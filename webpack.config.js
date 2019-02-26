@@ -1,5 +1,5 @@
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env) => {
   const isProduction = env === 'production'
@@ -14,7 +14,7 @@ module.exports = (env) => {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: "babel-loader"
+          loader: ['babel-loader', 'eslint-loader']
         },
         {
           test: /\.s?css$/,
@@ -22,15 +22,15 @@ module.exports = (env) => {
             {
               loader: MiniCssExtractPlugin.loader,
             },
-            "css-loader",
-            "sass-loader"
+            'css-loader',
+            'sass-loader'
           ]
         }
       ]
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: "styles.css",
+        filename: 'styles.css',
       })
     ],
     devtool: isProduction ? 'source-map ' : 'inline-source-map',
