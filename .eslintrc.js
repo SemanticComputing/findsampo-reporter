@@ -18,9 +18,10 @@ module.exports = {
         2,
         'always'
       ],
-      //'no-console': 'off',
+      'no-console': 'off',
       'react/jsx-uses-vars': ['error'],
       'space-infix-ops': ['error', {'int32Hint': true}],
+      "react/prop-types": 0
     },
     'env': {
       'es6': true,
