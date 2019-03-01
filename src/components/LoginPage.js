@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { startGoogleLogin } from '../actions/auth';
-import firebase from '../firebase/firebase';
+import { startGoogleLogin, startEmailLogin, logout } from '../actions/auth';
 
 class LoginPage extends Component {
 
@@ -12,19 +11,22 @@ class LoginPage extends Component {
     password: ''
   };
 
-  onLoginPress(e) {
-    e.preventDefault();
-
-    const { email, password } = this.state;
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('Login succeeded!');
-      })
-      .catch(() => {
-        console.log('Login failed!');
-      });
+  onTextFieldChange = (e) => {
+    this.setState({
+      [e.target.type]: e.target.value
+    });
   }
+
+  onLoginPress = (e) => {
+    e.preventDefault();
+    this.props.startEmailLogin(this.state);
+  }
+
+  onLogoutPress = (e) => {
+    e.preventDefault();
+    this.props.logout();
+  }
+
 
   render() {
     return (
@@ -36,7 +38,7 @@ class LoginPage extends Component {
           autoComplete='email'
           variant='outlined'
           value={this.state.email}
-          onChange={(email) => this.setState({ email })}
+          onChange={this.onTextFieldChange}
         />
         <TextField
           label="Password"
@@ -44,7 +46,7 @@ class LoginPage extends Component {
           autoComplete="current-password"
           variant="outlined"
           value={this.state.password}
-          onChange={(password) => this.setState({ password })}
+          onChange={this.onTextFieldChange}
         />
         <Button variant="contained" color="primary" onClick={this.onLoginPress}>
           Log In
@@ -52,14 +54,19 @@ class LoginPage extends Component {
         <Button variant="contained" color="primary" onClick={this.props.startGoogleLogin}>
           Google Log In
         </Button>
+        <Button variant="contained" color="primary" onClick={this.onLogoutPress}>
+          Log Out
+        </Button>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  startGoogleLogin: () => dispatch(startGoogleLogin())
+  startGoogleLogin: () => dispatch(startGoogleLogin()),
+  startEmailLogin: (credentials) => dispatch(startEmailLogin(credentials)),
+  logout: () => dispatch(logout())
+
 });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);
-

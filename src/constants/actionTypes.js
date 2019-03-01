@@ -1,5 +1,8 @@
-// All actions types for reduc are defined here
-
 // Auth
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
+export const AUTH_START_GOOGLE_LOGIN = 'AUTH_START_GOOGLE_LOGIN';
+export const AUTH_START_EMAIL_LOGIN = 'AUTH_START_EMAIL_LOGIN';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const AUTH_LOGOUT_SUCCESS = 'AUTH_LOGOUT_SUCCESS';
+export const AUTH_LOGIN_LOGGED_USER = 'AUTH_LOGIN_LOGGED_USER';
+

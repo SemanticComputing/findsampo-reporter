@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import configureStore from './store/configureStore';
 import firebase from './firebase/firebase';
-import { login, logout } from './actions/auth';
+import { logout, loginLoggedUser } from './actions/auth';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
@@ -26,8 +26,12 @@ const renderApp = () => {
 
 // Firebase observer for changes to the user's sign-in state.
 firebase.auth().onAuthStateChanged((user) => {
-  if(user) {
-    store.dispatch(login(user.uid));
+  if (user) {
+    store.dispatch(loginLoggedUser({
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName
+    }));
     renderApp();
   } else {
     store.dispatch(logout());
