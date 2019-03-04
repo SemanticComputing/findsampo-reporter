@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LangMenu from './LangMenu';
@@ -37,8 +38,8 @@ class Header extends Component {
 
     return (
       <div>
-        <AppBar position="static">
-          <Toolbar>
+        <AppBar position="static" className="appbar">
+          <Toolbar className="appbar__toolbar">
             <Typography variant="h6" color="inherit" className='appbar__typography'>
               FindSampo
             </Typography>
@@ -54,9 +55,10 @@ class Header extends Component {
                     to="/"
                     color="inherit"
                   >
-                    <Icon>account_circle</Icon>
-                    {this.props.username}
-                    <Icon>arrow_drop_down</Icon> 
+                    <Button className="appbar__button"variant="contained" color="default" size="small">
+                      <Avatar className="button__avatar"size="small">{this.props.username.substring(0, 2).toUpperCase()}</Avatar>
+                      <Icon>arrow_drop_down</Icon> 
+                    </Button>
                   </IconButton>
                   <Menu
                     id="menu-appbar"

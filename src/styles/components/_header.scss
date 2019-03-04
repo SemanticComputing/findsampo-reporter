@@ -1,3 +1,12 @@
+.appbar .appbar__toolbar {
+  padding-right: 0;
+}
+
+.appbar__button .button__avatar {
+  width: 2rem;
+  height: 2rem;
+}
+
 .appbar__typography {
   flex-grow: 1
 }
