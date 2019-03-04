@@ -41,8 +41,11 @@ class Header extends Component {
         <AppBar position="static" className="appbar">
           <Toolbar className="appbar__toolbar">
             <Typography variant="h6" color="inherit" className='appbar__typography'>
-              FindSampo
+              <Link className="appbar__title" to="/">
+                FindSampo
+              </Link>
             </Typography>
+
             <LangMenu />
             {
               this.props.isAuthenticated ? (
@@ -55,9 +58,9 @@ class Header extends Component {
                     to="/"
                     color="inherit"
                   >
-                    <Button className="appbar__button"variant="contained" color="default" size="small">
-                      <Avatar className="button__avatar"size="small">{this.props.username.substring(0, 2).toUpperCase()}</Avatar>
-                      <Icon>arrow_drop_down</Icon> 
+                    <Button variant="contained" color="default" size="small">
+                      <Avatar className="appbar__avatar" size="small">{this.props.username.substring(0, 2).toUpperCase()}</Avatar>
+                      <Icon>arrow_drop_down</Icon>
                     </Button>
                   </IconButton>
                   <Menu

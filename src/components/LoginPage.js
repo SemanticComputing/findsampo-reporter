@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { startGoogleLogin, startEmailLogin, logout } from '../actions/auth';
+import { startGoogleLogin, startEmailLogin } from '../actions/auth';
 
 class LoginPage extends Component {
 
@@ -54,9 +54,6 @@ class LoginPage extends Component {
         <Button variant="contained" color="primary" onClick={this.props.startGoogleLogin}>
           Google Log In
         </Button>
-        <Button variant="contained" color="primary" onClick={this.onLogoutPress}>
-          Log Out
-        </Button>
         <Button component={Link} to="/signup" variant="contained" color="primary">
           Sign up
         </Button>
@@ -68,8 +65,6 @@ class LoginPage extends Component {
 const mapDispatchToProps = (dispatch) => ({
   startGoogleLogin: () => dispatch(startGoogleLogin()),
   startEmailLogin: (credentials) => dispatch(startEmailLogin(credentials)),
-  logout: () => dispatch(logout())
-
 });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);

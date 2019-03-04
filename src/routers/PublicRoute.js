@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import Header from '../components/Header';
 
 /*
  * PublicRoute is used to redirect the user into 
@@ -18,7 +19,10 @@ export const PublicRoute = ({
       // TODO: Add here a notification about that the user is already logged in
       <Redirect to="/" />
     ) : (
-      <Component {...props} />
+      <div>
+        <Header />
+        <Component {...props} />
+      </div>
     )
   )} />
 );
