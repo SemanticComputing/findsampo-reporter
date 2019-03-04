@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { startGoogleLogin, startEmailLogin, logout } from '../actions/auth';
 
 class LoginPage extends Component {
@@ -26,7 +27,6 @@ class LoginPage extends Component {
     e.preventDefault();
     this.props.logout();
   }
-
 
   render() {
     return (
@@ -56,6 +56,9 @@ class LoginPage extends Component {
         </Button>
         <Button variant="contained" color="primary" onClick={this.onLogoutPress}>
           Log Out
+        </Button>
+        <Button component={Link} to="/signup" variant="contained" color="primary">
+          Sign up
         </Button>
       </div>
     );

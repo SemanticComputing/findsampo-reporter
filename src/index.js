@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './components/App';
+import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import firebase from './firebase/firebase';
 import { logout, loginLoggedUser } from './actions/auth';
@@ -12,7 +12,7 @@ const store = configureStore();
 
 const jsx = (
   <Provider store={store}>
-    <App />
+    <AppRouter />
   </Provider>
 );
 

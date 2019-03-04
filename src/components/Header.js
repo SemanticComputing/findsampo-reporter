@@ -1,28 +1,107 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import LangMenu from './LangMenu';
+import { logout } from '../actions/auth';
 
-const Header = () => {
-  return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" className='appbar__typography'>
-            FindSampo
-          </Typography>
-          <LangMenu />
-          <Button color="inherit">
-            <Icon className='appbar__icon'>input</Icon>
-            Login
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};
 
-export default Header;
+
+class Header extends Component {
+  state = {
+    anchorEl: null
+  };
+
+  handleMenu = (e) => {
+    this.setState({ anchorEl: e.currentTarget });
+  };
+
+  onCloseMenuPresed = () => {
+    this.setState({ anchorEl: null });
+  }
+
+  onLogoutPressed = () => {
+    this.onCloseMenuPresed();
+    this.props.logout();
+  }
+
+  render() {
+    const open = !!this.state.anchorEl;
+
+    return (
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" color="inherit" className='appbar__typography'>
+              FindSampo
+            </Typography>
+            <LangMenu />
+            {
+              this.props.isAuthenticated ? (
+                <div>
+                  <IconButton
+                    aria-owns={open ? 'menu-appbar' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleMenu}
+                    component={Link}
+                    to="/"
+                    color="inherit"
+                  >
+                    <Icon>account_circle</Icon>
+                    {this.props.username}
+                    <Icon>arrow_drop_down</Icon> 
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={this.onCloseMenuPresed}
+                  >
+                    <MenuItem onClick={this.onLogoutPressed}>Log out</MenuItem>
+                  </Menu>
+                </div>
+
+              ) : (
+                <Button
+                  component={Link}
+                  to="/login"
+                  color="inherit"
+                >
+                  <Icon className='appbar__icon'>input</Icon>
+                  Login
+                </Button>
+              )
+            }
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
+}
+
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: !!state.auth.uid,
+  username: state.auth.displayName
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
