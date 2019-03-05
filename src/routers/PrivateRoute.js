@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import Header from '../components/Header';
 
 /*
  * PrivateRoute is used to redirect the user into 
@@ -17,7 +16,6 @@ export const PrivateRoute = ({
   <Route {...rest} component={(props) => (
     isAuthenticated ? (
       <div>
-        <Header />
         <Component {...props} />
       </div>
     ) : (
