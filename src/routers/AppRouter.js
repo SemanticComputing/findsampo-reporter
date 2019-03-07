@@ -5,8 +5,8 @@ import PublicRoute from './PublicRoute';
 import { connect } from 'react-redux';
 import NotFoundPage from '../components/NotFoundPage';
 import AppHome from '../components/AppHome';
-import LoginPage from '../components/LoginPage';
-import SignupPage from '../components/SignupPage';
+import LoginPage from '../components/authentication/LoginPage';
+import SignupPage from '../components/authentication/SignupPage';
 import Header from '../components/Header';
 
 export const history = createHistory();

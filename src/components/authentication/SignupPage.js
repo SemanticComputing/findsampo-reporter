@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
-import { signup } from '../actions/auth';
+import { signup } from '../../actions/auth';
 
 class SignupPage extends Component {
   state = {

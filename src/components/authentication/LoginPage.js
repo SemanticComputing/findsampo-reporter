@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { startGoogleLogin, startEmailLogin } from '../actions/auth';
+import { startGoogleLogin, startEmailLogin } from '../../actions/auth';
 
 class LoginPage extends Component {
 
