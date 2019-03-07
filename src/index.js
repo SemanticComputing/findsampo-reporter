@@ -5,17 +5,25 @@ import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import firebase from './firebase/firebase';
 import { logout, loginLoggedUser } from './actions/auth';
+import { setLocale } from './actions/locale';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
+// Confiture store
 const store = configureStore();
 
+// Language Settings
+const lang = localStorage.getItem('locale') || 'en';
+store.dispatch(setLocale(lang));
+
+// App
 const jsx = (
   <Provider store={store}>
     <AppRouter />
   </Provider>
 );
 
+// App rendering options
 let hasRendered = false;
 const renderApp = () => {
   if (!hasRendered) {

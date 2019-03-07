@@ -10,26 +10,25 @@ import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import intl from 'react-intl-universal';
 import LangMenu from './LangMenu';
 import { logout } from '../actions/auth';
-
-
 
 class Header extends Component {
   state = {
     anchorEl: null
   };
 
-  handleMenu = (e) => {
+  onMenuPressed = (e) => {
     this.setState({ anchorEl: e.currentTarget });
   };
 
-  onCloseMenuPresed = () => {
+  onClosePresed = () => {
     this.setState({ anchorEl: null });
   }
 
   onLogoutPressed = () => {
-    this.onCloseMenuPresed();
+    this.onClosePresed();
     this.props.logout();
   }
 
@@ -42,7 +41,7 @@ class Header extends Component {
           <Toolbar className="appbar__toolbar">
             <Typography variant="h6" color="inherit" className='appbar__typography'>
               <Link className="appbar__title" to="/">
-                FindSampo
+                {intl.get('header.title')}
               </Link>
             </Typography>
 
@@ -53,7 +52,7 @@ class Header extends Component {
                   <IconButton
                     aria-owns={open ? 'menu-appbar' : undefined}
                     aria-haspopup="true"
-                    onClick={this.handleMenu}
+                    onClick={this.onMenuPressed}
                     component={Link}
                     to="/"
                     color="inherit"
@@ -75,9 +74,11 @@ class Header extends Component {
                       horizontal: 'right',
                     }}
                     open={open}
-                    onClose={this.onCloseMenuPresed}
+                    onClose={this.onClosePresed}
                   >
-                    <MenuItem onClick={this.onLogoutPressed}>Log out</MenuItem>
+                    <MenuItem onClick={this.onLogoutPressed}>
+                      {intl.get('header.logout')}
+                    </MenuItem>
                   </Menu>
                 </div>
 
@@ -88,7 +89,7 @@ class Header extends Component {
                   color="inherit"
                 >
                   <Icon className='appbar__icon'>input</Icon>
-                  Login
+                  {intl.get('header.login')}
                 </Button>
               )
             }

@@ -9,3 +9,7 @@ export const AUTH_LOGIN_LOGGED_USER = 'AUTH_LOGIN_LOGGED_USER';
 // Auth Signup
 export const AUTH_SIGNUP = 'AUTH_SIGNUP';
 export const AUTH_SIGNUP_SUCCESS = 'AUTH_SIGNUP_SUCCESS';
+
+// Locale
+export const LOCALE_SET = 'LOCALE_SET';
+export const LOCALE_SET_SUCCESS = 'LOCALE_SET_SUCCESS';

@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogicMiddleware } from 'redux-logic';
-import authReducer from '../reducers/auth';
+import auth from '../reducers/auth';
+import locale from '../reducers/locale';
 import rootLogic from '../logics/rootLogic';
 
 // Create react middleware
@@ -15,7 +16,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default () => {
   const store = createStore(
     combineReducers({
-      auth: authReducer
+      auth,
+      locale
     }),
     composeEnhancers(composeMiddleware)
   );

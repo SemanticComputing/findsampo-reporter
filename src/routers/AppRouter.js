@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import PublicRoute from './PublicRoute';
-//import Privateroute from './Privateroute';
+import { connect } from 'react-redux';
 import NotFoundPage from '../components/NotFoundPage';
 import AppHome from '../components/AppHome';
 import LoginPage from '../components/LoginPage';
@@ -28,4 +28,8 @@ const AppRouter = () => (
   </Router>
 );
 
-export default AppRouter;
+const mapStateToProps = (state) => ({
+  locale: state.locale,
+});
+
+export default connect(mapStateToProps)(AppRouter);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import intl from 'react-intl-universal';
 import { signup } from '../actions/auth';
 
 class SignupPage extends Component {
@@ -25,16 +26,16 @@ class SignupPage extends Component {
   render() {
     return (
       <div className='signup-form'>
-        <h2>Sign Up</h2>
+        <h2>{intl.get('loginPage.signup')}</h2>
         <TextField
           id="username"
-          label="Username"
+          label={intl.get('signupPage.title')}
           variant='outlined'
           onChange={this.onTextFieldChange}
         />
         <TextField
           id="email"
-          label='Email'
+          label={intl.get('signupPage.email')}
           type='email'
           autoComplete='email'
           variant='outlined'
@@ -42,14 +43,14 @@ class SignupPage extends Component {
         />
         <TextField
           id="password"
-          label="Password"
+          label={intl.get('signupPage.password')}
           type="password"
           autoComplete="current-password"
           variant='outlined'
           onChange={this.onTextFieldChange}
         />
         <Button variant="contained" color="primary" onClick={this.onSignupPress}>
-          Sign Up
+          {intl.get('signupPage.signup')}
         </Button>
       </div>
     );

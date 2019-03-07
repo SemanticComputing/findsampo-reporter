@@ -1,4 +1,8 @@
-import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT_SUCCESS, AUTH_LOGIN_LOGGED_USER } from '../constants/actionTypes';
+import { 
+  AUTH_LOGIN_SUCCESS, 
+  AUTH_LOGOUT_SUCCESS, 
+  AUTH_LOGIN_LOGGED_USER 
+} from '../constants/actionTypes';
 
 const initialState = {
   authError: null

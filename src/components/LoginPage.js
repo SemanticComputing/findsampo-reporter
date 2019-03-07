@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import intl from 'react-intl-universal';
 import { startGoogleLogin, startEmailLogin } from '../actions/auth';
 
 class LoginPage extends Component {
@@ -31,9 +32,9 @@ class LoginPage extends Component {
   render() {
     return (
       <div className='login-form'>
-        <h2>Log In</h2>
+        <h2>{intl.get('loginPage.title')}</h2>
         <TextField
-          label='Email'
+          label={intl.get('loginPage.email')}
           type='email'
           autoComplete='email'
           variant='outlined'
@@ -41,7 +42,7 @@ class LoginPage extends Component {
           onChange={this.onTextFieldChange}
         />
         <TextField
-          label="Password"
+          label={intl.get('loginPage.password')}
           type="password"
           autoComplete="current-password"
           variant="outlined"
@@ -49,13 +50,13 @@ class LoginPage extends Component {
           onChange={this.onTextFieldChange}
         />
         <Button variant="contained" color="primary" onClick={this.onLoginPress}>
-          Log In
+          {intl.get('loginPage.login')}
         </Button>
         <Button variant="contained" color="primary" onClick={this.props.startGoogleLogin}>
           Google Log In
         </Button>
         <Button component={Link} to="/signup" variant="contained" color="primary">
-          Sign up
+          {intl.get('loginPage.signup')}
         </Button>
       </div>
     );

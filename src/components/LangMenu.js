@@ -4,15 +4,35 @@ import Menu from '@material-ui/core/Menu';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Fab from '@material-ui/core/Fab';
-
+import { connect } from 'react-redux';
+import { setLocale } from '../actions/locale';
 
 const langs = [
+  'EN',
   'FI',
-  'SV',
-  'EN'
+  'SV'
 ];
 
 class LangMenu extends Component {
+  state = {
+    anchorEl: null,
+    selectedIndex: 0,
+  };
+
+  onMenuItemPressed = (e, index) => {
+    this.props.setLocale(langs[index].toLowerCase());
+    this.setState({ selectedIndex: index, anchorEl: null });
+    localStorage.setItem('locale', langs[index].toLowerCase());
+  };
+
+  onListItemPressed = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  onClosePressed = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
     return (
       <div>
@@ -20,20 +40,27 @@ class LangMenu extends Component {
           <ListItem
             aria-haspopup='true'
             aria-controls='lang-button'
+            onClick={this.onListItemPressed}
           >
-            <Fab variant='round'  size='small'>
-              {langs[0]}
+            <Fab variant='round' size='small'
+              aria-haspopup='true'
+              aria-controls='lang-button'
+              onClick={this.onListItemPressed}>
+              {localStorage.getItem('locale') || langs[this.state.selectedIndex]}
             </Fab>
           </ListItem>
         </List>
         <Menu
           id="lang-button"
-          open={false}
+          anchorEl={this.state.anchorEl}
+          open={!!this.state.anchorEl}
+          onClose={this.onClosePressed}
         >
           {langs.map((option, index) => (
             <MenuItem
               key={option}
-              disabled={index === 0}
+              selected={index === this.state.selectedIndex}
+              onClick={event => this.onMenuItemPressed(event, index)}
             >
               {option}
             </MenuItem>
@@ -44,5 +71,8 @@ class LangMenu extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  setLocale: (locale) => dispatch(setLocale(locale))
+});
 
-export default LangMenu;
+export default connect(undefined, mapDispatchToProps)(LangMenu);

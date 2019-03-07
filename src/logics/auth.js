@@ -62,6 +62,7 @@ const logout = createLogic({
 const signup = createLogic({
   type: AUTH_SIGNUP,
   latest: true,
+  warnTimeout: 0,
 
   processOptions: {
     dispatchMultiple: true
@@ -85,7 +86,6 @@ const signup = createLogic({
     });
   }
 });
-
 
 export default [
   startGoogleLogin,
