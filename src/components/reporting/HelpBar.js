@@ -13,17 +13,23 @@ class HelpBar extends Component {
   }
 
   onOpenPressed = () => {
-    this.setState(()=> ({open: true}));
+    this.setState(() => ({ open: true }));
   };
 
   onClosePressed = () => {
-    this.setState(()=> ({open: false}));
+    this.setState(() => ({ open: false }));
   };
 
   render() {
     return (
-      <div>
-        <Icon onClick={this.onOpenPressed}>help_outlined</Icon>
+      <div className="help-bar">
+        <Icon
+          onClick={this.onOpenPressed}
+          className="help-bar__icon"
+          size=""
+        >
+          help_outlined
+        </Icon>
         <Dialog
           open={this.state.open}
           onClose={this.onClosePressed}

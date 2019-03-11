@@ -1,0 +1,25 @@
+.question {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  align-items: center;
+  & &__icon {
+    color: grey;
+    font-size: 6rem;
+  }
+  .help-bar {
+    align-self: flex-end;
+  }
+  .answer-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .button-bar {
+    margin-top: 1rem;
+    align-self: stretch;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+}

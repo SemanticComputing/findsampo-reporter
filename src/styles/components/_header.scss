@@ -1,19 +1,19 @@
 .appbar {
-  .appbar__title {
+  & &__title {
     color: white;
     text-decoration: none;
   }
-  .appbar__toolbar {
+  & &__toolbar {
     padding-right: 0;
   }
-  .appbar__avatar {
+  & &__avatar {
     width: 2rem;
     height: 2rem;
   }
-  .appbar__typography {
+  & &__typography {
     flex-grow: 1
   }
-  .appbar__icon {
+  & &__icon {
     margin-right: $xss-size 
   }
 }

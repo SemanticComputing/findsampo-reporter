@@ -2,12 +2,12 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 const ButtonBar = () => (
-  <div>
+  <div className="button-bar"> 
     <Button variant="contained" color="primary">
-      Button 1
+      Yes
     </Button>
     <Button variant="contained" color="primary">
-      Button 2
+      No
     </Button>
   </div>
 );

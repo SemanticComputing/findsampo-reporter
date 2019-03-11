@@ -7,7 +7,7 @@ const Footer = () => {
     <div>
       <AppBar position="static" className='footer'>
         <Toolbar>
-          <p>Copyright © 2019 SuALT</p>
+          <p>Copyright © 2019 FindSampo</p>
         </Toolbar>
       </AppBar>
     </div>
