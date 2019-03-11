@@ -28,8 +28,8 @@ class LangMenu extends Component {
     localStorage.setItem('locale', langs[index].toLowerCase());
   };
 
-  onListItemPressed = event => {
-    this.setState(() => ({ anchorEl: event.currentTarget }));
+  onListItemPressed = (e) => {
+    this.setState({ anchorEl: e.currentTarget });
   };
 
   onClosePressed = () => {

@@ -1,3 +1,28 @@
 html {
   height: 100%;
 }
+
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: 4.9rem auto fit-content(6rem);
+  grid-template-areas: "appbar"
+                       "content"
+                       "footer";
+  height: 100%;
+}
+
+.appbar {
+  grid-area: appbar;
+}
+
+.footer {
+  grid-area: footer;
+}

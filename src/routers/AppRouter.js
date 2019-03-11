@@ -8,6 +8,7 @@ import AppHomePage from '../components/AppHomePage';
 import LoginPage from '../components/authentication/LoginPage';
 import SignupPage from '../components/authentication/SignupPage';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export const history = createHistory();
 
@@ -24,6 +25,7 @@ const AppRouter = () => (
         <PublicRoute path="/signup" component={SignupPage} />
         <Route component={NotFoundPage}></Route>
       </Switch>
+      <Footer />
     </div>
   </Router>
 );

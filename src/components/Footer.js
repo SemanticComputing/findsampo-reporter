@@ -1,14 +1,13 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 
 const Footer = () => {
   return (
     <div>
-      <AppBar position="static" id='footer'>
+      <AppBar position="static" className='footer'>
         <Toolbar>
-          <Button color='inherit'>FOOOOOTEEEERRR</Button>
+          <p>Copyright © 2019 SuALT</p>
         </Toolbar>
       </AppBar>
     </div>
