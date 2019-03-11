@@ -21,16 +21,19 @@ class LangMenu extends Component {
 
   onMenuItemPressed = (e, index) => {
     this.props.setLocale(langs[index].toLowerCase());
-    this.setState({ selectedIndex: index, anchorEl: null });
+    this.setState(() => ({
+      selectedIndex: index,
+      anchorEl: null
+    }));
     localStorage.setItem('locale', langs[index].toLowerCase());
   };
 
   onListItemPressed = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState(() => ({ anchorEl: event.currentTarget }));
   };
 
   onClosePressed = () => {
-    this.setState({ anchorEl: null });
+    this.setState(() => ({ anchorEl: null }));
   };
 
   render() {

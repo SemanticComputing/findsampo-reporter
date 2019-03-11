@@ -20,11 +20,11 @@ class Header extends Component {
   };
 
   onMenuPressed = (e) => {
-    this.setState({ anchorEl: e.currentTarget });
+    this.setState(() => ({ anchorEl: e.currentTarget }));
   };
 
   onClosePresed = () => {
-    this.setState({ anchorEl: null });
+    this.setState(() => ({ aanchorEl: null }));
   }
 
   onLogoutPressed = () => {
