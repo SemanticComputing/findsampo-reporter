@@ -1,11 +1,12 @@
 export const OptionTypes = Object.freeze({
-  TOGGLE: Symbol('toggle'),
-  MAP: Symbol('map'),
-  FIELD: Symbol('field'),
-  PHOTO: Symbol('photo')
+  BUTTON: 'button',
+  TOGGLE: 'toggle',
+  MAP: 'map',
+  FIELD: 'field',
+  PHOTO: 'photo'
 });
 
 export const ButtonTypes = Object.freeze({
-  STEPPER: Symbol('stepper'),
-  EXECUTER: Symbol('executer')
+  STEPPER: 'stepper',
+  EXECUTER: 'executer'
 });

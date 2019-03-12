@@ -12,7 +12,10 @@ class Question extends Component {
     return (
       <div className="question">
         <HelpBar />
-        <Icon className="question__icon" size="large">{icon}</Icon>
+        {
+          icon && 
+          <Icon className="question__icon" size="large">{icon}</Icon>
+        }
         <p>{question}</p>
         <AnswerOptions />
         <ButtonBar />

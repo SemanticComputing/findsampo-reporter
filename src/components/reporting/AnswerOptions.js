@@ -18,7 +18,7 @@ class AnswerOptions extends Component {
       <div className="answer-options">
         {
           options &&
-          options.type === 'toggle' &&
+          options.type === 'button' &&
           options.texts.map((txt) =>
             <FormControlLabel
               control={
