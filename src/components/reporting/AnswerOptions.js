@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -12,39 +13,27 @@ class AnswerOptions extends Component {
   }
 
   render() {
+    const options = this.props.currentQuestion.options;
     return (
       <div className="answer-options">
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={this.state.checked}
-              onChange={this.onOptionClicked}
-              value="antoine"
+        {
+          options &&
+          options.type === 'toggle' &&
+          options.texts.map((txt) =>
+            <FormControlLabel
+              control={
+                <Checkbox checked={this.state.checked} onChange={this.onOptionClicked} value={txt} />
+              }
+              label={txt} key={txt}
             />
-          }
-          label="Choice 1"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox checked={this.state.checked} onChange={this.onOptionClicked} value="jason" />
-          }
-          label="Choice 2"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox checked={this.state.checked} onChange={this.onOptionClicked} value="jason" />
-          }
-          label="Choice 3"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox checked={this.state.checked} onChange={this.onOptionClicked} value="jason" />
-          }
-          label="Choice 4"
-        />
+          )
+        }
       </div>
     );
   }
 }
+const mapStateToProps = (state) => ({
+  currentQuestion: state.report.questions[state.report.currentStep]
+});
 
-export default AnswerOptions;
+export default connect(mapStateToProps)(AnswerOptions);

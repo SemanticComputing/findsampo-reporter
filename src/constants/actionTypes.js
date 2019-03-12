@@ -13,3 +13,6 @@ export const AUTH_SIGNUP_SUCCESS = 'AUTH_SIGNUP_SUCCESS';
 // Locale
 export const LOCALE_SET = 'LOCALE_SET';
 export const LOCALE_SET_SUCCESS = 'LOCALE_SET_SUCCESS';
+
+// Reporting
+export const REPORT_CHANGE_QUESTION = 'REPORT_CHANGE_QUESTION';

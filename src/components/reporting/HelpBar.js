@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Icon from '@material-ui/core/Icon';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -26,7 +27,6 @@ class HelpBar extends Component {
         <Icon
           onClick={this.onOpenPressed}
           className="help-bar__icon"
-          size=""
         >
           help_outlined
         </Icon>
@@ -35,10 +35,10 @@ class HelpBar extends Component {
           onClose={this.onClosePressed}
           aria-labelledby="dialog-title"
         >
-          <DialogTitle id="dialog-title">Some Help about the question</DialogTitle>
+          <DialogTitle id="dialog-title">Help</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Here you can provide anything
+              {this.props.currentQuestion.help}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -52,4 +52,8 @@ class HelpBar extends Component {
   }
 }
 
-export default HelpBar;
+const mapStateToProps = (state) => ({
+  currentQuestion: state.report.questions[state.report.currentStep]
+});
+
+export default connect(mapStateToProps)(HelpBar);

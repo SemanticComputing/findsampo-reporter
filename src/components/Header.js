@@ -24,7 +24,7 @@ class Header extends Component {
   };
 
   onClosePresed = () => {
-    this.setState(() => ({ aanchorEl: null }));
+    this.setState({ anchorEl: null });
   }
 
   onLogoutPressed = () => {

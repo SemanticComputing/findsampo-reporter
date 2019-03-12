@@ -1,15 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import { changeQuestion } from '../../actions/report';
 
-const ButtonBar = () => (
-  <div className="button-bar"> 
-    <Button variant="contained" color="primary">
-      Yes
-    </Button>
-    <Button variant="contained" color="primary">
-      No
-    </Button>
-  </div>
+const ButtonBar = (props) => (
+  props.buttons.map((btn) => {
+    return (
+      <div className="button-bar" key={btn.text}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.changeQuestion(btn.nextStep)}
+        >
+          {btn.text}
+        </Button>
+      </div>
+    );
+  })
 );
 
-export default ButtonBar;
+const mapStateToProps = (state) => ({
+  buttons: state.report.questions[state.report.currentStep].buttons
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeQuestion: (step) => dispatch(changeQuestion(step))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonBar);
