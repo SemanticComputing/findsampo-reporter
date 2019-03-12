@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
+import intl from 'react-intl-universal';
 
 class HelpBar extends Component {
   state = {
@@ -38,7 +39,7 @@ class HelpBar extends Component {
           <DialogTitle id="dialog-title">Help</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {this.props.currentQuestion.help}
+              {intl.get(this.props.currentQuestion.help)}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

@@ -9,17 +9,17 @@ export default {
     {
       step: 0,
       icon: 'local_hospital',
-      question: 'Would you like to get familiar with our started kits before starting to add your find?',
-      help: 'This questions is for providing some help. Please choose one of the choices',
+      question: 'report.questionZero.question',
+      help: 'report.questionZero.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes, please!',
+          text: 'report.questionZero.buttonOne',
           nextStep: 1
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No, thanks!',
+          text: 'report.questionZero.buttonTwo',
           nextStep: 2
         }
       ]
@@ -27,8 +27,8 @@ export default {
     {
       step: 1,
       icon: 'assignment-alert',
-      question: 'Great, below you can find the most relevant instructions.',
-      help: 'Please select one of the guides!',
+      question: 'report.questionOne.question',
+      help: 'report.questionOne.help',
       options: {
         type: OptionTypes.BUTTON,
         texts: ['General', 'Starter Guide', 'More']
@@ -36,7 +36,7 @@ export default {
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionOne.buttonOne',
           nextStep: 3
         },
       ]
@@ -44,29 +44,29 @@ export default {
     {
       step: 2,
       icon: 'place',
-      question: 'Are you adding a find that has recently found?',
-      help: 'This question is asked to get your current location and date.',
+      question: 'report.questionTwo.question',
+      help: 'report.questionTwo.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes, I am on the find site',
+          text: 'report.questionTwo.buttonOne',
           nextStep: 3
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No, I found it a while ago',
+          text: 'report.questionTwo.buttonTwo',
           nextStep: 3
         },
       ]
     },
     {
       step: 3,
-      question: 'Pick the find site locaton please.',
-      help: 'Mark exactly where the find has been found.',
+      question: 'report.questionThree.question',
+      help: 'report.questionThree.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Done, continue',
+          text: 'report.questionThree.buttonOne',
           nextStep: 4
         }
       ]
@@ -74,12 +74,12 @@ export default {
     {
       step: 4,
       icon: 'date_range',
-      question: 'Pick a find date please.',
-      help: 'Select the exact date that find has been found.',
+      question: 'report.questionFour.question',
+      help: 'report.questionFour.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionFour.buttonOne',
           nextStep: 5
         }
       ]
@@ -87,12 +87,12 @@ export default {
     {
       step: 5,
       icon: 'add_a_photo',
-      question: 'Please add some photos from the find site.',
-      help: 'Min three photos is needed.',
+      question: 'report.questionFive.question',
+      help: 'report.questionFive.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionFive.buttonOne',
           nextStep: 6
         }
       ]
@@ -100,12 +100,12 @@ export default {
     {
       step: 6,
       icon: 'label',
-      question: 'Input a name for the find.',
-      help: 'The name should be descriptive.',
+      question: 'report.questionSix.question',
+      help: 'report.questionSix.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionSix.buttonOne',
           nextStep: 7
         }
       ]
@@ -113,12 +113,12 @@ export default {
     {
       step: 7,
       icon: 'add_a_photo',
-      question: 'Please add some photos from the find.',
-      help: 'Min three photos is needed.',
+      question: 'report.questionSeven.question',
+      help: 'report.questionSeven.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionSeven.buttonOne',
           nextStep: 8
         }
       ]
@@ -126,17 +126,17 @@ export default {
     {
       step: 8,
       icon: 'more',
-      question: 'Would like to give some additional information about the find?',
-      help: 'If you accept this, you are going to provide some additional information',
+      question: 'report.questionEight.question',
+      help: 'report.questionEight.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes,please',
+          text: 'report.questionEight.buttonOne',
           nextStep: 9
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No, thanks',
+          text: 'report.questionEight.buttonTwo',
           nextStep: 88 // FIX ME!
         }
       ]
@@ -144,12 +144,12 @@ export default {
     {
       step: 9,
       icon: 'wb_incandescent',
-      question: 'Select the type of the find.',
-      help: 'If you cannot find the type you can select others.',
+      question: 'report.questionNine.question',
+      help: 'report.questionNine.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionNine.buttonOne',
           nextStep: 10
         }
       ]
@@ -157,12 +157,12 @@ export default {
     {
       step: 10,
       icon: 'blur_on',
-      question: 'Select the material of the find.',
-      help: 'If you cannot find the material you can select others.',
+      question: 'report.questionTen.question',
+      help: 'report.questionTen.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionTen.buttonOne',
           nextStep: 11
         }
       ]
@@ -170,12 +170,12 @@ export default {
     {
       step: 11,
       icon: 'line_style',
-      question: 'Please fill in the find details',
-      help: 'Some explenation about depth and size.',
+      question: 'report.questionEleven.question',
+      help: 'report.questionEleven.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Continue',
+          text: 'report.questionEleven.buttonOne',
           nextStep: 12
         }
       ]
@@ -183,17 +183,17 @@ export default {
     {
       step: 12,
       icon: 'lock',
-      question: 'The Finnish heritage agency can publish your name at their website?',
-      help: 'What does this mean? How the name is used?',
+      question: 'report.questionTwelve.question',
+      help: 'report.questionTwelve.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes',
+          text: 'report.questionTwelve.buttonOne',
           nextStep: 13
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No',
+          text: 'report.questionTwelve.buttonTwo',
           nextStep: 13
         }
       ]
@@ -201,17 +201,17 @@ export default {
     {
       step: 13,
       icon: 'public',
-      question: 'Do you want to donete your discovery to collections?',
-      help: 'What does discovery donating mean? What happens if it is done?',
+      question: 'report.questionThirteen.question',
+      help: 'report.questionThirteen.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes',
+          text: 'report.questionThirteen.buttonOne',
           nextStep: 14
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No',
+          text: 'report.questionThirteen.buttonTwo',
           nextStep: 14
         }
       ]
@@ -219,17 +219,17 @@ export default {
     {
       step: 14,
       icon: 'domain',
-      question: 'Do you want to donete your discovery to collections?',
-      help: 'What does discovery donating mean? What happens if it is done?',
+      question: 'report.questionFourteen.question',
+      help: 'report.questionFourteen.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes',
+          text: 'report.questionFourteen.buttonOne',
           nextStep: 15
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No',
+          text: 'report.questionFourteen.buttonTwo',
           nextStep: 15
         }
       ]
@@ -237,17 +237,17 @@ export default {
     {
       step: 15,
       icon: 'more_horiz',
-      question: 'Would you like to add something?',
-      help: 'Here you can provide any kind of information about the find and find site.',
+      question: 'report.questionFifteen.question',
+      help: 'report.questionFifteen.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes',
+          text: 'report.questionFifteen.buttonOne',
           nextStep: 16
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No',
+          text: 'report.questionFifteen.buttonTwo',
           nextStep: 16
         }
       ]
@@ -255,17 +255,17 @@ export default {
     {
       step: 16,
       icon: 'add_circle_outline',
-      question: 'Would you like to add another find?',
-      help: 'One report can contains many finds. Some intruduction about it.',
+      question: 'report.questionSixteen.question',
+      help: 'report.questionSixteen.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Yes, please',
+          text: 'report.questionSixteen.buttonOne',
           nextStep: 17
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'No, thanks',
+          text: 'report.questionSixteen.buttonTwo',
           nextStep: 17
         }
       ]
@@ -273,12 +273,12 @@ export default {
     {
       step: 17,
       icon: 'check_circle_outline',
-      question: 'Your add has been added successfully.',
-      help: 'You find has been sent. You will get an notification soon.',
+      question: 'report.questionSeventeen.question',
+      help: 'report.questionSeventeen.help',
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'Finish',
+          text: 'report.questionSeventeen.buttonOne',
           nextStep: 18
         }
       ]

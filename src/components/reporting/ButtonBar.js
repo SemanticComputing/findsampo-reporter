@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { changeQuestion } from '../../actions/report';
+import intl from 'react-intl-universal';
 
 const ButtonBar = (props) => (
   props.buttons.map((btn) => {
@@ -12,7 +13,7 @@ const ButtonBar = (props) => (
           color="primary"
           onClick={() => props.changeQuestion(btn.nextStep)}
         >
-          {btn.text}
+          {intl.get(btn.text)}
         </Button>
       </div>
     );

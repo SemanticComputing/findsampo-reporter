@@ -4,19 +4,20 @@ import HelpBar from './HelpBar';
 import { Icon } from '@material-ui/core';
 import AnswerOptions from './AnswerOptions';
 import ButtonBar from './ButtonBar';
+import intl from 'react-intl-universal';
 
 class Question extends Component {
 
   render() {
-    const {icon, question} = this.props.questions[this.props.currentStep];
+    const { icon, question } = this.props.questions[this.props.currentStep];
     return (
       <div className="question">
         <HelpBar />
         {
-          icon && 
+          icon &&
           <Icon className="question__icon" size="large">{icon}</Icon>
         }
-        <p>{question}</p>
+        <p>{intl.get(question)}</p>
         <AnswerOptions />
         <ButtonBar />
       </div>
