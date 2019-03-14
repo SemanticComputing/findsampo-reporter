@@ -18,9 +18,7 @@ export const PublicRoute = ({
       // TODO: Add here a notification about that the user is already logged in
       <Redirect to="/" />
     ) : (
-      <div>
-        <Component {...props} />
-      </div>
+      <Component {...props} />
     )
   )} />
 );

@@ -63,6 +63,9 @@ export default {
       step: 3,
       question: 'report.questionThree.question',
       help: 'report.questionThree.help',
+      options: {
+        type: OptionTypes.MAP
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,

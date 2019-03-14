@@ -15,9 +15,7 @@ export const PrivateRoute = ({
 }) => (
   <Route {...rest} component={(props) => (
     isAuthenticated ? (
-      <div>
-        <Component {...props} />
-      </div>
+      <Component {...props} />
     ) : (
       // TODO: Add here a notification about the redirection
       <Redirect to="/login" />

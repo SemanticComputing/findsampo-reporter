@@ -8,7 +8,9 @@ import Question from './Question';
 class Report extends Component {
   render() {
     return (
-      <Question />
+      <div className="report">
+        <Question />
+      </div>
     );
   }
 }

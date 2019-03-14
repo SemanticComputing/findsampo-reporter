@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   height: 100%;
 }
@@ -12,11 +16,12 @@ body {
 
 .app {
   display: grid;
-  grid-template-rows: 4.9rem auto fit-content(6rem);
+  grid-template-rows: 4.9rem auto fit-content(5rem);
   grid-template-areas: "appbar"
                        "content"
                        "footer";
   height: 100%;
+  background-color: $color-app-background;
 }
 
 .appbar {

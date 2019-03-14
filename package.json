@@ -13,6 +13,7 @@
     "@material-ui/core": "^3.9.2",
     "firebase": "^5.8.4",
     "history": "^4.7.2",
+    "leaflet": "^1.4.0",
     "normalize.css": "^8.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
@@ -41,6 +42,7 @@
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.0"

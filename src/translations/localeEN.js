@@ -37,7 +37,7 @@ export default {
       'buttonTwo': 'No, I found it a while ago'
     },
     'questionThree': {
-      'question': 'Pick the find site locaton please.',
+      'question': 'Pick the find site location please.',
       'help': 'Mark exactly where the find has been found.',
       'buttonOne': 'Done, continue'
     },
