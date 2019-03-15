@@ -2,8 +2,6 @@ import { OptionTypes, ButtonTypes } from '../enum/enums';
 
 // Initial State of the report
 export default {
-  status: 'draft',
-  stage: 0,
   currentStep: 0,
   questions: [
     {
@@ -79,6 +77,9 @@ export default {
       icon: 'date_range',
       question: 'report.questionFour.question',
       help: 'report.questionFour.help',
+      options: {
+        type: OptionTypes.DATE_PICKER
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,

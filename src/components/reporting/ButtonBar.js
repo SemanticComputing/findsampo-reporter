@@ -5,19 +5,22 @@ import { changeQuestion } from '../../actions/report';
 import intl from 'react-intl-universal';
 
 const ButtonBar = (props) => (
-  props.buttons.map((btn) => {
-    return (
-      <div className="button-bar" key={btn.text}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.changeQuestion(btn.nextStep)}
-        >
-          {intl.get(btn.text)}
-        </Button>
-      </div>
-    );
-  })
+  <div className="button-bar">
+    {
+      props.buttons.map((btn) => {
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => props.changeQuestion(btn.nextStep)}
+            key={btn.text}
+          >
+            {intl.get(btn.text)}
+          </Button>
+        );
+      })
+    }
+  </div>
 );
 
 const mapStateToProps = (state) => ({

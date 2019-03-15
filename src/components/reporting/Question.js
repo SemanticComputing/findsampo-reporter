@@ -13,11 +13,13 @@ class Question extends Component {
     return (
       <div className="question">
         <HelpBar />
-        {
-          icon &&
-          <Icon className="question__icon" size="large">{icon}</Icon>
-        }
-        <p>{intl.get(question)}</p>
+        <div className="question__properties">
+          {
+            icon &&
+            <Icon className="question__icon" size="large">{icon}</Icon>
+          }
+          <p>{intl.get(question)}</p>
+        </div>
         <AnswerOptions />
         <ButtonBar />
       </div>

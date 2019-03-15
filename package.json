@@ -10,10 +10,13 @@
   "author": "Pejam Hassanzadeh",
   "license": "MIT",
   "dependencies": {
+    "@date-io/moment": "^1.1.0",
     "@material-ui/core": "^3.9.2",
     "firebase": "^5.8.4",
     "history": "^4.7.2",
     "leaflet": "^1.4.0",
+    "material-ui-pickers": "^2.2.4",
+    "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
