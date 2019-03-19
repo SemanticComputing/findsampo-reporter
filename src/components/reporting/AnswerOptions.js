@@ -5,6 +5,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import Map from '../map/Map';
+import PhotoRenderer from './PhotoRenderer';
 import { OptionTypes } from '../../helpers/enum/enums';
 import { setDate } from '../../actions/findNotification';
 
@@ -20,7 +21,6 @@ class AnswerOptions extends Component {
 
   renderAnswerOptions() {
     const options = this.props.currentQuestion.options;
-
     let container;
     if (options) {
       switch (options.type) {
@@ -52,6 +52,11 @@ class AnswerOptions extends Component {
             </MuiPickersUtilsProvider>
           );
           break;
+        case OptionTypes.PHOTOGRAPH:
+          container = (
+            <PhotoRenderer for={options.for} />
+          );
+          break;
       }
     }
     return container;
@@ -73,6 +78,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setDate: (date) => dispatch(setDate(date)),
-}); 
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnswerOptions);

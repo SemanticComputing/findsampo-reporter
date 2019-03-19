@@ -13,7 +13,7 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionZero.buttonOne',
-          nextStep: 1
+          nextStep: 5
         },
         {
           type: ButtonTypes.STEPPER,
@@ -93,6 +93,10 @@ export default {
       icon: 'add_a_photo',
       question: 'report.questionFive.question',
       help: 'report.questionFive.help',
+      options: {
+        type: OptionTypes.PHOTOGRAPH,
+        for: 'find-site'
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,
@@ -119,6 +123,10 @@ export default {
       icon: 'add_a_photo',
       question: 'report.questionSeven.question',
       help: 'report.questionSeven.help',
+      options: {
+        type: OptionTypes.PHOTOGRAPH,
+        for: 'find'
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,
