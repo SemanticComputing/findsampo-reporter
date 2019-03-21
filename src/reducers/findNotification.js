@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,
@@ -39,10 +40,23 @@ export default (state = initialState, action) => {
         photoghraphs: [...state.photoghraphs, ...action.photos]
       };
     case FIND_NOTIFICATION_SET_FIND_PHOTOS:
-      return {
-        ...state,
-        finds: [...state.finds, ...action.photos]
-      };
+      // If there is no photos then create a new objet
+      if (!state.finds[action.index]) {
+        return (
+          {
+            ...state,
+            finds: [...state.finds, action[action.index]]
+          }
+        );
+      } else { // if there is already, update it
+        return update(state, {
+          finds: {
+            [action.index]: {
+              photos: { $set: [...state.finds[action.index].photos, ...action[action.index].photos] }
+            }
+          }
+        });
+      }
     default:
       return state;
   }

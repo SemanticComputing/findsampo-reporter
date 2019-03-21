@@ -15,9 +15,20 @@ export const setCoordinates = (coords) => ({
   coords
 });
 
-export const setFindPhotos = (photos) => ({
+export const setFindPhotos = (photos, index) => ({
   type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
-  photos
+  index,
+  [index]: {
+    photos
+  }
+});
+
+export const test = (nimi, index) => ({
+  type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
+  index,
+  [index]: {
+    nimi
+  }
 });
 
 export const setFindSitePhotos = (photos) => ({
