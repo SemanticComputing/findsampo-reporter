@@ -28,3 +28,18 @@ Builds the app for development production to the `build` folder.<br>
 ### `yarn build:prod`
 
 Builds the app for production to the `build` folder.<br>
+
+## Deploy with Docker
+
+### Build
+ `docker build -t findsampo_image .`
+
+### Run
+ `docker run -d -p 3007:3001 --name findsampo findsampo_image`
+
+### Upgrade
+```
+docker build -t findsampo_image .
+docker stop findsampo
+docker rm findsampo
+docker run -d -p 3007:3001 --name findsampo findsampo_image
