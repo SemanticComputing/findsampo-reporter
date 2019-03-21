@@ -28,7 +28,12 @@ export default {
     'questionOne': {
       'question': 'Great, below you can find the most relevant instructions.',
       'help': 'Please select one of the guides!',
-      'buttonOne': 'Continue'
+      'buttonOne': 'Continue',
+      'options' : {
+        'optionOne': 'General Instructions',
+        'optionTwo': 'Starter Kit',
+        'optionThree': 'Reporting Instructions',
+      }
     },
     'questionTwo': {
       'question': 'Are you adding a find that has recently found?',
@@ -52,8 +57,8 @@ export default {
       'buttonOne': 'Continue'
     },
     'questionSix': {
-      'question': 'Input a name for the find.',
-      'help': 'The name should be descriptive.',
+      'question': 'Do you want to add additional materials related to the find site?',
+      'help': 'Description about what it can be',
       'buttonOne': 'Continue'
     },
     'questionSeven': {
@@ -117,6 +122,21 @@ export default {
       'help': 'You find has been sent. You will get an notification soon.',
       'buttonOne': 'Finish'
     },
-
+    'questionEightTeen': {
+      'question': 'How would like to loacte the find site?',
+      'help': 'There is two options. Choose one of them.',
+      'buttonOne': 'Pick a location',
+      'buttonTwo': 'Use an existing location'
+    },
+    'questionNineTeen': {
+      'question': 'Choose one of available find sites',
+      'help': 'These find sites are based on the your previous reports.',
+      'buttonOne': 'Continue',
+    },
+    'questionTwenty': {
+      'question': 'Time your find please.',
+      'help': 'If you cannot find the type you can select others.',
+      'buttonOne': 'Continue'
+    },
   }
 };

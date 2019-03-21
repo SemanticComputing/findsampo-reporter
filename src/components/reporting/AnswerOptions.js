@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
 import { OptionTypes } from '../../helpers/enum/enums';
 import { setDate } from '../../actions/findNotification';
+import ExpandPanel from '../ExpandPanel';
 
 class AnswerOptions extends Component {
 
@@ -29,7 +31,7 @@ class AnswerOptions extends Component {
             options.texts.map((txt) =>
               <FormControlLabel
                 control={
-                  <Checkbox checked={this.state.checked} onChange={this.onOptionClicked} value={txt} />
+                  <Checkbox checked={true} onChange={this.onOptionClicked} value={txt} />
                 }
                 label={txt} key={txt}
               />
@@ -55,6 +57,22 @@ class AnswerOptions extends Component {
         case OptionTypes.PHOTOGRAPH:
           container = (
             <PhotoRenderer for={options.for} />
+          );
+          break;
+        case OptionTypes.FIELD:
+          container = (
+            <TextField
+              label="Additional Materials"
+              multiline
+              rows="3"
+              margin="normal"
+              variant="outlined"
+            />
+          );
+          break;
+        case OptionTypes.EXPANSION_PANEL:
+          container = (
+            <ExpandPanel content={options.panelElements}/>
           );
           break;
       }

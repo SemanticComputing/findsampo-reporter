@@ -1,4 +1,7 @@
 import { OptionTypes, ButtonTypes } from '../enum/enums';
+import StarterKit from '../../components/instructions/StarterKit';
+import GeneralKit from '../../components/instructions/GeneralKit';
+import ReportingKit from '../../components/instructions/ReportingKit';
 
 // Initial State of the report
 export default {
@@ -13,7 +16,7 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionZero.buttonOne',
-          nextStep: 5
+          nextStep: 1
         },
         {
           type: ButtonTypes.STEPPER,
@@ -28,8 +31,21 @@ export default {
       question: 'report.questionOne.question',
       help: 'report.questionOne.help',
       options: {
-        type: OptionTypes.BUTTON,
-        texts: ['General', 'Starter Guide', 'More']
+        type: OptionTypes.EXPANSION_PANEL,
+        panelElements: [
+          {
+            header: 'report.questionOne.options.optionOne',
+            component: StarterKit
+          },
+          {
+            header: 'report.questionOne.options.optionTwo',
+            component: GeneralKit
+          },
+          {
+            header: 'report.questionOne.options.optionThree',
+            component: ReportingKit
+          }
+        ]
       },
       buttons: [
         {
@@ -53,7 +69,7 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionTwo.buttonTwo',
-          nextStep: 3
+          nextStep: 18
         },
       ]
     },
@@ -107,9 +123,12 @@ export default {
     },
     {
       step: 6,
-      icon: 'label',
+      icon: 'announcement',
       question: 'report.questionSix.question',
       help: 'report.questionSix.help',
+      options: {
+        type: OptionTypes.FIELD
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,
@@ -294,6 +313,50 @@ export default {
           nextStep: 18
         }
       ]
-    }
+    },
+    {
+      step: 18,
+      icon: 'place',
+      question: 'report.questionEightTeen.question',
+      help: 'report.questionEightTeen.help',
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionEightTeen.buttonOne',
+          nextStep: 3
+        },
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionEightTeen.buttonTwo',
+          nextStep: 19
+        },
+      ]
+    },
+    {
+      step: 19,
+      icon: 'place',
+      question: 'report.questionNineTeen.question',
+      help: 'report.questionNineTeen.help',
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionNineTeen.buttonOne',
+          nextStep: 4
+        }
+      ]
+    },
+    {
+      step: 20,
+      icon: 'place',
+      question: 'report.questionTwenty.question',
+      help: 'report.questionTwenty.help',
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionTwenty.buttonOne',
+          nextStep: 4
+        }
+      ]
+    },
   ]
 };
