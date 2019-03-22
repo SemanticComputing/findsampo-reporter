@@ -42,5 +42,10 @@ module.exports = {
       },
       'sourceType': 'module'
     },
+    "settings": {
+      "react": {
+        "version": "detect", 
+      }
+    },
     'plugins': ['react']
   };
