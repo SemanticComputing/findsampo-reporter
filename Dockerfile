@@ -10,12 +10,10 @@ WORKDIR /opt/app
 
 USER node
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+# Yarn and webpack configs
+COPY package.json ./
 COPY yarn.lock ./
-COPY webpack*.js ./
+COPY webpack.config.js ./
 
 # Babel 7 presets and plugins
 COPY .babelrc ./
@@ -23,7 +21,7 @@ COPY .babelrc ./
 # ESLint configuration
 COPY .eslintrc.js ./
 
-# Bundle app source
+# App source
 COPY src ./src
 
 # Run the scripts defined in package.json
