@@ -4,7 +4,8 @@ import {
   FIND_NOTIFICATION_SET_COORDS,
   REPORT_CHANGE_QUESTION,
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
-  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS
+  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
+  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -57,6 +58,11 @@ export default (state = initialState, action) => {
           }
         });
       }
+    case FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS:
+      return {
+        ...state,
+        additionalMaterials: action.text
+      };
     default:
       return state;
   }

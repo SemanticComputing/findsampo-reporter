@@ -52,13 +52,13 @@ export default {
       'buttonOne': 'Continue'
     },
     'questionFive': {
-      'question': 'Please add some photos from the find site.',
-      'help': 'Min three photos is needed.',
+      'question': 'Do you want to add additional materials related to the find site?',
+      'help': 'Description about what it can be',
       'buttonOne': 'Continue'
     },
     'questionSix': {
-      'question': 'Do you want to add additional materials related to the find site?',
-      'help': 'Description about what it can be',
+      'question': 'Please add some photos from the find site.',
+      'help': 'Min three photos is needed.',
       'buttonOne': 'Continue'
     },
     'questionSeven': {

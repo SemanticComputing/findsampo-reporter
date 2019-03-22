@@ -8,7 +8,7 @@ import MomentUtils from '@date-io/moment';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
 import { OptionTypes } from '../../helpers/enum/enums';
-import { setDate } from '../../actions/findNotification';
+import { setDate, setAdditionalMaterial } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
 
 class AnswerOptions extends Component {
@@ -19,6 +19,10 @@ class AnswerOptions extends Component {
 
   onFindDateChange = (selectedDate) => {
     this.props.setDate(selectedDate._d);
+  }
+
+  onAdditionalMaterialTyped = (event) => {
+    this.props.setAdditionalMaterial(event.target.value);
   }
 
   renderAnswerOptions() {
@@ -67,6 +71,7 @@ class AnswerOptions extends Component {
               rows="3"
               margin="normal"
               variant="outlined"
+              onBlur={this.onAdditionalMaterialTyped}
             />
           );
           break;
@@ -96,6 +101,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setDate: (date) => dispatch(setDate(date)),
+  setAdditionalMaterial: (text) => dispatch(setAdditionalMaterial(text))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnswerOptions);

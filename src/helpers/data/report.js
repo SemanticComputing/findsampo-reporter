@@ -106,12 +106,11 @@ export default {
     },
     {
       step: 5,
-      icon: 'add_a_photo',
+      icon: 'announcement',
       question: 'report.questionFive.question',
       help: 'report.questionFive.help',
       options: {
-        type: OptionTypes.PHOTOGRAPH,
-        for: 'find-site'
+        type: OptionTypes.FIELD
       },
       buttons: [
         {
@@ -123,11 +122,12 @@ export default {
     },
     {
       step: 6,
-      icon: 'announcement',
+      icon: 'add_a_photo',
       question: 'report.questionSix.question',
       help: 'report.questionSix.help',
       options: {
-        type: OptionTypes.FIELD
+        type: OptionTypes.PHOTOGRAPH,
+        for: 'find-site'
       },
       buttons: [
         {

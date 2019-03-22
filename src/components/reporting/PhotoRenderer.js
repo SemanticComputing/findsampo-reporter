@@ -12,9 +12,11 @@ import { PhotosOf } from '../../helpers/enum/enums';
 import { setFindSitePhotos, setFindPhotos } from '../../actions/findNotification';
 
 class PhotoRenderer extends Component {
+
   state = {
     isPhotoDialogOpen: false,
-    photos: []
+    findSitePhotos: [],
+    findPhotos: [],
   }
 
   onOpenPhotoDialogPressed = () => {
@@ -30,9 +32,15 @@ class PhotoRenderer extends Component {
       reader.onload = (() => {
         return (e) => {
           // Render thumbnails
-          this.setState((prevState) => ({
-            photos: [...prevState.photos, e.target.result]
-          }));
+          if (this.props.for === PhotosOf.FIND_SITE) {
+            this.setState((prevState) => ({
+              findSitePhotos: [...prevState.findSitePhotos, e.target.result]
+            }));
+          } else {
+            this.setState((prevState) => ({
+              findPhotos: [...prevState.findPhotos, e.target.result]
+            }));
+          }
         };
       })(file);
       // Read in the image file as a data URL.
@@ -49,6 +57,28 @@ class PhotoRenderer extends Component {
       this.props.setFindPhotos(files, this.props.lastFindIndex);
     }
     this.onOpenPhotoDialogPressed();
+  }
+
+  renderPhotos() {
+    const currentModePhotos = this.props.for === PhotosOf.FIND_SITE
+      ? this.state.findSitePhotos
+      : this.state.findPhotos;
+
+    if (currentModePhotos.length > 0) {
+      return (
+        <span>
+          {
+            currentModePhotos.map((photo, index) => (
+              <img
+                className="photo-renderer__photo"
+                src={photo}
+                key={index}
+              />
+            ))
+          }
+        </span>
+      );
+    }
   }
 
   render() {
@@ -109,20 +139,7 @@ class PhotoRenderer extends Component {
         <output>
           <div>
             {
-              this.state.photos.length > 0 &&
-              <span>
-                {
-                  this.state.photos.map((photo, index) => {
-                    return (
-                      <img
-                        className="photo-renderer__photo"
-                        src={photo}
-                        key={index}
-                      />
-                    );
-                  })
-                }
-              </span>
+              this.renderPhotos()
             }
           </div>
         </output>
