@@ -10,6 +10,7 @@ import PhotoRenderer from './PhotoRenderer';
 import { OptionTypes } from '../../helpers/enum/enums';
 import { setDate, setAdditionalMaterial } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
+import TreeView from '../../components/TreeView';
 
 class AnswerOptions extends Component {
 
@@ -77,7 +78,12 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.EXPANSION_PANEL:
           container = (
-            <ExpandPanel content={options.panelElements}/>
+            <ExpandPanel content={options.panelElements} />
+          );
+          break;
+        case OptionTypes.TREE_VIEW:
+          container = (
+            <TreeView content={options.treeData} />
           );
           break;
       }

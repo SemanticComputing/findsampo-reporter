@@ -5,7 +5,8 @@ export const OptionTypes = Object.freeze({
   DATE_PICKER: 'date-picker',
   FIELD: 'field',
   PHOTOGRAPH: 'photograph',
-  EXPANSION_PANEL: 'expansion-panel'
+  EXPANSION_PANEL: 'expansion-panel',
+  TREE_VIEW: 'tree-view'
 });
 
 export const ButtonTypes = Object.freeze({

@@ -2,6 +2,7 @@ import { OptionTypes, ButtonTypes } from '../enum/enums';
 import StarterKit from '../../components/instructions/StarterKit';
 import GeneralKit from '../../components/instructions/GeneralKit';
 import ReportingKit from '../../components/instructions/ReportingKit';
+import eras from '../../helpers/data/eras';
 
 // Initial State of the report
 export default {
@@ -190,6 +191,10 @@ export default {
       icon: 'blur_on',
       question: 'report.questionTen.question',
       help: 'report.questionTen.help',
+      options: {
+        type: OptionTypes.TREE_VIEW,
+        treeData: eras
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,

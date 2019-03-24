@@ -138,5 +138,15 @@ export default {
       'help': 'If you cannot find the type you can select others.',
       'buttonOne': 'Continue'
     },
+  },
+  'eras': { // TODO TRANSLATE THESE TO ENGLISH
+    'mesolithic': {
+      'name': 'Mesolithic',
+      'periodOne': 'Varhaisvaihe',
+      'periodTwo': 'Keskivaihe',
+      'periodThree': 'Myöhäisvaihe'
+    },
+    'beforeCommonEra': 'eaa',
+    'afterCommonEra': 'jaa'
   }
 };
