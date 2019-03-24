@@ -10,10 +10,6 @@ In this project yarn is used as a package manager tool. Please avoid using NPM<b
 
 Yarn initialization instructions: https://yarnpkg.com/en/docs/install<br>
 
-This repository does not contain .env files and these files are needed for building the project.<br>
-
-Please contact pejam.hassanzadeh@aalto.fi for getting a test env file.<br>
-
 After these steps, run command "yarn" then you are ready to run the available scripts.
 
 ## Available Scripts
