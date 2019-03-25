@@ -141,10 +141,78 @@ export default {
   },
   'eras': { // TODO TRANSLATE THESE TO ENGLISH
     'mesolithic': {
-      'name': 'Mesolithic',
+      'name': 'Mesoliittinen kivikausi',
       'periodOne': 'Varhaisvaihe',
       'periodTwo': 'Keskivaihe',
       'periodThree': 'Myöhäisvaihe'
+    },
+    'neolithicStoneAge': {
+      'name': 'Neoliittinen kivikausi',
+      'periodOne': 'Varhaisvaihe',
+      'periodTwo': 'Keskivaihe',
+      'periodThree': 'Myöhäisvaihe'
+    },
+    'neolithicPotteryStoneAge': {
+      'name': 'Neoliittisen kivikauden keramiikkatyypit',
+      'periodOne': 'Vanhempi varhaiskampakeramiikka',
+      'periodTwo': 'Säräisniemi 1 -keramiikka',
+      'periodThree': 'Varhainen asbestikeramiikka',
+      'periodFour': 'Nuorempi varhaiskampakeramiikka',
+      'periodFive': 'Jäkärlän keramiikka',
+      'periodSix': 'Tyypillinen kampakeramiikka',
+      'periodSeven': 'Myöhäiskampakeramiikka',
+      'periodEight': 'Kierikin keramiikka',
+      'periodNine': 'Pöljän keramiikka',
+      'periodTen': 'Jysmän keramiikka',
+      'periodEleven': 'Pyheensillan keramiikka',
+      'periodTwelve': 'Nuorakeramiikka',
+      'periodThirteen': 'Kiukaisten keramiikka'
+    },
+    'protoMetal': {
+      'name': 'Pronssi- ja varhaismetallikausi',
+      'periodOne': 'Varhaismetallikausi',
+      'periodTwo': 'Pronssikausi',
+      'periodThree': 'Vanhempi pronssikausi',
+      'periodFour': 'Nuorempi pronssikausi',
+      'periodFive': 'Esiroomalainen rautakausi',
+      'periodSix': 'Vanhempi roomalainen rautakausi',
+      'periodSeven': 'Nuorempi roomalainen rautakausi'
+    },
+    'potteryProtoMetal': {
+      'name': 'Pronssi- ja varhaismetallikauden keramiikkatyylit',
+      'periodOne': 'Tekstiilikeramiikka',
+      'periodTwo': '(Rannikon) pronssikauden keramiikat',
+      'periodThree': 'Morbyn keramiikka',
+      'periodFour': 'Säräisniemi 2 -keramiikka',
+      'periodFive': 'Anttilan keramiikka',
+      'periodSix': 'Luukonsaaren keramiikka',
+      'periodSeven': 'Kjelmøyn keramiikka',
+      'periodEight': 'Sirnihtan keramiikka'
+    },
+    'ironAge': {
+      'name': 'Rautakausi',
+      'periodOne': 'Varhaisrautakausi',
+      'periodTwo': 'Keskirautakausi',
+      'periodThree': 'Myöhäisrautakausi',
+    },
+    'ironAgePeriodization': {
+      'name': 'Rautakauden periodisaatio',
+      'periodOne': 'Esiroomalainen aika',
+      'periodTwo': 'Vanhempi roomalaisaika',
+      'periodThree': 'Nuorempi roomalaisaika',
+      'periodFour': 'Kansainvaellusaika',
+      'periodFive': 'Merovingiaika',
+      'periodSix': 'Viikinkiaika',
+      'periodSeven': 'Länsi-Suomen viikinkiaika',
+      'periodEight': 'Karjalan viikinkiaika',
+      'periodNine': 'Ristiretkiaika',
+      'periodTen': 'Länsi-Suomen ristiretkiaika',
+      'periodEleven': 'Savo-Karjalan ristiretkiaika',
+    },
+    'middleAges': {
+      'name': 'Keskiaika',
+      'periodOne': 'Länsi-Suomen keskiaika',
+      'periodTwo': 'Itä-Suomen/Karjalan keskiaika',
     },
     'beforeCommonEra': 'eaa',
     'afterCommonEra': 'jaa'

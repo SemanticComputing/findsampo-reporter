@@ -29,7 +29,6 @@ class TreeView extends Component {
   };
 
   render() {
-    console.log(this.state.treeData);
     return (
       <div style={{ height: 400 }}>
         <SortableTree
