@@ -22,12 +22,14 @@ COPY .babelrc ./
 COPY .eslintrc.js ./
 
 # App source
-COPY src ./src
+COPY public ./public
+COPY client ./client
+COPY server ./server
 
 # Run the scripts defined in package.json
 RUN yarn && yarn build:prod
 
-#EXPOSE 3001
+EXPOSE 3001
 
 # Express server handles the backend functionality and also serves the React app
-#CMD ["node", "dist/server"]
+CMD ["node", "./server/server.js"]
