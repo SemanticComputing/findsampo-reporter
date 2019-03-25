@@ -22,9 +22,14 @@ COPY .babelrc ./
 # ESLint configuration
 COPY .eslintrc.js ./
 
-# App source
+# Env variables
+COPY .env.development ./
+
+# Public files
 COPY --chown=node:node public ./public
-COPY  client ./client
+
+# Client and server files
+COPY client ./client
 COPY server ./server
 
 # Run the scripts defined in package.json
