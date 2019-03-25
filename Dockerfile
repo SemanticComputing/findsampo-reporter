@@ -1,3 +1,4 @@
+# https://github.com/nodejs/docker-node/blob/170ed2092d4925971f9cd3ad5dfc416e820f90fd/10/alpine/Dockerfile
 FROM node:10.15.3-alpine
 
 # Create app directory
@@ -22,8 +23,8 @@ COPY .babelrc ./
 COPY .eslintrc.js ./
 
 # App source
-COPY public ./public
-COPY client ./client
+COPY --chown=node:node public ./public
+COPY  client ./client
 COPY server ./server
 
 # Run the scripts defined in package.json
