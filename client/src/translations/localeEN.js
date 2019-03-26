@@ -66,7 +66,7 @@ export default {
       'buttonOne': 'Continue'
     },
     'questionSeven': {
-      'question': 'How would like to loacte the find site?',
+      'question': 'How would like to locate the find site?',
       'help': 'There is two options. Choose one of them.',
       'buttonOne': 'Pick a location',
       'buttonTwo': 'Use an existing location'

@@ -65,7 +65,7 @@ class Map extends Component {
             </div>
           </div>
         ) : (
-          <CircularProgress />
+          <CircularProgress className="answer-options__progress" size="5rem" />
         )
       );
     }

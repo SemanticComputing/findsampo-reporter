@@ -200,7 +200,7 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionTen.buttonTwo',
-          nextStep: 16
+          nextStep: 15
         }
       ]
     },
