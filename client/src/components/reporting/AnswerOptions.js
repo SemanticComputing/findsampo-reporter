@@ -73,6 +73,7 @@ class AnswerOptions extends Component {
               margin="normal"
               variant="outlined"
               onBlur={this.onAdditionalMaterialTyped}
+              className="answer-options__text-field"
             />
           );
           break;
@@ -92,8 +93,18 @@ class AnswerOptions extends Component {
   }
 
   render() {
+    // Change styling between different steps
+    const options = this.props.currentQuestion.options;
+    let currentStyle;
+    if (options) {
+      currentStyle = (options.type == OptionTypes.TREE_VIEW || options.type == OptionTypes.MAP)
+        ? 'answer-options full-content'
+        : 'answer-options';
+    } else {
+      currentStyle = 'answer-options';
+    }
     return (
-      <div className="answer-options">
+      <div className={currentStyle}>
         {this.renderAnswerOptions()}
       </div>
     );

@@ -1,8 +1,9 @@
 .question {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 0.5rem;
   align-items: center;
+  flex: 1;
   & &__icon {
     color: grey;
     font-size: 6rem;
@@ -23,6 +24,13 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
+    &.full-content {
+      flex: 1;
+    }
+    &__text-field {
+      width: 100%;
+    }
     & .photo-renderer {
       &__photo{
         width: 4rem;

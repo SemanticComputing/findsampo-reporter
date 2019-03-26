@@ -29,6 +29,11 @@ body {
   grid-area: appbar;
 }
 
+.content {
+  grid-area: content;
+  display: flex;
+}
+
 .footer {
   grid-area: footer;
 }

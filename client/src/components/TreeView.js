@@ -30,7 +30,7 @@ class TreeView extends Component {
 
   render() {
     return (
-      <div style={{ height: 400 }}>
+      <div style={{ flex: 1 }}>
         <SortableTree
           treeData={this.state.treeData}
           canDrag={false}
