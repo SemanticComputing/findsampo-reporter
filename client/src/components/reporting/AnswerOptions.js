@@ -11,6 +11,7 @@ import { OptionTypes } from '../../helpers/enum/enums';
 import { setDate, setAdditionalMaterial } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
 import TreeView from '../../components/TreeView';
+import { Divider } from '@material-ui/core';
 
 class AnswerOptions extends Component {
 
@@ -50,13 +51,31 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.DATE_PICKER:
           container = (
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <DatePicker
-                autoOk
-                format='DD.MM.YYYY'
-                value={this.props.findDate}
-                onChange={this.onFindDateChange} />
-            </MuiPickersUtilsProvider>
+            <div className="answer-options__date-picker-container">
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <DatePicker
+                  autoOk
+                  variant="outlined"
+                  label="Date"
+                  format="DD.MM.YYYY"
+                  value={this.props.findDate}
+                  onChange={this.onFindDateChange}
+                  className="answer-options__date-picker" />
+                <div className="answer-options__date-picker-container__divider">
+                  <Divider variant="middle" />
+                </div>
+                <DatePicker
+                  autoOk
+                  variant="outlined"
+                  label="Approximate date"
+                  openTo="year"
+                  views={['year', 'month']}
+                  value={this.props.findDate}
+                  onChange={this.onFindDateChange}
+                  className="answer-options__date-picker"
+                />
+              </MuiPickersUtilsProvider>
+            </div>
           );
           break;
         case OptionTypes.PHOTOGRAPH:

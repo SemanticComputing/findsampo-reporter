@@ -51,7 +51,7 @@ export default {
       'buttonOne': 'Done, continue'
     },
     'questionFour': {
-      'question': 'Pick a find date please.',
+      'question': 'Pick OR approximate a find date please.',
       'help': 'Select the exact date that find has been found.',
       'buttonOne': 'Continue'
     },
