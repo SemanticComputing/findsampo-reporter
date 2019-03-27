@@ -11,7 +11,6 @@ import { OptionTypes } from '../../helpers/enum/enums';
 import { setDate, setAdditionalMaterial } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
 import TreeView from '../../components/TreeView';
-import { Divider } from '@material-ui/core';
 
 class AnswerOptions extends Component {
 
@@ -61,9 +60,7 @@ class AnswerOptions extends Component {
                   value={this.props.findDate}
                   onChange={this.onFindDateChange}
                   className="answer-options__date-picker" />
-                <div className="answer-options__date-picker-container__divider">
-                  <Divider variant="middle" />
-                </div>
+                <span className="answer-options__date-picker-container__span">OR</span>
                 <DatePicker
                   autoOk
                   variant="outlined"
