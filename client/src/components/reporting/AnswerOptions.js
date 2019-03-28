@@ -100,7 +100,7 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.TREE_VIEW:
           container = (
-            <TreeView content={options.treeData} />
+            <TreeView content={options.treeData} for={options.for}/>
           );
           break;
       }

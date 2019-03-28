@@ -1,8 +1,10 @@
-import { OptionTypes, ButtonTypes } from '../enum/enums';
+import { OptionTypes, ButtonTypes, TreeViewTypes } from '../enum/enums';
 import StarterKit from '../../components/instructions/StarterKit';
 import GeneralKit from '../../components/instructions/GeneralKit';
 import ReportingKit from '../../components/instructions/ReportingKit';
 import eras from '../../helpers/data/eras';
+import findTypes from '../../helpers/data/findTypes';
+import findMaterials from '../../helpers/data/findMaterials';
 
 // Initial State of the report
 export default {
@@ -209,6 +211,11 @@ export default {
       icon: 'wb_incandescent',
       question: 'report.questionEleven.question',
       help: 'report.questionEleven.help',
+      options: {
+        type: OptionTypes.TREE_VIEW,
+        treeData: findTypes,
+        for: TreeViewTypes.TYPE
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,
@@ -223,7 +230,8 @@ export default {
       help: 'report.questionTwelve.help',
       options: {
         type: OptionTypes.TREE_VIEW,
-        treeData: eras
+        treeData: eras,
+        for: TreeViewTypes.ERAS
       },
       buttons: [
         {
@@ -238,6 +246,11 @@ export default {
       icon: 'line_style',
       question: 'report.questionThirteen.question',
       help: 'report.questionThirteen.help',
+      options: {
+        type: OptionTypes.TREE_VIEW,
+        treeData: findMaterials,
+        for: TreeViewTypes.MATERIAL
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,

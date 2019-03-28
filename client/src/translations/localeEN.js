@@ -196,5 +196,28 @@ export default {
     },
     'beforeCommonEra': 'eaa',
     'afterCommonEra': 'jaa'
+  },
+  'findTypes': {
+    'weapon': 'Weapon',
+    'coin': 'Coin',
+    'dish': 'Dish',
+    'bottle': 'Bottle',
+    'mounting': 'Mouting',
+    'fragment': 'Fragment',
+    'ceramic': 'Ceramic',
+    'jewellery': 'Jewellery',
+    'bones': 'Bones',
+    'tool': 'Tool'
+  },
+  'findMaterials': {
+    'stone': 'Stone',
+    'slag': 'Slag',
+    'glass': 'Glass',
+    'metal': 'Metal',
+    'leather': 'Leather',
+    'wood': 'Wood',
+    'iron': 'Iron',
+    'bronze': 'Bronze',
+    'porcelain': 'Porcelain'
   }
 };

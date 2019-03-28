@@ -18,3 +18,9 @@ export const PhotosOf = Object.freeze({
   FIND: 'find',
   FIND_SITE: 'find-site'
 });
+
+export const TreeViewTypes = Object.freeze({
+  MATERIAL: 'material',
+  TYPE: 'type',
+  ERAS: 'eras'
+});

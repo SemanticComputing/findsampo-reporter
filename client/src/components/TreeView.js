@@ -3,15 +3,24 @@ import Checkbox from '@material-ui/core/Checkbox';
 import SortableTree, { changeNodeAtPath } from 'react-sortable-tree';
 import FileExplorerTheme from 'react-sortable-tree-theme-minimal';
 import intl from 'react-intl-universal';
+import { TreeViewTypes } from '../helpers/enum/enums';
+
 
 class TreeView extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      treeData: getErasTreeData(this.props.content)
+      treeData: generateTreeData(this.props.for, this.props.content)
     };
   }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      treeData: generateTreeData(props.for, props.content)
+    };
+  }
+
 
   onSelectCheckbox = treeObj => event => {
     const newTreeData = changeNodeAtPath({
@@ -58,6 +67,44 @@ class TreeView extends Component {
     );
   }
 }
+
+
+const generateTreeData = (treeViewType, content) => {
+  if (treeViewType === TreeViewTypes.TYPE) {
+    return getTypesTreeData(content);
+  } else if (treeViewType === TreeViewTypes.ERAS) {
+    return getErasTreeData(content);
+  } else if (treeViewType === TreeViewTypes.MATERIAL) {
+    return getMaterialsTreeData(content);
+  }
+};
+
+
+const getTypesTreeData = (data) => {
+  const nodes = [];
+  for (let e of data) {
+    nodes.push(
+      {
+        title: intl.get(e),
+        selected: false
+      }
+    );
+  }
+  return nodes;
+};
+
+const getMaterialsTreeData = (data) => {
+  const nodes = [];
+  for (let e of data) {
+    nodes.push(
+      {
+        title: intl.get(e),
+        selected: false
+      }
+    );
+  }
+  return nodes;
+};
 
 const getErasTreeData = (data) => {
   const nodes = [];
