@@ -1,0 +1,44 @@
+.tree-view {
+
+  // React Sortable Tree Library Modifications
+  .rstcustom__row {
+    padding-left: 0.15rem !important;
+    white-space: normal;
+
+    .rstcustom__rowContents {
+      flex: 1
+    }
+  }
+
+  .rstcustom__expandButton,
+  .rstcustom__collapseButton {
+    padding-left: 1.9rem;
+  }
+
+  .rstcustom__nodeContent {
+    width: 100%;
+  }
+
+  .tree-view__label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    &__checkbox {
+      padding-left: 0
+    }
+    &__texts {
+      display: inline-block;
+      &__title {
+        display: inline-block;
+        font-weight: normal;
+      }
+      &__extras {
+        display: block;
+        font-weight: lighter;
+        font-size: 85%;
+      }
+    }
+  }
+
+
+}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SortableTree, { changeNodeAtPath } from 'react-sortable-tree';
 import FileExplorerTheme from 'react-sortable-tree-theme-minimal';
 import intl from 'react-intl-universal';
@@ -30,25 +29,29 @@ class TreeView extends Component {
 
   render() {
     return (
-      <div style={{ flex: 1 }}>
+      <div className="tree-view" style={{ flex: 1 }}>
         <SortableTree
           treeData={this.state.treeData}
           canDrag={false}
+          isVirtualized={false}
+          rowHeight={70}
           onChange={treeData => this.setState({ treeData })}
           theme={FileExplorerTheme}
           generateNodeProps={(n) => ({
             title: (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={n.node.selected}
-                    onChange={this.onSelectCheckbox(n)}
-                    color="primary"
-                  />
-                }
-                label={n.node.title}
-              />
-            ),
+              <label className="tree-view__label">
+                <Checkbox
+                  checked={n.node.selected}
+                  onChange={this.onSelectCheckbox(n)}
+                  color="primary"
+                  className="tree-view__label__checkbox"
+                />
+                <div className="tree-view__label__texts">
+                  <span className="tree-view__label__texts__title">{n.node.title}</span>
+                  <span className="tree-view__label__texts__extras">{n.node.extras}</span>
+                </div>
+              </label>
+            )
           })}
         />
       </div>
@@ -62,7 +65,12 @@ const getErasTreeData = (data) => {
     nodes.push(
       {
         title: generateTitle(e),
-        children: e.periods.map((period) => ({ title: generateTitle(period), selected: false })),
+        extras: generateErasExtras(e),
+        children: e.periods.map((period) => ({
+          title: generateTitle(period),
+          extras: generateErasExtras(period),
+          selected: false
+        })),
         selected: false
       }
     );
@@ -73,13 +81,17 @@ const getErasTreeData = (data) => {
 const generateTitle = (obj) => {
   return (
     intl.get(obj.epoch)
-    + ' '
-    + obj.start.value
-    + intl.get(obj.start.unit)
-    + ' — '
-    + obj.end.value
-    + intl.get(obj.end.unit)
   );
 };
+
+const generateErasExtras = (obj) => {
+  return ''.concat(
+    obj.start.value,
+    intl.get(obj.start.unit),
+    ' — ', obj.end.value,
+    intl.get(obj.end.unit)
+  );
+};
+
 
 export default TreeView;

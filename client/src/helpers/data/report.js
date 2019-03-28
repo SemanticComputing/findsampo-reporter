@@ -219,7 +219,6 @@ export default {
     },
     {
       step: 12,
-      icon: 'blur_on',
       question: 'report.questionTwelve.question',
       help: 'report.questionTwelve.help',
       options: {

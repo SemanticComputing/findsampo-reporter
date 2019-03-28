@@ -24,7 +24,7 @@ export default {
     'stepThree': 'Find',
     'stepFour': 'Done!',
     'questionZero': {
-      'question': 'Would you like to get familiar with our started kits before starting to add your find?',
+      'question': 'Would you like to get familiar with our starter kits before starting to add your find?',
       'help': 'This questions is for providing some help. Please choose one of the choices',
       'buttonOne': 'Yes, please!',
       'buttonTwo': 'No, thanks!'
