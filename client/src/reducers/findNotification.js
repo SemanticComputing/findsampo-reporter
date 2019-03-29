@@ -6,7 +6,10 @@ import {
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
   FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
-  FIND_NOTIFICATION_CHANGE_FIND_INDEX
+  FIND_NOTIFICATION_CHANGE_FIND_INDEX,
+  FIND_NOTIFICATION_SET_FIND_TYPE,
+  FIND_NOTIFICATION_SET_FIND_MATERIAL,
+  FIND_NOTIFICATION_SET_FIND_TIMING
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -70,6 +73,30 @@ export default (state = initialState, action) => {
         ...state,
         currentFindIndex: action.index
       };
+    case FIND_NOTIFICATION_SET_FIND_TYPE:
+      return update(state, {
+        finds: {
+          [action.index]: {
+            $merge: { type: action.findType }
+          }
+        }
+      });
+    case FIND_NOTIFICATION_SET_FIND_MATERIAL:
+      return update(state, {
+        finds: {
+          [action.index]: {
+            $merge: { material: action.findMaterial }
+          }
+        }
+      });
+    case FIND_NOTIFICATION_SET_FIND_TIMING:
+      return update(state, {
+        finds: {
+          [action.index]: {
+            $merge: { timing: action.findTiming }
+          }
+        }
+      });
     default:
       return state;
   }

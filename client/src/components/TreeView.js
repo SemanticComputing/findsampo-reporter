@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Checkbox from '@material-ui/core/Checkbox';
 import SortableTree, { changeNodeAtPath } from 'react-sortable-tree';
 import FileExplorerTheme from 'react-sortable-tree-theme-minimal';
 import intl from 'react-intl-universal';
 import { TreeViewTypes } from '../helpers/enum/enums';
-
+import { setFindType, setFindMaterial, setFindTiming } from '../actions/findNotification';
 
 class TreeView extends Component {
   constructor(props) {
@@ -28,6 +29,16 @@ class TreeView extends Component {
   }
 
   onSelectCheckbox = treeObj => event => {
+    // Change redux state
+    const title = event.target.checked ? treeObj.node.title.toLowerCase() : '';
+    if (this.state.type === TreeViewTypes.TYPE) {
+      this.props.setFindType(title, this.props.currentFindIndex);
+    } else if (this.state.type === TreeViewTypes.ERAS) {
+      this.props.setFindTiming(title, this.props.currentFindIndex);
+    } else if (this.state.type === TreeViewTypes.MATERIAL) {
+      this.props.setFindMaterial(title, this.props.currentFindIndex);
+    }
+    // Update the tree
     const newTreeData = changeNodeAtPath({
       treeData: this.state.treeData,
       getNodeKey: ({ treeIndex }) => treeIndex,
@@ -143,5 +154,14 @@ const generateErasExtras = (obj) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  currentFindIndex: state.findNotification.currentFindIndex
+});
 
-export default TreeView;
+const mapDispatchToProps = (dispatch) => ({
+  setFindType: (findType, index) => dispatch(setFindType(findType, index)),
+  setFindMaterial: (findMaterial, index) => dispatch(setFindMaterial(findMaterial, index)),
+  setFindTiming: (findTiming, index) => dispatch(setFindTiming(findTiming, index))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TreeView);
