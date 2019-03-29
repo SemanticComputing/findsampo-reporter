@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
@@ -11,8 +12,17 @@ import { OptionTypes } from '../../helpers/enum/enums';
 import { setDate, setAdditionalMaterial } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
 import TreeView from '../../components/TreeView';
+import intl from 'react-intl-universal';
 
 class AnswerOptions extends Component {
+
+  state = {
+    isExactDay: false
+  }
+
+  onExactDayChanged = () => {
+    this.setState((prevState) => ({isExactDay: !prevState.isExactDay}));
+  }
 
   onOptionClicked = () => {
     //this.setState(() => ({ checked: !this.state.checked }));
@@ -24,6 +34,33 @@ class AnswerOptions extends Component {
 
   onAdditionalMaterialTyped = (event) => {
     this.props.setAdditionalMaterial(event.target.value);
+  }
+
+  renderDatePickers() {
+    if (this.state.isExactDay) {
+      return (
+        <DatePicker
+          autoOk
+          variant="outlined"
+          label="Date"
+          format="DD.MM.YYYY"
+          value={this.props.findDate}
+          onChange={this.onFindDateChange}
+          className="answer-options__date-picker" />
+      );
+    } else {
+      return (
+        <DatePicker
+          autoOk
+          variant="outlined"
+          label="Approximate date"
+          openTo="year"
+          views={['year', 'month']}
+          value={this.props.findDate}
+          onChange={this.onFindDateChange}
+          className="answer-options__date-picker" />
+      );
+    }
   }
 
   renderAnswerOptions() {
@@ -51,26 +88,18 @@ class AnswerOptions extends Component {
         case OptionTypes.DATE_PICKER:
           container = (
             <div className="answer-options__date-picker-container">
+              <FormControlLabel
+                labelPlacement="start"
+                control={
+                  <Switch
+                    checked={this.state.isExactDay}
+                    onChange={this.onExactDayChanged}
+                  />
+                }
+                label={intl.get('report.questionFour.selectionText')}
+              />
               <MuiPickersUtilsProvider utils={MomentUtils}>
-                <DatePicker
-                  autoOk
-                  variant="outlined"
-                  label="Date"
-                  format="DD.MM.YYYY"
-                  value={this.props.findDate}
-                  onChange={this.onFindDateChange}
-                  className="answer-options__date-picker" />
-                <span className="answer-options__date-picker-container__span">OR</span>
-                <DatePicker
-                  autoOk
-                  variant="outlined"
-                  label="Approximate date"
-                  openTo="year"
-                  views={['year', 'month']}
-                  value={this.props.findDate}
-                  onChange={this.onFindDateChange}
-                  className="answer-options__date-picker"
-                />
+                {this.renderDatePickers()}
               </MuiPickersUtilsProvider>
             </div>
           );
@@ -100,7 +129,7 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.TREE_VIEW:
           container = (
-            <TreeView content={options.treeData} for={options.for}/>
+            <TreeView content={options.treeData} for={options.for} />
           );
           break;
       }

@@ -51,11 +51,14 @@
     &__date-picker-container{
       flex: 1;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       &__span {
         margin: 1rem 0.5rem 1rem 0.5rem;
       }
     }
     &__date-picker {
+      margin-top: 1.5rem;
       input {
         text-align: center;
       }

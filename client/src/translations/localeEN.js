@@ -53,7 +53,8 @@ export default {
     'questionFour': {
       'question': 'Pick OR approximate a find date please.',
       'help': 'Select the exact date that find has been found.',
-      'buttonOne': 'Continue'
+      'buttonOne': 'Continue',
+      'selectionText': 'I know the exact day.'
     },
     'questionFive': {
       'question': 'Do you want to add additional materials related to the find site?',
