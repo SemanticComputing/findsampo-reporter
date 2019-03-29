@@ -17,7 +17,7 @@ import intl from 'react-intl-universal';
 class AnswerOptions extends Component {
 
   state = {
-    isExactDay: false
+    isExactDay: true
   }
 
   onExactDayChanged = () => {

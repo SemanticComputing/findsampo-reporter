@@ -11,16 +11,21 @@ class TreeView extends Component {
     super(props);
 
     this.state = {
-      treeData: generateTreeData(this.props.for, this.props.content)
+      treeData: generateTreeData(this.props.for, this.props.content),
+      type: this.props.for
     };
   }
 
-  static getDerivedStateFromProps(props) {
-    return {
-      treeData: generateTreeData(props.for, props.content)
-    };
+  static getDerivedStateFromProps(props, state) {
+    // Change values only if type is changed
+    if (props.for !== state.type) {
+      return {
+        treeData: generateTreeData(props.for, props.content),
+        type: props.for
+      };
+    }
+    return null;
   }
-
 
   onSelectCheckbox = treeObj => event => {
     const newTreeData = changeNodeAtPath({
@@ -32,7 +37,6 @@ class TreeView extends Component {
         selected: event.target.checked
       },
     });
-
     this.setState({ treeData: newTreeData });
   };
 
@@ -67,7 +71,6 @@ class TreeView extends Component {
     );
   }
 }
-
 
 const generateTreeData = (treeViewType, content) => {
   if (treeViewType === TreeViewTypes.TYPE) {
