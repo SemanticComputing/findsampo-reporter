@@ -1,4 +1,4 @@
-import { OptionTypes, ButtonTypes, TreeViewTypes } from '../enum/enums';
+import { OptionTypes, ButtonTypes, TreeViewTypes, ButtonActions } from '../enum/enums';
 import StarterKit from '../../components/instructions/StarterKit';
 import GeneralKit from '../../components/instructions/GeneralKit';
 import ReportingKit from '../../components/instructions/ReportingKit';
@@ -125,7 +125,7 @@ export default {
     },
     {
       step: 6,
-      icon: 'add_a_photo',
+      icon: 'photo_camera',
       question: 'report.questionSix.question',
       help: 'report.questionSix.help',
       options: {
@@ -173,7 +173,7 @@ export default {
     },
     {
       step: 9,
-      icon: 'add_a_photo',
+      icon: 'photo_camera',
       question: 'report.questionNine.question',
       help: 'report.questionNine.help',
       options: {
@@ -281,7 +281,8 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionFifteen.buttonOne',
-          nextStep: 9
+          nextStep: 9,
+          action: ButtonActions.CHANGE_CURRENT_FIND_INDEX
         },
         {
           type: ButtonTypes.STEPPER,

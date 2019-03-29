@@ -54,7 +54,7 @@ class PhotoRenderer extends Component {
     if (this.props.for === PhotosOf.FIND_SITE) {
       this.props.setFindSitePhotos(files);
     } else {
-      this.props.setFindPhotos(files, this.props.lastFindIndex);
+      this.props.setFindPhotos(files, this.props.currentFindIndex);
     }
     this.onOpenPhotoDialogPressed();
   }
@@ -84,7 +84,7 @@ class PhotoRenderer extends Component {
   render() {
     return (
       <div className="photo-renderer">
-        <Icon onClick={this.onOpenPhotoDialogPressed}>add</Icon>
+        <Icon onClick={this.onOpenPhotoDialogPressed} className="photo-renderer__icon">add</Icon>
         <Dialog
           onClose={this.onOpenPhotoDialogPressed}
           aria-labelledby="photo-dialog"
@@ -149,7 +149,7 @@ class PhotoRenderer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  lastFindIndex: state.findNotification.finds.length >= 1 ? state.findNotification.finds.length - 1 : 0
+  currentFindIndex: state.findNotification.currentFindIndex
 });
 
 const mapDispatchToProps = (dispatch) => ({

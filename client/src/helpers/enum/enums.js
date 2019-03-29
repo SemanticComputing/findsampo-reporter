@@ -24,3 +24,7 @@ export const TreeViewTypes = Object.freeze({
   TYPE: 'type',
   ERAS: 'eras'
 });
+
+export const ButtonActions = Object.freeze({
+  CHANGE_CURRENT_FIND_INDEX: 'change_current_gind_index'
+});

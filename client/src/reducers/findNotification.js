@@ -5,12 +5,14 @@ import {
   REPORT_CHANGE_QUESTION,
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS
+  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
+  FIND_NOTIFICATION_CHANGE_FIND_INDEX
 } from '../constants/actionTypes';
 
 const initialState = {
   status: 'draft',
   currentStep: 0,
+  currentFindIndex: 0,
   findSiteCoords: null,
   date: new Date(),
   additionalMaterials: null,
@@ -62,6 +64,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         additionalMaterials: action.text
+      };
+    case FIND_NOTIFICATION_CHANGE_FIND_INDEX:
+      return {
+        ...state,
+        currentFindIndex: action.index
       };
     default:
       return state;

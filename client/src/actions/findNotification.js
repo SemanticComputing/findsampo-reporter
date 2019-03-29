@@ -3,7 +3,8 @@ import {
   FIND_NOTIFICATION_SET_COORDS,
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS
+  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
+  FIND_NOTIFICATION_CHANGE_FIND_INDEX
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -24,12 +25,9 @@ export const setFindPhotos = (photos, index) => ({
   }
 });
 
-export const test = (nimi, index) => ({
-  type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
-  index,
-  [index]: {
-    nimi
-  }
+export const changeFindIndex = (index) => ({
+  type: FIND_NOTIFICATION_CHANGE_FIND_INDEX,
+  index
 });
 
 export const setFindSitePhotos = (photos) => ({
