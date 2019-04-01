@@ -104,9 +104,11 @@ export default {
       'buttonOne': 'Continue'
     },
     'questionFourteen': {
-      'question': 'Please fill in the find details.',
-      'help': 'Some explenation about depth and size.',
-      'buttonOne': 'Continue'
+      'question': 'Please input the find depth.',
+      'help': 'Some explenation about find depth.',
+      'label': 'Find Depth',
+      'buttonOne': 'Continue',
+      'depthUnit': 'cm'
     },
     'questionFifteen': {
       'question': 'Would you like to add another find?',

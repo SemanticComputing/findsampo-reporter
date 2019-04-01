@@ -1,5 +1,5 @@
 export const OptionTypes = Object.freeze({
-  BUTTON: 'button',
+  NUMBER_FIELD: 'number-field',
   TOGGLE: 'toggle',
   MAP: 'map',
   DATE_PICKER: 'date-picker',

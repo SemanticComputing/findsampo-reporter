@@ -261,9 +261,12 @@ export default {
     },
     {
       step: 14,
-      icon: 'more_horiz',
+      icon: 'vertical_align_bottom',
       question: 'report.questionFourteen.question',
       help: 'report.questionFourteen.help',
+      options: {
+        type: OptionTypes.NUMBER_FIELD,
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,
