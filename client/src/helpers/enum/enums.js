@@ -28,3 +28,10 @@ export const TreeViewTypes = Object.freeze({
 export const ButtonActions = Object.freeze({
   CHANGE_CURRENT_FIND_INDEX: 'change_current_gind_index'
 });
+
+export const RouterPaths = Object.freeze({
+  HOME_PAGE: '/',
+  REPORT_PAGE: '/report',
+  LOGIN_PAGE: '/login',
+  SIGNUP_PAGE: '/signup'
+});

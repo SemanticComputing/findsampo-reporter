@@ -222,5 +222,12 @@ export default {
     'iron': 'Iron',
     'bronze': 'Bronze',
     'porcelain': 'Porcelain'
+  },
+  'bottomNavBar': {
+    'home': 'Home',
+    'mine': 'MyFinds',
+    'nearby': 'Nearby',
+    'report': 'Report',
+    'more': 'More'
   }
 };

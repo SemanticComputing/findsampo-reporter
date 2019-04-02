@@ -11,6 +11,8 @@ import SignupPage from '../components/authentication/SignupPage';
 import Report from '../components/reporting/Report';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BottomNav from '../components/BottomNav';
+import { RouterPaths } from '../helpers/enum/enums';
 
 export const history = createHistory();
 
@@ -25,14 +27,15 @@ const AppRouter = () => (
       </div>
       <div className="content">
         <Switch>
-          <Route path="/" component={AppHomePage} exact={true} />
-          <PublicRoute path="/login" component={LoginPage} />
-          <PublicRoute path="/signup" component={SignupPage} />
-          <PrivateRoute path="/report" component={Report} />
+          <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
+          <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />
+          <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
+          <PrivateRoute path={RouterPaths.REPORT_PAGE} component={Report} />
           <Route component={NotFoundPage}></Route>
         </Switch>
       </div>
       <div className="footer">
+        <BottomNav />
         <Footer />
       </div>
     </div>
