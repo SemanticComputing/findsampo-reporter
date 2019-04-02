@@ -98,7 +98,7 @@ class PhotoRenderer extends Component {
           <DialogTitle id="photo-dialog">Add photo</DialogTitle>
           <div>
             <List>
-              <ListItem onClick={() => this.captureInputRef.current.click()}>
+              <ListItem button onClick={() => this.captureInputRef.current.click()}>
                 <ListItemAvatar>
                   <Avatar>
                     <Icon>camera_alt</Icon>
@@ -115,7 +115,7 @@ class PhotoRenderer extends Component {
                 />
                 <label className="answer-options__label">Take Photo</label>
               </ListItem>
-              <ListItem onClick={() => this.galleryInputRef.current.click()}>
+              <ListItem button onClick={() => this.galleryInputRef.current.click()}>
                 <ListItemAvatar>
                   <Avatar>
                     <Icon>insert_photo</Icon>
@@ -132,7 +132,7 @@ class PhotoRenderer extends Component {
                 />
                 <label className="answer-options__label">Select from gallery</label>
               </ListItem>
-              <ListItem onClick={this.onOpenPhotoDialogPressed}>
+              <ListItem button onClick={this.onOpenPhotoDialogPressed}>
                 <ListItemAvatar>
                   <Avatar>
                     <Icon>cancel</Icon>
