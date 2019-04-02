@@ -12,6 +12,11 @@ import { PhotosOf } from '../../helpers/enum/enums';
 import { setFindSitePhotos, setFindPhotos } from '../../actions/findNotification';
 
 class PhotoRenderer extends Component {
+  constructor(props) {
+    super(props);
+    this.captureInputRef = React.createRef();
+    this.galleryInputRef = React.createRef();
+  }
 
   state = {
     isPhotoDialogOpen: false,
@@ -93,7 +98,7 @@ class PhotoRenderer extends Component {
           <DialogTitle id="photo-dialog">Add photo</DialogTitle>
           <div>
             <List>
-              <ListItem>
+              <ListItem onClick={() => this.captureInputRef.current.click()}>
                 <ListItemAvatar>
                   <Avatar>
                     <Icon>camera_alt</Icon>
@@ -106,10 +111,11 @@ class PhotoRenderer extends Component {
                   className="answer-options__input"
                   onChange={this.onPhotoPickerPressed}
                   capture
+                  ref={this.captureInputRef}
                 />
-                <label htmlFor="photo-from-camera" className="answer-options__label">Take Photo</label>
+                <label className="answer-options__label">Take Photo</label>
               </ListItem>
-              <ListItem>
+              <ListItem onClick={() => this.galleryInputRef.current.click()}>
                 <ListItemAvatar>
                   <Avatar>
                     <Icon>insert_photo</Icon>
@@ -122,10 +128,11 @@ class PhotoRenderer extends Component {
                   accept="image/*"
                   onChange={this.onPhotoPickerPressed}
                   multiple
+                  ref={this.galleryInputRef}
                 />
-                <label htmlFor="photo-from-gallery" className="answer-options__label">Select from gallery</label>
+                <label className="answer-options__label">Select from gallery</label>
               </ListItem>
-              <ListItem>
+              <ListItem onClick={this.onOpenPhotoDialogPressed}>
                 <ListItemAvatar>
                   <Avatar>
                     <Icon>cancel</Icon>
@@ -137,11 +144,7 @@ class PhotoRenderer extends Component {
           </div>
         </Dialog>
         <output>
-          <div>
-            {
-              this.renderPhotos()
-            }
-          </div>
+          <div>{this.renderPhotos()}</div>
         </output>
       </div>
     );
