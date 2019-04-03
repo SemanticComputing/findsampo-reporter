@@ -1,5 +1,8 @@
-.bottom-nav  {
-  &__action {
-    min-width: 0 !important;
+.bottom-nav {
+  & &__action {
+    min-width: 0;
+  }
+  & &__selected {
+    color: $color-primary !important;
   }
 }
