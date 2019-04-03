@@ -11,9 +11,37 @@
     height: 2rem;
   }
   & &__typography {
-    flex-grow: 1
+    margin-right: 2rem;
   }
+  & &__typography--mobile {
+    flex-grow: 1;
+  }
+  mobile
   & &__icon {
     margin-right: $xss-size 
   }
+  & &__icon-container  {
+    flex-grow: 1;
+    &__icon {
+      color: white;
+      &__label {
+        opacity: 1;
+        font-size: 0.75rem;
+        transition: font-size 0.2s, opacity 0.2s;
+        transition-delay: 0s, 0s;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        transition-delay: 0.1s;
+      }
+    }
+    &__icon--selected {
+      border-bottom: 3px solid white;
+      border-radius: 0;
+      padding: 12px 12px 10px 12px;
+    }
+    .MuiIconButton-label-82 {
+      flex-direction: column;
+    }
+  }
 }
+
+
