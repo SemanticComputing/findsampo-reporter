@@ -26,7 +26,7 @@ export const TreeViewTypes = Object.freeze({
 });
 
 export const ButtonActions = Object.freeze({
-  CHANGE_CURRENT_FIND_INDEX: 'change_current_gind_index'
+  CHANGE_CURRENT_FIND_INDEX: 'change-current-find-index'
 });
 
 export const RouterPaths = Object.freeze({
@@ -37,4 +37,12 @@ export const RouterPaths = Object.freeze({
   MY_FINDS_PAGE: '/myfinds',
   MORE_PAGE: '/more',
   NEARBY_PAGE: '/nearby',
+});
+
+export const QuestionDependencies = Object.freeze({
+  LOCATION: 'location',
+  DATE: 'date',
+  EXISTS_FIND_SITE: 'exists-find-site',
+  FIND_SITE_PHOTO: 'find-site-photo',
+  FIND_PHOTO: 'find-photo'
 });

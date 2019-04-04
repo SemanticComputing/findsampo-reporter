@@ -1,4 +1,5 @@
-import { OptionTypes, ButtonTypes, TreeViewTypes, ButtonActions } from '../enum/enums';
+
+import { OptionTypes, ButtonTypes, TreeViewTypes, ButtonActions, QuestionDependencies } from '../enum/enums';
 import StarterKit from '../../components/instructions/StarterKit';
 import GeneralKit from '../../components/instructions/GeneralKit';
 import ReportingKit from '../../components/instructions/ReportingKit';
@@ -15,11 +16,12 @@ export default {
       icon: 'local_hospital',
       question: 'report.questionZero.question',
       help: 'report.questionZero.help',
+      skipStep: 2,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionZero.buttonOne',
-          nextStep: 1
+          nextStep: 1,
         },
         {
           type: ButtonTypes.STEPPER,
@@ -33,6 +35,8 @@ export default {
       icon: 'assignment-alert',
       question: 'report.questionOne.question',
       help: 'report.questionOne.help',
+      backStep: 0,
+      skipStep: 2,
       options: {
         type: OptionTypes.EXPANSION_PANEL,
         panelElements: [
@@ -67,12 +71,12 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionTwo.buttonOne',
-          nextStep: 3
+          nextStep: 3,
         },
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionTwo.buttonTwo',
-          nextStep: 7
+          nextStep: 7,
         },
       ]
     },
@@ -80,6 +84,8 @@ export default {
       step: 3,
       question: 'report.questionThree.question',
       help: 'report.questionThree.help',
+      backStep: 2,
+      dependentOn: QuestionDependencies.LOCATION,
       options: {
         type: OptionTypes.MAP
       },
@@ -96,6 +102,8 @@ export default {
       icon: 'date_range',
       question: 'report.questionFour.question',
       help: 'report.questionFour.help',
+      backStep: 3,
+      dependentOn: QuestionDependencies.DATE,
       options: {
         type: OptionTypes.DATE_PICKER
       },
@@ -112,6 +120,8 @@ export default {
       icon: 'announcement',
       question: 'report.questionFive.question',
       help: 'report.questionFive.help',
+      backStep: 4,
+      skipStep: 6,
       options: {
         type: OptionTypes.FIELD
       },
@@ -128,6 +138,8 @@ export default {
       icon: 'photo_camera',
       question: 'report.questionSix.question',
       help: 'report.questionSix.help',
+      backStep: 5,
+      dependentOn: QuestionDependencies.FIND_SITE_PHOTO,
       options: {
         type: OptionTypes.PHOTOGRAPH,
         for: 'find-site'
@@ -145,6 +157,7 @@ export default {
       icon: 'place',
       question: 'report.questionSeven.question',
       help: 'report.questionSeven.help',
+      backStep: 2,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
@@ -163,6 +176,8 @@ export default {
       icon: 'place',
       question: 'report.questionEight.question',
       help: 'report.questionEight.help',
+      backStep: 7,
+      dependentOn: QuestionDependencies.EXISTS_FIND_SITE,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
@@ -176,6 +191,8 @@ export default {
       icon: 'photo_camera',
       question: 'report.questionNine.question',
       help: 'report.questionNine.help',
+      backStep: 6,
+      dependentOn: QuestionDependencies.FIND_PHOTO,
       options: {
         type: OptionTypes.PHOTOGRAPH,
         for: 'find'
@@ -193,6 +210,7 @@ export default {
       icon: 'more',
       question: 'report.questionTen.question',
       help: 'report.questionTen.help',
+      backStep: 9,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
@@ -211,6 +229,8 @@ export default {
       icon: 'wb_incandescent',
       question: 'report.questionEleven.question',
       help: 'report.questionEleven.help',
+      backStep: 10,
+      skipStep: 12,
       options: {
         type: OptionTypes.TREE_VIEW,
         treeData: findTypes,
@@ -228,6 +248,8 @@ export default {
       step: 12,
       question: 'report.questionTwelve.question',
       help: 'report.questionTwelve.help',
+      backStep: 11,
+      skipStep: 13,
       options: {
         type: OptionTypes.TREE_VIEW,
         treeData: eras,
@@ -246,6 +268,8 @@ export default {
       icon: 'line_style',
       question: 'report.questionThirteen.question',
       help: 'report.questionThirteen.help',
+      backStep: 12,
+      skipStep: 14,
       options: {
         type: OptionTypes.TREE_VIEW,
         treeData: findMaterials,
@@ -264,6 +288,8 @@ export default {
       icon: 'vertical_align_bottom',
       question: 'report.questionFourteen.question',
       help: 'report.questionFourteen.help',
+      backStep: 13,
+      skipStep: 15,
       options: {
         type: OptionTypes.NUMBER_FIELD,
       },
@@ -280,6 +306,7 @@ export default {
       icon: 'add_circle_outline',
       question: 'report.questionFifteen.question',
       help: 'report.questionFifteen.help',
+      backStep: 14,
       buttons: [
         {
           type: ButtonTypes.STEPPER,

@@ -23,6 +23,8 @@ export default {
     'stepTwo': 'Find Site',
     'stepThree': 'Find',
     'stepFour': 'Done!',
+    'skip': 'Skip',
+    'back': 'Back',
     'questionZero': {
       'question': 'Would you like to get familiar with our starter kits before starting to add your find?',
       'help': 'This questions is for providing some help. Please choose one of the choices',
@@ -43,7 +45,7 @@ export default {
       'question': 'Are you adding a find that has recently found?',
       'help': 'This question is asked to get your current location and date.',
       'buttonOne': 'Yes, I am on the find site',
-      'buttonTwo': 'No, I found it a while ago'
+      'buttonTwo': 'No, I found a while ago'
     },
     'questionThree': {
       'question': 'Pick the find site location please.',

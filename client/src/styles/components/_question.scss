@@ -17,8 +17,16 @@
     }
   }
   .help-bar {
-    position: absolute;
-    align-self: flex-end;
+    align-self: stretch;
+    &__button-panel {
+      align-self: stretch;
+      display: flex;
+      justify-content: space-between;
+    }
+    &__divider {
+      height: 2px;
+      margin: 0.7rem 0 0 0;
+    }
   }
   .answer-options {
     display: flex;
@@ -37,7 +45,7 @@
       align-items: center;
       &__icon {
         color: grey;
-        font-size: 5rem;    
+        font-size: 5rem;
       }
       &__photo {
         width: 4rem;
@@ -48,7 +56,7 @@
     &__progress {
       align-self: center;
     }
-    &__date-picker-container{
+    &__date-picker-container {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -64,6 +72,7 @@
       }
     }
   }
+  
   .button-bar {
     margin-top: 1rem;
     align-self: stretch;
@@ -73,6 +82,7 @@
     flex-direction: column;
     button {
       margin: 0.2rem;
+      padding: 0.5rem;
     }
   }
 }

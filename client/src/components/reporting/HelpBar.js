@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Icon from '@material-ui/core/Icon';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
+import {
+  Icon,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Button
+} from '@material-ui/core/';
 import intl from 'react-intl-universal';
+import { changeQuestion } from '../../actions/report';
 
 class HelpBar extends Component {
   state = {
@@ -22,15 +25,40 @@ class HelpBar extends Component {
     this.setState(() => ({ open: false }));
   };
 
+  onBackButtonPressed = () => {
+    this.props.changeQuestion(this.props.currentQuestion.backStep);
+  };
+
+  onSkipButtonPressed = () => {
+    this.props.changeQuestion(this.props.currentQuestion.skipStep);
+  };
+
   render() {
     return (
       <div className="help-bar">
-        <Icon
-          onClick={this.onOpenPressed}
-          className="help-bar__icon"
-        >
-          help_outlined
-        </Icon>
+        <div className="help-bar__button-panel">
+          <Button
+            disabled={!this.props.hasBackStep}
+            onClick={this.onBackButtonPressed}
+          >
+            <Icon>navigate_before</Icon>
+            {intl.get('report.back')}
+          </Button>
+
+          <Icon
+            onClick={this.onOpenPressed}
+            className="help-bar__icon"
+          >
+            help_outlined
+          </Icon>
+          <Button
+            disabled={!this.props.hasSkipStep}
+            onClick={this.onSkipButtonPressed}
+          >
+            {intl.get('report.skip')}
+            <Icon>navigate_next</Icon>
+          </Button>
+        </div>
         <Dialog
           open={this.state.open}
           onClose={this.onClosePressed}
@@ -54,7 +82,13 @@ class HelpBar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentQuestion: state.report.questions[state.report.currentStep]
+  currentQuestion: state.report.questions[state.report.currentStep],
+  hasBackStep: !!state.report.questions[state.report.currentStep].backStep,
+  hasSkipStep: !!state.report.questions[state.report.currentStep].skipStep
 });
 
-export default connect(mapStateToProps)(HelpBar);
+const mapDispatchToProps = (dispatch) => ({
+  changeQuestion: (step) => dispatch(changeQuestion(step)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HelpBar);
