@@ -12,7 +12,10 @@ import { setCoordinates } from '../../actions/findNotification';
 
 class Map extends Component {
   componentDidMount() {
-    this.getGeoLocation();
+    // If location is not provided try to get geolocation
+    if(!this.props.location) {
+      this.getGeoLocation();
+    }
   }
 
   state = {
@@ -34,7 +37,7 @@ class Map extends Component {
   render() {
     {
       return (
-        this.state.hasCurrentLocation ? (
+        this.props.location || this.state.hasCurrentLocation ? (
           <div id="map">
             <div>
               <Snackbar

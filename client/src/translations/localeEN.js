@@ -18,7 +18,26 @@ export default {
     'password': 'Password',
     'signup': 'Sign Up',
   },
-  'report':{
+  'overview': {
+    'title': 'Summary',
+    'notProvidedValue': 'Not Provided',
+    'findSite': {
+      'title': 'Find Site Details',
+      'photos': 'Photos',
+      'location': 'Location',
+      'additionalMaterials': 'Additional Materials',
+    },
+    'find': {
+      'title': 'Details of finds',
+      'subTitle': 'Find',
+      'photos': 'Photos',
+      'depth': 'Depth',
+      'type': 'Type',
+      'timing': 'Timing',
+      'material': 'Material'
+    }
+  },
+  'report': {
     'stepOne': 'Start',
     'stepTwo': 'Find Site',
     'stepThree': 'Find',
@@ -35,7 +54,7 @@ export default {
       'question': 'Great, below you can find the most relevant instructions.',
       'help': 'Please select one of the guides!',
       'buttonOne': 'Continue',
-      'options' : {
+      'options': {
         'optionOne': 'General Instructions',
         'optionTwo': 'Starter Kit',
         'optionThree': 'Reporting Instructions',
@@ -119,9 +138,11 @@ export default {
       'buttonTwo': 'No, thanks'
     },
     'questionSixteen': {
+      'buttonOne': 'Looks good, Send Please!'
+    },
+    'questionSeventeen': {
       'question': 'Your add has been added successfully.',
       'help': 'You find has been sent. You will get an notification soon.',
-      'buttonOne': 'Finish'
     },
   },
   'eras': { // TODO TRANSLATE THESE TO ENGLISH

@@ -8,21 +8,43 @@ import intl from 'react-intl-universal';
 
 class Question extends Component {
 
-  render() {
-    const { icon, question } = this.props.questions[this.props.currentStep];
-    return (
-      <div className="question">
-        <HelpBar />
-        <div className="question__properties">
-          {
-            icon &&
-            <Icon className="question__icon" size="large">{icon}</Icon>
-          }
-          <p>{intl.get(question)}</p>
+  renderQuestion(currentQuestion) {
+    const { icon, question, help, component: Component } = currentQuestion;
+    if (Component) {
+      return (
+        <div className="question">
+          <Component />
+          <ButtonBar />
         </div>
-        <AnswerOptions />
-        <ButtonBar />
-      </div>
+      );
+    } else {
+      return (
+        <div className="question">
+          {
+            help &&
+            <HelpBar />
+          }
+          <div className="question__properties">
+            {
+              icon &&
+              <Icon className="question__icon" size="large">{icon}</Icon>
+            }
+            {
+              question &&
+              <p>{intl.get(question)}</p>
+            }
+          </div>
+          <AnswerOptions />
+          <ButtonBar />
+        </div>
+      );
+    }
+  }
+
+  render() {
+    const currentQuestion = this.props.questions[this.props.currentStep];
+    return (
+      this.renderQuestion(currentQuestion)
     );
   }
 }

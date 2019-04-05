@@ -6,6 +6,7 @@ import ReportingKit from '../../components/instructions/ReportingKit';
 import eras from '../../helpers/data/eras';
 import findTypes from '../../helpers/data/findTypes';
 import findMaterials from '../../helpers/data/findMaterials';
+import Overview from '../../components/reporting/Overview';
 
 // Initial State of the report
 export default {
@@ -321,16 +322,22 @@ export default {
     },
     {
       step: 16,
-      icon: 'check_circle_outline',
-      question: 'report.questionSixteen.question',
-      help: 'report.questionSixteen.help',
+      backStep: 15,
+      component: Overview,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionSixteen.buttonOne',
-          nextStep: 999
-        }
+          nextStep: 17,
+        },
       ]
+    },
+    {
+      step: 17,
+      icon: 'check_circle_outline',
+      question: 'report.questionSeventeen.question',
+      help: 'report.questionSeventeen.help',
+      buttons: []
     },
   ]
 };

@@ -32,7 +32,7 @@ const getCurrentStep = (currentStep) => {
     return 0;
   } else if (currentStep > 2 && currentStep < 9) {
     return 1;
-  } else if (currentStep > 8 && currentStep < 16) {
+  } else if (currentStep > 8 && currentStep < 17) {
     return 2;
   } else {
     return 3;
