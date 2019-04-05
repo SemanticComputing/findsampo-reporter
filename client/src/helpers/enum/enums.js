@@ -41,8 +41,6 @@ export const RouterPaths = Object.freeze({
 
 export const QuestionDependencies = Object.freeze({
   LOCATION: 'location',
-  DATE: 'date',
-  EXISTS_FIND_SITE: 'exists-find-site',
   FIND_SITE_PHOTO: 'find-site-photo',
   FIND_PHOTO: 'find-photo'
 });

@@ -103,7 +103,6 @@ export default {
       question: 'report.questionFour.question',
       help: 'report.questionFour.help',
       backStep: 3,
-      dependentOn: QuestionDependencies.DATE,
       options: {
         type: OptionTypes.DATE_PICKER
       },
@@ -177,7 +176,6 @@ export default {
       question: 'report.questionEight.question',
       help: 'report.questionEight.help',
       backStep: 7,
-      dependentOn: QuestionDependencies.EXISTS_FIND_SITE,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
