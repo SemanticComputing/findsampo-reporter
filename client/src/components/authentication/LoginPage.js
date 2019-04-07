@@ -60,7 +60,12 @@ class LoginPage extends Component {
           className='login-form__text-field'
         />
         <div className='login-form__button-container'>
-          <Button variant="contained" color="primary" onClick={this.onLoginPress}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={this.onLoginPress}
+            className='login-form__button-container__button'
+          >
             {intl.get('loginPage.login')}
           </Button>
           <Typography variant="overline" className='login-form__button-container__typography'>
@@ -78,7 +83,13 @@ class LoginPage extends Component {
           <Typography variant="overline" className='login-form__button-container__typography'>
             {intl.get('loginPage.notAMemberYet')}
           </Typography>
-          <Button component={Link} to="/signup" variant="contained" color="primary">
+          <Button 
+            component={Link} 
+            to="/signup" 
+            variant="contained" 
+            color="primary"
+            className='login-form__button-container__button'
+          >
             {intl.get('loginPage.signup')}
           </Button>
         </div>

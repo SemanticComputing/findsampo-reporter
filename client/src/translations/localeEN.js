@@ -21,6 +21,8 @@ export default {
     'email': 'Email',
     'password': 'Password',
     'signup': 'Sign Up',
+    'alreadyAMember': 'Already a member?',
+    'login': 'Log In'
   },
   'overview': {
     'title': 'Summary',
