@@ -10,6 +10,10 @@ export default {
     'password': 'Password',
     'login': 'Log In',
     'signup': 'Sign Up',
+    'forgotPassword': 'Forgot your password?',
+    'loginWith': 'Log in with',
+    'googleLogin': 'G',
+    'notAMemberYet': 'Not a member yet?'
   },
   'signupPage': {
     'title': 'Sign Up',

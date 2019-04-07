@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {
+  TextField,
+  Button,
+  Typography,
+  Divider,
+  Avatar
+} from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import { startGoogleLogin, startEmailLogin } from '../../actions/auth';
 
 class LoginPage extends Component {
-
   state = {
     email: '',
     password: ''
@@ -32,7 +36,9 @@ class LoginPage extends Component {
   render() {
     return (
       <div className='login-form'>
-        <h2>{intl.get('loginPage.title')}</h2>
+        <Typography className="login-form__title" variant="overline">
+          {intl.get('loginPage.title')}
+        </Typography>
         <TextField
           label={intl.get('loginPage.email')}
           type='email'
@@ -40,6 +46,8 @@ class LoginPage extends Component {
           variant='outlined'
           value={this.state.email}
           onChange={this.onTextFieldChange}
+          fullWidth
+          className='login-form__text-field'
         />
         <TextField
           label={intl.get('loginPage.password')}
@@ -48,16 +56,32 @@ class LoginPage extends Component {
           variant="outlined"
           value={this.state.password}
           onChange={this.onTextFieldChange}
+          fullWidth
+          className='login-form__text-field'
         />
-        <Button variant="contained" color="primary" onClick={this.onLoginPress}>
-          {intl.get('loginPage.login')}
-        </Button>
-        <Button variant="contained" color="primary" onClick={this.props.startGoogleLogin}>
-          Google Log In
-        </Button>
-        <Button component={Link} to="/signup" variant="contained" color="primary">
-          {intl.get('loginPage.signup')}
-        </Button>
+        <div className='login-form__button-container'>
+          <Button variant="contained" color="primary" onClick={this.onLoginPress}>
+            {intl.get('loginPage.login')}
+          </Button>
+          <Typography variant="overline" className='login-form__button-container__typography'>
+            {intl.get('loginPage.forgotPassword')}
+          </Typography>
+          <Typography variant="overline" className='login-form__button-container__typography'>
+            {intl.get('loginPage.loginWith')}
+          </Typography>
+          <Avatar
+            className='login-form__button-container__avatar'
+            onClick={this.props.startGoogleLogin}>
+            {intl.get('loginPage.googleLogin')}
+          </Avatar>
+          <Divider className='login-form__button-container__divider' />
+          <Typography variant="overline" className='login-form__button-container__typography'>
+            {intl.get('loginPage.notAMemberYet')}
+          </Typography>
+          <Button component={Link} to="/signup" variant="contained" color="primary">
+            {intl.get('loginPage.signup')}
+          </Button>
+        </div>
       </div>
     );
   }
