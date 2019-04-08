@@ -86,7 +86,7 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.MAP:
           container = (
-            <Map />
+            <Map showCurrentLocation/>
           );
           break;
         case OptionTypes.DATE_PICKER:

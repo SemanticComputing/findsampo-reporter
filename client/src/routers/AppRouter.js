@@ -13,6 +13,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BottomNav from '../components/BottomNav';
 import { RouterPaths } from '../helpers/enum/enums';
+import Nearby from '../components/NearbyPage';
 
 export const history = createHistory();
 
@@ -30,6 +31,7 @@ const AppRouter = () => (
           <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
           <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />
           <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
+          <Route path={RouterPaths.NEARBY_PAGE} component={Nearby}></Route>
           <PrivateRoute path={RouterPaths.REPORT_PAGE} component={Report} />
           <Route component={NotFoundPage}></Route>
         </Switch>

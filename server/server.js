@@ -17,6 +17,12 @@ app.post(FIND_NOTIFICATION_END_POINT, (req, res) => {
   res.send('Your POST request has been received!');
 });
 
+//Finds
+const FINDS_END_POINT = '/api/v1/finds';
+app.get(FINDS_END_POINT, (req, res) => {
+  res.send('Your FINDS GET request has been received!');
+});
+
 // Application
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));

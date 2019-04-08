@@ -5,67 +5,31 @@ import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
 import { setCoordinates } from '../../actions/findNotification';
 
+/**
+ * Parameters
+ * showCurrentLocation: If true user's current location is shown on the map
+ * data: Marker points which will be shown on the map
+ */
 class Map extends Component {
   componentDidMount() {
-    // If location is not provided try to get geolocation
-    if(!this.props.location) {
+    if (this.props.showCurrentLocation) {
       this.getGeoLocation();
+    } else {
+      this.renderMap();
     }
   }
 
   state = {
     hasCurrentLocation: false,
-    snackbarOpen: false
   }
-
-  handleClick = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = (e, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    this.setState({ snackbarOpen: false });
-  };
 
   render() {
     {
       return (
-        this.props.location || this.state.hasCurrentLocation ? (
+        (this.props.showCurrentLocation && this.state.hasCurrentLocation) || this.props.data ? (
           <div id="map">
-            <div>
-              <Snackbar
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                open={this.state.open}
-                autoHideDuration={6000}
-                onClose={this.handleClose}
-                ContentProps={{
-                  'aria-describedby': 'message-id',
-                }}
-                message={<span id="message-id">Note archived</span>}
-                action={[
-                  <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
-                    UNDO
-                  </Button>,
-                  <IconButton
-                    key="close"
-                    aria-label="Close"
-                    color="inherit"
-                    onClick={this.handleClose}
-                  >
-                  </IconButton>,
-                ]}
-              />
-            </div>
           </div>
         ) : (
           <CircularProgress className="answer-options__progress" size="5rem" />
