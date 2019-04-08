@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
 import { changeQuestion } from '../../actions/report';
-import { changeFindIndex } from '../../actions/findNotification';
+import { changeFindIndex, sendFindNotification } from '../../actions/findNotification';
 import { ButtonActions } from '../../helpers/enum/enums';
 import { QuestionDependencies } from '../../helpers/enum/enums';
 
@@ -75,6 +75,9 @@ const executeButtonAction = (props, buttonAction) => {
     case ButtonActions.CHANGE_CURRENT_FIND_INDEX:
       props.changeFindIndex(props.currentFindIndex + 1);
       break;
+    case ButtonActions.SEND_FIND_NOTIFICATION:
+      props.sendFindNotification();
+      break;
   }
 };
 
@@ -89,7 +92,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeQuestion: (step) => dispatch(changeQuestion(step)),
-  changeFindIndex: (index) => dispatch(changeFindIndex(index))
+  changeFindIndex: (index) => dispatch(changeFindIndex(index)),
+  sendFindNotification: () => dispatch(sendFindNotification())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonBar);

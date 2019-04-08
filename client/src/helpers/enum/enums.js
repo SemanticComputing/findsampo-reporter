@@ -26,7 +26,8 @@ export const TreeViewTypes = Object.freeze({
 });
 
 export const ButtonActions = Object.freeze({
-  CHANGE_CURRENT_FIND_INDEX: 'change-current-find-index'
+  CHANGE_CURRENT_FIND_INDEX: 'change-current-find-index',
+  SEND_FIND_NOTIFICATION: 'send-find-notification'
 });
 
 export const RouterPaths = Object.freeze({

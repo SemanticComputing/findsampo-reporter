@@ -8,7 +8,8 @@ import {
   FIND_NOTIFICATION_SET_FIND_TYPE,
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
   FIND_NOTIFICATION_SET_FIND_TIMING,
-  FIND_NOTIFICATION_SET_FIND_DEPTH
+  FIND_NOTIFICATION_SET_FIND_DEPTH,
+  FIND_NOTIFICATION_SEND
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -68,3 +69,6 @@ export const setFindDepth = (findDepth, index) => ({
   index
 });
 
+export const sendFindNotification = () => ({
+  type: FIND_NOTIFICATION_SEND
+});

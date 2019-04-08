@@ -329,6 +329,7 @@ export default {
           type: ButtonTypes.STEPPER,
           text: 'report.questionSixteen.buttonOne',
           nextStep: 17,
+          //action: ButtonActions.SEND_FIND_NOTIFICATION TODO: Uncomment this
         },
       ]
     },
