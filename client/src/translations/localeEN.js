@@ -24,6 +24,10 @@ export default {
     'alreadyAMember': 'Already a member?',
     'login': 'Log In'
   },
+  'notFoundPage': {
+    'pageNotFound': 'Ooops! Page Not Found!',
+    'goToHomePage': 'Go To HomePage'
+  },
   'overview': {
     'title': 'Summary',
     'notProvidedValue': 'Not Provided',
