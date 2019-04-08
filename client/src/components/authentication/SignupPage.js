@@ -58,14 +58,14 @@ class SignupPage extends Component {
           className='signup-form__text-field'
         />
         <div className="signup-form__container">
-          <Button
+          {/*<Button
             variant="contained"
             color="primary"
             onClick={this.onSignupPress}
             className="signup-form__container__button"
           >
             {intl.get('signupPage.signup')}
-          </Button>
+          </Button>*/}
           <Divider className="signup-form__container__divider" />
           <Typography variant="overline" className="signup-form__container__typography">
             {intl.get('signupPage.alreadyAMember')}

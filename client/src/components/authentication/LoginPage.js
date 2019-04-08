@@ -6,7 +6,7 @@ import {
   Button,
   Typography,
   Divider,
-  Avatar
+  //Avatar
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import { startGoogleLogin, startEmailLogin } from '../../actions/auth';
@@ -74,11 +74,11 @@ class LoginPage extends Component {
           <Typography variant="overline" className='login-form__button-container__typography'>
             {intl.get('loginPage.loginWith')}
           </Typography>
-          <Avatar
+          {/*<Avatar
             className='login-form__button-container__avatar'
             onClick={this.props.startGoogleLogin}>
             {intl.get('loginPage.googleLogin')}
-          </Avatar>
+          </Avatar>*/}
           <Divider className='login-form__button-container__divider' />
           <Typography variant="overline" className='login-form__button-container__typography'>
             {intl.get('loginPage.notAMemberYet')}
