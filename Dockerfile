@@ -9,6 +9,10 @@ rm -rf /tmp/* /var/cache/apk/*
 
 WORKDIR /opt/app
 
+# Public files
+COPY public ./public
+RUN chown -R node:node ./public
+
 USER node
 
 # Yarn and webpack configs
@@ -24,9 +28,6 @@ COPY .eslintrc.js ./
 
 # Env variables
 COPY .env.development ./
-
-# Public files
-COPY --chown=node:node public ./public
 
 # Client and server files
 COPY client ./client
