@@ -13,7 +13,7 @@ class NearbyPage extends Component {
     return (
       <div className="nearby">
         <div className="nearby__tool-bar">
-          <Icon>tune</Icon>
+          <Icon className="nearby__tool-bar__icon" >tune</Icon>
           <FormControlLabel
             labelPlacement="start"
             control={
