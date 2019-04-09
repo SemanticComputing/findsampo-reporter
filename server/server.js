@@ -1,11 +1,15 @@
 const path = require('path');
 const express = require('express');
+const finds = require('./sparql/queries/finds');
+const querystring = require('querystring');
+const axios = require('axios');
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3001;
 
 app.use(express.static(publicPath));
 
+/* FIXME
 // Find Notifications API
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 // TODO: Get data to database
@@ -15,12 +19,32 @@ app.get(FIND_NOTIFICATION_END_POINT, (req, res) => {
 // TODO: Save received data to database
 app.post(FIND_NOTIFICATION_END_POINT, (req, res) => {
   res.send('Your POST request has been received!');
-});
+});*/
+
 
 //Finds
 const FINDS_END_POINT = '/api/v1/finds';
-app.get(FINDS_END_POINT, (req, res) => {
-  res.send('Your FINDS GET request has been received!');
+
+const defaultSelectHeaders = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Accept': 'application/sparql-results+json; charset=utf-8',
+  'Authorization': 'Basic c2Vjbzpsb2dvczAz'
+};
+
+app.get(FINDS_END_POINT, async (req, res, next) => {
+  try {
+    const query = finds.getValidatedFinds;
+    const response = await axios({
+      method: 'post',
+      headers: defaultSelectHeaders,
+      url: 'https://ldf.fi/sualt-fha-finds/sparql',
+      data: querystring.stringify({ query })
+    });
+    const { bindings } = response.data.results;
+    res.send(bindings);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Application
@@ -29,5 +53,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log('Server is up!');
+  console.log(`Express server started on port ${port}`);
 });

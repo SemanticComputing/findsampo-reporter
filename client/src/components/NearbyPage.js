@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon, FormControlLabel, Switch } from '@material-ui/core';
+import { Icon, FormControlLabel, Switch, CircularProgress } from '@material-ui/core';
 import Map from './map/Map';
 import { getValidatedFinds } from '../actions/find';
 
@@ -15,6 +15,7 @@ class NearbyPage extends Component {
         <div className="nearby__tool-bar">
           <Icon className="nearby__tool-bar__icon" >tune</Icon>
           <FormControlLabel
+            className="nearby__tool-bar__form-control-label"
             labelPlacement="start"
             control={
               <Switch
@@ -26,15 +27,25 @@ class NearbyPage extends Component {
           />
         </div>
         <div className="nearby__map">
-          <Map data />
+          {
+            this.props.finds ? (
+              < Map markerData={this.props.finds} />
+            ) : (
+              <CircularProgress size="5rem" />
+            )
+          }
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  finds: state.finds.validatedFinds
+});
+
 const mapDispatchToProps = (dispatch) => ({
   getValidatedFinds: () => dispatch(getValidatedFinds())
 });
 
-export default connect(undefined, mapDispatchToProps)(NearbyPage);
+export default connect(mapStateToProps, mapDispatchToProps)(NearbyPage);

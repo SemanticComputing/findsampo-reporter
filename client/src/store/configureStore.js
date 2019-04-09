@@ -1,9 +1,11 @@
+import 'regenerator-runtime/runtime';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogicMiddleware } from 'redux-logic';
 import auth from '../reducers/auth';
 import locale from '../reducers/locale';
 import report from '../reducers/report';
 import findNotification from '../reducers/findNotification';
+import finds from '../reducers/find';
 import rootLogic from '../logics/rootLogic';
 
 // Create react middleware
@@ -21,7 +23,8 @@ export default () => {
       locale,
       auth,
       report,
-      findNotification
+      findNotification,
+      finds
     }),
     composeEnhancers(composeMiddleware)
   );

@@ -27,7 +27,7 @@ const OverView = (props) => {
           <Typography variant="caption" className="overview__properties">
             {intl.get('overview.findSite.location')}
           </Typography>
-          <Map />
+          <Map location={props.findNotification.findSiteCoords}/>
         </div>
         <Typography variant="caption" className="overview__properties">
           {intl.get('overview.findSite.additionalMaterials')}
