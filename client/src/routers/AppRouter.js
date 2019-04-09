@@ -31,7 +31,7 @@ const AppRouter = () => (
           <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
           <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />
           <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
-          <Route path={RouterPaths.NEARBY_PAGE} component={Nearby}></Route>
+          <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={Nearby}></PrivateRoute>
           <PrivateRoute path={RouterPaths.REPORT_PAGE} component={Report} />
           <Route component={NotFoundPage}></Route>
         </Switch>
