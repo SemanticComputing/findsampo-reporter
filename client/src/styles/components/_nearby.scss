@@ -5,8 +5,12 @@
   &__tool-bar {
     flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    & &__paper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
     & &__icon {
       font-size: 2.3rem;
       color: $color-grey;
@@ -18,5 +22,8 @@
   &__map {
     flex: 14; 
     display: flex;
+    &__progress {
+      margin: auto;
+    }
   }
 }
