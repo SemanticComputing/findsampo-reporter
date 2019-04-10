@@ -19,6 +19,7 @@
     "immutability-helper": "^3.0.0",
     "leaflet": "^1.4.0",
     "leaflet.markercluster": "^1.4.1",
+    "material-table": "^1.30.0",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",

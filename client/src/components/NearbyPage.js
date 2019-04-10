@@ -3,24 +3,34 @@ import { connect } from 'react-redux';
 import { Icon, FormControlLabel, Switch, CircularProgress, Paper } from '@material-ui/core';
 import Map from './map/Map';
 import { getValidatedFinds } from '../actions/find';
+import Table from './table/Table';
 
 class NearbyPage extends Component {
+  state = {
+    showMap: true
+  }
+
   componentDidMount() {
     this.props.getValidatedFinds();
+  }
+
+  onShowMapSwitchPressed = () => {
+    this.setState((prevState) => ({ showMap: !prevState.showMap }));
   }
 
   render() {
     return (
       <div className="nearby">
         <div className="nearby__tool-bar">
-          <Paper className="nearby__tool-bar__paper"elevation={1}>
+          <Paper className="nearby__tool-bar__paper" elevation={1}>
             <Icon className="nearby__tool-bar__icon" >tune</Icon>
             <FormControlLabel
               className="nearby__tool-bar__form-control-label"
               labelPlacement="start"
+              onClick={this.onShowMapSwitchPressed}
               control={
                 <Switch
-                  checked={true} // FIXME
+                  checked={this.state.showMap}
                   color="primary"
                 />
               }
@@ -31,7 +41,11 @@ class NearbyPage extends Component {
         <div className="nearby__map">
           {
             this.props.finds ? (
-              < Map markerData={this.props.finds} />
+              this.state.showMap ? (
+                < Map markerData={this.props.finds} />
+              ) : (
+                <Table tableData={convertToTableData(this.props.finds)} />
+              )
             ) : (
               <CircularProgress className="nearby__map__progress" size="5rem" />
             )
@@ -41,6 +55,23 @@ class NearbyPage extends Component {
     );
   }
 }
+
+const convertToTableData = (data) => {
+  const tableData = [];
+  for (let d of data) {
+    tableData.push(
+      {
+        title: d.title.value,
+        material: d.main_material ? d.main_material.value : '-',
+        type: d.type ? d.type.value : '-',
+        period: d.period ? d.period.value : '-',
+        description: d.description ? d.description.value : 'Not additional information found!', // FIXME
+        image: d.image_url ? d.image_url.value : ''
+      }
+    );
+  }
+  return tableData;
+};
 
 const mapStateToProps = (state) => ({
   finds: state.finds.validatedFinds
