@@ -9,7 +9,6 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { setCoordinates } from '../../actions/findNotification';
-import { Card, CardActionArea, CardContent, Typography, CardActions, Button } from '@material-ui/core';
 
 /**
  * Parameters
@@ -87,7 +86,10 @@ class Map extends Component {
     this.layerGroup = L.layerGroup().addTo(this.map);
 
     // Add a listener for click events
-    this.map.addEventListener('click', this.onMapTapped);
+    // Listener is setted only if user's current location is viewed
+    if (this.props.showCurrentLocation && this.state.hasCurrentLocation) {
+      this.map.addEventListener('click', this.onMapTapped);
+    }
   }
 
   initialiseMarkers = (position) => {
@@ -146,38 +148,29 @@ class Map extends Component {
     const markers = L.markerClusterGroup();
     for (let marker of markerData) {
       if (marker.lat && marker.long && !isNaN(marker.lat.value) && !isNaN(marker.long.value)) {
-        //const popupText = this.generateMarkerPopup(marker);
+        const popupText = this.generateMarkerPopup(marker);
         const markerToMap = new L.marker(new L.LatLng(marker.lat.value, marker.long.value))
-          .bindPopup('<Button>Share</Button>'); // FIXME
+          .bindPopup(popupText);
         markers.addLayer(markerToMap);
       }
     }
     this.map.addLayer(markers);
   }
 
-  // FIXME
   generateMarkerPopup = (marker) => {
-    return (
-      <div>
-        <Card>
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {marker.title.value}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button>
-              Share
-            </Button>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
-      </div>
-    );
+    let popupText = '';
+    const image = marker.image_url ? `<img class="leaflet-popup-content__image" src=${marker.image_url.value} />` : '';
+    const title = marker.title ? `<h2 class="leaflet-popup-content__text-container__title">${marker.title.value}</h2>` : '';
+    const description = marker.description ? `<p class="leaflet-popup-content__text-container__description">${marker.description.value}</p>` : '';
+
+    popupText += `${image}
+                  <div class="leaflet-popup-content__text-container">
+                  ${title} 
+                  ${description}
+                  </div>
+                  `;
+
+    return popupText;
   }
 
 
