@@ -20,4 +20,8 @@
       }
     }
   }
+  // Hide search bar of material ui
+  & > div:first-of-type > div:first-of-type {
+    display: none;
+  }
 }

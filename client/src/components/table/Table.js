@@ -49,7 +49,7 @@ const renderDetailPanel = (row) => {
               title={row.title}
             />
           ) : (
-            <Tooltip title="No Image" placement="left">
+            <Tooltip title="No Image" placement="top">
               <Icon className="table__detail-panel__container__icon">crop_original</Icon>
             </Tooltip>
           )
