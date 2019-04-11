@@ -30,7 +30,8 @@ const Table = (props) => {
           pageSize: 20,
           pageSizeOptions: [20, 50, 100, 1000],
           search: false,
-          showTitle: false
+          showTitle: false,
+          maxBodyHeight: 1000,
         }}
       />
     </div>
