@@ -3,11 +3,17 @@
   & &__detail-panel {
     &__container {
       display: flex;
+      @media screen and (max-width: $size-max-mobile) {
+        flex-direction: column;
+      }
       padding: 1rem;
       &__image {
         flex: 1;
         height: 12rem;
         background-size: cover;
+        @media screen and (max-width: $size-max-mobile) {
+          width: 100%;
+        }
       }
       &__icon {
         flex: 1;
@@ -23,5 +29,44 @@
   // Hide search bar of material ui
   & > div:first-of-type > div:first-of-type {
     display: none;
+  }
+
+  // Change mobile view of table
+  @media screen and (max-width: $size-max-mobile) {
+    & tbody {
+      tr {
+        border: 1px solid rgba(224, 224, 224, 1);
+      }
+      tr td {
+        display: block;
+        border: none
+      }
+      tr td:first-of-type {
+        display: table-cell;
+        font-weight: bold;
+      }
+      tr td:before {
+        font-weight: bold;
+      }
+      // Hard Coded Column Names
+      tr td:nth-of-type(2):before {
+        content: "Title: ";  
+      }
+      tr td:nth-of-type(3):before {
+        content: "Material: ";  
+      }
+      tr td:nth-of-type(4):before {
+        content: "Type: ";  
+      }
+      tr td:nth-of-type(5):before {
+        content: "Period: ";  
+      }
+      tr td:nth-of-type(6):before {
+        content: "Town: ";  
+      }
+    }
+    & thead {
+      display: none;
+    }
   }
 }
