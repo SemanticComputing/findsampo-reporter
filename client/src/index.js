@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import firebase from './firebase/firebase';
@@ -8,6 +9,24 @@ import { logout, loginLoggedUser } from './actions/auth';
 import { setLocale } from './actions/locale';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#005566',
+      main: '#007A93',
+      dark: '#3394a8'
+    },
+    secondary: {
+      light: '#9c9c9c',
+      main: '#e0e0e0',
+      dark: '#e6e6e6'
+    },
+  },
+  typography: {
+    useNextVariants: true
+  }
+});
 
 // Confiture store
 const store = configureStore();
@@ -18,9 +37,11 @@ store.dispatch(setLocale(lang));
 
 // App
 const jsx = (
-  <Provider store={store}>
-    <AppRouter />
-  </Provider>
+  <MuiThemeProvider theme={theme}>
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
+  </MuiThemeProvider>
 );
 
 // App rendering options
