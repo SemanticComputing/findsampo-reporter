@@ -7,7 +7,8 @@ import Table from './table/Table';
 
 class NearbyPage extends Component {
   state = {
-    showMap: true
+    showMap: true,
+    finds: this.props.finds
   }
 
   componentDidMount() {
@@ -19,6 +20,7 @@ class NearbyPage extends Component {
   }
 
   render() {
+    console.log(this.state.finds);
     return (
       <div className="nearby">
         <div className="nearby__tool-bar">
@@ -42,7 +44,7 @@ class NearbyPage extends Component {
           {
             this.props.finds ? (
               this.state.showMap ? (
-                < Map markerData={this.props.finds} />
+                <Map markerData={this.props.finds} />
               ) : (
                 <Table tableData={convertToTableData(this.props.finds)} />
               )
