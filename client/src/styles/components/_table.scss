@@ -1,3 +1,23 @@
 .table {
   flex: 1;
+  & &__detail-panel {
+    &__container {
+      display: flex;
+      padding: 1rem;
+      &__image {
+        flex: 1;
+        height: 12rem;
+        background-size: cover;
+      }
+      &__icon {
+        flex: 1;
+        text-align: center;
+        font-size: 8rem;
+        color: $color-grey;
+      }
+      &__content {
+        flex: 1;
+      }
+    }
+  }
 }

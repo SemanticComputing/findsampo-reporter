@@ -65,8 +65,11 @@ const convertToTableData = (data) => {
         material: d.main_material ? d.main_material.value : '-',
         type: d.type ? d.type.value : '-',
         period: d.period ? d.period.value : '-',
+        municipality: d.municipality ? d.municipality.value : '-',
         description: d.description ? d.description.value : 'Not additional information found!', // FIXME
-        image: d.image_url ? d.image_url.value : ''
+        image: d.image_url ? d.image_url.value : '',
+        specification: d.specification ? d.specification.value : 'Not Provided',
+        province: d.province ? d.province.value : 'Not Provided'
       }
     );
   }
