@@ -6,6 +6,7 @@ import locale from '../reducers/locale';
 import report from '../reducers/report';
 import findNotification from '../reducers/findNotification';
 import finds from '../reducers/find';
+import facetFilters from '../reducers/facetFilter';
 import rootLogic from '../logics/rootLogic';
 
 // Create react middleware
@@ -24,7 +25,8 @@ export default () => {
       auth,
       report,
       findNotification,
-      finds
+      finds,
+      facetFilters
     }),
     composeEnhancers(composeMiddleware)
   );

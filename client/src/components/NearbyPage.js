@@ -20,7 +20,6 @@ class NearbyPage extends Component {
   }
 
   render() {
-    console.log(this.state.finds);
     return (
       <div className="nearby">
         <div className="nearby__tool-bar">

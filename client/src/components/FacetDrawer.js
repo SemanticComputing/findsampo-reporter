@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Drawer,
   Button,
@@ -11,18 +12,112 @@ import {
   ListItem,
   ListItemText,
   Checkbox,
-  Badge
+  Avatar,
+  Chip,
+  IconButton
 } from '@material-ui/core';
-
+import { setFacetFilter, removeFacetFilter, emptyFacetFilter } from '../actions/facetFilter';
 
 class FacetDrawer extends Component {
   state = {
     open: false,
+    searchText: '',
+    facetCriteria: [
+      { criteria: 'find-type', label: 'Find Type' },
+      { criteria: 'material', label: 'Material' },
+      { criteria: 'period', label: 'Period' },
+      { criteria: 'town', label: 'Town' }
+    ]
   };
 
-  toggleDrawer = (open) => () => {
+  onToggleDrawerPressed = (open) => () => {
     this.setState({ open });
   };
+
+  onDeleteFiltersPressed = () => {
+    this.props.emptyFacetFilter();
+  }
+
+  onCheckboxPressed = (criteria, label) => event => {
+    if (event.target.checked) {
+      this.props.setFacetFilter({
+        criteria,
+        label
+      });
+    } else {
+      this.props.removeFacetFilter({
+        criteria,
+        label
+      });
+    }
+  }
+
+  onSearchTextChanged = (event) => {
+    this.setState({ searchText: event.target.value });
+  }
+
+  onSearchTextDeleted = () => {
+    this.props.removeFacetFilter({
+      criteria: CRITERIA_TITLE,
+      label: this.state.searchText
+    });
+    this.setState({ searchText: '' });
+  }
+
+  // Criteria is title on search
+  onSeachPressed = () => {
+    if (this.state.searchText.length > 0) {
+      this.props.setFacetFilter({
+        criteria: CRITERIA_TITLE,
+        label: this.state.searchText
+      });
+    }
+  }
+
+  renderCheckboxList = (criteria) => {
+    return (
+      <List className="facet-drawer__container__paper__list">
+        {[0, 1, 2, 3].map((label, index) => (
+          <ListItem
+            key={index}
+            role={undefined}
+            dense
+            button
+            className="facet-drawer__container__paper__list__list-item"
+          /*onClick={this.handleToggle(value)}*/
+          >
+            <Checkbox
+              /*checked={this.state.checked.indexOf(value) !== -1}*/
+              tabIndex={-1}
+              disableRipple
+              className="facet-drawer__container__paper__list__list-item__checkbox"
+              color="primary"
+              onClick={this.onCheckboxPressed(criteria, label)}
+            />
+            <ListItemText
+              className="facet-drawer__container__paper__list__list-item__text"
+              primary={`Line item ${label + 1}`}
+            />
+            <Avatar  className="facet-drawer__container__paper__list__list-item__avatar">
+              4
+            </Avatar>
+          </ListItem>
+        ))}
+      </List>
+    );
+  };
+
+  renderFacetCriteria = () => {
+    return (
+      this.state.facetCriteria.map((f) =>
+        <Paper key={f.criteria} className="facet-drawer__container__paper">
+          <Typography variant="overline">
+            {f.label}
+            {this.renderCheckboxList(f.criteria)}
+          </Typography>
+        </Paper>
+      ));
+  }
 
   render() {
     const sideList = (
@@ -31,52 +126,69 @@ class FacetDrawer extends Component {
           <Typography variant="overline">
             Faceted Search
           </Typography>
-        </Paper>
-        <Paper className="facet-drawer__container__paper">
           <TextField
             className="facet-drawer__container__paper__search"
             margin="normal"
             variant="outlined"
             placeholder="Find name search"
+            value={this.state.searchText}
+            onChange={this.onSearchTextChanged}
+            onKeyPress={(e) => {
+              if (e.key === ENTER) {
+                this.onSeachPressed();
+              }
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Icon>search</Icon>
+                  <IconButton onClick={this.onSeachPressed} className="facet-drawer__container__paper__search__icon">
+                    <Icon>search</Icon>
+                  </IconButton>
                 </InputAdornment>
               ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={this.onSearchTextDeleted} className="facet-drawer__container__paper__search__icon">
+                    <Icon>delete</Icon>
+                  </IconButton>
+                </InputAdornment>
+              )
             }}
           />
         </Paper>
-        <Paper className="facet-drawer__container__paper">
-          <Typography variant="overline">
-            Find Type
-            {renderCheckboxList()}
-          </Typography>
-        </Paper>
-        <Paper className="facet-drawer__container__paper">
-          <Typography variant="overline">
-            Material
-          </Typography>
-          {renderCheckboxList()}
-        </Paper>
-        <Paper className="facet-drawer__container__paper">
-          <Typography variant="overline">
-            Period
-          </Typography>
-          {renderCheckboxList()}
-        </Paper>
-        <Paper className="facet-drawer__container__paper">
-          <Typography variant="overline">
-            Town
-          </Typography>
-          {renderCheckboxList()}
-        </Paper>
+        {
+          this.props.filters.length > 0 &&
+          <Paper className="facet-drawer__container__paper facet-drawer__container__filter-box">
+            <Typography variant="overline">
+              Search criteria
+            </Typography>
+            <div className="facet-drawer__container__paper__filters">
+              {this.props.filters.map((data, index) => {
+                return (
+                  <Chip
+                    color="primary"
+                    onDelete={this.onDeleteFiltersPressed}
+                    key={index}
+                    label={data.label}
+                  />
+                );
+              })}
+            </div>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={this.onDeleteFiltersPressed}>
+              Empty
+            </Button>
+          </Paper>
+        }
+        {this.renderFacetCriteria()}
       </div >
     );
 
     return (
       <div>
-        <Drawer open={this.state.open} onClose={this.toggleDrawer(false)} className="facet-drawer">
+        <Drawer open={this.state.open} onClose={this.onToggleDrawerPressed(false)} className="facet-drawer">
           <div
             tabIndex={0}
             role="button"
@@ -86,41 +198,25 @@ class FacetDrawer extends Component {
             {sideList}
           </div>
         </Drawer>
-        <Button onClick={this.toggleDrawer(true)}>Open Left</Button>
+        <Button onClick={this.onToggleDrawerPressed(true)}>Open Left</Button>
       </div>
 
     );
   }
 }
 
-const renderCheckboxList = () => {
-  return (
-    <List className="facet-drawer__container__paper__list">
-      {[0, 1, 2, 3].map(value => (
-        <ListItem
-          key={value}
-          role={undefined}
-          dense
-          button
-          className="facet-drawer__container__paper__list__list-item"
-        /*onClick={this.handleToggle(value)}*/
-        >
-          <Checkbox
-            /*checked={this.state.checked.indexOf(value) !== -1}*/
-            tabIndex={-1}
-            disableRipple
-            className="facet-drawer__container__paper__list__list-item__checkbox"
-          />
-          <ListItemText
-            className="facet-drawer__container__paper__list__list-item__text"
-            primary={`Line item ${value + 1}`}
-          />
-          <Badge color="secondary" badgeContent={4}>
-          </Badge>
-        </ListItem>
-      ))}
-    </List>
-  );
-};
+// Variables
+const ENTER = 'Enter';
+const CRITERIA_TITLE = 'title';
 
-export default FacetDrawer;
+const mapStateToProps = (state) => ({
+  filters: state.facetFilters
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setFacetFilter: (filter) => dispatch(setFacetFilter(filter)),
+  removeFacetFilter: (filter) => dispatch(removeFacetFilter(filter)),
+  emptyFacetFilter: () => dispatch(emptyFacetFilter())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FacetDrawer);
