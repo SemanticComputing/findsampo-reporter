@@ -33,6 +33,7 @@ const Table = (props) => {
           showTitle: false,
           maxBodyHeight: 1000,
         }}
+        onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
     </div>
   );
