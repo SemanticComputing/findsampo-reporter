@@ -52,6 +52,13 @@ class FacetDrawer extends Component {
     }
   }
 
+  onChipDeletePressed = data => () => {
+    this.props.removeFacetFilter({
+      criteria: data.criteria,
+      label: data.label
+    });
+  }
+
   onSearchTextChanged = (event) => {
     this.setState({ searchText: event.target.value });
   }
@@ -87,7 +94,7 @@ class FacetDrawer extends Component {
           /*onClick={this.handleToggle(value)}*/
           >
             <Checkbox
-              /*checked={this.state.checked.indexOf(value) !== -1}*/
+              checked={this.props.filters.filter(f => f.criteria === criteria && f.label === label).length > 0}
               tabIndex={-1}
               disableRipple
               className="facet-drawer__container__paper__list__list-item__checkbox"
@@ -98,7 +105,7 @@ class FacetDrawer extends Component {
               className="facet-drawer__container__paper__list__list-item__text"
               primary={`Line item ${label + 1}`}
             />
-            <Avatar  className="facet-drawer__container__paper__list__list-item__avatar">
+            <Avatar className="facet-drawer__container__paper__list__list-item__avatar">
               4
             </Avatar>
           </ListItem>
@@ -167,7 +174,7 @@ class FacetDrawer extends Component {
                 return (
                   <Chip
                     color="primary"
-                    onDelete={this.onDeleteFiltersPressed}
+                    onDelete={this.onChipDeletePressed(data)}
                     key={index}
                     label={data.label}
                   />
