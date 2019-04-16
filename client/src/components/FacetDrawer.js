@@ -28,7 +28,7 @@ import {
 
 class FacetDrawer extends Component {
   state = {
-    open: this.props.isOpen || false,
+    open: false,
     searchText: '',
     facetCriteria: [
       { criteria: FacetFilters.TYPE, label: 'Type' },
