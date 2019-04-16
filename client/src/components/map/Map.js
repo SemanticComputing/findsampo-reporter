@@ -29,6 +29,13 @@ class Map extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.markerData !== this.props.markerData) {
+      this.markers.clearLayers();
+      this.showMarkersOnMap(this.props.markerData);
+    }
+  }
+
   render() {
     {
       return (
@@ -145,16 +152,16 @@ class Map extends Component {
   }
 
   showMarkersOnMap = (markerData) => {
-    const markers = L.markerClusterGroup();
+    this.markers = L.markerClusterGroup();
     for (let marker of markerData) {
       if (marker.lat && marker.long && !isNaN(marker.lat.value) && !isNaN(marker.long.value)) {
         const popupText = this.generateMarkerPopup(marker);
         const markerToMap = new L.marker(new L.LatLng(marker.lat.value, marker.long.value))
           .bindPopup(popupText);
-        markers.addLayer(markerToMap);
+        this.markers.addLayer(markerToMap);
       }
     }
-    this.map.addLayer(markers);
+    this.map.addLayer(this.markers);
   }
 
   generateMarkerPopup = (marker) => {

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon, FormControlLabel, Switch, CircularProgress, Paper } from '@material-ui/core';
+import { FormControlLabel, Switch, CircularProgress, Paper } from '@material-ui/core';
 import Map from './map/Map';
-import { getValidatedFinds } from '../actions/find';
 import Table from './table/Table';
+import FacetDrawer from './FacetDrawer';
+import findsSelector from '../selectors/facet/facetFinds';
+import { getValidatedFinds } from '../actions/find';
 
 class NearbyPage extends Component {
   state = {
+    isFacetOpen: false,
     showMap: true,
-    finds: this.props.finds
   }
 
   componentDidMount() {
@@ -24,7 +26,7 @@ class NearbyPage extends Component {
       <div className="nearby">
         <div className="nearby__tool-bar">
           <Paper className="nearby__tool-bar__paper" elevation={1}>
-            <Icon className="nearby__tool-bar__icon" >tune</Icon>
+            <FacetDrawer isOpen={this.state.isFacetOpen} />
             <FormControlLabel
               className="nearby__tool-bar__form-control-label"
               labelPlacement="start"
@@ -78,7 +80,7 @@ const convertToTableData = (data) => {
 };
 
 const mapStateToProps = (state) => ({
-  finds: state.finds.validatedFinds
+  finds: findsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

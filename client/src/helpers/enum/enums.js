@@ -45,3 +45,11 @@ export const QuestionDependencies = Object.freeze({
   FIND_SITE_PHOTO: 'find-site-photo',
   FIND_PHOTO: 'find-photo'
 });
+
+export const FacetFilters = Object.freeze({
+  TITLE: 'title',
+  TYPE: 'type',
+  MATERIAL: 'main_material',
+  MUNICIPALITY: 'municipality',
+  PERIOD: 'period',
+});

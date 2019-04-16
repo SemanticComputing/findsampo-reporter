@@ -17,16 +17,24 @@ import {
   IconButton
 } from '@material-ui/core';
 import { setFacetFilter, removeFacetFilter, emptyFacetFilter } from '../actions/facetFilter';
+import { FacetFilters } from '../helpers/enum/enums';
+import findsSelector from '../selectors/facet/facetFinds';
+import {
+  materialSelector,
+  typeSelector,
+  municipalitySelector,
+  periodSelector
+} from '../selectors/facet/facetItems';
 
 class FacetDrawer extends Component {
   state = {
-    open: false,
+    open: this.props.isOpen || false,
     searchText: '',
     facetCriteria: [
-      { criteria: 'find-type', label: 'Find Type' },
-      { criteria: 'material', label: 'Material' },
-      { criteria: 'period', label: 'Period' },
-      { criteria: 'town', label: 'Town' }
+      { criteria: FacetFilters.TYPE, label: 'Type' },
+      { criteria: FacetFilters.MATERIAL, label: 'Material' },
+      { criteria: FacetFilters.PERIOD, label: 'Period' },
+      { criteria: FacetFilters.MUNICIPALITY, label: 'Municipality' }
     ]
   };
 
@@ -81,35 +89,63 @@ class FacetDrawer extends Component {
     }
   }
 
+  getCriterias = (filter) => {
+    switch (filter) {
+      case FacetFilters.MATERIAL:
+        return this.props.materials;
+      case FacetFilters.TYPE:
+        return this.props.types;
+      case FacetFilters.PERIOD:
+        return this.props.periods;
+      case FacetFilters.MUNICIPALITY:
+        return this.props.municipalities;
+    }
+  }
+
+  getFilterIncidence = (criteria, label) => {
+    const insidence = this.props.finds.filter((f) => {
+      if (f[criteria]) {
+        return f[criteria].value === label;
+      }
+      return false;
+    });
+    return insidence.length;
+  }
+
   renderCheckboxList = (criteria) => {
+    const items = this.getCriterias(criteria);
     return (
       <List className="facet-drawer__container__paper__list">
-        {[0, 1, 2, 3].map((label, index) => (
-          <ListItem
-            key={index}
-            role={undefined}
-            dense
-            button
-            className="facet-drawer__container__paper__list__list-item"
-          /*onClick={this.handleToggle(value)}*/
-          >
-            <Checkbox
-              checked={this.props.filters.filter(f => f.criteria === criteria && f.label === label).length > 0}
-              tabIndex={-1}
-              disableRipple
-              className="facet-drawer__container__paper__list__list-item__checkbox"
-              color="primary"
-              onClick={this.onCheckboxPressed(criteria, label)}
-            />
-            <ListItemText
-              className="facet-drawer__container__paper__list__list-item__text"
-              primary={`Line item ${label + 1}`}
-            />
-            <Avatar className="facet-drawer__container__paper__list__list-item__avatar">
-              4
-            </Avatar>
-          </ListItem>
-        ))}
+        {items.map((label, index) => {
+          const incidence = this.getFilterIncidence(criteria, label);
+          return (
+            incidence > 0 &&
+            <ListItem
+              key={index}
+              role={undefined}
+              dense
+              button
+              className="facet-drawer__container__paper__list__list-item"
+            /*onClick={this.handleToggle(value)}*/
+            >
+              <Checkbox
+                checked={this.props.filters.filter(f => f.criteria === criteria && f.label === label).length > 0}
+                tabIndex={-1}
+                disableRipple
+                className="facet-drawer__container__paper__list__list-item__checkbox"
+                color="primary"
+                onClick={this.onCheckboxPressed(criteria, label)}
+              />
+              <ListItemText
+                className="facet-drawer__container__paper__list__list-item__text"
+                primary={label}
+              />
+              <Avatar className="facet-drawer__container__paper__list__list-item__avatar">
+                {incidence}
+              </Avatar>
+            </ListItem>
+          );
+        })}
       </List>
     );
   };
@@ -120,7 +156,9 @@ class FacetDrawer extends Component {
         <Paper key={f.criteria} className="facet-drawer__container__paper">
           <Typography variant="overline">
             {f.label}
-            {this.renderCheckboxList(f.criteria)}
+            <Paper className="facet-drawer__container__paper__list-paper" elevation={1}>
+              {this.renderCheckboxList(f.criteria)}
+            </Paper>
           </Typography>
         </Paper>
       ));
@@ -162,6 +200,16 @@ class FacetDrawer extends Component {
               )
             }}
           />
+          {
+            this.props.finds &&
+            <Typography
+              className="facet-drawer__container__paper__search__result"
+              color="textSecondary"
+              gutterBottom
+            >
+              {this.props.finds.length} search results.
+            </Typography>
+          }
         </Paper>
         {
           this.props.filters.length > 0 &&
@@ -205,7 +253,7 @@ class FacetDrawer extends Component {
             {sideList}
           </div>
         </Drawer>
-        <Button onClick={this.onToggleDrawerPressed(true)}>Open Left</Button>
+        <Icon className="nearby__tool-bar__icon" onClick={this.onToggleDrawerPressed(true)}>tune</Icon>
       </div>
 
     );
@@ -217,7 +265,12 @@ const ENTER = 'Enter';
 const CRITERIA_TITLE = 'title';
 
 const mapStateToProps = (state) => ({
-  filters: state.facetFilters
+  filters: state.facetFilters,
+  materials: materialSelector(state),
+  types: typeSelector(state),
+  periods: periodSelector(state),
+  municipalities: municipalitySelector(state),
+  finds: findsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
