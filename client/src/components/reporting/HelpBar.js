@@ -7,7 +7,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  Button
+  Button,
+  Paper
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import { changeQuestion } from '../../actions/report';
@@ -36,7 +37,7 @@ class HelpBar extends Component {
   render() {
     return (
       <div className="help-bar">
-        <div className="help-bar__button-panel">
+        <Paper className="help-bar__button-panel">
           <Button
             disabled={!this.props.hasBackStep}
             onClick={this.onBackButtonPressed}
@@ -58,7 +59,7 @@ class HelpBar extends Component {
             {intl.get('report.skip')}
             <Icon>navigate_next</Icon>
           </Button>
-        </div>
+        </Paper>
         <Dialog
           open={this.state.open}
           onClose={this.onClosePressed}
@@ -67,7 +68,7 @@ class HelpBar extends Component {
           <DialogTitle id="dialog-title">Help</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {intl.get(this.props.currentQuestion.help)}
+              {this.props.currentQuestion.help && intl.get(this.props.currentQuestion.help)}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

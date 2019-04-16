@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import { Stepper, Step, StepLabel } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 
 const StepMaker = (props) => {

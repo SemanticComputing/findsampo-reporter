@@ -4,6 +4,14 @@
   margin: 0.5rem;
   align-items: center;
   flex: 1;
+  & &__paper {
+    align-self: stretch;
+    margin-top: 0.1rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
   & &__icon {
     color: grey;
     font-size: 6rem;
@@ -22,6 +30,7 @@
       align-self: stretch;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
     &__divider {
       height: 2px;

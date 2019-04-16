@@ -89,7 +89,7 @@ class PhotoRenderer extends Component {
   render() {
     return (
       <div className="photo-renderer">
-        <Icon onClick={this.onOpenPhotoDialogPressed} className="photo-renderer__icon">add</Icon>
+        <Icon onClick={this.onOpenPhotoDialogPressed} className="photo-renderer__icon">add_a_photo</Icon>
         <Dialog
           onClose={this.onOpenPhotoDialogPressed}
           aria-labelledby="photo-dialog"

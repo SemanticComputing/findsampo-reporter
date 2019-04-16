@@ -33,7 +33,6 @@ export default {
     },
     {
       step: 1,
-      icon: 'assignment-alert',
       question: 'report.questionOne.question',
       help: 'report.questionOne.help',
       backStep: 0,
@@ -100,7 +99,6 @@ export default {
     },
     {
       step: 4,
-      icon: 'date_range',
       question: 'report.questionFour.question',
       help: 'report.questionFour.help',
       backStep: 3,
@@ -117,7 +115,6 @@ export default {
     },
     {
       step: 5,
-      icon: 'announcement',
       question: 'report.questionFive.question',
       help: 'report.questionFive.help',
       backStep: 4,
@@ -135,7 +132,6 @@ export default {
     },
     {
       step: 6,
-      icon: 'photo_camera',
       question: 'report.questionSix.question',
       help: 'report.questionSix.help',
       backStep: 5,
@@ -154,7 +150,6 @@ export default {
     },
     {
       step: 7,
-      icon: 'place',
       question: 'report.questionSeven.question',
       help: 'report.questionSeven.help',
       backStep: 2,
@@ -173,7 +168,6 @@ export default {
     },
     {
       step: 8,
-      icon: 'place',
       question: 'report.questionEight.question',
       help: 'report.questionEight.help',
       backStep: 7,
@@ -187,7 +181,6 @@ export default {
     },
     {
       step: 9,
-      icon: 'photo_camera',
       question: 'report.questionNine.question',
       help: 'report.questionNine.help',
       backStep: 6,
@@ -206,7 +199,6 @@ export default {
     },
     {
       step: 10,
-      icon: 'more',
       question: 'report.questionTen.question',
       help: 'report.questionTen.help',
       backStep: 9,
@@ -225,7 +217,6 @@ export default {
     },
     {
       step: 11,
-      icon: 'wb_incandescent',
       question: 'report.questionEleven.question',
       help: 'report.questionEleven.help',
       backStep: 10,
@@ -264,7 +255,6 @@ export default {
     },
     {
       step: 13,
-      icon: 'line_style',
       question: 'report.questionThirteen.question',
       help: 'report.questionThirteen.help',
       backStep: 12,
@@ -284,7 +274,6 @@ export default {
     },
     {
       step: 14,
-      icon: 'vertical_align_bottom',
       question: 'report.questionFourteen.question',
       help: 'report.questionFourteen.help',
       backStep: 13,
@@ -302,7 +291,6 @@ export default {
     },
     {
       step: 15,
-      icon: 'add_circle_outline',
       question: 'report.questionFifteen.question',
       help: 'report.questionFifteen.help',
       backStep: 14,
