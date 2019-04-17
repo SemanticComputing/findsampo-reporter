@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FormControlLabel, Switch, CircularProgress, Paper } from '@material-ui/core';
+import { FormControlLabel, Switch, CircularProgress, Paper, Icon } from '@material-ui/core';
 import Map from './map/Map';
 import Table from './table/Table';
 import FacetDrawer from './FacetDrawer';
 import findsSelector from '../selectors/facet/facetFinds';
 import { getValidatedFinds } from '../actions/find';
+import { isDesktopScreen, isMobileScreen } from '../helpers/functions/functions';
 
 class NearbyPage extends Component {
   state = {
@@ -21,12 +22,16 @@ class NearbyPage extends Component {
     this.setState((prevState) => ({ showMap: !prevState.showMap }));
   }
 
+  onToggleDrawerPressed = () => {
+    this.setState((prevState) => ({ isFacetOpen: !prevState.isFacetOpen }));
+  };
+
   render() {
     return (
       <div className="nearby">
         <div className="nearby__tool-bar">
           <Paper className="nearby__tool-bar__paper" elevation={1}>
-            <FacetDrawer isOpen={this.state.isFacetOpen} />
+            <Icon className="nearby__tool-bar__icon" onClick={this.onToggleDrawerPressed}>tune</Icon>
             <FormControlLabel
               className="nearby__tool-bar__form-control-label"
               labelPlacement="start"
@@ -44,11 +49,21 @@ class NearbyPage extends Component {
         <div className="nearby__map">
           {
             this.props.finds ? (
-              this.state.showMap ? (
-                <Map markerData={this.props.finds} />
-              ) : (
-                <Table tableData={convertToTableData(this.props.finds)} />
-              )
+              <div className="nearby__map__container">
+                <FacetDrawer toggleHandler={this.onToggleDrawerPressed} open={this.state.isFacetOpen} />
+                <div
+                  className={this.state.isFacetOpen && isDesktopScreen(window) ?
+                    'nearby__map__container__find-content--shifted' :
+                    isMobileScreen(window) ? 'nearby__map__container__find-content--mobile' : 'nearby__map__container__find-content'
+                  }
+                >
+                  {this.state.showMap ? (
+                    <Map markerData={this.props.finds} />
+                  ) : (
+                    <Table tableData={convertToTableData(this.props.finds)} />
+                  )}
+                </div>
+              </div>
             ) : (
               <CircularProgress className="nearby__map__progress" size="5rem" />
             )

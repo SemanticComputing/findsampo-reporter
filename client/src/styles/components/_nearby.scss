@@ -22,6 +22,27 @@
   &__map {
     flex: 14; 
     display: flex;
+    &__container {
+      flex: 1;
+      display: flex;
+      &__find-content {
+        flex: 1;
+        display: flex;
+        flex-grow: 1;
+        transition: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+        margin-left: -$size-drawer-left-margin;
+        &--shifted {
+          flex: 1;
+          display: flex;
+          transition: margin 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+          margin-left: 0
+        }
+      }
+      &__find-content--mobile {
+        flex: 1;
+        display: flex;
+      }
+    }
     &__progress {
       margin: auto;
     }

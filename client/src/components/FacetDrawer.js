@@ -19,6 +19,7 @@ import {
 import { setFacetFilter, removeFacetFilter, emptyFacetFilter } from '../actions/facetFilter';
 import { FacetFilters } from '../helpers/enum/enums';
 import findsSelector from '../selectors/facet/facetFinds';
+import { isDesktopScreen } from '../helpers/functions/functions';
 import {
   materialSelector,
   typeSelector,
@@ -28,7 +29,7 @@ import {
 
 class FacetDrawer extends Component {
   state = {
-    open: false,
+    open: this.props.open || false,
     searchText: '',
     facetCriteria: [
       { criteria: FacetFilters.TYPE, label: 'Type' },
@@ -38,9 +39,15 @@ class FacetDrawer extends Component {
     ]
   };
 
-  onToggleDrawerPressed = (open) => () => {
-    this.setState({ open });
-  };
+  static getDerivedStateFromProps(props, state) {
+    // Change values only if type is changed
+    if (props.open !== state.open) {
+      return {
+        open: props.open
+      };
+    }
+    return null;
+  }
 
   onDeleteFiltersPressed = () => {
     this.props.emptyFacetFilter();
@@ -119,7 +126,7 @@ class FacetDrawer extends Component {
         {items.map((label, index) => {
           const incidence = this.getFilterIncidence(criteria, label);
           return (
-            incidence > 0 &&
+            //incidence > 0 &&
             <ListItem
               key={index}
               role={undefined}
@@ -168,9 +175,14 @@ class FacetDrawer extends Component {
     const sideList = (
       <div className="facet-drawer__container">
         <Paper className="facet-drawer__container__paper">
-          <Typography variant="overline">
-            Faceted Search
-          </Typography>
+          <div className="facet-drawer__container__paper__search-label">
+            <Typography variant="overline">
+              Faceted Search
+            </Typography>
+            <IconButton onClick={this.props.toggleHandler}>
+              <Icon>arrow_back_ios</Icon>
+            </IconButton>
+          </div>
           <TextField
             className="facet-drawer__container__paper__search"
             margin="normal"
@@ -242,20 +254,22 @@ class FacetDrawer extends Component {
     );
 
     return (
-      <div>
-        <Drawer open={this.state.open} onClose={this.onToggleDrawerPressed(false)} className="facet-drawer">
-          <div
-            tabIndex={0}
-            role="button"
-          //onClick={this.toggleDrawer(false)}
-          //onKeyDown={this.toggleDrawer(false)}
-          >
-            {sideList}
-          </div>
-        </Drawer>
-        <Icon className="nearby__tool-bar__icon" onClick={this.onToggleDrawerPressed(true)}>tune</Icon>
-      </div>
-
+      <Drawer
+        variant={isDesktopScreen(window) ? 'persistent' : 'temporary'}
+        anchor="left"
+        open={this.state.open}
+        onClose={this.props.toggleHandler}
+        className="facet-drawer"
+      >
+        <div
+          tabIndex={0}
+          role="button"
+        //onClick={this.toggleDrawer(false)}
+        //onKeyDown={this.toggleDrawer(false)}
+        >
+          {sideList}
+        </div>
+      </Drawer>
     );
   }
 }
