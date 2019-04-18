@@ -27,6 +27,11 @@ class Map extends Component {
     } else {
       this.renderMap();
     }
+    window.addEventListener('map-resized', this.onMapResized);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('map-resized', this.onMapResized);
   }
 
   componentDidUpdate(prevProps) {
@@ -151,6 +156,16 @@ class Map extends Component {
     this.layerGroup.clearLayers();
   }
 
+  /**
+   * Called when map container size is changed. It re-renders needed parts of the map
+   */
+  onMapResized = () => {
+    this.map.invalidateSize(true);
+  }
+
+  /**
+   * Shows the markers on the map
+   */
   showMarkersOnMap = (markerData) => {
     this.markers = L.markerClusterGroup();
     for (let marker of markerData) {
@@ -164,6 +179,9 @@ class Map extends Component {
     this.map.addLayer(this.markers);
   }
 
+  /**
+   * Generates marker popup
+   */
   generateMarkerPopup = (marker) => {
     let popupText = '';
     const image = marker.image_url ? `<img class="leaflet-popup-content__image" src=${marker.image_url.value} />` : '';

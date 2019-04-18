@@ -24,7 +24,14 @@ class NearbyPage extends Component {
 
   onToggleDrawerPressed = () => {
     this.setState((prevState) => ({ isFacetOpen: !prevState.isFacetOpen }));
+    this.sendMapResizedEvent();
   };
+
+  sendMapResizedEvent = () => {
+    // Create the event and dispach it
+    const event = new CustomEvent('map-resized');
+    window.dispatchEvent(event);
+  }
 
   render() {
     return (

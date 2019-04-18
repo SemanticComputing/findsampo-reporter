@@ -133,7 +133,6 @@ class FacetDrawer extends Component {
               dense
               button
               className="facet-drawer__container__paper__list__list-item"
-            /*onClick={this.handleToggle(value)}*/
             >
               <Checkbox
                 checked={this.props.filters.filter(f => f.criteria === criteria && f.label === label).length > 0}
@@ -259,13 +258,11 @@ class FacetDrawer extends Component {
         anchor="left"
         open={this.state.open}
         onClose={this.props.toggleHandler}
-        className="facet-drawer"
+        className={this.state.open ? 'facet-drawer' : 'facet-drawer facet-drawer--no-facet'}
       >
         <div
           tabIndex={0}
           role="button"
-        //onClick={this.toggleDrawer(false)}
-        //onKeyDown={this.toggleDrawer(false)}
         >
           {sideList}
         </div>
