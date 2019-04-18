@@ -124,7 +124,7 @@ class FacetDrawer extends Component {
     return (
       <List className="facet-drawer__container__paper__list">
         {items.map((label, index) => {
-          const incidence = this.getFilterIncidence(criteria, label);
+          //const incidence = this.getFilterIncidence(criteria, label);
           return (
             //incidence > 0 &&
             <ListItem
@@ -147,7 +147,6 @@ class FacetDrawer extends Component {
                 primary={label}
               />
               <Avatar className="facet-drawer__container__paper__list__list-item__avatar">
-                {incidence}
               </Avatar>
             </ListItem>
           );
