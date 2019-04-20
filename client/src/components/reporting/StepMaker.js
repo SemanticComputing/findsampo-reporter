@@ -8,7 +8,7 @@ const StepMaker = (props) => {
   const activeStep = getCurrentStep(props.currentStep);
   return (
     <div className="step-maker">
-      <Stepper activeStep={activeStep} alternativeLabel>
+      <Stepper className="step-maker__container" activeStep={activeStep} alternativeLabel>
         {steps.map(label => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
