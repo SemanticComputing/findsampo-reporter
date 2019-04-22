@@ -18,14 +18,8 @@ import {
 } from '@material-ui/core';
 import { setFacetFilter, removeFacetFilter, emptyFacetFilter } from '../actions/facetFilter';
 import { FacetFilters } from '../helpers/enum/enums';
-import findsSelector from '../selectors/facet/facetFinds';
+import findsSelector from '../selectors/facet/facetResults';
 import { isDesktopScreen } from '../helpers/functions/functions';
-import {
-  materialSelector,
-  typeSelector,
-  municipalitySelector,
-  periodSelector
-} from '../selectors/facet/facetItems';
 
 class FacetDrawer extends Component {
   state = {
@@ -96,37 +90,25 @@ class FacetDrawer extends Component {
     }
   }
 
-  getCriterias = (filter) => {
+  getFacetResult = (filter) => {
     switch (filter) {
       case FacetFilters.MATERIAL:
-        return this.props.materials;
+        return this.props.finds.materials;
       case FacetFilters.TYPE:
-        return this.props.types;
+        return this.props.finds.types;
       case FacetFilters.PERIOD:
-        return this.props.periods;
+        return this.props.finds.periods;
       case FacetFilters.MUNICIPALITY:
-        return this.props.municipalities;
+        return this.props.finds.municipalities;
     }
   }
 
-  getFilterIncidence = (criteria, label) => {
-    const insidence = this.props.finds.filter((f) => {
-      if (f[criteria]) {
-        return f[criteria].value === label;
-      }
-      return false;
-    });
-    return insidence.length;
-  }
-
   renderCheckboxList = (criteria) => {
-    const items = this.getCriterias(criteria);
+    const items = this.getFacetResult(criteria);
     return (
       <List className="facet-drawer__container__paper__list">
         {items.map((label, index) => {
-          //const incidence = this.getFilterIncidence(criteria, label);
           return (
-            //incidence > 0 &&
             <ListItem
               key={index}
               role={undefined}
@@ -135,18 +117,19 @@ class FacetDrawer extends Component {
               className="facet-drawer__container__paper__list__list-item"
             >
               <Checkbox
-                checked={this.props.filters.filter(f => f.criteria === criteria && f.label === label).length > 0}
+                checked={this.props.filters.filter(f => f.criteria === criteria && f.label === label.value).length > 0}
                 tabIndex={-1}
                 disableRipple
                 className="facet-drawer__container__paper__list__list-item__checkbox"
                 color="primary"
-                onClick={this.onCheckboxPressed(criteria, label)}
+                onClick={this.onCheckboxPressed(criteria, label.value)}
               />
               <ListItemText
                 className="facet-drawer__container__paper__list__list-item__text"
-                primary={label}
+                primary={label.value}
               />
               <Avatar className="facet-drawer__container__paper__list__list-item__avatar">
+                {label.count}
               </Avatar>
             </ListItem>
           );
@@ -211,13 +194,13 @@ class FacetDrawer extends Component {
             }}
           />
           {
-            this.props.finds &&
+            this.props.finds.results &&
             <Typography
               className="facet-drawer__container__paper__search__result"
               color="textSecondary"
               gutterBottom
             >
-              {this.props.finds.length} search results.
+              {this.props.finds.results.length} search results.
             </Typography>
           }
         </Paper>
@@ -276,10 +259,6 @@ const CRITERIA_TITLE = 'title';
 
 const mapStateToProps = (state) => ({
   filters: state.facetFilters,
-  materials: materialSelector(state),
-  types: typeSelector(state),
-  periods: periodSelector(state),
-  municipalities: municipalitySelector(state),
   finds: findsSelector(state)
 });
 

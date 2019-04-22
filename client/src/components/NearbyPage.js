@@ -4,7 +4,7 @@ import { FormControlLabel, Switch, CircularProgress, Paper, Icon } from '@materi
 import Map from './map/Map';
 import Table from './table/Table';
 import FacetDrawer from './FacetDrawer';
-import findsSelector from '../selectors/facet/facetFinds';
+import findsSelector from '../selectors/facet/facetResults';
 import { getValidatedFinds } from '../actions/find';
 import { isDesktopScreen, isMobileScreen } from '../helpers/functions/functions';
 
@@ -55,7 +55,7 @@ class NearbyPage extends Component {
         </div>
         <div className="nearby__map">
           {
-            this.props.finds ? (
+            this.props.finds.results ? (
               <div className="nearby__map__container">
                 <FacetDrawer toggleHandler={this.onToggleDrawerPressed} open={this.state.isFacetOpen} />
                 <div
@@ -65,9 +65,9 @@ class NearbyPage extends Component {
                   }
                 >
                   {this.state.showMap ? (
-                    <Map markerData={this.props.finds} />
+                    <Map markerData={this.props.finds.results} />
                   ) : (
-                    <Table tableData={convertToTableData(this.props.finds)} />
+                    <Table tableData={convertToTableData(this.props.finds.results)} />
                   )}
                 </div>
               </div>
