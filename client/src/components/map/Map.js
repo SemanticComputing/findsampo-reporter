@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import L from 'leaflet';
+import 'leaflet.heat/dist/leaflet-heat.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
@@ -9,6 +10,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { setCoordinates } from '../../actions/findNotification';
+import { MapMode } from '../../helpers/enum/enums';
 
 /**
  * Parameters
@@ -35,8 +37,9 @@ class Map extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.markerData !== this.props.markerData) {
-      this.markers.clearLayers();
+    if (prevProps.markerData !== this.props.markerData || this.props.mode) {
+      this.clusterMap.clearLayers();
+      this.heatMap.setLatLngs([]);
       this.showMarkersOnMap(this.props.markerData);
     }
   }
@@ -167,16 +170,47 @@ class Map extends Component {
    * Shows the markers on the map
    */
   showMarkersOnMap = (markerData) => {
-    this.markers = L.markerClusterGroup();
+    // Cluster Mode
+    this.clusterMap = L.markerClusterGroup();
+    const latLngs = [];
+
     for (let marker of markerData) {
       if (marker.lat && marker.long && !isNaN(marker.lat.value) && !isNaN(marker.long.value)) {
         const popupText = this.generateMarkerPopup(marker);
-        const markerToMap = new L.marker(new L.LatLng(marker.lat.value, marker.long.value))
-          .bindPopup(popupText);
-        this.markers.addLayer(markerToMap);
+        const location = new L.LatLng(marker.lat.value, marker.long.value);
+        const markerToMap = new L.marker(location).bindPopup(popupText);
+        latLngs.push(location);
+        this.clusterMap.addLayer(markerToMap);
       }
     }
-    this.map.addLayer(this.markers);
+
+    // HeatMap Mode
+    this.heatMap = L.heatLayer(latLngs, {
+      radius: 15,
+      minOpacity: 1.0,
+      blur: 25,
+      maxZoom: 13,
+      gradient: {
+        0: '#66ff00',
+        0.1: '#66ff00',
+        0.2: '#93ff00',
+        0.3: '#c1ff00',
+        0.4: '#eeff00',
+        0.5: '#f4e300',
+        0.6: '#f9c600',
+        0.7: '#ffaa00',
+        0.8: '#ff7100',
+        0.9: '#ff3900',
+        1: '#ff0000'
+      }
+    });
+
+    // Show the current mode layer
+    if (this.props.mode && this.props.mode === MapMode.HEATMAP) {
+      this.map.addLayer(this.heatMap);
+    } else {
+      this.map.addLayer(this.clusterMap);
+    }
   }
 
   /**

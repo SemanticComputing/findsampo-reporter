@@ -53,3 +53,8 @@ export const FacetFilters = Object.freeze({
   MUNICIPALITY: 'municipality',
   PERIOD: 'period',
 });
+
+export const MapMode = Object.freeze({
+  HEATMAP: 'heat-map',
+  CLUSTURED_MAP: 'clustured-map'
+});
