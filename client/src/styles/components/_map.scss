@@ -29,4 +29,10 @@
   & .leaflet-popup-close-button {
     font-size: 1.5rem;
   }
+  & .leaflet-control-zoominfo-info {
+    margin-left: -10px;
+  }
+  & .leaflet-control {
+    border: 4px solid rgba(0,0,0,0.3);
+  }  
 }

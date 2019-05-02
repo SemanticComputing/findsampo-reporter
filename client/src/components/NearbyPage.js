@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CircularProgress, Paper, Icon, Tabs, Tab } from '@material-ui/core';
+import { CircularProgress, Paper, Icon, Tabs, Tab, IconButton } from '@material-ui/core';
 import Map from './map/Map';
 import Table from './table/Table';
 import FacetDrawer from './FacetDrawer';
@@ -40,7 +40,7 @@ class NearbyPage extends Component {
 
   renderSelectedMode = () => {
     if (this.state.mode == 0) {
-      return <Map markerData={this.props.finds.results} mode={MapMode.CLUSTURED_MAP}/>;
+      return <Map markerData={this.props.finds.results} mode={MapMode.CLUSTURED_MAP} />;
     } else if (this.state.mode == 1) {
       return <Map markerData={this.props.finds.results} mode={MapMode.HEATMAP} />;
     } else {
@@ -53,7 +53,9 @@ class NearbyPage extends Component {
       <div className="nearby">
         <div className="nearby__tool-bar">
           <Paper className="nearby__tool-bar__paper" elevation={1}>
-            <Icon className="nearby__tool-bar__icon" onClick={this.onToggleDrawerPressed}>tune</Icon>
+            <IconButton color="primary" onClick={this.onToggleDrawerPressed} component="span">
+              <Icon className="nearby__tool-bar__icon" >tune</Icon>
+            </IconButton>
             <div>
               <Tabs
                 value={this.state.mode}
@@ -62,9 +64,9 @@ class NearbyPage extends Component {
                 indicatorColor="primary"
                 textColor="primary"
               >
-                <Tab icon={<Icon>map</Icon>} label="MAP" className="nearby__tool-bar__paper__tabs__tab"/>
-                <Tab icon={<Icon>wb_sunny</Icon>} label="HEATMAP" className="nearby__tool-bar__paper__tabs__tab"/>
-                <Tab icon={<Icon>table_chart</Icon>} label="TABLE" className="nearby__tool-bar__paper__tabs__tab"/>
+                <Tab icon={<Icon>map</Icon>} label="MAP" className="nearby__tool-bar__paper__tabs__tab" />
+                <Tab icon={<Icon>wb_sunny</Icon>} label="HEATMAP" className="nearby__tool-bar__paper__tabs__tab" />
+                <Tab icon={<Icon>table_chart</Icon>} label="TABLE" className="nearby__tool-bar__paper__tabs__tab" />
               </Tabs>
             </div>
           </Paper>

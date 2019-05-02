@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import L from 'leaflet';
 import 'leaflet.heat/dist/leaflet-heat.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
+import 'leaflet.zoominfo/dist/L.Control.Zoominfo.js';
+import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min.js';
+
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import 'leaflet.zoominfo/dist/L.Control.Zoominfo.css';
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
+
 import icon from 'leaflet/dist/images/marker-icon.png';
+import 'leaflet-fullscreen/dist/fullscreen.png';
+
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { setCoordinates } from '../../actions/findNotification';
@@ -29,6 +38,7 @@ class Map extends Component {
     } else {
       this.renderMap();
     }
+    // Event listener which listens for map resize changes.
     window.addEventListener('map-resized', this.onMapResized);
   }
 
@@ -84,24 +94,39 @@ class Map extends Component {
    * Initialise map settings for leaflet
    */
   initialiseMap = () => {
+
+    const openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+
+    // Create a layergroup for adding markers
+    this.layerGroup = L.layerGroup();
+
+    // Base maps 
+    const baseMaps = {
+      'Open Street Map': openStreetMap
+    };
+
+    // Overlay Maps
+    const overlayMaps = {
+      'Archaeological Finds': this.layerGroup
+    };
+
     this.map = L.map('map', {
       center: [62.24147, 25.72088],
       zoom: 5,
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,
+      layers: [openStreetMap]
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
+    L.control.layers(baseMaps, overlayMaps).addTo(this.map);
+    this.layerGroup.addTo(this.map);
 
-    // Create a layergroup for adding markers
-    this.layerGroup = L.layerGroup().addTo(this.map);
-
-    // Add a listener for click events
-    // Listener is setted only if user's current location is viewed
+    // Add a click listener which is setted only if user's current location is viewed
     if (this.props.showCurrentLocation && this.state.hasCurrentLocation) {
       this.map.addEventListener('click', this.onMapTapped);
     }
@@ -209,7 +234,8 @@ class Map extends Component {
     if (this.props.mode && this.props.mode === MapMode.HEATMAP) {
       this.map.addLayer(this.heatMap);
     } else {
-      this.map.addLayer(this.clusterMap);
+      this.layerGroup.addLayer(this.clusterMap);
+      //this.map.addLayer(this.clusterMap);
     }
   }
 
@@ -231,8 +257,6 @@ class Map extends Component {
 
     return popupText;
   }
-
-
 }
 
 const mapDispatchToProps = (dispatch) => ({
