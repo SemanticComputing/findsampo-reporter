@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import L from 'leaflet';
+import 'leaflet-wms-header';
 import 'leaflet.heat/dist/leaflet-heat.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import 'leaflet.zoominfo/dist/L.Control.Zoominfo.js';
@@ -100,13 +101,27 @@ class Map extends Component {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
 
+    const maanMittausLaitos = L.TileLayer.wmsHeader(
+      'https://karttakuva.maanmittauslaitos.fi/maasto/wmts/1.0.0/WMTS?request=GetTile&style=default&TileMatrixSet=WGS84_Pseudo-Mercator&TileMatrix={z}&TileRow={y}&TileCol={x}',
+      {
+        layers: 'taustakartta',
+        format: 'image/png',
+        transparent: true,
+      },
+      [
+        { header: 'Authorization', value: 'JWT ' },
+        { header: 'content-type', value: 'text/plain' },
+      ]
+    );
+
 
     // Create a layergroup for adding markers
     this.layerGroup = L.layerGroup();
 
     // Base maps 
     const baseMaps = {
-      'Open Street Map': openStreetMap
+      'Open Street Map': openStreetMap,
+      'Maanmittauslaitos': maanMittausLaitos
     };
 
     // Overlay Maps
@@ -120,7 +135,7 @@ class Map extends Component {
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,
-      layers: [openStreetMap]
+      layers: [openStreetMap, maanMittausLaitos]
     });
 
     L.control.layers(baseMaps, overlayMaps).addTo(this.map);

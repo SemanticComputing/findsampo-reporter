@@ -14,7 +14,14 @@ const Table = (props) => {
   return (
     <div className="table">
       <MaterialTable
-        columns={[ // FIXME
+        columns={[ // TODO: Add translations
+          {
+            title: 'Preview Image',
+            field: 'image',
+            render: rowData => rowData.image ?
+              <img src={rowData.image} className="table__column__icon"/> : 
+              <Icon className="table__column__icon">crop_original</Icon>
+          },
           { title: 'Title', field: 'title' },
           { title: 'Material', field: 'material' },
           { title: 'Type', field: 'type' },

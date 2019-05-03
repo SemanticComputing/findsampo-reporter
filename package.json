@@ -23,7 +23,7 @@
     "leaflet.markercluster": "^1.4.1",
     "leaflet.zoominfo": "git+https://github.com/SemanticComputing/Leaflet.zoominfo.git",
     "lodash": "^4.17.11",
-    "material-table": "^1.30.0",
+    "material-table": "^1.35.0",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",

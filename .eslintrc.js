@@ -21,7 +21,8 @@ module.exports = {
       'no-console': 'off',
       'react/jsx-uses-vars': ['error'],
       'space-infix-ops': ['error', {'int32Hint': true}],
-      "react/prop-types": 0
+      'react/prop-types': 0,
+      'react/display-name': 'off'
     },
     'env': {
       'es6': true,
