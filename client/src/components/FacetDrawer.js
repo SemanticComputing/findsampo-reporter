@@ -118,6 +118,7 @@ class FacetDrawer extends Component {
             >
               <Checkbox
                 checked={this.props.filters.filter(f => f.criteria === criteria && f.label === label.value).length > 0}
+                disabled={label.count <= 0}
                 tabIndex={-1}
                 disableRipple
                 className="facet-drawer__container__paper__list__list-item__checkbox"
@@ -125,10 +126,18 @@ class FacetDrawer extends Component {
                 onClick={this.onCheckboxPressed(criteria, label.value)}
               />
               <ListItemText
-                className="facet-drawer__container__paper__list__list-item__text"
+                className={label.count <= 0 ?
+                  'facet-drawer__container__paper__list__list-item__text disabled' :
+                  'facet-drawer__container__paper__list__list-item__text'
+                }
                 primary={label.value}
               />
-              <Avatar className="facet-drawer__container__paper__list__list-item__avatar">
+              <Avatar
+                className={label.count <= 0 ?
+                  'facet-drawer__container__paper__list__list-item__avatar disabled' :
+                  'facet-drawer__container__paper__list__list-item__avatar'
+                }
+              >
                 {label.count}
               </Avatar>
             </ListItem>
