@@ -14,7 +14,10 @@ import {
   Checkbox,
   Avatar,
   Chip,
-  IconButton
+  IconButton,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails
 } from '@material-ui/core';
 import { setFacetFilter, removeFacetFilter, emptyFacetFilter } from '../actions/facetFilter';
 import { FacetFilters } from '../helpers/enum/enums';
@@ -150,14 +153,16 @@ class FacetDrawer extends Component {
   renderFacetCriteria = () => {
     return (
       this.state.facetCriteria.map((f) =>
-        <Paper key={f.criteria} className="facet-drawer__container__paper">
-          <Typography variant="overline">
-            {f.label}
+        <ExpansionPanel key={f.criteria} className="facet-drawer__container__paper">
+          <ExpansionPanelSummary expandIcon={<Icon>keyboard_arrow_down</Icon>}>
+            <Typography className="overline">{f.label}</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
             <Paper className="facet-drawer__container__paper__list-paper" elevation={1}>
               {this.renderCheckboxList(f.criteria)}
             </Paper>
-          </Typography>
-        </Paper>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
       ));
   }
 
