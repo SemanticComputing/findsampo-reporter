@@ -1,0 +1,18 @@
+.footer {
+  &__toolbar {
+    justify-content: space-between;
+  }
+  &__link {
+    padding: 0.5rem;
+  }
+  &__img {
+    height: 3rem;
+  }
+  &__img-small{
+    height: 2rem;
+  } 
+  &__logo-container {
+    display: flex;
+    align-items: center;
+  }
+}
