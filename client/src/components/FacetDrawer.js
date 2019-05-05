@@ -153,7 +153,7 @@ class FacetDrawer extends Component {
   renderFacetCriteria = () => {
     return (
       this.state.facetCriteria.map((f) =>
-        <ExpansionPanel key={f.criteria} className="facet-drawer__container__paper">
+        <ExpansionPanel key={f.criteria} className="facet-drawer__container__paper facet-drawer__container__panel">
           <ExpansionPanelSummary expandIcon={<Icon>keyboard_arrow_down</Icon>}>
             <Typography className="overline">{f.label}</Typography>
           </ExpansionPanelSummary>

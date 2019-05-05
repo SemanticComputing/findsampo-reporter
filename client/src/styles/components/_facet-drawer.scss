@@ -62,6 +62,9 @@
         }
       }
     }
+    &__panel {
+      padding: 1rem 0;
+    }
     &__filter-box {
       display: flex;
       flex-direction: column;
