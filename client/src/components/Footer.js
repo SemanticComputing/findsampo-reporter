@@ -53,7 +53,7 @@ const Footer = () => {
                 target='_blank'
                 rel='noopener noreferrer'
               >
-                <img className="footer__img" src="images/logos/logo_fha-compressor.png" alt='FHA logo' />
+                <img className="footer__img footer__img-medium" src="images/logos/logo_fha-compressor.png" alt='FHA logo' />
               </a>
             </div>
             <div className="footer__social-media-container">
