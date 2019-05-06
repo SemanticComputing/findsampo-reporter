@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import firebase from './firebase/firebase';
 import { logout, loginLoggedUser } from './actions/auth';
 import { setLocale } from './actions/locale';
+import { isDesktopScreen, isMobileScreen } from './helpers/functions/functions';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
@@ -39,7 +41,26 @@ store.dispatch(setLocale(lang));
 const jsx = (
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
-      <AppRouter />
+      <SnackbarProvider
+        maxSnack={3}
+        preventDuplicate={true}
+        dense={isMobileScreen(window)}
+        anchorOrigin={
+          isDesktopScreen(window) ?
+            {
+              vertical: 'top',
+              horizontal: 'right',
+            }
+            :
+            {
+              vertical: 'bottom',
+              horizontal: 'center',
+            }
+        }
+        transitionDuration={{ exit: 380, enter: 400 }}
+      >
+        <AppRouter />
+      </SnackbarProvider>
     </Provider>
   </MuiThemeProvider>
 );

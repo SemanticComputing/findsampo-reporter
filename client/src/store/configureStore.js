@@ -4,6 +4,7 @@ import { createLogicMiddleware } from 'redux-logic';
 import auth from '../reducers/auth';
 import locale from '../reducers/locale';
 import report from '../reducers/report';
+import notifier from '../reducers/notifier';
 import findNotification from '../reducers/findNotification';
 import finds from '../reducers/find';
 import facetFilters from '../reducers/facetFilter';
@@ -22,6 +23,7 @@ export default () => {
   const store = createStore(
     combineReducers({
       locale,
+      notifier,
       auth,
       report,
       findNotification,

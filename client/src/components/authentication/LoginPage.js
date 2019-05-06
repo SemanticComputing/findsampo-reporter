@@ -5,16 +5,18 @@ import {
   TextField,
   Button,
   Typography,
-  Divider,
+  Divider
   //Avatar
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import { startGoogleLogin, startEmailLogin } from '../../actions/auth';
-
+import { enqueueSnackbar, changeSnipperStatus } from '../../actions/notifier';
+import Spinner from '../Spinner';
 class LoginPage extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    isLoginInProgress: this.props.isAuthenticated || false
   };
 
   onTextFieldChange = (e) => {
@@ -25,7 +27,17 @@ class LoginPage extends Component {
 
   onLoginPress = (e) => {
     e.preventDefault();
-    this.props.startEmailLogin(this.state);
+    if (this.state.email.length <= 0 && this.state.password.length <= 0) {
+      this.props.enqueueSnackbar({
+        message: 'Password and email cannot be empty!',
+        options: {
+          variant: 'error',
+        },
+      });
+    } else {
+      this.props.startEmailLogin(this.state);
+      this.props.changeSnipperStatus(true);
+    }
   }
 
   onLogoutPress = (e) => {
@@ -60,9 +72,9 @@ class LoginPage extends Component {
           className='login-form__text-field'
         />
         <div className='login-form__button-container'>
-          <Button 
-            variant="contained" 
-            color="primary" 
+          <Button
+            variant="contained"
+            color="primary"
             onClick={this.onLoginPress}
             className='login-form__button-container__button'
           >
@@ -83,24 +95,34 @@ class LoginPage extends Component {
           <Typography variant="overline" className='login-form__button-container__typography'>
             {intl.get('loginPage.notAMemberYet')}
           </Typography>
-          <Button 
-            component={Link} 
-            to="/signup" 
-            variant="contained" 
+          <Button
+            component={Link}
+            to="/signup"
+            variant="contained"
             color="primary"
             className='login-form__button-container__button'
           >
             {intl.get('loginPage.signup')}
           </Button>
         </div>
+        {
+          this.props.isLoading &&
+          <Spinner />
+        }
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLoading: state.notifier.isLoading
+});
+
 const mapDispatchToProps = (dispatch) => ({
   startGoogleLogin: () => dispatch(startGoogleLogin()),
   startEmailLogin: (credentials) => dispatch(startEmailLogin(credentials)),
+  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
+  changeSnipperStatus: (status) => dispatch(changeSnipperStatus(status))
 });
 
-export default connect(undefined, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

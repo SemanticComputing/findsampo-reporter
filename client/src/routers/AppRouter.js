@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 import BottomNav from '../components/BottomNav';
 import { RouterPaths } from '../helpers/enum/enums';
 import Nearby from '../components/NearbyPage';
-
+import Notifier from '../components/Notifier';
 export const history = createHistory();
 
 /**
@@ -25,6 +25,7 @@ const AppRouter = () => (
     <div className="app">
       <div className="appbar">
         <Header />
+        <Notifier />
       </div>
       <div className="content">
         <Switch>

@@ -27,6 +27,7 @@
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
+    "notistack": "^0.8.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-intl-universal": "^1.15.5",

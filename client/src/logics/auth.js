@@ -7,9 +7,11 @@ import {
   AUTH_LOGOUT,
   AUTH_LOGOUT_SUCCESS,
   AUTH_SIGNUP,
-  AUTH_SIGNUP_SUCCESS
+  AUTH_SIGNUP_SUCCESS,
+  NOTIFIER_CHANGE_STATUS
 } from '../constants/actionTypes';
 import { loginLoggedUser } from '../actions/auth';
+import { enqueueSnackbar } from '../actions/notifier';
 
 // Auth Login
 const startGoogleLogin = createLogic({
@@ -30,16 +32,25 @@ const startEmailLogin = createLogic({
   type: AUTH_START_EMAIL_LOGIN,
   latest: true,
 
-  processOptions: {
-    dispatchReturn: true,
-    successType: AUTH_LOGIN_SUCCESS
-  },
-
-  process({ action }) {
+  process({ action }, dispatch, done) {
     return firebase.auth().signInWithEmailAndPassword(
       action.credentials.email,
       action.credentials.password
-    );
+    )
+      .then((res) => {
+        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false});
+        dispatch({ type: AUTH_LOGIN_SUCCESS, payload: res });
+      })
+      .catch((error) => {
+        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false});
+        dispatch(enqueueSnackbar({
+          message: error.message,
+          options: {
+            variant: 'error',
+          },
+        }));
+      })
+      .then(() => done());
   }
 });
 
