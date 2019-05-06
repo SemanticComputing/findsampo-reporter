@@ -34,11 +34,11 @@ const Table = (props) => {
           return renderDetailPanel(rowData);
         }}
         options={{
-          pageSize: 20,
-          pageSizeOptions: [20, 50, 100, 1000],
+          pageSize: 10,
+          pageSizeOptions: [10, 50, 100, 1000],
           search: false,
           showTitle: false,
-          maxBodyHeight: 1000,
+          maxBodyHeight: 600,
         }}
         onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
