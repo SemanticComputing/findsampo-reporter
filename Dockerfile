@@ -7,9 +7,6 @@ RUN mkdir /opt/app && chown node:node /opt/app
 RUN apk add --update git && \
 rm -rf /tmp/* /var/cache/apk/*
 
-# Environment variables
-ENV NLSOF_AUTH $NLSOF_AUTH
-
 WORKDIR /opt/app
 
 # Public files
@@ -35,6 +32,11 @@ COPY .env.development ./
 # Client and server files
 COPY client ./client
 COPY server ./server
+
+# Environment variables
+ARG NLSOF_AUTH
+
+ENV NLSOF_AUTH=${NLSOF_AUTH}
 
 # Run the scripts defined in package.json
 RUN yarn && yarn build:prod
