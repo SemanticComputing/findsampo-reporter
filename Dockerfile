@@ -7,6 +7,9 @@ RUN mkdir /opt/app && chown node:node /opt/app
 RUN apk add --update git && \
 rm -rf /tmp/* /var/cache/apk/*
 
+# Environment variables
+ENV NLSOF_AUTH $NLSOF_AUTH
+
 WORKDIR /opt/app
 
 # Public files
