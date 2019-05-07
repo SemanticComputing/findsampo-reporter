@@ -24,7 +24,6 @@ app.post(FIND_NOTIFICATION_END_POINT, (req, res) => {
 
 //Finds
 const FINDS_END_POINT = '/api/v1/finds';
-
 const defaultSelectHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded',
   'Accept': 'application/sparql-results+json; charset=utf-8',
@@ -46,6 +45,30 @@ app.get(FINDS_END_POINT, async (req, res, next) => {
     next(error);
   }
 });
+
+
+//National Land Survey Of Finland
+const NLSOF_END_POINT = '/api/v1/nlsof';
+const nlsofHeader = {
+  'Content-Type': 'image/png',
+  'Authorization': 'Basic ' +  process.env.NLSOF_AUTH
+};
+
+app.get(NLSOF_END_POINT, async (req, res, next) => {
+  const url = `https://karttakuva.maanmittauslaitos.fi/maasto/wmts/1.0.0/${req.query.type}/default/WGS84_Pseudo-Mercator/${req.query.z}/${req.query.y}/${req.query.x}.png`;
+  try {
+    const response = await axios({
+      method: 'get',
+      url,
+      responseType: 'arraybuffer',
+      headers: nlsofHeader,
+    });
+    res.end(response.data, 'base64');
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 // Application
 app.get('*', (req, res) => {

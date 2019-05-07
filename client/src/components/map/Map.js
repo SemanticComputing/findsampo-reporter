@@ -6,6 +6,7 @@ import 'leaflet.heat/dist/leaflet-heat.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import 'leaflet.zoominfo/dist/L.Control.Zoominfo.js';
 import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min.js';
+import 'leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant.js';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
@@ -95,19 +96,28 @@ class Map extends Component {
    */
   initialiseMap = () => {
 
-    const openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Map Layers
+    const nationalSurveyOfFinland = L.tileLayer('/api/v1/nlsof?z={z}&x={x}&y={y}&type=taustakartta', {
       maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
 
+    const nationalSurveyOfFinlandTopographical = L.tileLayer('/api/v1/nlsof?z={z}&x={x}&y={y}&type=maastokartta', {
+      maxZoom: 19,
+    });
+
+    const googleMaps = L.gridLayer.googleMutant({
+      type: 'roadmap'
+    });
+    
 
     // Create a layergroup for adding markers
     this.layerGroup = L.layerGroup();
 
     // Base maps 
     const baseMaps = {
-      'Open Street Map': openStreetMap,
-      //'Maanmittauslaitos': maanMittausLaitos
+      'Background Map (National Survey of Finland)': nationalSurveyOfFinland,
+      'Topographical Map (National Survey of Finland)': nationalSurveyOfFinlandTopographical,
+      'Google Maps': googleMaps
     };
 
     // Overlay Maps
@@ -116,13 +126,15 @@ class Map extends Component {
     };
 
     this.map = L.map('map', {
-      center: [62.24147, 25.72088],
+      center: [64.9, 26.0],
       zoom: 5,
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,
-      layers: [openStreetMap]
+      layers: [nationalSurveyOfFinland]
     });
+
+    //this.map.on('zoomend', console.log('Zoom is end'));
 
     L.control.layers(baseMaps, overlayMaps).addTo(this.map);
     this.layerGroup.addTo(this.map);
@@ -189,6 +201,7 @@ class Map extends Component {
    * Called when map container size is changed. It re-renders needed parts of the map
    */
   onMapResized = () => {
+    console.log('selam');
     this.map.invalidateSize(true);
   }
 
