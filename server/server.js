@@ -6,7 +6,15 @@ const axios = require('axios');
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3001;
+const dotenv = require('dotenv');
 
+// Define Environment Variables
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({ path: '.env.test' });
+};
+
+// Define path of static files
 app.use(express.static(publicPath));
 
 /* FIXME
@@ -31,6 +39,7 @@ const defaultSelectHeaders = {
 };
 
 app.get(FINDS_END_POINT, async (req, res, next) => {
+  console.log(process.env.FIREBASE_API_KEY)
   try {
     const query = finds.getValidatedFinds;
     const response = await axios({
