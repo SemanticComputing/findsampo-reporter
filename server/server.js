@@ -39,7 +39,6 @@ const defaultSelectHeaders = {
 };
 
 app.get(FINDS_END_POINT, async (req, res, next) => {
-  console.log(process.env.FIREBASE_API_KEY)
   try {
     const query = finds.getValidatedFinds;
     const response = await axios({
