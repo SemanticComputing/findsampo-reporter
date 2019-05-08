@@ -35,8 +35,10 @@ COPY server ./server
 
 # Environment variables
 ARG NLSOF_AUTH
+ARG FHA_FINDS_AUTH
 
 ENV NLSOF_AUTH=${NLSOF_AUTH}
+ENV FHA_FINDS_AUTH=${FHA_FINDS_AUTH}
 
 # Run the scripts defined in package.json
 RUN yarn && yarn build:prod

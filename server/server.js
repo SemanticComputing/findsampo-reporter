@@ -27,7 +27,7 @@ const FINDS_END_POINT = '/api/v1/finds';
 const defaultSelectHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded',
   'Accept': 'application/sparql-results+json; charset=utf-8',
-  'Authorization': 'Basic c2Vjbzpsb2dvczAz'
+  'Authorization': `Basic ${process.env.FHA_FINDS_AUTH}`
 };
 
 app.get(FINDS_END_POINT, async (req, res, next) => {
@@ -51,7 +51,7 @@ app.get(FINDS_END_POINT, async (req, res, next) => {
 const NLSOF_END_POINT = '/api/v1/nlsof';
 const nlsofHeader = {
   'Content-Type': 'image/png',
-  'Authorization': 'Basic ' +  process.env.NLSOF_AUTH
+  'Authorization': `Basic ${process.env.NLSOF_AUTH}`
 };
 
 app.get(NLSOF_END_POINT, async (req, res, next) => {
