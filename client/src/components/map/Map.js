@@ -29,11 +29,7 @@ import {
 import intl from 'react-intl-universal';
 import { setCoordinates } from '../../actions/findNotification';
 import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
-import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
-
-
-// TODO: REMOVE AXIOS FROM HERE AND ADD SPINNER TO MAP
-import axios from 'axios';
+import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey, fetchWMTSData } from '../../helpers/functions/functions';
 
 
 /**
@@ -207,28 +203,26 @@ class Map extends Component {
   }
 
 
-  getAncientMonument = (layer, bounds, mapLayer) => {
-    const boxBounds = `${bounds._southWest.lng},${bounds._southWest.lat},${bounds._northEast.lng},${bounds._northEast.lat}`;
-    const url = `http://kartta.nba.fi/arcgis/services/WFS/MV_Kulttuuriymparisto/MapServer/WFSServer?request=GetFeature&service=WFS&version=2.0.0&typeName=${layer}&srsName=EPSG:4326&outputformat=geojson&bbox=${boxBounds}`;
+  getAncientMonument = async (layer, bounds, mapLayer) => {
+    const features = await fetchWMTSData(layer, bounds);
 
-    axios.get(url)
-      .then((res) => {
-        L.geoJSON(res.data.features, {
-          pointToLayer: (feature, latlng) => {
-            return this.createPointToLayer(latlng, this.getOverlayColor(layer));
-          },
-          style: {
-            cursor: 'pointer',
-            color: this.getOverlayColor(layer),
-            dashArray: '3, 5'
-          },
-          onEachFeature: (feature, layer) => {
-            layer.bindPopup(this.generateFeaturePopup(feature.properties));
-          }
-        }).addTo(mapLayer).addTo(this.map);
+    if (features) {
+      L.geoJSON(features, {
+        pointToLayer: (feature, latlng) => {
+          return this.createPointToLayer(latlng, this.getOverlayColor(layer));
+        },
+        style: {
+          cursor: 'pointer',
+          color: this.getOverlayColor(layer),
+          dashArray: '3, 5'
+        },
+        onEachFeature: (feature, layer) => {
+          layer.bindPopup(this.generateFeaturePopup(feature.properties));
+        }
+      }).addTo(mapLayer).addTo(this.map);
 
-        this.setState({ isLoading: false });
-      });
+      this.setState({ isLoading: false });
+    }
   }
 
   createStripePattern = (color) => {
@@ -417,16 +411,6 @@ class Map extends Component {
     });
   }
 
-  /**
-   * 
-   */
-  generateLayerLabel = (name) => {
-    const color = this.getOverlayColor(getWMTSLayerKeyByValue(name));
-    return `
-      <div className="color-box" style="background-color:${color};"></div>
-      <span>${name}</span>
-    `;
-  }
   /**
    * Returs default color of the selected overlay
    */
