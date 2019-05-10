@@ -205,7 +205,8 @@ class Map extends Component {
 
   getAncientMonument = async (layer, bounds, mapLayer) => {
     const features = await fetchWMTSData(layer, bounds);
-
+    mapLayer.clearLayers();
+    
     if (features) {
       L.geoJSON(features, {
         pointToLayer: (feature, latlng) => {
@@ -223,19 +224,6 @@ class Map extends Component {
 
       this.setState({ isLoading: false });
     }
-  }
-
-  createStripePattern = (color) => {
-    // Create a new
-    var stripePattern = new L.StripePattern({
-      angle: 45,
-      weight: 2,
-      color: color,
-      opacity: 0.2,
-    });
-    stripePattern.addTo(this.map);
-
-    return stripePattern;
   }
 
   createPointToLayer = (latlng, color) => {
