@@ -24,6 +24,33 @@ export default {
     'alreadyAMember': 'Already a member?',
     'login': 'Log In'
   },
+  'nearByPage': {
+    'map': {
+      'mapLayers': {
+        'backGroundMap': 'Background Map (National Survey of Finland)',
+        'topographicalMap': 'Topographical Map (National Survey of Finland)',
+        'googleMaps': 'Google Maps'
+      },
+      'overLays': {
+        'arkeologiset_loydot': 'Arkeologiset löydöt',
+        'arkeologiset_kohteet_alue': 'Muinaisjäännösalueet',
+        'arkeologiset_kohteet_piste': 'Muinaisjäännöspisteet',
+        'maailmanperinto_alue': 'Maailmanperintökohteet alueet',
+        'maailmanperinto_piste': 'Maailmanperintökohteet pisteet',
+        'rakennusperinto_alue': 'Rakennusperintörekisterin suojellut alueet',
+        'rakennusperinto_piste': 'Rakennusperintörekisterin suojellut rakennukset',
+        'arkeologisten_kohteiden_alakohteet_piste': 'Muinaisjäännösten alakohteet',
+        'rky_alue': 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt alueet',
+        'rky_piste': 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt pisteet',
+        'rky_viiva': 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt viivat'
+      },
+      'alert': {
+        'zoomAlertTitle': 'Zoom Level Alert',
+        'zoomAlertContent': 'Please change the zoom level to 10 to view selected layer as shown below.',
+        'zoomAlertConfirmation': 'OK'
+      },
+    }
+  },
   'notFoundPage': {
     'pageNotFound': 'Ooops! Page Not Found!',
     'goToHomePage': 'Go To HomePage'

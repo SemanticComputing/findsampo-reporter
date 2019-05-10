@@ -34,5 +34,17 @@
   }
   & .leaflet-control {
     border: 4px solid rgba(0,0,0,0.3);
-  }  
+  }
+ & .map__data-loader-spiner {
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    color: $color-bottom-bar-icon-grey;
+  }
 }

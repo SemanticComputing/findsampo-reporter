@@ -16,11 +16,25 @@ import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 
 import icon from 'leaflet/dist/images/marker-icon.png';
 import 'leaflet-fullscreen/dist/fullscreen.png';
-
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+import {
+  CircularProgress,
+  Dialog, DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Button,
+  DialogActions
+} from '@material-ui/core';
+import intl from 'react-intl-universal';
 import { setCoordinates } from '../../actions/findNotification';
-import { MapMode } from '../../helpers/enum/enums';
+import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
+import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
+
+
+// TODO: REMOVE AXIOS FROM HERE AND ADD SPINNER TO MAP
+import axios from 'axios';
+
 
 /**
  * Parameters
@@ -31,6 +45,9 @@ import { MapMode } from '../../helpers/enum/enums';
 class Map extends Component {
   state = {
     hasCurrentLocation: false,
+    activeOverLays: [],
+    isLoading: false,
+    isDialogOpen: false
   }
 
   componentDidMount() {
@@ -39,12 +56,6 @@ class Map extends Component {
     } else {
       this.renderMap();
     }
-    // Event listener which listens for map resize changes.
-    window.addEventListener('map-resized', this.onMapResized);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('map-resized', this.onMapResized);
   }
 
   componentDidUpdate(prevProps) {
@@ -62,6 +73,30 @@ class Map extends Component {
           this.props.markerData ||
           this.props.location ? (
             <div id="map">
+              {
+                this.state.isLoading &&
+                <CircularProgress className="map__data-loader-spiner" size="5rem" />
+              }
+              <Dialog
+                open={this.state.isDialogOpen}
+                onClose={this.onDialogClosedPressed}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {intl.get('nearByPage.map.alert.zoomAlertTitle')}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    {intl.get('nearByPage.map.alert.zoomAlertContent')}
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.onDialogClosedPressed} color="primary" autoFocus>
+                    {intl.get('nearByPage.map.alert.zoomAlertConfirmation')}
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           ) : (
             <CircularProgress className="answer-options__progress" size="5rem" />
@@ -69,6 +104,11 @@ class Map extends Component {
       );
     }
   }
+
+  onDialogClosedPressed = () => {
+    this.setState((prevState) => ({ isDialogOpen: !prevState.isDialogOpen }));
+  }
+
 
   /**
    * Initialise map and its settings
@@ -95,34 +135,52 @@ class Map extends Component {
    * Initialise map settings for leaflet
    */
   initialiseMap = () => {
-
     // Map Layers
     const nationalSurveyOfFinland = L.tileLayer('/api/v1/nlsof?z={z}&x={x}&y={y}&type=taustakartta', {
-      maxZoom: 19,
+      maxZoom: 18,
     });
 
     const nationalSurveyOfFinlandTopographical = L.tileLayer('/api/v1/nlsof?z={z}&x={x}&y={y}&type=maastokartta', {
-      maxZoom: 19,
+      maxZoom: 18,
     });
 
     const googleMaps = L.gridLayer.googleMutant({
       type: 'roadmap'
     });
-    
 
     // Create a layergroup for adding markers
-    this.layerGroup = L.layerGroup();
+    this.findsLayer = L.layerGroup();
+    const archaeologicalPlacesAreaLayer = L.layerGroup();
+    const archaeologicalPlacesPointLayer = L.layerGroup();
+    const worldHeritageSiteAreaLayer = L.layerGroup();
+    const worldHeritageSitePointLayer = L.layerGroup();
+    const archaeologicalHeritageAreaLayer = L.layerGroup();
+    const archaeologicalHeritagePointLayer = L.layerGroup();
+    const archaeologicalSublacesPointLayer = L.layerGroup();
+    const rkyAreaLayer = L.layerGroup();
+    const rkyPointLayer = L.layerGroup();
+    const rkyLineLayer = L.layerGroup();
 
     // Base maps 
     const baseMaps = {
-      'Background Map (National Survey of Finland)': nationalSurveyOfFinland,
-      'Topographical Map (National Survey of Finland)': nationalSurveyOfFinlandTopographical,
-      'Google Maps': googleMaps
+      [intl.get('nearByPage.map.mapLayers.backGroundMap')]: nationalSurveyOfFinland,
+      [intl.get('nearByPage.map.mapLayers.topographicalMap')]: nationalSurveyOfFinlandTopographical,
+      [intl.get('nearByPage.map.mapLayers.googleMaps')]: googleMaps
     };
 
     // Overlay Maps
-    const overlayMaps = {
-      'Archaeological Finds': this.layerGroup
+    const overlayLayers = {
+      [intl.get('nearByPage.map.overLays.arkeologiset_loydot')]: this.findsLayer,
+      [intl.get('nearByPage.map.overLays.arkeologiset_kohteet_alue')]: archaeologicalPlacesAreaLayer,
+      [intl.get('nearByPage.map.overLays.arkeologiset_kohteet_piste')]: archaeologicalPlacesPointLayer,
+      [intl.get('nearByPage.map.overLays.maailmanperinto_alue')]: worldHeritageSiteAreaLayer,
+      [intl.get('nearByPage.map.overLays.maailmanperinto_piste')]: worldHeritageSitePointLayer,
+      [intl.get('nearByPage.map.overLays.rakennusperinto_alue')]: archaeologicalHeritageAreaLayer,
+      [intl.get('nearByPage.map.overLays.rakennusperinto_piste')]: archaeologicalHeritagePointLayer,
+      [intl.get('nearByPage.map.overLays.arkeologisten_kohteiden_alakohteet_piste')]: archaeologicalSublacesPointLayer,
+      [intl.get('nearByPage.map.overLays.rky_alue')]: rkyAreaLayer,
+      [intl.get('nearByPage.map.overLays.rky_piste')]: rkyPointLayer,
+      [intl.get('nearByPage.map.overLays.rky_viiva')]: rkyLineLayer,
     };
 
     this.map = L.map('map', {
@@ -134,15 +192,68 @@ class Map extends Component {
       layers: [nationalSurveyOfFinland]
     });
 
-    //this.map.on('zoomend', console.log('Zoom is end'));
-
-    L.control.layers(baseMaps, overlayMaps).addTo(this.map);
-    this.layerGroup.addTo(this.map);
+    // Add overlay layers to map
+    L.control.layers(baseMaps, overlayLayers).addTo(this.map);
+    // Active overlay layer
+    this.findsLayer.addTo(this.map);
 
     // Add a click listener which is setted only if user's current location is viewed
     if (this.props.showCurrentLocation && this.state.hasCurrentLocation) {
       this.map.addEventListener('click', this.onMapTapped);
     }
+
+    // Listen for changes
+    this.initialiseMapListeners(overlayLayers);
+  }
+
+
+  getAncientMonument = (layer, bounds, mapLayer) => {
+    const boxBounds = `${bounds._southWest.lng},${bounds._southWest.lat},${bounds._northEast.lng},${bounds._northEast.lat}`;
+    const url = `http://kartta.nba.fi/arcgis/services/WFS/MV_Kulttuuriymparisto/MapServer/WFSServer?request=GetFeature&service=WFS&version=2.0.0&typeName=${layer}&srsName=EPSG:4326&outputformat=geojson&bbox=${boxBounds}`;
+
+    axios.get(url)
+      .then((res) => {
+        L.geoJSON(res.data.features, {
+          pointToLayer: (feature, latlng) => {
+            return this.createPointToLayer(latlng, this.getOverlayColor(layer));
+          },
+          style: {
+            cursor: 'pointer',
+            color: this.getOverlayColor(layer),
+            dashArray: '3, 5'
+          },
+          onEachFeature: (feature, layer) => {
+            layer.bindPopup(this.generateFeaturePopup(feature.properties));
+          }
+        }).addTo(mapLayer).addTo(this.map);
+
+        this.setState({ isLoading: false });
+      });
+  }
+
+  createStripePattern = (color) => {
+    // Create a new
+    var stripePattern = new L.StripePattern({
+      angle: 45,
+      weight: 2,
+      color: color,
+      opacity: 0.2,
+    });
+    stripePattern.addTo(this.map);
+
+    return stripePattern;
+  }
+
+  createPointToLayer = (latlng, color) => {
+    const geojsonMarkerOptions = {
+      radius: 8,
+      fillColor: color,
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    };
+
+    return L.circleMarker(latlng, geojsonMarkerOptions);
   }
 
   initialiseMarkers = (position) => {
@@ -186,7 +297,7 @@ class Map extends Component {
    * Sets a location on the map
    */
   setLocation = (lat, lng) => {
-    L.marker(new L.LatLng(lat, lng)).addTo(this.layerGroup);
+    L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
     this.props.setCoordinates({ lat, lng });
   }
 
@@ -194,15 +305,7 @@ class Map extends Component {
    * Clears all markers on the map
    */
   clearAllMarkers = () => {
-    this.layerGroup.clearLayers();
-  }
-
-  /**
-   * Called when map container size is changed. It re-renders needed parts of the map
-   */
-  onMapResized = () => {
-    console.log('selam');
-    this.map.invalidateSize(true);
+    this.findsLayer.clearLayers();
   }
 
   /**
@@ -222,13 +325,24 @@ class Map extends Component {
         this.clusterMap.addLayer(markerToMap);
       }
     }
-
     // HeatMap Mode
-    this.heatMap = L.heatLayer(latLngs, {
+    this.heatMap = this.initialiseHeatMap(latLngs);
+
+    // Show the current mode layer
+    if (this.props.mode && this.props.mode === MapMode.HEATMAP) {
+      this.map.addLayer(this.heatMap);
+    } else {
+      this.findsLayer.addLayer(this.clusterMap);
+    }
+  }
+
+  initialiseHeatMap = (latLngs) => {
+    const heatLayer = L.heatLayer(latLngs, {
       radius: 15,
       minOpacity: 1.0,
       blur: 25,
       maxZoom: 13,
+      // Google maps gradient settings is used as default
       gradient: {
         0: '#66ff00',
         0.1: '#66ff00',
@@ -244,13 +358,121 @@ class Map extends Component {
       }
     });
 
-    // Show the current mode layer
-    if (this.props.mode && this.props.mode === MapMode.HEATMAP) {
-      this.map.addLayer(this.heatMap);
-    } else {
-      this.layerGroup.addLayer(this.clusterMap);
-      //this.map.addLayer(this.clusterMap);
+    return heatLayer;
+  }
+
+  /**
+   *  Sets listeners for loading data of overlay layers
+   */
+  initialiseMapListeners = (overlayLayers) => {
+    // The data layhers below can be fetched without zoom level restrictions
+    const smallDataLayers = [
+      Fha_Wfs_Layer.RKY_LINES,
+      Fha_Wfs_Layer.RKY_POINTS,
+      Fha_Wfs_Layer.ARCHITECTURAL_HERITAGE_AREAS,
+      Fha_Wfs_Layer.WORLD_HERITAGE_SITE_AREAS,
+      Fha_Wfs_Layer.WORLD_HERITAGE_SITE_POINT
+    ];
+    // Fired when an overlay is selected through the layer control
+    this.map.on('overlayadd', (eo) => {
+      const layerName = getWMTSLayerKeyByValue(eo.name);
+      if (layerName !== Fha_Wfs_Layer.ARCHEOLOGICAL_FINDS) {
+        this.state.activeOverLays.push(layerName);
+        if (this.map.getZoom() < 10 && !smallDataLayers.includes(layerName)) {
+          this.setState({ isDialogOpen: true });
+        } else {
+          this.setState({ isLoading: true });
+          this.getAncientMonument(layerName, this.map.getBounds(), overlayLayers[eo.name]);
+        }
+      }
+    });
+
+    //Fired when an overlay is deselected through the layer control
+    this.map.on('overlayremove', (eo) => {
+      const layerName = getWMTSLayerKeyByValue(eo.name);
+      if (layerName !== Fha_Wfs_Layer.ARCHEOLOGICAL_FINDS) {
+        const activeOverLays = this.state.activeOverLays.filter((name) => name !== layerName);
+        this.setState({ activeOverLays });
+      }
+    });
+
+    // Fired when the map has changed, after any animations
+    this.map.on('zoomend', () => {
+      if (this.map.getZoom() >= 10 && this.state.activeOverLays.length > 0) {
+        this.state.activeOverLays.forEach((element) => {
+          this.setState({ isLoading: true });
+          this.getAncientMonument(element, this.map.getBounds(), overlayLayers[getWMTSLayerValueByKey(element)]);
+        });
+      }
+    });
+
+    //Fired when the center of the map stops changing
+    this.map.on('moveend', () => {
+      if (this.map.getZoom() >= 10 && this.state.activeOverLays.length > 0) {
+        this.state.activeOverLays.forEach((element) => {
+          this.setState({ isLoading: true });
+          this.getAncientMonument(element, this.map.getBounds(), overlayLayers[getWMTSLayerValueByKey(element)]);
+        });
+      }
+    });
+  }
+
+  /**
+   * 
+   */
+  generateLayerLabel = (name) => {
+    const color = this.getOverlayColor(getWMTSLayerKeyByValue(name));
+    return `
+      <div className="color-box" style="background-color:${color};"></div>
+      <span>${name}</span>
+    `;
+  }
+  /**
+   * Returs default color of the selected overlay
+   */
+  getOverlayColor = (overlay) => {
+    switch (overlay) {
+      case Fha_Wfs_Layer.ARCHEOLOGICAL_PLACES_AREAS:
+        return Colors.PINK;
+      case Fha_Wfs_Layer.ARCHEOLOGICAL_PLACES_POINT:
+        return Colors.LIME;
+      case Fha_Wfs_Layer.WORLD_HERITAGE_SITE_AREAS:
+        return Colors.DEEP_PURPLE;
+      case Fha_Wfs_Layer.WORLD_HERITAGE_SITE_POINT:
+        return Colors.BLUE;
+      case Fha_Wfs_Layer.ARCHITECTURAL_HERITAGE_AREAS:
+        return Colors.CYAN;
+      case Fha_Wfs_Layer.ARCHITECTURAL_HERITAGE_POINT:
+        return Colors.TEAL;
+      case Fha_Wfs_Layer.ARCHEOLOGICAL_SUBPLACES_POINT:
+        return Colors.GREEN;
+      case Fha_Wfs_Layer.RKY_AREAS:
+        return Colors.BROWN;
+      case Fha_Wfs_Layer.RKY_POINTS:
+        return Colors.YELLOW;
+      case Fha_Wfs_Layer.RKY_LINES:
+        return Colors.ORANGE;
     }
+  }
+
+  /**
+   * Generates marker popup
+   */
+  generateFeaturePopup = (feature) => {
+    let popupText = '';
+    const placeName = feature.kohdenimi ? `<h3 class="leaflet-popup-content__text-container__title">Kohdenimi: ${feature.kohdenimi}</h3>` : '';
+    const typeName = feature.laji ? `<h3 class="leaflet-popup-content__text-container__title">Laji: ${feature.laji}</h3>` : '';
+    const townName = feature.kunta ? `<h3 class="leaflet-popup-content__text-container__title">Kunta: ${feature.kunta}</h3>` : '';
+
+    popupText += `
+                  <div class="leaflet-popup-content__text-container">
+                  ${placeName}
+                  ${typeName}
+                  ${townName}
+                  </div>
+                  `;
+
+    return popupText;
   }
 
   /**

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { FacetFilters } from '../../helpers/enum/enums';
-import { groupBy, merge, head, intersectionWith, isEqual, keyBy, keys, countBy, omit, size /*, size, some */ } from 'lodash';
+import { groupBy, merge, head, intersectionWith, isEqual, keyBy, keys, countBy, omit, size } from 'lodash';
 
 const findsSelector = (state) => state.finds.validatedFinds;
 const filtersSelector = (state) => state.facetFilters;
