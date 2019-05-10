@@ -49,14 +49,11 @@ export const getWMTSLayerValueByKey = (value) => {
 
 export const fetchWMTSData = async (layer, bounds) => {
   const boxBounds = `${bounds._southWest.lng},${bounds._southWest.lat},${bounds._northEast.lng},${bounds._northEast.lat}`;
-  const url = `
-     http://kartta.nba.fi/arcgis/services/WFS/MV_Kulttuuriymparisto/MapServer/WFSServer?request=GetFeature` +
-    `&service=WFS&version=2.0.0&typeName=${layer}&srsName=EPSG:4326&outputformat=geojson&bbox=${boxBounds}
-  `;
+  const url = `/api/v1/fha_wfs?layer=${layer}&boxBounds=${boxBounds}`;
 
   try {
     const response = await axios.get(url);
-    return response.data.features;
+    return response.data;
   } catch (error) {
     console.error(error);
   }
