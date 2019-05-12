@@ -80,7 +80,8 @@
   }
   & .leaflet-control-layers-expanded {
     @media screen and (max-width: $size-max-mobile) {
-      max-width: 19rem;
+      max-width: 16rem;
+      max-height: 22rem;
     }
   }
   & .leaflet-control-layers-list.leaflet-control-layers-scrollbar {
