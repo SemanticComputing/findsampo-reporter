@@ -3,10 +3,13 @@ const express = require('express');
 const finds = require('./sparql/queries/finds');
 const querystring = require('querystring');
 const axios = require('axios');
+const dotenv = require('dotenv');
+const shrinkRay = require('shrink-ray-current');
+
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3001;
-const dotenv = require('dotenv');
+
 
 // Define Environment Variables
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -14,8 +17,12 @@ if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: '.env.test' });
 };
 
-// Define path of static files
+// Compress all requests
+app.use(shrinkRay());
+
+// Define static files path
 app.use(express.static(publicPath));
+
 
 /* FIXME
 // Find Notifications API

@@ -38,7 +38,8 @@
     "react-sortable-tree-theme-minimal": "^0.0.14",
     "redux": "^4.0.1",
     "redux-logic": "^2.1.1",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "shrink-ray-current": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
@@ -49,6 +50,8 @@
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "brotli-webpack-plugin": "^1.1.0",
+    "compression-webpack-plugin": "^2.0.0",
     "css-loader": "^2.1.0",
     "dotenv": "^6.2.0",
     "eslint": "^5.16.0",
