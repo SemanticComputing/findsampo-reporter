@@ -57,4 +57,25 @@
   & .leaflet-control-layers-overlays::before {
     content: "Overlay Layers:";
   }
+
+  // Overlay control stylings
+  & .leaflet-control-layers-base label div,
+    .leaflet-control-layers-overlays label div{
+    display: flex;
+    align-items: center;
+  }
+  & .leaflet-control-layers-base label div span,
+  .leaflet-control-layers-overlays label div span{
+    font-size: 0.85rem;
+  }
+  & .leaflet-control-layers-selector {
+    margin: 3px;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  & .leaflet-control-layers-selector:checked + span {
+    width: 100%;
+    background-color: #8080802b;
+    padding: 2px;
+  }
 }
