@@ -70,12 +70,22 @@
   }
   & .leaflet-control-layers-selector {
     margin: 3px;
-    width: 1.2rem;
-    height: 1.2rem;
+    min-width: 1.2rem;
+    min-height: 1.2rem;
   }
   & .leaflet-control-layers-selector:checked + span {
     width: 100%;
     background-color: #8080802b;
     padding: 2px;
+  }
+  & .leaflet-control-layers-expanded {
+    @media screen and (max-width: $size-max-mobile) {
+      max-width: 19rem;
+    }
+  }
+  & .leaflet-control-layers-list.leaflet-control-layers-scrollbar {
+    @media screen and (max-width: $size-max-mobile) {
+      height: 360px !important;
+    }
   }
 }
