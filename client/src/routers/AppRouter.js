@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import BottomNav from '../components/BottomNav';
 import { RouterPaths } from '../helpers/enum/enums';
 import Nearby from '../components/NearbyPage';
 import Notifier from '../components/Notifier';
-export const history = createHistory();
+export const history = createBrowserHistory();
 
 /**
  *  Root component where is also router defined.
