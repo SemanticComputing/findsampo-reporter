@@ -19,7 +19,13 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails
 } from '@material-ui/core';
-import { setFacetFilter, removeFacetFilter, emptyFacetFilter } from '../actions/facetFilter';
+import {
+  setFacetFilter,
+  removeFacetFilter,
+  emptyFacetFilter,
+  setFacetFilterPanel,
+  removeFacetFilterPanel
+} from '../actions/facetFilter';
 import { FacetFilters } from '../helpers/enum/enums';
 import findsSelector from '../selectors/facet/facetResults';
 import { isDesktopScreen } from '../helpers/functions/functions';
@@ -32,7 +38,8 @@ class FacetDrawer extends Component {
       { criteria: FacetFilters.TYPE, label: 'Type' },
       { criteria: FacetFilters.MATERIAL, label: 'Material' },
       { criteria: FacetFilters.PERIOD, label: 'Period' },
-      { criteria: FacetFilters.MUNICIPALITY, label: 'Municipality' }
+      { criteria: FacetFilters.MUNICIPALITY, label: 'Municipality' },
+      { criteria: FacetFilters.PROVINCE, label: 'Province' }
     ]
   };
 
@@ -93,24 +100,23 @@ class FacetDrawer extends Component {
     }
   }
 
-  getFacetResult = (filter) => {
-    switch (filter) {
-      case FacetFilters.MATERIAL:
-        return this.props.finds.materials;
-      case FacetFilters.TYPE:
-        return this.props.finds.types;
-      case FacetFilters.PERIOD:
-        return this.props.finds.periods;
-      case FacetFilters.MUNICIPALITY:
-        return this.props.finds.municipalities;
+  onExpansionPanelOpened = (label) => (event, expanded) => {
+    if (expanded) {
+      this.props.setFacetFilterPanel(label);
+    } else {
+      this.props.removeFacetFilterPanel(label);
     }
   }
 
-  renderCheckboxList = (criteria) => {
-    const items = this.getFacetResult(criteria);
+  getNumOfSelectedFilters = (criteria) => {
+    return this.props.filters.filter((f) => f.criteria === criteria).length;
+  }
+
+  renderFilterPanelContents = (criteria) => {
+    const items = this.props.finds[criteria];
     return (
       <List className="facet-drawer__container__paper__list">
-        {items.map((label, index) => {
+        {items && items.map((label, index) => {
           return (
             <ListItem
               key={index}
@@ -150,16 +156,26 @@ class FacetDrawer extends Component {
     );
   };
 
-  renderFacetCriteria = () => {
+  renderFacetPanels = () => {
     return (
       this.state.facetCriteria.map((f) =>
-        <ExpansionPanel key={f.criteria} className="facet-drawer__container__paper facet-drawer__container__panel">
+        <ExpansionPanel
+          key={f.criteria}
+          className="facet-drawer__container__paper facet-drawer__container__panel"
+          onChange={this.onExpansionPanelOpened(f.criteria)}
+        >
           <ExpansionPanelSummary expandIcon={<Icon>keyboard_arrow_down</Icon>}>
             <Typography className="overline">{f.label}</Typography>
+            {
+              this.getNumOfSelectedFilters(f.criteria) > 0 &&
+              <Avatar className='facet-drawer__container__panel__avatar'>
+                {this.getNumOfSelectedFilters(f.criteria)}
+              </Avatar>
+            }
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Paper className="facet-drawer__container__paper__list-paper" elevation={1}>
-              {this.renderCheckboxList(f.criteria)}
+              {this.renderFilterPanelContents(f.criteria)}
             </Paper>
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -244,7 +260,7 @@ class FacetDrawer extends Component {
             </Button>
           </Paper>
         }
-        {this.renderFacetCriteria()}
+        {this.renderFacetPanels()}
       </div >
     );
 
@@ -267,19 +283,21 @@ class FacetDrawer extends Component {
   }
 }
 
-// Variables
+// Default Variables
 const ENTER = 'Enter';
 const CRITERIA_TITLE = 'title';
 
 const mapStateToProps = (state) => ({
-  filters: state.facetFilters,
+  filters: state.facetFilters.activeFilters,
   finds: findsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setFacetFilter: (filter) => dispatch(setFacetFilter(filter)),
   removeFacetFilter: (filter) => dispatch(removeFacetFilter(filter)),
-  emptyFacetFilter: () => dispatch(emptyFacetFilter())
+  emptyFacetFilter: () => dispatch(emptyFacetFilter()),
+  setFacetFilterPanel: (filterPanel) => dispatch(setFacetFilterPanel(filterPanel)),
+  removeFacetFilterPanel: (filterPanel) => dispatch(removeFacetFilterPanel(filterPanel))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FacetDrawer);

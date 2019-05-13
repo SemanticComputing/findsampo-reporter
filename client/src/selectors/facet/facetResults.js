@@ -3,7 +3,8 @@ import { FacetFilters } from '../../helpers/enum/enums';
 import { groupBy, merge, head, intersectionWith, isEqual, keyBy, keys, countBy, omit, size } from 'lodash';
 
 const findsSelector = (state) => state.finds.validatedFinds;
-const filtersSelector = (state) => state.facetFilters;
+const filtersSelector = (state) => state.facetFilters.activeFilters;
+const filterPanelsSelector = (state) => state.facetFilters.activeFilterPanels;
 
 /**
  * The main selector function for filtering all finds based on the selected facet filters.
@@ -12,9 +13,10 @@ const filtersSelector = (state) => state.facetFilters;
  * @param {Selected filters} filters 
  * returns results with filter values and amounts
  */
-const filterFinds = (finds, filters) => {
+const filterFinds = (finds, filters, filterPanels) => {
   let results = [];
   let searchResults = [];
+  const selectedFilterPanels = {};
   const groupedFilters = groupBy(filters, (filter) => filter.criteria); // Group filters by filter name
 
   // If finds are available and there are selected filters then start filtering / processing
@@ -36,12 +38,14 @@ const filterFinds = (finds, filters) => {
     results = finds;
   }
 
+  // Add data of active filter panels
+  for (let panelName of filterPanels) {
+    selectedFilterPanels[panelName] = getFilterValuesWithAmount(results, searchResults, panelName, finds, groupedFilters);
+  }
+
   return {
     results,
-    materials: getFilterValuesWithAmount(results, searchResults, FacetFilters.MATERIAL, finds, groupedFilters),
-    types: getFilterValuesWithAmount(results, searchResults, FacetFilters.TYPE, finds, groupedFilters),
-    municipalities: getFilterValuesWithAmount(results, searchResults, FacetFilters.MUNICIPALITY, finds, groupedFilters),
-    periods: getFilterValuesWithAmount(results, searchResults, FacetFilters.PERIOD, finds, groupedFilters),
+    ...selectedFilterPanels
   };
 };
 
@@ -134,5 +138,6 @@ const getFilterValuesWithAmount = (results, searchResults, filterType, finds, gr
 export default createSelector(
   findsSelector,
   filtersSelector,
+  filterPanelsSelector,
   filterFinds
 );

@@ -52,6 +52,7 @@ export const FacetFilters = Object.freeze({
   MATERIAL: 'main_material',
   MUNICIPALITY: 'municipality',
   PERIOD: 'period',
+  PROVINCE: 'province',
 });
 
 export const MapMode = Object.freeze({

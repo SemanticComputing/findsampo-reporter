@@ -19,7 +19,7 @@ const Table = (props) => {
             title: 'Preview Image',
             field: 'image',
             render: rowData => rowData.image ?
-              <img src={rowData.image} className="table__column__icon"/> : 
+              <img src={rowData.image} className="table__column__icon" /> :
               <Icon className="table__column__icon">crop_original</Icon>
           },
           { title: 'Title', field: 'title' },
