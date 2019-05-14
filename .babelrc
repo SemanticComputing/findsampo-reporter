@@ -26,6 +26,9 @@
     ],
     [
       "@babel/plugin-syntax-dynamic-import"
+    ],
+    [
+      "lodash"
     ]
   ]
 }

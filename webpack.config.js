@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV === 'development') {
@@ -81,7 +81,10 @@ const getPlugins = (isProduction) => {
       'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
       'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
     }),
-    new BundleAnalyzerPlugin()
+    new LodashModuleReplacementPlugin({
+      caching: true,
+      cloning: true
+    })
   ];
 
   // Run Compression Plugins only in production mode

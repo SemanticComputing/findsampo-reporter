@@ -5,7 +5,7 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
-import MomentUtils from '@date-io/moment';
+import DateFnsUtils from '@date-io/date-fns';
 import intl from 'react-intl-universal';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
@@ -102,7 +102,7 @@ class AnswerOptions extends Component {
                 }
                 label={intl.get('report.questionFour.selectionText')}
               />
-              <MuiPickersUtilsProvider utils={MomentUtils}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 {this.renderDatePickers()}
               </MuiPickersUtilsProvider>
             </div>
