@@ -360,7 +360,7 @@ class Map extends Component {
       const layerName = getWMTSLayerKeyByValue(eo.name);
       if (layerName !== Fha_Wfs_Layer.ARCHEOLOGICAL_FINDS) {
         this.state.activeOverLays.push(layerName);
-        if (this.map.getZoom() < 10 && !smallDataLayers.includes(layerName)) {
+        if (this.map.getZoom() < MIN_ZOOM_LEVEL && !smallDataLayers.includes(layerName)) {
           this.setState({ isDialogOpen: true });
         } else {
           this.setState({ isLoading: true });
@@ -380,7 +380,7 @@ class Map extends Component {
 
     // Fired when the map has changed, after any animations
     this.map.on('zoomend', () => {
-      if (this.map.getZoom() >= 10 && this.state.activeOverLays.length > 0) {
+      if (this.map.getZoom() >= MIN_ZOOM_LEVEL && this.state.activeOverLays.length > 0) {
         this.state.activeOverLays.forEach((element) => {
           this.setState({ isLoading: true });
           this.getAncientMonument(element, this.map.getBounds(), overlayLayers[getWMTSLayerValueByKey(element)]);
@@ -390,7 +390,7 @@ class Map extends Component {
 
     //Fired when the center of the map stops changing
     this.map.on('moveend', () => {
-      if (this.map.getZoom() >= 10 && this.state.activeOverLays.length > 0) {
+      if (this.map.getZoom() >= MIN_ZOOM_LEVEL && this.state.activeOverLays.length > 0) {
         this.state.activeOverLays.forEach((element) => {
           this.setState({ isLoading: true });
           this.getAncientMonument(element, this.map.getBounds(), overlayLayers[getWMTSLayerValueByKey(element)]);
@@ -466,6 +466,8 @@ class Map extends Component {
     return popupText;
   }
 }
+
+const MIN_ZOOM_LEVEL = 13;
 
 const mapDispatchToProps = (dispatch) => ({
   setCoordinates: (coords) => dispatch(setCoordinates(coords)),
