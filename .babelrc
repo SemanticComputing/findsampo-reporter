@@ -23,6 +23,9 @@
         "loose": true,
         "useBuiltIns": true
       }
+    ],
+    [
+      "@babel/plugin-syntax-dynamic-import"
     ]
   ]
 }

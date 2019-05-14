@@ -106,8 +106,6 @@ app.get(FHA_WFS_END_POINT, async (req, res, next) => {
 });
 
 
-
-
 // Application
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
