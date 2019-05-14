@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV === 'development') {
@@ -80,10 +79,6 @@ const getPlugins = (isProduction) => {
       'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
       'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
       'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
-    }),
-    new LodashModuleReplacementPlugin({
-      caching: true,
-      cloning: true
     })
   ];
 
