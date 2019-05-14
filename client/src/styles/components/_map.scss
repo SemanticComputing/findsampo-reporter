@@ -17,12 +17,27 @@
       &__text-container {
         color: $color-text-grey;
         padding: 1rem;
-        &__title {
-          margin-bottom: 0.35rem;
-        }
         &__description {
           margin: 0;
         }
+        &__title {
+          margin-bottom: 0.35rem;
+        }
+        &__info {
+          margin-bottom: 0.3rem;
+          font-size: 0.85rem;
+        }
+      }
+      &__place-text-container {
+        padding: 0 1rem 1rem 1rem;
+      }
+      &__header {
+        margin: 0;
+        padding: 10px 20px;
+        background: #8080802b;
+        text-transform: uppercase;
+        font-weight: 400;
+        text-align: center;
       }
     }
   }

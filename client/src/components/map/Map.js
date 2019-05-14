@@ -206,7 +206,7 @@ class Map extends Component {
   getAncientMonument = async (layer, bounds, mapLayer) => {
     const features = await fetchWMTSData(layer, bounds);
     mapLayer.clearLayers();
-    
+
     if (features) {
       L.geoJSON(features, {
         pointToLayer: (feature, latlng) => {
@@ -432,15 +432,23 @@ class Map extends Component {
    */
   generateFeaturePopup = (feature) => {
     let popupText = '';
-    const placeName = feature.kohdenimi ? `<h3 class="leaflet-popup-content__text-container__title">Kohdenimi: ${feature.kohdenimi}</h3>` : '';
-    const typeName = feature.laji ? `<h3 class="leaflet-popup-content__text-container__title">Laji: ${feature.laji}</h3>` : '';
-    const townName = feature.kunta ? `<h3 class="leaflet-popup-content__text-container__title">Kunta: ${feature.kunta}</h3>` : '';
+    const typeName = feature.laji ? `<p class="leaflet-popup-content__header">${feature.laji}</p>` : '';
+    const placeName = feature.kohdenimi ?
+      `<p class="leaflet-popup-content__text-container__info"><b>${intl.get('nearByPage.map.mapContent.name')}</b> : ${feature.kohdenimi}</p>` : '';
+    const townName = feature.kunta ?
+      `<p class="leaflet-popup-content__text-container__info"><b>${intl.get('nearByPage.map.mapContent.town')}</b> : ${feature.kunta}</p>` : '';
+    const link = feature.mjtunnus ?
+      `<p class="leaflet-popup-content__text-container__info"><b>${intl.get('nearByPage.map.mapContent.link')}</b> : 
+      <a href="https://www.kyppi.fi/to.aspx?id=112.${feature.mjtunnus}" target="_blank">${intl.get('nearByPage.map.mapContent.more')}</a></p>` : '';
 
     popupText += `
-                  <div class="leaflet-popup-content__text-container">
-                  ${placeName}
-                  ${typeName}
-                  ${townName}
+                  <div>
+                    ${typeName}
+                  </div>
+                  <div class="leaflet-popup-content__place-text-container">
+                    ${placeName}
+                    ${townName}
+                    ${link}
                   </div>
                   `;
 

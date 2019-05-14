@@ -49,6 +49,12 @@ export default {
         'zoomAlertContent': 'Please change the zoom level to 13 to view selected layer as shown below.',
         'zoomAlertConfirmation': 'OK'
       },
+      'mapContent': {
+        'name': 'Name',
+        'town': 'Town',
+        'link': 'Link',
+        'more': 'More'
+      }
     }
   },
   'notFoundPage': {
