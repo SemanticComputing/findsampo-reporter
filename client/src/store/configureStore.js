@@ -8,6 +8,7 @@ import notifier from '../reducers/notifier';
 import findNotification from '../reducers/findNotification';
 import finds from '../reducers/find';
 import facetFilters from '../reducers/facetFilter';
+import map from '../reducers/map';
 import rootLogic from '../logics/rootLogic';
 
 // Create react middleware
@@ -28,7 +29,8 @@ export default () => {
       report,
       findNotification,
       finds,
-      facetFilters
+      facetFilters,
+      map
     }),
     composeEnhancers(composeMiddleware)
   );

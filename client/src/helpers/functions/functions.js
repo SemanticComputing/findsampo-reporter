@@ -1,5 +1,4 @@
 import { invert } from 'lodash';
-import axios from 'axios';
 
 const MOBILE_SCREEN_MAX_WIDTH = 650;
 
@@ -45,16 +44,4 @@ export const getWMTSLayerValueByKey = (value) => {
   };
 
   return names[value];
-};
-
-export const fetchWMTSData = async (layer, bounds) => {
-  const boxBounds = `${bounds._southWest.lng},${bounds._southWest.lat},${bounds._northEast.lng},${bounds._northEast.lat}`;
-  const url = `/api/v1/fha_wfs?layer=${layer}&boxBounds=${boxBounds}`;
-
-  try {
-    const response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
 };

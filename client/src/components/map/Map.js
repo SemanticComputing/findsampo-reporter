@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { isEqual } from 'lodash';
 
 import L from 'leaflet';
 import 'leaflet.heat/dist/leaflet-heat.js';
@@ -28,8 +29,9 @@ import {
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
 import { setCoordinates } from '../../actions/findNotification';
+import { fetchMapData } from '../../actions/map';
 import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
-import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey, fetchWMTSData } from '../../helpers/functions/functions';
+import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
 
 
 /**
@@ -59,6 +61,12 @@ class Map extends Component {
       this.clusterMap.clearLayers();
       this.heatMap.setLatLngs([]);
       this.showMarkersOnMap(this.props.markerData);
+    }
+
+    // Checks if map wmts data is updated
+    // If it is updated load the layers again with the updated data.
+    if (!isEqual(prevProps.wmtsData, this.props.wmtsData)) {
+      this.loadFetchedLayers();
     }
   }
 
@@ -101,6 +109,35 @@ class Map extends Component {
     }
   }
 
+  loadFetchedLayers = () => {
+    if (this.props.wmtsData && this.state.isLoading) {
+      for (let l of this.props.wmtsData) {
+        const mapLayer = this.overlayLayers[getWMTSLayerValueByKey(l.layer)];
+        // Clear current layers
+        mapLayer.clearLayers();
+        // Load the fetched data
+        L.geoJSON(l.data, {
+          pointToLayer: (feature, latlng) => {
+            return this.createPointToLayer(latlng, this.getOverlayColor(l.layer));
+          },
+          style: {
+            cursor: 'pointer',
+            color: this.getOverlayColor(l.layer),
+            dashArray: '3, 5'
+          },
+          onEachFeature: (feature, layer) => {
+            layer.bindPopup(this.generateFeaturePopup(feature.properties));
+          }
+        }).addTo(mapLayer).addTo(this.map);
+      }
+      // Stop loading spinner
+      this.setState({ isLoading: false });
+    }
+  }
+
+  /**
+   * Change status of the map layer dialog
+   */
   onDialogClosedPressed = () => {
     this.setState((prevState) => ({ isDialogOpen: !prevState.isDialogOpen }));
   }
@@ -165,7 +202,7 @@ class Map extends Component {
     };
 
     // Overlay Maps
-    const overlayLayers = {
+    this.overlayLayers = {
       [intl.get('nearByPage.map.overLays.arkeologiset_loydot')]: this.findsLayer,
       [intl.get('nearByPage.map.overLays.arkeologiset_kohteet_alue')]: archaeologicalPlacesAreaLayer,
       [intl.get('nearByPage.map.overLays.arkeologiset_kohteet_piste')]: archaeologicalPlacesPointLayer,
@@ -189,7 +226,7 @@ class Map extends Component {
     });
 
     // Add overlay layers to map
-    L.control.layers(baseMaps, overlayLayers).addTo(this.map);
+    L.control.layers(baseMaps, this.overlayLayers).addTo(this.map);
     // Active overlay layer
     this.findsLayer.addTo(this.map);
 
@@ -199,31 +236,7 @@ class Map extends Component {
     }
 
     // Listen for changes
-    this.initialiseMapListeners(overlayLayers);
-  }
-
-
-  getAncientMonument = async (layer, bounds, mapLayer) => {
-    const features = await fetchWMTSData(layer, bounds);
-    mapLayer.clearLayers();
-
-    if (features) {
-      L.geoJSON(features, {
-        pointToLayer: (feature, latlng) => {
-          return this.createPointToLayer(latlng, this.getOverlayColor(layer));
-        },
-        style: {
-          cursor: 'pointer',
-          color: this.getOverlayColor(layer),
-          dashArray: '3, 5'
-        },
-        onEachFeature: (feature, layer) => {
-          layer.bindPopup(this.generateFeaturePopup(feature.properties));
-        }
-      }).addTo(mapLayer).addTo(this.map);
-
-      this.setState({ isLoading: false });
-    }
+    this.initialiseMapListeners(this.overlayLayers);
   }
 
   createPointToLayer = (latlng, color) => {
@@ -346,7 +359,7 @@ class Map extends Component {
   /**
    *  Sets listeners for loading data of overlay layers
    */
-  initialiseMapListeners = (overlayLayers) => {
+  initialiseMapListeners = () => {
     // The data layhers below can be fetched without zoom level restrictions
     const smallDataLayers = [
       Fha_Wfs_Layer.RKY_LINES,
@@ -364,7 +377,7 @@ class Map extends Component {
           this.setState({ isDialogOpen: true });
         } else {
           this.setState({ isLoading: true });
-          this.getAncientMonument(layerName, this.map.getBounds(), overlayLayers[eo.name]);
+          this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
         }
       }
     });
@@ -378,23 +391,11 @@ class Map extends Component {
       }
     });
 
-    // Fired when the map has changed, after any animations
-    this.map.on('zoomend', () => {
-      if (this.map.getZoom() >= MIN_ZOOM_LEVEL && this.state.activeOverLays.length > 0) {
-        this.state.activeOverLays.forEach((element) => {
-          this.setState({ isLoading: true });
-          this.getAncientMonument(element, this.map.getBounds(), overlayLayers[getWMTSLayerValueByKey(element)]);
-        });
-      }
-    });
-
     //Fired when the center of the map stops changing
     this.map.on('moveend', () => {
       if (this.map.getZoom() >= MIN_ZOOM_LEVEL && this.state.activeOverLays.length > 0) {
-        this.state.activeOverLays.forEach((element) => {
-          this.setState({ isLoading: true });
-          this.getAncientMonument(element, this.map.getBounds(), overlayLayers[getWMTSLayerValueByKey(element)]);
-        });
+        this.setState({ isLoading: true });
+        this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
       }
     });
   }
@@ -477,8 +478,13 @@ class Map extends Component {
 
 const MIN_ZOOM_LEVEL = 13;
 
-const mapDispatchToProps = (dispatch) => ({
-  setCoordinates: (coords) => dispatch(setCoordinates(coords)),
+const mapStateToProps = (state) => ({
+  wmtsData: state.map.fetchResults
 });
 
-export default connect(undefined, mapDispatchToProps)(Map);
+const mapDispatchToProps = (dispatch) => ({
+  setCoordinates: (coords) => dispatch(setCoordinates(coords)),
+  fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

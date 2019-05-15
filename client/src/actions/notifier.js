@@ -17,7 +17,6 @@ export const removeSnackbar = (key) => ({
   key,
 });
 
-
 export const changeSnipperStatus = (status) => ({
   type: NOTIFIER_CHANGE_STATUS,
   status,
