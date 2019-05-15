@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { isEqual } from 'lodash';
+import { isEqual, difference } from 'lodash';
 
 import L from 'leaflet';
 import 'leaflet.heat/dist/leaflet-heat.js';
@@ -393,7 +393,8 @@ class Map extends Component {
 
     //Fired when the center of the map stops changing
     this.map.on('moveend', () => {
-      if (this.map.getZoom() >= MIN_ZOOM_LEVEL && this.state.activeOverLays.length > 0) {
+      if (this.map.getZoom() >= MIN_ZOOM_LEVEL
+        && difference(this.state.activeOverLays, smallDataLayers).length > 0) {
         this.setState({ isLoading: true });
         this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
       }
