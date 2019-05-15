@@ -10,6 +10,13 @@
   & &__avatar {
     width: 2rem;
     height: 2rem;
+    background: $color-primary;
+  }
+  & &__button {
+    background: $color-ligher-grey;
+    &__icon {
+      color: $color-dark-grey;
+    }
   }
   & &__typography {
     margin-right: 2rem;

@@ -145,9 +145,9 @@ class Header extends Component {
                     to="/"
                     color="inherit"
                   >
-                    <Button variant="contained" color="default" size="small">
-                      <Avatar className="appbar__avatar" size="small">{this.props.username.substring(0, 2).toUpperCase()}</Avatar>
-                      <Icon>arrow_drop_down</Icon>
+                    <Button className="appbar__button" variant="contained" size="small">
+                      <Avatar className="appbar__avatar" color="primary" size="small">{this.props.username.substring(0, 2).toUpperCase()}</Avatar>
+                      <Icon className="appbar__button__icon">arrow_drop_down</Icon>
                     </Button>
                   </IconButton>
                   <Menu
