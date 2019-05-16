@@ -7,8 +7,8 @@ import {
   Toolbar,
   Button,
   Icon,
-  Typography,
   IconButton,
+  Typography,
   MenuItem,
   Menu,
   Avatar
@@ -52,66 +52,61 @@ class Header extends Component {
   renderIconContainer() {
     return (
       isDesktopScreen(window) && <div className="appbar__icon-container">
-        <IconButton
+        <Button
           className="appbar__icon-container__icon"
           component={NavLink}
           to={RouterPaths.HOME_PAGE}
           isActive={(match, location) => location.pathname === RouterPaths.HOME_PAGE}
           activeClassName="appbar__icon-container__icon--selected"
         >
-          <Icon>home</Icon>
           <span className="appbar__icon-container__icon__label">
             {intl.get('bottomNavBar.home')}
           </span>
-        </IconButton>
-        <IconButton
+        </Button>
+        <Button
           className="appbar__icon-container__icon"
           component={NavLink}
           to={RouterPaths.MY_FINDS_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.MY_FINDS_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"
         >
-          <Icon>stars</Icon>
           <span className="appbar__icon-container__icon__label">
             {intl.get('bottomNavBar.mine')}
           </span>
-        </IconButton>
-        <IconButton
+        </Button>
+        <Button
           className="appbar__icon-container__icon"
           component={NavLink}
           to={RouterPaths.NEARBY_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.NEARBY_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"
         >
-          <Icon>place</Icon>
           <span className="appbar__icon-container__icon__label">
             {intl.get('bottomNavBar.nearby')}
           </span>
-        </IconButton>
-        <IconButton
+        </Button>
+        <Button
           className="appbar__icon-container__icon"
           component={NavLink}
           to={RouterPaths.REPORT_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.REPORT_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"
         >
-          <Icon>control_point</Icon>
           <span className="appbar__icon-container__icon__label">
             {intl.get('bottomNavBar.report')}
           </span>
-        </IconButton>
-        <IconButton
+        </Button>
+        <Button
           className="appbar__icon-container__icon"
           component={NavLink}
           to={RouterPaths.MORE_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.MORE_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"
         >
-          <Icon>menu</Icon>
           <span className="appbar__icon-container__icon__label">
             {intl.get('bottomNavBar.more')}
           </span>
-        </IconButton>
+        </Button>
       </div>
     );
   }
