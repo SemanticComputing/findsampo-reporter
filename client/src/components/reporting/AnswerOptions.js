@@ -44,7 +44,7 @@ class AnswerOptions extends Component {
           autoOk
           variant="outlined"
           label="Date"
-          format="DD.MM.YYYY"
+          format="dd.MM.yyyy"
           value={this.props.findDate}
           onChange={this.onFindDateChange}
           className="answer-options__date-picker" />
