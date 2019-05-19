@@ -55,9 +55,9 @@ body {
 .content {
   grid-area: content;
   display: flex;
-  /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/*/
+  /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
   min-height: 0px;
-  overflow-y: auto;
+  //overflow-y: auto; */
 
   @media screen and (max-width: $size-max-mobile) {
     position: relative;

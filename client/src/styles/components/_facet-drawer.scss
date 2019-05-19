@@ -80,19 +80,20 @@
       display: flex;
       flex-direction: column;
     }
+    @media screen and (min-width: $size-max-mobile) {
+      // Since top is set to initial, height of header and toolbar needs to be added
+      // Which is 150px, otherwise scroll does not work properly.
+      padding-bottom: 150px;
+    }
   }
   & .disabled, .disabled span{
     color: $color-disabled;
   }
-  @media screen and (min-width: $size-max-mobile) {
-    width: $size-drawer-left-margin;
-  }
   & > div:nth-of-type(1) {
     @media screen and (min-width: $size-max-mobile) {
       background: #f5f5f5;
-      max-width: none;
       top: initial;
-      position: initial;
+      width: $size-drawer-left-margin;
     }
   }
   & > div:nth-of-type(2) {

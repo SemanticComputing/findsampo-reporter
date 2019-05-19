@@ -28,8 +28,8 @@
   &__map {
     flex: 14; 
     display: flex;
-    /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/*/
-    min-height: 0px;
+    /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
+    min-height: 0px;*/
     &__container {
       flex: 1;
       display: flex;
@@ -38,12 +38,12 @@
         display: flex;
         flex-grow: 1;
         transition: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
-        margin-left: -$size-drawer-left-margin;
+        margin-left: 0;
         &--shifted {
           flex: 1;
           display: flex;
           transition: margin 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
-          margin-left: 0
+          margin-left: $size-drawer-left-margin
         }
       }
       &__find-content--mobile {
