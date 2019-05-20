@@ -16,45 +16,60 @@ class AppHomePage extends Component {
           bgImage='./images/others/home_bg.jpg'
         />
 
-        <Slider slideItems={sliderData} />
-
         <ContentContainer
-          header='Guides and Instructions'
-          headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', marginTop: '3rem' }}
-          cardData={data}
+          header='Recent Finds'
+          headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', marginTop: '2rem', fontSize: '1.2rem', marginBottom: '0' }}
           bgColor='#f7f7f7'
+          component={() => <Slider slideItems={sliderData} />}
         />
 
         <ContentContainer
-          header='Findsampo has received over 5000 applications'
-          headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', marginTop: '3rem' }}
+          header='Guides and Instructions'
+          headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', marginTop: '2rem', fontSize: '1.2rem' }}
+          cardData={data}
+          bgColor='#fff'
+        />
+
+        <ContentContainer
+          header='Findsampo has received over x applications'
+          headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', margin: '2rem 0' }}
+          bgColor='#f7f7f7'
         />
       </div>
     );
   }
 }
 
+// FIXME : Replace with real ones
 const sliderData = [
   {
-    des: '1',
-    imgSrc: 'https://i.imgur.com/7nbAJ0C.jpg'
+    des: 'Neulahakaisia, Imatra',
+    imgSrc: 'http://luettelointi.nba.fi/assets/uploads/find_images/40039-131.JPG'
   },
   {
-    des: '2',
-    imgSrc: 'https://i.imgur.com/pgCzueK.jpg'
+    des: 'Kehäsolki, Imatea',
+    imgSrc: 'http://luettelointi.nba.fi/assets/uploads/find_images/40039-118.JPG'
   },
   {
-    des: '1',
-    imgSrc: 'https://i.imgur.com/7nbAJ0C.jpg'
+    des: 'Miekanpansi, Asikkala',
+    imgSrc: 'http://luettelointi.nba.fi/assets/uploads/find_images/40932_1a.JPG'
   },
   {
-    des: '2',
-    imgSrc: 'https://i.imgur.com/pgCzueK.jpg'
+    des: 'Kantasormus, Haapavesi',
+    imgSrc: 'http://luettelointi.nba.fi/assets/uploads/find_images/40548-1.JPG'
+  },
+  {
+    des: 'Linturiipus, Hattula',
+    imgSrc: 'http://luettelointi.nba.fi/assets/uploads/find_images/40449-2.jpg'
+  },
+  {
+    des: 'Rengaskuolaimet, Vesilahti',
+    imgSrc: 'http://luettelointi.nba.fi/assets/uploads/find_images/40548-1.JPG'
   }
 ];
 
 
-// TODO: Replace these with the real ones
+// FIXME: Replace these with the real ones
 const data = [
   {
     title: 'What should I do if I find an antiquity?',

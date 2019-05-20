@@ -1,5 +1,29 @@
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, Button, CardActions } from '@material-ui/core';
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+  CardActions
+} from '@material-ui/core';
+
+/**
+ * ContentContainer is a component which can show all kind of layers with different styles on the homepage
+ * It accepts the following attributes:
+ * 
+ * stylingClass: Styles for content container
+ * header: Header text
+ * headerStyle: Header styles
+ * description: Description (Sub header)
+ * descriptionStyle: Styles for description
+ * bgColor: Background color
+ * bgImage: Background image
+ * cardData: Data that used to show material ui cards
+ *           it contains image and description
+ * component: Component to show
+ */
 
 const ContentContainer = (props) => {
   const {

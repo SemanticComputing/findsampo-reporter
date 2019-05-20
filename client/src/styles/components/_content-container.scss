@@ -21,11 +21,10 @@
     }
   }
 }
-
 .content-container--justified {
   justify-content: center;
   flex: unset;
-  height: 25rem;
+  height: 22rem;
   @media screen and (max-width: $size-max-mobile) {
     height: 16rem;
   }
