@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const finds = require('./sparql/queries/finds');
+const makeObjectList = require('./sparql/mappers/sparqlObjectMapper');
 const querystring = require('querystring');
 const axios = require('axios');
 const dotenv = require('dotenv');
@@ -15,7 +16,7 @@ const port = process.env.PORT || 3001;
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: '.env.test' });
-};
+}
 
 // Compress all requests
 app.use(shrinkRay());
@@ -54,8 +55,8 @@ app.get(FINDS_END_POINT, async (req, res, next) => {
       url: 'https://ldf.fi/sualt-fha-finds/sparql',
       data: querystring.stringify({ query })
     });
-    const { bindings } = response.data.results;
-    res.send(bindings);
+    const mappedResults = makeObjectList(response.data.results.bindings);
+    res.send(mappedResults);
   } catch (error) {
     next(error);
   }
