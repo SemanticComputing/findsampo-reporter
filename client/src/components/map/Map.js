@@ -29,7 +29,7 @@ import {
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
 import { setCoordinates } from '../../actions/findNotification';
-import { fetchMapData } from '../../actions/map';
+import { fetchMapData, startMapSpinner } from '../../actions/map';
 import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
 
@@ -44,8 +44,8 @@ class Map extends Component {
   state = {
     hasCurrentLocation: false,
     activeOverLays: [],
-    isLoading: false,
-    isDialogOpen: false
+    isDialogOpen: false,
+    prevZoomLevel: null
   }
 
   componentDidMount() {
@@ -63,7 +63,7 @@ class Map extends Component {
       this.showMarkersOnMap(this.props.markerData);
     }
 
-    // Checks if map wmts data is updated
+    // Checks if the wmts data is updated
     // If it is updated load the layers again with the updated data.
     if (!isEqual(prevProps.wmtsData, this.props.wmtsData)) {
       this.loadFetchedLayers();
@@ -78,7 +78,7 @@ class Map extends Component {
           this.props.location ? (
             <div id="map">
               {
-                this.state.isLoading &&
+                this.props.isFetchInProgress &&
                 <CircularProgress className="map__data-loader-spiner" size="5rem" />
               }
               <Dialog
@@ -110,7 +110,7 @@ class Map extends Component {
   }
 
   loadFetchedLayers = () => {
-    if (this.props.wmtsData && this.state.isLoading) {
+    if (this.props.wmtsData) {
       for (let l of this.props.wmtsData) {
         const mapLayer = this.overlayLayers[getWMTSLayerValueByKey(l.layer)];
         // Clear current layers
@@ -130,8 +130,6 @@ class Map extends Component {
           }
         }).addTo(mapLayer).addTo(this.map);
       }
-      // Stop loading spinner
-      this.setState({ isLoading: false });
     }
   }
 
@@ -368,6 +366,7 @@ class Map extends Component {
       Fha_Wfs_Layer.WORLD_HERITAGE_SITE_AREAS,
       Fha_Wfs_Layer.WORLD_HERITAGE_SITE_POINT
     ];
+
     // Fired when an overlay is selected through the layer control
     this.map.on('overlayadd', (eo) => {
       const layerName = getWMTSLayerKeyByValue(eo.name);
@@ -376,7 +375,7 @@ class Map extends Component {
         if (this.map.getZoom() < MIN_ZOOM_LEVEL && !smallDataLayers.includes(layerName)) {
           this.setState({ isDialogOpen: true });
         } else {
-          this.setState({ isLoading: true });
+          this.props.startMapSpinner();
           this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
         }
       }
@@ -391,11 +390,26 @@ class Map extends Component {
       }
     });
 
-    //Fired when the center of the map stops changing
-    this.map.on('moveend', () => {
+    //Fired when the zooming starts.
+    this.map.on('zoomstart', () => {
+      this.setState({ prevZoomLevel: this.map.getZoom() });
+    });
+
+    //Fired when the zooming ends.
+    this.map.on('zoomend', () => {
+      if ((this.map.getZoom() === MIN_ZOOM_LEVEL
+        || (this.map.getZoom() >= MIN_ZOOM_LEVEL && this.state.prevZoomLevel > this.map.getZoom()))
+        && difference(this.state.activeOverLays, smallDataLayers).length > 0) {
+        this.props.startMapSpinner();
+        this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
+      }
+    });
+
+    //Fired when the drag ends.
+    this.map.on('dragend', () => {
       if (this.map.getZoom() >= MIN_ZOOM_LEVEL
         && difference(this.state.activeOverLays, smallDataLayers).length > 0) {
-        this.setState({ isLoading: true });
+        this.props.startMapSpinner();
         this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
       }
     });
@@ -480,12 +494,14 @@ class Map extends Component {
 const MIN_ZOOM_LEVEL = 13;
 
 const mapStateToProps = (state) => ({
-  wmtsData: state.map.fetchResults
+  wmtsData: state.map.fetchResults,
+  isFetchInProgress: state.map.fetchInProgress
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCoordinates: (coords) => dispatch(setCoordinates(coords)),
-  fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds))
+  fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds)),
+  startMapSpinner: () => dispatch(startMapSpinner())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

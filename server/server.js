@@ -15,7 +15,7 @@ const port = process.env.PORT || 3001;
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: '.env.test' });
-};
+}
 
 // Compress all requests
 app.use(shrinkRay());
