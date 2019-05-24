@@ -3,10 +3,12 @@ import { Carousel } from 'react-responsive-carousel';
 import { isDesktopScreen } from '../../helpers/functions/functions';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+const DESKTOP_SCREEN_PERSENTAGE = 30;
+const MOBILE_SCREEN_PERSENTAGE = 95;
+
 class Slider extends Component {
   render() {
-    const centerPercentage = isDesktopScreen(window) ? 30 : 95;
-    console.log(centerPercentage);
+    const centerPercentage = isDesktopScreen(window) ? DESKTOP_SCREEN_PERSENTAGE : MOBILE_SCREEN_PERSENTAGE;
     return (
       <div className="slider">
         <Carousel

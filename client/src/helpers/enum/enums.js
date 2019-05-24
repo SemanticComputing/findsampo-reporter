@@ -38,6 +38,7 @@ export const RouterPaths = Object.freeze({
   MY_FINDS_PAGE: '/myfinds',
   MORE_PAGE: '/more',
   NEARBY_PAGE: '/nearby',
+  LEGALITY_CHECKER_PAGE: '/amisafe',
 });
 
 export const QuestionDependencies = Object.freeze({

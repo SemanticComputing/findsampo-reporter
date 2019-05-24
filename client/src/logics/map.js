@@ -2,8 +2,8 @@ import { createLogic } from 'redux-logic';
 import axios from 'axios';
 import {
   MAP_FETCH_DATA,
-  MAP_FETCH_DATA_SUCCESS
-
+  MAP_FETCH_DATA_SUCCESS,
+  MAP_FETCH_DATA_FAIL
 } from '../constants/actionTypes';
 
 
@@ -15,7 +15,8 @@ const fetchWMTSData = createLogic({
 
   processOptions: {
     dispatchReturn: true,
-    successType: MAP_FETCH_DATA_SUCCESS
+    successType: MAP_FETCH_DATA_SUCCESS,
+    failType: MAP_FETCH_DATA_FAIL
   },
 
   async process({ action }) {

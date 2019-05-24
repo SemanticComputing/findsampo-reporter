@@ -2,23 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEqual, difference } from 'lodash';
 
+// JS files
 import L from 'leaflet';
-import 'leaflet.heat/dist/leaflet-heat.js';
-import 'leaflet.markercluster/dist/leaflet.markercluster.js';
-import 'leaflet.zoominfo/dist/L.Control.Zoominfo.js';
-import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min.js';
-import 'leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant.js';
+import leafletPip from '@mapbox/leaflet-pip/leaflet-pip';
+import 'leaflet.heat/dist/leaflet-heat';
+import 'leaflet.markercluster/dist/leaflet.markercluster';
+import 'leaflet.zoominfo/dist/L.Control.Zoominfo';
+import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min';
+import 'leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant';
 
+// CSS files
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import 'leaflet.zoominfo/dist/L.Control.Zoominfo.css';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 
+// Images
 import icon from 'leaflet/dist/images/marker-icon.png';
 import 'leaflet-fullscreen/dist/fullscreen.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
+// Others
 import {
   CircularProgress,
   Dialog, DialogTitle,
@@ -29,7 +34,7 @@ import {
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
 import { setCoordinates } from '../../actions/findNotification';
-import { fetchMapData } from '../../actions/map';
+import { fetchMapData, startMapSpinner } from '../../actions/map';
 import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
 
@@ -39,13 +44,18 @@ import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/fu
  * showCurrentLocation: If true user's current location is shown on the map
  * markerData: Marker points which will be shown on the map
  * location: The location where map component adds a marker
+ * zoomLevel: Defines the default zoom level of the map
+ * layers: Default active layers to show on the map
+ * checkPointInPolygons: Show notification that user is at ancient monument area
+ * legalityResultHandler: Function which is used to send legality result to parent component
  */
 class Map extends Component {
   state = {
     hasCurrentLocation: false,
+    currentLocation: null,
     activeOverLays: [],
-    isLoading: false,
-    isDialogOpen: false
+    isDialogOpen: false,
+    prevZoomLevel: null
   }
 
   componentDidMount() {
@@ -63,7 +73,7 @@ class Map extends Component {
       this.showMarkersOnMap(this.props.markerData);
     }
 
-    // Checks if map wmts data is updated
+    // Checks if the wmts data is updated
     // If it is updated load the layers again with the updated data.
     if (!isEqual(prevProps.wmtsData, this.props.wmtsData)) {
       this.loadFetchedLayers();
@@ -78,7 +88,7 @@ class Map extends Component {
           this.props.location ? (
             <div id="map">
               {
-                this.state.isLoading &&
+                this.props.isFetchInProgress &&
                 <CircularProgress className="map__data-loader-spiner" size="5rem" />
               }
               <Dialog
@@ -110,13 +120,13 @@ class Map extends Component {
   }
 
   loadFetchedLayers = () => {
-    if (this.props.wmtsData && this.state.isLoading) {
+    if (this.props.wmtsData) {
       for (let l of this.props.wmtsData) {
         const mapLayer = this.overlayLayers[getWMTSLayerValueByKey(l.layer)];
         // Clear current layers
         mapLayer.clearLayers();
         // Load the fetched data
-        L.geoJSON(l.data, {
+        const geoJSONLayer = L.geoJSON(l.data, {
           pointToLayer: (feature, latlng) => {
             return this.createPointToLayer(latlng, this.getOverlayColor(l.layer));
           },
@@ -128,10 +138,10 @@ class Map extends Component {
           onEachFeature: (feature, layer) => {
             layer.bindPopup(this.generateFeaturePopup(feature.properties));
           }
-        }).addTo(mapLayer).addTo(this.map);
+        });
+        geoJSONLayer.addTo(mapLayer).addTo(this.map);
+        this.pointInPolygonChecker(geoJSONLayer);
       }
-      // Stop loading spinner
-      this.setState({ isLoading: false });
     }
   }
 
@@ -142,7 +152,6 @@ class Map extends Component {
     this.setState((prevState) => ({ isDialogOpen: !prevState.isDialogOpen }));
   }
 
-
   /**
    * Initialise map and its settings
    */
@@ -150,6 +159,7 @@ class Map extends Component {
     this.initialiseIcon();
     this.initialiseMap();
     this.initialiseMarkers(position);
+    this.initialiseLayers();
   }
 
   /**
@@ -218,7 +228,7 @@ class Map extends Component {
 
     this.map = L.map('map', {
       center: [64.9, 26.0],
-      zoom: 5,
+      zoom: DEFAULT_ZOOM_LEVEL,
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,
@@ -259,10 +269,51 @@ class Map extends Component {
     // If current location is provided show it
     if (position) {
       this.setLocation(position.coords.latitude, position.coords.longitude);
+      this.map.setView(L.latLng(position.coords.latitude, position.coords.longitude), this.props.zoomLevel);
     }
     // If a location is given
     if (this.props.location) {
       this.setLocation(this.props.location.lat, this.props.location.lng);
+    }
+  }
+
+  /**
+   * Initialise Default Active Layers on the map if any of them provided
+   */
+  initialiseLayers = () => {
+    // If layers property is provided then show it on the map
+    if (this.props.layers) {
+      this.props.layers.forEach(e => {
+        this.map.addLayer(this.overlayLayers[getWMTSLayerValueByKey(e)]);
+      });
+    }
+  }
+
+  /**
+   * Checks that user is not on a ancient monument.
+   */
+  pointInPolygonChecker = (geoJSONLayer) => {
+    if (this.state.hasCurrentLocation && this.state.currentLocation &&
+      this.props.layers && this.props.checkPointInPolygons) {
+      const result = leafletPip.pointInLayer(
+        L.latLng(this.state.currentLocation.coords.latitude,
+          this.state.currentLocation.coords.longitude),
+        geoJSONLayer,
+        true);
+      // L.latLng(60.183232,24.818036) for forbidden test purposes
+      if (result.length > 0) {
+        this.props.legalityResultHandler({
+          header: intl.get('legalityCheckerPage.alert.forbidden.header'),
+          description: intl.get('legalityCheckerPage.alert.forbidden.description'),
+          className: 'forbidden'
+        });
+      } else {
+        this.props.legalityResultHandler({
+          header: intl.get('legalityCheckerPage.alert.allowed.header'),
+          description: intl.get('legalityCheckerPage.alert.allowed.description'),
+          className: 'allowed'
+        });
+      }
     }
   }
 
@@ -272,6 +323,7 @@ class Map extends Component {
   getGeoLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({ hasCurrentLocation: true });
+      this.setState({ currentLocation: position });
       this.renderMap(position);
       // On fail
     }, () => {
@@ -323,7 +375,7 @@ class Map extends Component {
     // HeatMap Mode
     this.heatMap = this.initialiseHeatMap(latLngs);
 
-    // Show the current mode layer
+    // Show the layer of the active mode (heat or normal map)
     if (this.props.mode && this.props.mode === MapMode.HEATMAP) {
       this.map.addLayer(this.heatMap);
     } else {
@@ -368,15 +420,17 @@ class Map extends Component {
       Fha_Wfs_Layer.WORLD_HERITAGE_SITE_AREAS,
       Fha_Wfs_Layer.WORLD_HERITAGE_SITE_POINT
     ];
+
     // Fired when an overlay is selected through the layer control
     this.map.on('overlayadd', (eo) => {
       const layerName = getWMTSLayerKeyByValue(eo.name);
       if (layerName !== Fha_Wfs_Layer.ARCHEOLOGICAL_FINDS) {
         this.state.activeOverLays.push(layerName);
-        if (this.map.getZoom() < MIN_ZOOM_LEVEL && !smallDataLayers.includes(layerName)) {
+        if (this.map.getZoom() < MIN_ZOOM_LEVEL && !smallDataLayers.includes(layerName)
+          && (!this.props.checkPointInPolygons)) {
           this.setState({ isDialogOpen: true });
         } else {
-          this.setState({ isLoading: true });
+          this.props.startMapSpinner();
           this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
         }
       }
@@ -391,11 +445,26 @@ class Map extends Component {
       }
     });
 
-    //Fired when the center of the map stops changing
-    this.map.on('moveend', () => {
+    //Fired when the zooming starts.
+    this.map.on('zoomstart', () => {
+      this.setState({ prevZoomLevel: this.map.getZoom() });
+    });
+
+    //Fired when the zooming ends.
+    this.map.on('zoomend', () => {
+      if ((this.map.getZoom() === MIN_ZOOM_LEVEL
+        || (this.map.getZoom() >= MIN_ZOOM_LEVEL && this.state.prevZoomLevel > this.map.getZoom()))
+        && difference(this.state.activeOverLays, smallDataLayers).length > 0) {
+        this.props.startMapSpinner();
+        this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
+      }
+    });
+
+    //Fired when the drag ends.
+    this.map.on('dragend', () => {
       if (this.map.getZoom() >= MIN_ZOOM_LEVEL
         && difference(this.state.activeOverLays, smallDataLayers).length > 0) {
-        this.setState({ isLoading: true });
+        this.props.startMapSpinner();
         this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
       }
     });
@@ -478,14 +547,17 @@ class Map extends Component {
 }
 
 const MIN_ZOOM_LEVEL = 13;
+const DEFAULT_ZOOM_LEVEL = 5;
 
 const mapStateToProps = (state) => ({
-  wmtsData: state.map.fetchResults
+  wmtsData: state.map.fetchResults,
+  isFetchInProgress: state.map.fetchInProgress
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCoordinates: (coords) => dispatch(setCoordinates(coords)),
-  fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds))
+  fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds)),
+  startMapSpinner: () => dispatch(startMapSpinner())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

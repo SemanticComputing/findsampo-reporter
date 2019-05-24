@@ -61,6 +61,18 @@ export default {
     'pageNotFound': 'Ooops! Page Not Found!',
     'goToHomePage': 'Go To HomePage'
   },
+  'legalityCheckerPage': {
+    'alert': {
+      'allowed': {
+        'header': 'You are safe!',
+        'description': 'We could not find any ancient monument at your location.'
+      },
+      'forbidden': {
+        'header': 'You are not allowed to excavate in this area!',
+        'description': 'Please do not excavate. Ancient relics are protected by the Antiquities Act (295/63). According to this Act, all ancient relics are protected as reminders of Finland’s earlier inhabitants and history. Without permission issued under the Act, it is forbidden to excavate, cover, alter, damage or remove ancient relics or disturb them in any other way.'
+      }
+    }
+  },
   'overview': {
     'title': 'Summary',
     'notProvidedValue': 'Not Provided',
