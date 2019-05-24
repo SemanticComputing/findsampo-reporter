@@ -40,18 +40,23 @@ const SignupPage = Loadable({
   loading: Loading
 });
 
-const Nearby = Loadable({
+const NearbyPage = Loadable({
   loader: () => import('../components/NearbyPage'),
   loading: Loading
 });
 
-const Report = Loadable({
+const ReportPage = Loadable({
   loader: () => import('../components/reporting/Report'),
   loading: Loading
 });
 
 const NotFoundPage = Loadable({
   loader: () => import('../components/NotFoundPage'),
+  loading: Loading
+});
+
+const LegalityCheckerPage = Loadable({
+  loader: () => import('../components/LegalityCheckerPage'),
   loading: Loading
 });
 
@@ -77,8 +82,9 @@ const AppRouter = () => (
           <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
           <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />
           <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
-          <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={Nearby}></PrivateRoute>
-          <PrivateRoute path={RouterPaths.REPORT_PAGE} component={Report} />
+          <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={NearbyPage} />
+          <PrivateRoute path={RouterPaths.REPORT_PAGE} component={ReportPage} />
+          <PrivateRoute path={RouterPaths.LEGALITY_CHECKER_PAGE} component={LegalityCheckerPage} />
           <Route component={NotFoundPage}></Route>
         </Switch>
       </div>
