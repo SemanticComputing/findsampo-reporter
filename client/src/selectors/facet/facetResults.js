@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { FacetFilters } from '../../helpers/enum/enums';
-import { groupBy, merge, head, intersectionWith, isEqual, keyBy, keys, countBy, omit, size } from 'lodash';
+import { groupBy, merge, head, intersectionWith, isEqual, keyBy, keys, countBy, omit, size, isArray } from 'lodash';
 
 const findsSelector = (state) => state.finds.validatedFinds;
 const filtersSelector = (state) => state.facetFilters.activeFilters;
@@ -77,7 +77,11 @@ const getFindsByCriteria = (finds, filterKey, filters) => {
  * @param {Selected filter} filters
  */
 const filterBySearchKeyword = (find, filters) => {
-  if (find.title.value.toLowerCase().includes(head(filters).label.toLowerCase())) {
+  if (isArray(find.title)) {
+    // FIXME: Remove dublicates
+    console.log('The following finds have two or more titles');
+    console.log(find.title);
+  } else if (!isArray(find.title) && find.title.toLowerCase().includes(head(filters).label.toLowerCase())) {
     return find;
   }
 };
@@ -89,7 +93,7 @@ const filterBySearchKeyword = (find, filters) => {
  */
 const filterByOtherProperties = (find, filter) => {
   if (find[filter.criteria]) {
-    if (find[filter.criteria].value === filter.label) {
+    if (find[filter.criteria] === filter.label) {
       return find;
     }
   }
@@ -99,13 +103,13 @@ const filterByOtherProperties = (find, filter) => {
  * Gets filter values with their current amount
  * @param { Filtered finds} results 
  * @param { Search results for a keyword } searchResults 
- * @param { Type of the filter } filterType 
+ * @param { Type of the filter } filterType                 
  * @param { All available finds} finds 
  * @param { Grouped filters} groupedFilters 
  */
 const getFilterValuesWithAmount = (results, searchResults, filterType, finds, groupedFilters) => {
   const result = [];
-  const filterKey = filterType + '.value';
+  const filterKey = filterType;
   const filtersWithoutTitle = omit(groupedFilters, FacetFilters.TITLE);
   const filterValues = keys(keyBy(finds, filterKey));
   let res;

@@ -100,15 +100,15 @@ const convertToTableData = (data) => {
   for (let d of data) {
     tableData.push(
       {
-        title: d.title.value,
-        material: d.main_material ? d.main_material.value : '-',
-        type: d.type ? d.type.value : '-',
-        period: d.period ? d.period.value : '-',
-        municipality: d.municipality ? d.municipality.value : '-',
-        description: d.description ? d.description.value : 'Not additional information found!', // FIXME
-        image: d.image_url ? d.image_url.value : '',
-        specification: d.specification ? d.specification.value : 'Not Provided',
-        province: d.province ? d.province.value : 'Not Provided'
+        title: d.title,
+        material: d.main_material ? d.main_material : '-',
+        type: d.type ? d.type : '-',
+        period: d.period ? d.period : '-',
+        municipality: d.municipality ? d.municipality : '-',
+        description: d.description ? d.description : 'Not additional information found!', // FIXME
+        image: d.image_url ? d.image_url : '',
+        specification: d.specification ? d.specification : 'Not Provided',
+        province: d.province ? d.province : 'Not Provided'
       }
     );
   }

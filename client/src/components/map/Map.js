@@ -364,9 +364,9 @@ class Map extends Component {
     const latLngs = [];
 
     for (let marker of markerData) {
-      if (marker.lat && marker.long && !isNaN(marker.lat.value) && !isNaN(marker.long.value)) {
+      if (marker.lat && marker.long && !isNaN(marker.lat) && !isNaN(marker.long)) {
         const popupText = this.generateMarkerPopup(marker);
-        const location = new L.LatLng(marker.lat.value, marker.long.value);
+        const location = new L.LatLng(marker.lat, marker.long);
         const markerToMap = new L.marker(location).bindPopup(popupText);
         latLngs.push(location);
         this.clusterMap.addLayer(markerToMap);
@@ -531,9 +531,11 @@ class Map extends Component {
    */
   generateMarkerPopup = (marker) => {
     let popupText = '';
-    const image = marker.image_url ? `<img class="leaflet-popup-content__image" src=${marker.image_url.value} />` : '';
-    const title = marker.title ? `<h2 class="leaflet-popup-content__text-container__title">${marker.title.value}</h2>` : '';
-    const description = marker.description ? `<p class="leaflet-popup-content__text-container__description">${marker.description.value}</p>` : '';
+    // FIXME: SHOW ALL IMAGES
+    const firstImage = marker.image_url ? Array.isArray(marker.image_url) ? marker.image_url[0] : marker.image_url : '';
+    const image = marker.image_url ? `<img class="leaflet-popup-content__image" src=${firstImage} />` : '';
+    const title = marker.title ? `<h2 class="leaflet-popup-content__text-container__title">${marker.title}</h2>` : '';
+    const description = marker.description ? `<p class="leaflet-popup-content__text-container__description">${marker.description}</p>` : '';
 
     popupText += `${image}
                   <div class="leaflet-popup-content__text-container">
