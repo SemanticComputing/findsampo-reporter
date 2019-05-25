@@ -28,11 +28,14 @@
   &__map {
     flex: 14; 
     display: flex;
+    align-items: center;
+    justify-content: center;
     /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
     min-height: 0px;*/
     &__container {
       flex: 1;
       display: flex;
+      align-self: normal;
       &__find-content {
         flex: 1;
         display: flex;
@@ -50,9 +53,6 @@
         flex: 1;
         display: flex;
       }
-    }
-    &__progress {
-      margin: auto;
     }
   }
 }
