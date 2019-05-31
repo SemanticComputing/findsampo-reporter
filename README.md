@@ -4,7 +4,7 @@ Main reposity of the FindSampo project.
 
 ## Initialization
 
-Before starting ensure that you have node v.10.15 and yarn v.1.15.<br>
+Before starting ensure that you have node v.10.15 and yarn v.1.16.<br>
 
 In this project yarn is used as a package manager tool. Please avoid using NPM<br>
 
@@ -16,11 +16,11 @@ After these steps, run command "yarn" then you are ready to run the available sc
 
 In this project directory, you can run:
 
-### `yarn dev-server`
+### `yarn start:dev`
 
 Runs the app in the development mode.<br>
 
-The page will reload if you make edits.<br>
+The page will reload if you make changes.<br>
 You will also see any lint errors in the console.
 
 ### `yarn build:dev`

@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start:dev": "yarn start:server & yarn start:client",
+    "start:server": "nodemon server/server.js",
+    "start:client": "webpack-dev-server --inline --hote --open",
     "build:dev": "nodemon server/server.js & webpack --watch --progress",
-    "build:prod": "webpack -p --env production ",
-    "dev-server": "webpack-dev-server --open --mode development"
+    "build:prod": "webpack -p --env production "
   },
   "author": "Pejam Hassanzadeh",
   "license": "MIT",
@@ -16,7 +18,7 @@
     "axios": "^0.19.0",
     "date-fns": "^2.0.0-alpha.27",
     "express": "^4.16.4",
-    "firebase": "^5.8.4",
+    "firebase": "^6.1.0",
     "history": "^4.7.2",
     "immutability-helper": "^3.0.0",
     "leaflet": "^1.4.0",

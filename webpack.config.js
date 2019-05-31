@@ -57,7 +57,11 @@ module.exports = (env) => {
     devServer: {
       contentBase: path.join(__dirname, 'public'),
       historyApiFallback: true,
-      publicPath: '/dist/'
+      publicPath: '/dist/',
+      proxy: {
+        '/api': 'http://localhost:3001',
+        secure: false
+      }
     }
   };
 };
