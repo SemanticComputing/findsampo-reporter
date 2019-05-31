@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:dev": "webpack --watch --progress",
+    "build:dev": "nodemon server/server.js & webpack --watch --progress",
     "build:prod": "webpack -p --env production ",
     "dev-server": "webpack-dev-server --open --mode development"
   },
@@ -65,6 +65,7 @@
     "eslint-plugin-react": "^7.12.4",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
+    "nodemon": "^1.19.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
