@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start:dev": "yarn start:server & yarn start:client",
+    "start:server": "nodemon server/server.js",
+    "start:client": "webpack-dev-server --inline --hote --open",
     "build:dev": "nodemon server/server.js & webpack --watch --progress",
-    "build:prod": "webpack -p --env production ",
-    "dev-server": "nodemon server/server.js & webpack-dev-server --open --mode development"
+    "build:prod": "webpack -p --env production "
   },
   "author": "Pejam Hassanzadeh",
   "license": "MIT",
