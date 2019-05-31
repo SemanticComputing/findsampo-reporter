@@ -5,7 +5,7 @@
   "scripts": {
     "build:dev": "nodemon server/server.js & webpack --watch --progress",
     "build:prod": "webpack -p --env production ",
-    "dev-server": "webpack-dev-server --open --mode development"
+    "dev-server": "nodemon server/server.js & webpack-dev-server --open --mode development"
   },
   "author": "Pejam Hassanzadeh",
   "license": "MIT",
