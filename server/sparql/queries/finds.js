@@ -5,7 +5,7 @@ const getValidatedFinds = `
   PREFIX  sualt: <http://ldf.fi/schema/sualt/>
   PREFIX  foaf: <http://xmlns.com/foaf/0.1/>
 
-  SELECT ?id ?title ?specification ?municipality ?province ?sub_category
+  SELECT ?id ?title ?specification ?municipality ?province ?type ?sub_category
     ?typological_extension ?main_material ?period ?start_year
     ?extension_one ?end_year ?extension_two ?description ?lat ?long
     (GROUP_CONCAT(DISTINCT ?image_url_; SEPARATOR=";") AS ?image_url)
@@ -33,7 +33,7 @@ const getValidatedFinds = `
            wgs84:long ?long .
     }
   }
-  GROUP BY ?id ?title ?specification ?municipality ?province ?sub_category
+  GROUP BY ?id ?title ?specification ?municipality ?province ?type ?sub_category
     ?typological_extension ?main_material ?period ?start_year
     ?extension_one ?end_year ?extension_two ?description ?lat ?long
 `;
