@@ -1,5 +1,6 @@
 .step-maker {
-  & .MuiStepper-alternativeLabel-157 {
+  & &__container {
     background-color: #ffffffcc;
+    padding: 1.5rem 0;
   }
 }

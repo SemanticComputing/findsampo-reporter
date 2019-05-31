@@ -9,7 +9,8 @@ import {
   FIND_NOTIFICATION_CHANGE_FIND_INDEX,
   FIND_NOTIFICATION_SET_FIND_TYPE,
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
-  FIND_NOTIFICATION_SET_FIND_TIMING
+  FIND_NOTIFICATION_SET_FIND_TIMING,
+  FIND_NOTIFICATION_SET_FIND_DEPTH
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -94,6 +95,14 @@ export default (state = initialState, action) => {
         finds: {
           [action.index]: {
             $merge: { timing: action.findTiming }
+          }
+        }
+      });
+    case FIND_NOTIFICATION_SET_FIND_DEPTH:
+      return update(state, {
+        finds: {
+          [action.index]: {
+            $merge: { depth: action.findDepth }
           }
         }
       });

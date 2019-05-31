@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import { Stepper, Step, StepLabel } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 
 const StepMaker = (props) => {
@@ -10,7 +8,7 @@ const StepMaker = (props) => {
   const activeStep = getCurrentStep(props.currentStep);
   return (
     <div className="step-maker">
-      <Stepper activeStep={activeStep} alternativeLabel>
+      <Stepper className="step-maker__container" activeStep={activeStep} alternativeLabel>
         {steps.map(label => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
@@ -32,7 +30,7 @@ const getCurrentStep = (currentStep) => {
     return 0;
   } else if (currentStep > 2 && currentStep < 9) {
     return 1;
-  } else if (currentStep > 8 && currentStep < 16) {
+  } else if (currentStep > 8 && currentStep < 17) {
     return 2;
   } else {
     return 3;

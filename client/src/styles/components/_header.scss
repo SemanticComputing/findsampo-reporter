@@ -1,4 +1,5 @@
 .appbar {
+  z-index: 1;
   & &__title {
     color: white;
     text-decoration: none;
@@ -9,11 +10,46 @@
   & &__avatar {
     width: 2rem;
     height: 2rem;
+    background: $color-primary;
+  }
+  & &__button {
+    background: $color-ligher-grey;
+    &__icon {
+      color: $color-dark-grey;
+    }
   }
   & &__typography {
-    flex-grow: 1
+    margin-right: 2rem;
   }
+  & &__typography--mobile {
+    flex-grow: 1;
+  }
+  mobile
   & &__icon {
     margin-right: $xss-size 
   }
+  & &__icon-container  {
+    flex-grow: 1;
+    &__icon {
+      color: white;
+      &__label {
+        opacity: 1;
+        font-size: 0.9rem;
+        transition: font-size 0.2s, opacity 0.2s;
+        transition-delay: 0s, 0s;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        transition-delay: 0.1s;
+      }
+    }
+    &__icon--selected {
+      border-bottom: 3px solid white;
+      border-radius: 0;
+      padding: 12px 12px 10px 12px;
+    }
+    .MuiIconButton-label-82 {
+      flex-direction: column;
+    }
+  }
 }
+
+

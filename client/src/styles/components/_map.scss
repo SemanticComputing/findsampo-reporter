@@ -1,4 +1,108 @@
-#map { // TODO: Make this responsive
+#map {
   flex: 1;
   width: 100%;
+  // Styles for leaflet popup
+  & .leaflet-popup-content-wrapper {
+    // Material UI settings
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
+    border-radius: 4px;
+    & .leaflet-popup-content {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      &__image {
+        max-height: 8rem;
+        object-fit: cover;
+      }
+      &__text-container {
+        color: $color-text-grey;
+        padding: 1rem;
+        &__description {
+          margin: 0;
+        }
+        &__title {
+          margin-bottom: 0.35rem;
+        }
+        &__info {
+          margin-bottom: 0.3rem;
+          font-size: 0.85rem;
+        }
+      }
+      &__place-text-container {
+        padding: 0 1rem 1rem 1rem;
+      }
+      &__header {
+        margin: 0;
+        padding: 10px 20px;
+        background: #8080802b;
+        text-transform: uppercase;
+        font-weight: 400;
+        text-align: center;
+      }
+    }
+  }
+  & .leaflet-popup-close-button {
+    font-size: 1.5rem;
+  }
+  & .leaflet-control-zoominfo-info {
+    margin-left: -10px;
+  }
+  & .leaflet-control {
+    border: 4px solid rgba(0,0,0,0.3);
+  }
+  & .map__data-loader-spiner {
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    color: $color-bottom-bar-icon-grey;
+  }
+  & .leaflet-control-layers-base::before,
+  .leaflet-control-layers-overlays::before{
+    content: "Map Services:";
+    font-weight: bold;
+    padding-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  & .leaflet-control-layers-overlays::before {
+    content: "Overlay Layers:";
+  }
+
+  // Overlay control stylings
+  & .leaflet-control-layers-base label div,
+    .leaflet-control-layers-overlays label div{
+    display: flex;
+    align-items: center;
+  }
+  & .leaflet-control-layers-base label div span,
+  .leaflet-control-layers-overlays label div span{
+    font-size: 0.85rem;
+  }
+  & .leaflet-control-layers-selector {
+    margin: 3px;
+    min-width: 1.2rem;
+    min-height: 1.2rem;
+  }
+  & .leaflet-control-layers-selector:checked + span {
+    width: 100%;
+    background-color: #8080802b;
+    padding: 2px;
+  }
+  & .leaflet-control-layers-expanded {
+    @media screen and (max-width: $size-max-mobile) {
+      max-width: 16rem;
+      max-height: 22rem;
+      overflow-y: auto;
+    }
+  }
+  & .leaflet-control-layers-list.leaflet-control-layers-scrollbar {
+    @media screen and (max-width: $size-max-mobile) {
+      height: 21rem !important;
+    }
+  }
 }

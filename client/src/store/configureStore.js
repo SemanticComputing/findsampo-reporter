@@ -1,9 +1,14 @@
+import 'regenerator-runtime/runtime';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogicMiddleware } from 'redux-logic';
 import auth from '../reducers/auth';
 import locale from '../reducers/locale';
 import report from '../reducers/report';
+import notifier from '../reducers/notifier';
 import findNotification from '../reducers/findNotification';
+import finds from '../reducers/find';
+import facetFilters from '../reducers/facetFilter';
+import map from '../reducers/map';
 import rootLogic from '../logics/rootLogic';
 
 // Create react middleware
@@ -19,9 +24,13 @@ export default () => {
   const store = createStore(
     combineReducers({
       locale,
+      notifier,
       auth,
       report,
-      findNotification
+      findNotification,
+      finds,
+      facetFilters,
+      map
     }),
     composeEnhancers(composeMiddleware)
   );

@@ -1,0 +1,13 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  & &__action {
+    min-width: 0;
+  }
+  & &__selected {
+    color: $color-primary !important;
+  }
+}

@@ -10,6 +10,10 @@ export default {
     'password': 'Password',
     'login': 'Log In',
     'signup': 'Sign Up',
+    'forgotPassword': 'Forgot your password?',
+    'loginWith': 'Log in with',
+    'googleLogin': 'G',
+    'notAMemberYet': 'Not a member yet?'
   },
   'signupPage': {
     'title': 'Sign Up',
@@ -17,12 +21,84 @@ export default {
     'email': 'Email',
     'password': 'Password',
     'signup': 'Sign Up',
+    'alreadyAMember': 'Already a member?',
+    'login': 'Log In'
   },
-  'report':{
+  'nearByPage': {
+    'map': {
+      'mapLayers': {
+        'backGroundMap': 'Background Map (National Survey of Finland)',
+        'topographicalMap': 'Topographical Map (National Survey of Finland)',
+        'googleMaps': 'Google Maps'
+      },
+      'overLays': {
+        'arkeologiset_loydot': 'Arkeologiset löydöt',
+        'arkeologiset_kohteet_alue': 'Muinaisjäännösalueet',
+        'arkeologiset_kohteet_piste': 'Muinaisjäännöspisteet',
+        'maailmanperinto_alue': 'Maailmanperintökohteet alueet',
+        'maailmanperinto_piste': 'Maailmanperintökohteet pisteet',
+        'rakennusperinto_alue': 'Rakennusperintörekisterin suojellut alueet',
+        'rakennusperinto_piste': 'Rakennusperintörekisterin suojellut rakennukset',
+        'arkeologisten_kohteiden_alakohteet_piste': 'Muinaisjäännösten alakohteet',
+        'rky_alue': 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt alueet',
+        'rky_piste': 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt pisteet',
+        'rky_viiva': 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt viivat'
+      },
+      'alert': {
+        'zoomAlertTitle': 'Zoom Level Alert',
+        'zoomAlertContent': 'Please change the zoom level to 13 to view selected layer as shown below.',
+        'zoomAlertConfirmation': 'OK'
+      },
+      'mapContent': {
+        'name': 'Name',
+        'town': 'Town',
+        'link': 'Link',
+        'more': 'More'
+      }
+    }
+  },
+  'notFoundPage': {
+    'pageNotFound': 'Ooops! Page Not Found!',
+    'goToHomePage': 'Go To HomePage'
+  },
+  'legalityCheckerPage': {
+    'alert': {
+      'allowed': {
+        'header': 'You are safe!',
+        'description': 'We could not find any ancient monument at your location.'
+      },
+      'forbidden': {
+        'header': 'You are not allowed to excavate in this area!',
+        'description': 'Please do not excavate. Ancient relics are protected by the Antiquities Act (295/63). According to this Act, all ancient relics are protected as reminders of Finland’s earlier inhabitants and history. Without permission issued under the Act, it is forbidden to excavate, cover, alter, damage or remove ancient relics or disturb them in any other way.'
+      }
+    }
+  },
+  'overview': {
+    'title': 'Summary',
+    'notProvidedValue': 'Not Provided',
+    'findSite': {
+      'title': 'Find Site Details',
+      'photos': 'Photos',
+      'location': 'Location',
+      'additionalMaterials': 'Additional Materials',
+    },
+    'find': {
+      'title': 'Details of finds',
+      'subTitle': 'Find',
+      'photos': 'Photos',
+      'depth': 'Depth',
+      'type': 'Type',
+      'timing': 'Timing',
+      'material': 'Material'
+    }
+  },
+  'report': {
     'stepOne': 'Start',
     'stepTwo': 'Find Site',
     'stepThree': 'Find',
     'stepFour': 'Done!',
+    'skip': 'Skip',
+    'back': 'Back',
     'questionZero': {
       'question': 'Would you like to get familiar with our starter kits before starting to add your find?',
       'help': 'This questions is for providing some help. Please choose one of the choices',
@@ -33,7 +109,7 @@ export default {
       'question': 'Great, below you can find the most relevant instructions.',
       'help': 'Please select one of the guides!',
       'buttonOne': 'Continue',
-      'options' : {
+      'options': {
         'optionOne': 'General Instructions',
         'optionTwo': 'Starter Kit',
         'optionThree': 'Reporting Instructions',
@@ -43,7 +119,7 @@ export default {
       'question': 'Are you adding a find that has recently found?',
       'help': 'This question is asked to get your current location and date.',
       'buttonOne': 'Yes, I am on the find site',
-      'buttonTwo': 'No, I found it a while ago'
+      'buttonTwo': 'No, I found a while ago'
     },
     'questionThree': {
       'question': 'Pick the find site location please.',
@@ -104,9 +180,11 @@ export default {
       'buttonOne': 'Continue'
     },
     'questionFourteen': {
-      'question': 'Please fill in the find details.',
-      'help': 'Some explenation about depth and size.',
-      'buttonOne': 'Continue'
+      'question': 'Please input the find depth.',
+      'help': 'Some explenation about find depth.',
+      'label': 'Find Depth',
+      'buttonOne': 'Continue',
+      'depthUnit': 'cm'
     },
     'questionFifteen': {
       'question': 'Would you like to add another find?',
@@ -115,9 +193,11 @@ export default {
       'buttonTwo': 'No, thanks'
     },
     'questionSixteen': {
+      'buttonOne': 'Looks good, Send Please!'
+    },
+    'questionSeventeen': {
       'question': 'Your add has been added successfully.',
       'help': 'You find has been sent. You will get an notification soon.',
-      'buttonOne': 'Finish'
     },
   },
   'eras': { // TODO TRANSLATE THESE TO ENGLISH
@@ -220,5 +300,12 @@ export default {
     'iron': 'Iron',
     'bronze': 'Bronze',
     'porcelain': 'Porcelain'
+  },
+  'bottomNavBar': {
+    'home': 'Home',
+    'mine': 'MyFinds',
+    'nearby': 'Nearby',
+    'report': 'Report',
+    'more': 'More'
   }
 };

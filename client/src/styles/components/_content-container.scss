@@ -1,0 +1,33 @@
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  text-align: center;
+  &__card-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    &__card {
+      max-width: 335px;
+      margin: 1rem;
+      transition: transform 420ms cubic-bezier(.165,.84,.44,1);
+      &__media {
+        height: 140px,
+      }
+    }
+    &__card:hover {
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, .1);
+      transform: scale(1.05);
+    }
+  }
+}
+.content-container--justified {
+  justify-content: center;
+  flex: unset;
+  height: 22rem;
+  @media screen and (max-width: $size-max-mobile) {
+    height: 11rem;
+  }
+}

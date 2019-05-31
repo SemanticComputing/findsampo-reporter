@@ -2,8 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
 
-// TODO: Define test and dev envs here
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: '.env.development' });
@@ -16,7 +17,9 @@ module.exports = (env) => {
     entry: './client/src',
     output: {
       path: path.join(__dirname, 'public', 'dist'),
-      filename: 'bundle.js'
+      publicPath: '/dist/',
+      filename: 'bundle.js',
+      chunkFilename: '[name].bundle.js',
     },
     module: {
       rules: [
@@ -37,7 +40,7 @@ module.exports = (env) => {
           ]
         },
         {
-          test: /\.(png|jpg|gif)$/i,
+          test: /\.(png|jpg|gif|otf)$/i,
           use: [
             {
               loader: 'url-loader',
@@ -49,19 +52,7 @@ module.exports = (env) => {
         }
       ]
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: 'styles.css',
-      }),
-      new webpack.DefinePlugin({
-        'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
-        'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
-        'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
-        'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
-        'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
-        'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
-      })
-    ],
+    plugins: getPlugins(isProduction),
     devtool: isProduction ? 'source-map ' : 'inline-source-map',
     devServer: {
       contentBase: path.join(__dirname, 'public'),
@@ -69,4 +60,44 @@ module.exports = (env) => {
       publicPath: '/dist/'
     }
   };
+};
+
+/**
+ * Returns all availables plugins for the current env
+ * 
+ * @param {Determinates if current env is production } isProduction 
+ */
+const getPlugins = (isProduction) => {
+  const plugins = [
+    new MiniCssExtractPlugin({
+      filename: 'styles.css',
+    }),
+    new webpack.DefinePlugin({
+      'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
+      'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+      'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
+      'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
+      'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+      'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
+    })
+  ];
+
+  // Run Compression Plugins only in production mode
+  if (isProduction) {
+    plugins.push(
+      new CompressionPlugin({
+        filename: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240
+      }),
+      new BrotliPlugin({
+        asset: '[path].br[query]',
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+      })
+    );
+  }
+
+  return plugins;
 };

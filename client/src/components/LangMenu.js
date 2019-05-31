@@ -39,7 +39,7 @@ class LangMenu extends Component {
   render() {
     return (
       <div>
-        <List className='list'>
+        <List className='lang-menu'>
           <ListItem
             aria-haspopup='true'
             aria-controls='lang-button'
@@ -48,6 +48,7 @@ class LangMenu extends Component {
             <Fab variant='round' size='small'
               aria-haspopup='true'
               aria-controls='lang-button'
+              className="lang-menu__button"
               onClick={this.onListItemPressed}>
               {localStorage.getItem('locale') || langs[this.state.selectedIndex]}
             </Fab>

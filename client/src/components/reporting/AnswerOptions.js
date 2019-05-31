@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
-import MomentUtils from '@date-io/moment';
+import DateFnsUtils from '@date-io/date-fns';
+import intl from 'react-intl-universal';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
 import { OptionTypes } from '../../helpers/enum/enums';
-import { setDate, setAdditionalMaterial } from '../../actions/findNotification';
+import { setDate, setAdditionalMaterial, setFindDepth } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
 import TreeView from '../../components/TreeView';
-import intl from 'react-intl-universal';
 
 class AnswerOptions extends Component {
 
@@ -20,12 +20,13 @@ class AnswerOptions extends Component {
     isExactDay: true
   }
 
-  onExactDayChanged = () => {
-    this.setState((prevState) => ({isExactDay: !prevState.isExactDay}));
+
+  onFindDepthChanged = (event) => {
+    this.props.setFindDepth(event.target.value, this.props.currentFindIndex);
   }
 
-  onOptionClicked = () => {
-    //this.setState(() => ({ checked: !this.state.checked }));
+  onExactDayChanged = () => {
+    this.setState((prevState) => ({ isExactDay: !prevState.isExactDay }));
   }
 
   onFindDateChange = (selectedDate) => {
@@ -43,7 +44,7 @@ class AnswerOptions extends Component {
           autoOk
           variant="outlined"
           label="Date"
-          format="DD.MM.YYYY"
+          format="dd.MM.yyyy"
           value={this.props.findDate}
           onChange={this.onFindDateChange}
           className="answer-options__date-picker" />
@@ -68,21 +69,24 @@ class AnswerOptions extends Component {
     let container;
     if (options) {
       switch (options.type) {
-        case OptionTypes.BUTTON:
+        case OptionTypes.NUMBER_FIELD:
           container = (
-            options.texts.map((txt) =>
-              <FormControlLabel
-                control={
-                  <Checkbox checked={true} onChange={this.onOptionClicked} value={txt} />
-                }
-                label={txt} key={txt}
-              />
-            )
+            <TextField
+              id="outlined-number"
+              label={intl.get('report.questionFourteen.label')}
+              onChange={this.onFindDepthChanged}
+              type="number"
+              margin="normal"
+              variant="outlined"
+              InputProps={{
+                endAdornment: <InputAdornment position="end">{intl.get('report.questionFourteen.depthUnit')}</InputAdornment>,
+              }}
+            />
           );
           break;
         case OptionTypes.MAP:
           container = (
-            <Map />
+            <Map showCurrentLocation/>
           );
           break;
         case OptionTypes.DATE_PICKER:
@@ -98,7 +102,7 @@ class AnswerOptions extends Component {
                 }
                 label={intl.get('report.questionFour.selectionText')}
               />
-              <MuiPickersUtilsProvider utils={MomentUtils}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 {this.renderDatePickers()}
               </MuiPickersUtilsProvider>
             </div>
@@ -158,12 +162,14 @@ class AnswerOptions extends Component {
 
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],
-  findDate: state.findNotification.date
+  findDate: state.findNotification.date,
+  currentFindIndex: state.findNotification.currentFindIndex
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setDate: (date) => dispatch(setDate(date)),
-  setAdditionalMaterial: (text) => dispatch(setAdditionalMaterial(text))
+  setAdditionalMaterial: (text) => dispatch(setAdditionalMaterial(text)),
+  setFindDepth: (depth, index) => dispatch(setFindDepth(depth, index))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnswerOptions);

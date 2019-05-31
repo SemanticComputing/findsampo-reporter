@@ -1,10 +1,33 @@
-* {
+/**
+  Load Custom font families
+*/
+@font-face {
+  font-family: 'New Hero Bd';
+  src: url('/fonts/HeroNew-Regular.otf');
+}
+
+@font-face {
+  font-family: 'New Hero Bd';
+  src: url('/fonts/HeroNew-Bold.otf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'New Hero Bd';
+  src: url('/fonts/HeroNew-Light.otf');
+  font-weight: lighter;
+}
+
+/**
+  Use New Hero Bd for all classes except material-icons
+*/
+*:not(.material-icons) {
   box-sizing: border-box;
+  font-family: "New Hero Bd", "Helvetica", "Roboto", "Arial", sans-serif !important;
 }
 
 html {
   height: 100%;
-  font-family: "New Hero Bd","Helvetica","Roboto","Arial",sans-serif;
 }
 
 body {
@@ -19,8 +42,8 @@ body {
   display: grid;
   grid-template-rows: 4.9rem auto fit-content(5rem);
   grid-template-areas: "appbar"
-                       "content"
-                       "footer";
+    "content"
+    "footer";
   height: 100%;
   background-color: $color-app-background;
 }
@@ -32,6 +55,14 @@ body {
 .content {
   grid-area: content;
   display: flex;
+  /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
+  min-height: 0px;
+  //overflow-y: auto; */
+
+  @media screen and (max-width: $size-max-mobile) {
+    position: relative;
+    margin-bottom: 56px;
+  }
 }
 
 .footer {
