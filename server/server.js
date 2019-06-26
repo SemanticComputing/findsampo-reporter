@@ -138,7 +138,7 @@ app.post(REPORT_END_POINT, async (req, res, next) => {
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
-      url: 'http://localhost:3045/ds/update',
+      url: 'http://172.30.20.83:3030/ds/update',
       data: querystring.stringify({ update })
     });
     res.send(response.data);
@@ -172,7 +172,7 @@ app.get(REPORT_END_POINT, async (req, res, next) => {
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
-      url: 'http://localhost:3045/ds/sparql',
+      url: 'http://172.30.20.83:3030/ds/sparql',
       data: querystring.stringify({ query })
     });
     res.send(response.data.results.bindings);
