@@ -138,7 +138,7 @@ app.post(REPORT_END_POINT, async (req, res, next) => {
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
-      url: 'https://dev.löytösampo.fi/fuseki/update',
+      url: process.env.FUSEKI_UPDATE_URL,
       data: querystring.stringify({ update })
     });
     res.send(response.data);
@@ -172,7 +172,7 @@ app.get(REPORT_END_POINT, async (req, res, next) => {
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
-      url: 'https://dev.löytösampo.fi/fuseki/sparql',
+      url: process.env.FUSEKI_SPARQL_URL,
       data: querystring.stringify({ query })
     });
     res.send(response.data.results.bindings);
