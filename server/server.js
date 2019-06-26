@@ -1,12 +1,13 @@
 const path = require('path');
 const express = require('express');
-const finds = require('./sparql/queries/finds');
-const report = require('./sparql/queries/report');
-const mapFinds = require('./sparql/mappers/findsMapper');
+const url = require('url');
 const querystring = require('querystring');
 const axios = require('axios');
 const dotenv = require('dotenv');
 const shrinkRay = require('shrink-ray-current');
+const finds = require('./sparql/queries/finds');
+const report = require('./sparql/queries/report');
+const mapFinds = require('./sparql/mappers/findsMapper');
 
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
@@ -138,7 +139,7 @@ app.post(REPORT_END_POINT, async (req, res, next) => {
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
-      url: `http://${process.env.FUSEKI_UPDATE_URL}`,
+      url: url.parse(`http://${process.env.FUSEKI_UPDATE_URL}`),
       data: querystring.stringify({ update })
     });
     res.send(response.data);
@@ -172,7 +173,7 @@ app.get(REPORT_END_POINT, async (req, res, next) => {
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
-      url: `http://${process.env.FUSEKI_SPARQL_URL}`,
+      url: url.parse(`http://${process.env.FUSEKI_SPARQL_URL}`),
       data: querystring.stringify({ query })
     });
     res.send(response.data.results.bindings);
