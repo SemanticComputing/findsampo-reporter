@@ -16,6 +16,8 @@ export const LOCALE_SET_SUCCESS = 'LOCALE_SET_SUCCESS';
 
 // Reporting
 export const REPORT_CHANGE_QUESTION = 'REPORT_CHANGE_QUESTION';
+export const REPORT_POST = 'REPORT_POST';
+export const REPORT_GET = 'REPORT_GET';
 
 // Find Notification
 export const FIND_NOTIFICATION_SET_DATE = 'FIND_NOTIFICATION_SET_DATE';

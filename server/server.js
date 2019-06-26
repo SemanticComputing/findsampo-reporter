@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const finds = require('./sparql/queries/finds');
+const report = require('./sparql/queries/report');
 const mapFinds = require('./sparql/mappers/findsMapper');
 const querystring = require('querystring');
 const axios = require('axios');
@@ -118,6 +119,80 @@ app.get(FHA_WFS_END_POINT, async (req, res, next) => {
     });
     res.send(response.data.features);
   } catch (error) {
+    next(error);
+  }
+});
+
+
+
+//Report
+const REPORT_END_POINT = '/api/v1/report';
+const defaultreportHeaders = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Accept': 'application/sparql-results+json; charset=utf-8',
+};
+
+app.post(REPORT_END_POINT, async (req, res, next) => {
+  try {
+    const update = report.postReport;
+    const response = await axios({
+      method: 'post',
+      headers: defaultreportHeaders,
+      url: 'http://localhost:3045/ds/update',
+      data: querystring.stringify({ update })
+    });
+    res.send(response.data);
+    console.log(response);
+  } catch(error) {
+    if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+      console.log(error.response.data);
+    //console.log(error.response.status);
+    //console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+    // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+    next(error);
+  }
+});
+
+
+
+app.get(REPORT_END_POINT, async (req, res, next) => {
+  try {
+    const query = report.getReport;
+    const response = await axios({
+      method: 'post',
+      headers: defaultreportHeaders,
+      url: 'http://localhost:3045/ds/sparql',
+      data: querystring.stringify({ query })
+    });
+    res.send(response.data.results.bindings);
+  } catch(error) {
+    if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+      console.log(error.response.data);
+    //console.log(error.response.status);
+    //console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+    // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
     next(error);
   }
 });

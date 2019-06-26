@@ -3,6 +3,7 @@ import locale from './locale';
 import findNotification from './findNotification';
 import find from './find';
 import map from './map';
+import report from './report';
 
 // Combines all logic files
 export default [
@@ -10,5 +11,6 @@ export default [
   ...locale,
   ...findNotification,
   ...find,
-  ...map
+  ...map,
+  ...report
 ];
