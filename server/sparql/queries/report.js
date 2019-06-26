@@ -54,7 +54,6 @@ const getReport = `
     SELECT * WHERE {
     ?sub ?pred ?obj .
     } 
-    LIMIT 10
 `;
 
 exports.getReport = getReport;
