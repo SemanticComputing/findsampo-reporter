@@ -84,8 +84,9 @@ class HelpBar extends Component {
 
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],
-  hasBackStep: !!state.report.questions[state.report.currentStep].backStep,
-  hasSkipStep: !!state.report.questions[state.report.currentStep].skipStep
+  hasSkipStep: !!state.report.questions[state.report.currentStep].skipStep,
+  hasBackStep: state.report.questions[state.report.currentStep].backStep === 0 ||
+    !!state.report.questions[state.report.currentStep].backStep
 });
 
 const mapDispatchToProps = (dispatch) => ({

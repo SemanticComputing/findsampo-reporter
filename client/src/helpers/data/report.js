@@ -33,23 +33,23 @@ export default {
     },
     {
       step: 1,
-      question: 'report.questionOne.question',
-      help: 'report.questionOne.help',
+      question: 'report.questionProvideHelp.question',
+      help: 'report.questionProvideHelp.help',
       backStep: 0,
       skipStep: 2,
       options: {
         type: OptionTypes.EXPANSION_PANEL,
         panelElements: [
           {
-            header: 'report.questionOne.options.optionOne',
+            header: 'report.questionProvideHelp.options.optionOne',
             component: StarterKit
           },
           {
-            header: 'report.questionOne.options.optionTwo',
+            header: 'report.questionProvideHelp.options.optionTwo',
             component: GeneralKit
           },
           {
-            header: 'report.questionOne.options.optionThree',
+            header: 'report.questionProvideHelp.options.optionThree',
             component: ReportingKit
           }
         ]
@@ -57,7 +57,7 @@ export default {
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionOne.buttonOne',
+          text: 'report.questionProvideHelp.buttonOne',
           nextStep: 2
         },
       ]
@@ -65,25 +65,26 @@ export default {
     {
       step: 2,
       icon: 'place',
-      question: 'report.questionTwo.question',
-      help: 'report.questionTwo.help',
+      question: 'report.questionFindTimeDetermining.question',
+      help: 'report.questionFindTimeDetermining.help',
+      backStep: 0,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionTwo.buttonOne',
+          text: 'report.questionFindTimeDetermining.buttonOne',
           nextStep: 3,
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionTwo.buttonTwo',
-          nextStep: 7,
+          text: 'report.questionFindTimeDetermining.buttonTwo',
+          nextStep: 6,
         },
       ]
     },
     {
       step: 3,
-      question: 'report.questionThree.question',
-      help: 'report.questionThree.help',
+      question: 'report.questionFindLocation.question',
+      help: 'report.questionFindLocation.help',
       backStep: 2,
       dependentOn: QuestionDependencies.LOCATION,
       options: {
@@ -92,98 +93,16 @@ export default {
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionThree.buttonOne',
+          text: 'report.questionFindLocation.buttonOne',
           nextStep: 4
         }
       ]
     },
     {
       step: 4,
-      question: 'report.questionFour.question',
-      help: 'report.questionFour.help',
+      question: 'report.questionFindPhotos.question',
+      help: 'report.questionFindPhotos.help',
       backStep: 3,
-      options: {
-        type: OptionTypes.DATE_PICKER
-      },
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionFour.buttonOne',
-          nextStep: 5
-        }
-      ]
-    },
-    {
-      step: 5,
-      question: 'report.questionFive.question',
-      help: 'report.questionFive.help',
-      backStep: 4,
-      skipStep: 6,
-      options: {
-        type: OptionTypes.FIELD
-      },
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionFive.buttonOne',
-          nextStep: 6
-        }
-      ]
-    },
-    {
-      step: 6,
-      question: 'report.questionSix.question',
-      help: 'report.questionSix.help',
-      backStep: 5,
-      dependentOn: QuestionDependencies.FIND_SITE_PHOTO,
-      options: {
-        type: OptionTypes.PHOTOGRAPH,
-        for: 'find-site'
-      },
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionSix.buttonOne',
-          nextStep: 9
-        }
-      ]
-    },
-    {
-      step: 7,
-      question: 'report.questionSeven.question',
-      help: 'report.questionSeven.help',
-      backStep: 2,
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionSeven.buttonOne',
-          nextStep: 3
-        },
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionSeven.buttonTwo',
-          nextStep: 8
-        },
-      ]
-    },
-    {
-      step: 8,
-      question: 'report.questionEight.question',
-      help: 'report.questionEight.help',
-      backStep: 7,
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionEight.buttonOne',
-          nextStep: 4
-        }
-      ]
-    },
-    {
-      step: 9,
-      question: 'report.questionNine.question',
-      help: 'report.questionNine.help',
-      backStep: 6,
       dependentOn: QuestionDependencies.FIND_PHOTO,
       options: {
         type: OptionTypes.PHOTOGRAPH,
@@ -192,73 +111,87 @@ export default {
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionNine.buttonOne',
-          nextStep: 10
+          text: 'report.questionFindPhotos.buttonOne',
+          nextStep: 5
         }
       ]
     },
     {
-      step: 10,
-      question: 'report.questionTen.question',
-      help: 'report.questionTen.help',
-      backStep: 9,
+      step: 5,
+      question: 'report.questionFindSitePhotos.question',
+      help: 'report.questionFindSitePhotos.help',
+      backStep: 4,
+      skipStep: 6,
+      dependentOn: QuestionDependencies.FIND_SITE_PHOTO,
+      options: {
+        type: OptionTypes.PHOTOGRAPH,
+        for: 'find-site'
+      },
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionTen.buttonOne',
-          nextStep: 11
+          text: 'report.questionFindSitePhotos.buttonOne',
+          nextStep: 7
+        }
+      ]
+    },
+    {
+      step: 6,
+      question: 'report.questionFindDate.question',
+      help: 'report.questionFindDate.help',
+      backStep: 2,
+      options: {
+        type: OptionTypes.DATE_PICKER
+      },
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionFindDate.buttonOne',
+          nextStep: 3
+        }
+      ]
+    },
+    {
+      step: 7,
+      question: 'report.questionAddMoreInformation.question',
+      help: 'report.questionAddMoreInformation.help',
+      backStep: 5,
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionAddMoreInformation.buttonOne',
+          nextStep: 8
         },
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionTen.buttonTwo',
-          nextStep: 15
-        }
-      ]
-    },
-    {
-      step: 11,
-      question: 'report.questionEleven.question',
-      help: 'report.questionEleven.help',
-      backStep: 10,
-      skipStep: 12,
-      options: {
-        type: OptionTypes.TREE_VIEW,
-        treeData: findTypes,
-        for: TreeViewTypes.TYPE
-      },
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionEleven.buttonOne',
-          nextStep: 12
-        }
-      ]
-    },
-    {
-      step: 12,
-      question: 'report.questionTwelve.question',
-      help: 'report.questionTwelve.help',
-      backStep: 11,
-      skipStep: 13,
-      options: {
-        type: OptionTypes.TREE_VIEW,
-        treeData: eras,
-        for: TreeViewTypes.ERAS
-      },
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionTwelve.buttonOne',
+          text: 'report.questionAddMoreInformation.buttonTwo',
           nextStep: 13
         }
       ]
     },
     {
-      step: 13,
-      question: 'report.questionThirteen.question',
-      help: 'report.questionThirteen.help',
-      backStep: 12,
-      skipStep: 14,
+      step: 8,
+      question: 'report.questionFindDepth.question',
+      help: 'report.questionFindDepth.help',
+      backStep: 7,
+      skipStep: 9,
+      options: {
+        type: OptionTypes.NUMBER_FIELD,
+      },
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionFindDepth.buttonOne',
+          nextStep: 9
+        }
+      ]
+    },
+    {
+      step: 9,
+      question: 'report.questionFindMaterial.question',
+      help: 'report.questionFindMaterial.help',
+      backStep: 8,
+      skipStep: 10,
       options: {
         type: OptionTypes.TREE_VIEW,
         treeData: findMaterials,
@@ -267,66 +200,103 @@ export default {
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionThirteen.buttonOne',
+          text: 'report.questionFindMaterial.buttonOne',
+          nextStep: 10
+        }
+      ]
+    },
+    {
+      step: 10,
+      question: 'report.questionFindType.question',
+      help: 'report.questionFindType.help',
+      backStep: 9,
+      skipStep: 11,
+      options: {
+        type: OptionTypes.TREE_VIEW,
+        treeData: findTypes,
+        for: TreeViewTypes.TYPE
+      },
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionFindType.buttonOne',
+          nextStep: 11
+        }
+      ]
+    },
+    {
+      step: 11,
+      question: 'report.questionFindTime.question',
+      help: 'report.questionFindTime.help',
+      backStep: 10,
+      skipStep: 12,
+      options: {
+        type: OptionTypes.TREE_VIEW,
+        treeData: eras,
+        for: TreeViewTypes.ERAS
+      },
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionFindTime.buttonOne',
+          nextStep: 12
+        }
+      ]
+    },
+    {
+      step: 12,
+      question: 'report.questionAdditionalMaterials.question',
+      help: 'report.questionAdditionalMaterials.help',
+      backStep: 11,
+      skipStep: 13,
+      options: {
+        type: OptionTypes.FIELD
+      },
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionAdditionalMaterials.buttonOne',
+          nextStep: 13
+        }
+      ]
+    },
+    {
+      step: 13,
+      question: 'report.questionAddAnotherFind.question',
+      help: 'report.questionAddAnotherFind.help',
+      backStep: 12,
+      buttons: [
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionAddAnotherFind.buttonOne',
+          nextStep: 3,
+          action: ButtonActions.CHANGE_CURRENT_FIND_INDEX
+        },
+        {
+          type: ButtonTypes.STEPPER,
+          text: 'report.questionAddAnotherFind.buttonTwo',
           nextStep: 14
         }
       ]
     },
     {
       step: 14,
-      question: 'report.questionFourteen.question',
-      help: 'report.questionFourteen.help',
       backStep: 13,
-      skipStep: 15,
-      options: {
-        type: OptionTypes.NUMBER_FIELD,
-      },
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionFourteen.buttonOne',
-          nextStep: 15
-        }
-      ]
-    },
-    {
-      step: 15,
-      question: 'report.questionFifteen.question',
-      help: 'report.questionFifteen.help',
-      backStep: 14,
-      buttons: [
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionFifteen.buttonOne',
-          nextStep: 9,
-          action: ButtonActions.CHANGE_CURRENT_FIND_INDEX
-        },
-        {
-          type: ButtonTypes.STEPPER,
-          text: 'report.questionFifteen.buttonTwo',
-          nextStep: 16
-        }
-      ]
-    },
-    {
-      step: 16,
-      backStep: 15,
       component: Overview,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
-          text: 'report.questionSixteen.buttonOne',
-          nextStep: 17,
+          text: 'report.questionOverview.buttonOne',
+          nextStep: 15,
           //action: ButtonActions.SEND_FIND_NOTIFICATION TODO: Uncomment this
         },
       ]
     },
     {
-      step: 17,
+      step: 15,
       icon: 'check_circle_outline',
-      question: 'report.questionSeventeen.question',
-      help: 'report.questionSeventeen.help',
+      question: 'report.questionReportSent.question',
+      help: 'report.questionReportSent.help',
       buttons: []
-    },
-  ]
-};
+    }
+  ]};

@@ -105,7 +105,7 @@ export default {
       'buttonOne': 'Yes, please!',
       'buttonTwo': 'No, thanks!'
     },
-    'questionOne': {
+    'questionProvideHelp': {
       'question': 'Great, below you can find the most relevant instructions.',
       'help': 'Please select one of the guides!',
       'buttonOne': 'Continue',
@@ -115,90 +115,79 @@ export default {
         'optionThree': 'Reporting Instructions',
       }
     },
-    'questionTwo': {
+    'questionFindTimeDetermining': {
       'question': 'Are you adding a find that has recently found?',
       'help': 'This question is asked to get your current location and date.',
       'buttonOne': 'Yes, I am on the find site',
       'buttonTwo': 'No, I found a while ago'
     },
-    'questionThree': {
-      'question': 'Pick the find site location please.',
+    'questionFindLocation': {
+      'question': 'Pick the find location please.',
       'help': 'Mark exactly where the find has been found.',
       'buttonOne': 'Done, continue'
     },
-    'questionFour': {
+    'questionFindPhotos': {
+      'question': 'Please add some photos from the find.',
+      'help': 'Min three photos is needed.',
+      'buttonOne': 'Continue'
+    },
+    'questionFindSitePhotos': {
+      'question': 'Please add some photos from the find site.',
+      'help': 'Min three photos is needed.',
+      'buttonOne': 'Continue'
+    },
+    'questionFindDate': {
       'question': 'Pick OR approximate a find date please.',
       'help': 'Select the exact date that find has been found.',
       'buttonOne': 'Continue',
       'selectionText': 'I know the exact day.'
     },
-    'questionFive': {
-      'question': 'Do you want to add additional materials related to the find site?',
-      'help': 'Description about what it can be',
-      'buttonOne': 'Continue'
-    },
-    'questionSix': {
-      'question': 'Please add some photos from the find site.',
-      'help': 'Min three photos is needed.',
-      'buttonOne': 'Continue'
-    },
-    'questionSeven': {
-      'question': 'How would like to locate the find site?',
-      'help': 'There is two options. Choose one of them.',
-      'buttonOne': 'Pick a location',
-      'buttonTwo': 'Use an existing location'
-    },
-    'questionEight': {
-      'question': 'Choose one of available find sites',
-      'help': 'These find sites are based on the your previous reports.',
-      'buttonOne': 'Continue',
-    },
-    'questionNine': {
-      'question': 'Please add some photos from the find.',
-      'help': 'Min three photos is needed.',
-      'buttonOne': 'Continue'
-    },
-    'questionTen': {
-      'question': 'Would like to give some additional information about the find?',
-      'help': 'If you accept this, you are going to provide some additional information',
-      'buttonOne': 'Yes, please',
-      'buttonTwo': 'No, thanks'
-    },
-    'questionEleven': {
-      'question': 'Select the type of the find.',
-      'help': 'If you cannot find the type you can select others.',
-      'buttonOne': 'Continue'
-    },
-    'questionTwelve': {
-      'question': 'Time your find please.',
-      'help': 'If you cannot find the type you can select others.',
-      'buttonOne': 'Continue'
-    },
-    'questionThirteen': {
-      'question': 'Select the material of the find.',
-      'help': 'If you cannot find the material you can select others.',
-      'buttonOne': 'Continue'
-    },
-    'questionFourteen': {
+    'questionFindDepth': {
       'question': 'Please input the find depth.',
       'help': 'Some explenation about find depth.',
       'label': 'Find Depth',
       'buttonOne': 'Continue',
       'depthUnit': 'cm'
     },
-    'questionFifteen': {
+    'questionFindMaterial': {
+      'question': 'Select the material of the find.',
+      'help': 'If you cannot find the material you can select others.',
+      'buttonOne': 'Continue'
+    },
+    'questionFindType': {
+      'question': 'Select the type of the find.',
+      'help': 'If you cannot find the type you can select others.',
+      'buttonOne': 'Continue'
+    },
+    'questionFindTime': {
+      'question': 'Time your find please.',
+      'help': 'If you cannot find the type you can select others.',
+      'buttonOne': 'Continue'
+    },
+    'questionAdditionalMaterials': {
+      'question': 'Would you like to add additional materials related to the find site?',
+      'help': 'Description about what it can be',
+      'buttonOne': 'Continue'
+    },
+    'questionAddAnotherFind': {
       'question': 'Would you like to add another find?',
       'help': 'One report can contains many finds. Some intruduction about it.',
       'buttonOne': 'Yes, please',
       'buttonTwo': 'No, thanks'
     },
-    'questionSixteen': {
+    'questionOverview': {
       'buttonOne': 'Looks good, Send Please!'
     },
-    'questionSeventeen': {
-      'question': 'Your add has been added successfully.',
+    'questionReportSent': {
+      'question': 'Your find has been added successfully.',
       'help': 'You find has been sent. You will get an notification soon.',
     },
+    'questionAddMoreInformation': {
+      'question': 'Would you like to give some additional information about the find?',
+      'help': 'If you accept this, you are going to provide some additional information',
+      'buttonOne': 'Yes, please',
+      'buttonTwo': 'No, thanks'
+    }
   },
   'eras': { // TODO TRANSLATE THESE TO ENGLISH
     'mesolithic': {

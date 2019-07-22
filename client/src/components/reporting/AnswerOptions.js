@@ -73,13 +73,13 @@ class AnswerOptions extends Component {
           container = (
             <TextField
               id="outlined-number"
-              label={intl.get('report.questionFourteen.label')}
+              label={intl.get('report.questionFindDepth.label')}
               onChange={this.onFindDepthChanged}
               type="number"
               margin="normal"
               variant="outlined"
               InputProps={{
-                endAdornment: <InputAdornment position="end">{intl.get('report.questionFourteen.depthUnit')}</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{intl.get('report.questionFindDepth.depthUnit')}</InputAdornment>,
               }}
             />
           );
@@ -100,7 +100,7 @@ class AnswerOptions extends Component {
                     onChange={this.onExactDayChanged}
                   />
                 }
-                label={intl.get('report.questionFour.selectionText')}
+                label={intl.get('report.questionFindDate.selectionText')}
               />
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 {this.renderDatePickers()}
