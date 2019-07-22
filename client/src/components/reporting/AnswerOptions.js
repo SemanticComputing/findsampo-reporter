@@ -86,7 +86,7 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.MAP:
           container = (
-            <Map showCurrentLocation/>
+            <Map showCurrentLocation zoomLevel={DEFAULT_ZOOM_LEVEL} />
           );
           break;
         case OptionTypes.DATE_PICKER:
@@ -159,6 +159,8 @@ class AnswerOptions extends Component {
     );
   }
 }
+
+const DEFAULT_ZOOM_LEVEL = 15;
 
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],
