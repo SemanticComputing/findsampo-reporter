@@ -5,7 +5,7 @@ import intl from 'react-intl-universal';
 
 const StepMaker = (props) => {
   const steps = getSteps();
-  const activeStep = getCurrentStep(props.currentStep);
+  const activeStep = getActiveStep(props.currentStep);
   return (
     <div className="step-maker">
       <Stepper className="step-maker__container" activeStep={activeStep} alternativeLabel>
@@ -19,18 +19,23 @@ const StepMaker = (props) => {
   );
 };
 
+// Step boundaries
+const START_MAX = 2;
+const DETAILS_MAX = 6;
+const ADDITIONALS_MAX = 14;
+
 // Get current report steps
 const getSteps = () => {
   return [intl.get('report.stepOne'), intl.get('report.stepTwo'), intl.get('report.stepThree'), intl.get('report.stepFour')];
 };
 
 // Get the step of the current question
-const getCurrentStep = (currentStep) => {
-  if (currentStep < 3) {
+const getActiveStep = (currentStep) => {
+  if (currentStep <= START_MAX) {
     return 0;
-  } else if (currentStep > 2 && currentStep < 9) {
+  } else if (currentStep > START_MAX && currentStep <= DETAILS_MAX) {
     return 1;
-  } else if (currentStep > 8 && currentStep < 17) {
+  } else if (currentStep > DETAILS_MAX && currentStep <= ADDITIONALS_MAX) {
     return 2;
   } else {
     return 3;

@@ -94,8 +94,8 @@ export default {
   },
   'report': {
     'stepOne': 'Start',
-    'stepTwo': 'Find Site',
-    'stepThree': 'Find',
+    'stepTwo': 'Details',
+    'stepThree': 'Additionals',
     'stepFour': 'Done!',
     'skip': 'Skip',
     'back': 'Back',
