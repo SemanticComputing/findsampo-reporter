@@ -5,7 +5,7 @@ import {
   REPORT_CHANGE_QUESTION,
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
+  FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS,
   FIND_NOTIFICATION_CHANGE_FIND_INDEX,
   FIND_NOTIFICATION_SET_FIND_TYPE,
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
@@ -19,7 +19,6 @@ const initialState = {
   currentFindIndex: 0,
   findSiteCoords: null,
   date: new Date(),
-  additionalMaterials: null,
   photoghraphs: [],
   finds: []
 };
@@ -64,11 +63,14 @@ export default (state = initialState, action) => {
           }
         });
       }
-    case FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS:
-      return {
-        ...state,
-        additionalMaterials: action.text
-      };
+    case FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS:
+      return update(state, {
+        finds: {
+          [action.index]: {
+            $merge: { additionalMaterials: action.additionalMaterials }
+          }
+        }
+      });
     case FIND_NOTIFICATION_CHANGE_FIND_INDEX:
       return {
         ...state,

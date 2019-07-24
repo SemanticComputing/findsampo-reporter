@@ -34,7 +34,7 @@ class AnswerOptions extends Component {
   }
 
   onAdditionalMaterialTyped = (event) => {
-    this.props.setAdditionalMaterial(event.target.value);
+    this.props.setAdditionalMaterial(event.target.value, this.props.currentFindIndex);
   }
 
   renderDatePickers() {
@@ -170,7 +170,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setDate: (date) => dispatch(setDate(date)),
-  setAdditionalMaterial: (text) => dispatch(setAdditionalMaterial(text)),
+  setAdditionalMaterial: (additionalMaterial, index) => dispatch(setAdditionalMaterial(additionalMaterial, index)),
   setFindDepth: (depth, index) => dispatch(setFindDepth(depth, index))
 });
 

@@ -3,7 +3,7 @@ import {
   FIND_NOTIFICATION_SET_COORDS,
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
+  FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS,
   FIND_NOTIFICATION_CHANGE_FIND_INDEX,
   FIND_NOTIFICATION_SET_FIND_TYPE,
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
@@ -40,9 +40,10 @@ export const setFindSitePhotos = (photos) => ({
   photos
 });
 
-export const setAdditionalMaterial = (text) => ({
-  type: FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
-  text
+export const setAdditionalMaterial = (additionalMaterials, index) => ({
+  type: FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS,
+  additionalMaterials,
+  index
 });
 
 export const setFindType = (findType, index) => ({
