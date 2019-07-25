@@ -57,7 +57,7 @@ class PhotoRenderer extends Component {
     const files = event.target.files;
     this.onFilesSelected(files);
     if (this.props.for === PhotosOf.FIND_SITE) {
-      this.props.setFindSitePhotos(files);
+      this.props.setFindSitePhotos(files, this.props.currentFindIndex);
     } else {
       this.props.setFindPhotos(files, this.props.currentFindIndex);
     }
@@ -156,7 +156,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setFindSitePhotos: (photos) => dispatch(setFindSitePhotos(photos)),
+  setFindSitePhotos: (photos, findIndex) => dispatch(setFindSitePhotos(photos, findIndex)),
   setFindPhotos: (photos, findIndex) => dispatch(setFindPhotos(photos, findIndex))
 });
 

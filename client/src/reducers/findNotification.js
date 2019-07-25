@@ -18,7 +18,6 @@ const initialState = {
   currentStep: 0,
   currentFindIndex: 0,
   date: new Date(),
-  photoghraphs: [],
   finds: []
 };
 
@@ -54,11 +53,20 @@ export default (state = initialState, action) => {
         ...state,
         currentStep: action.step
       };
-    case FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS:
-      return {
-        ...state,
-        photoghraphs: [...state.photoghraphs, ...action.photos]
-      };
+    case FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS: {
+      const currentPhotos = !state.finds[action.index].findSite.photos ? [] : state.finds[action.index].findSite.photos;
+      return update(state, {
+        finds: {
+          [action.index]: {
+            findSite: {
+              photos: {
+                $set: [...currentPhotos, ...action[action.index].photos],
+              }
+            }
+          }
+        }
+      });
+    }
     case FIND_NOTIFICATION_SET_FIND_PHOTOS:
       // If there is no photos then create a new objet
       if (!state.finds[action.index].photos) {
@@ -70,7 +78,6 @@ export default (state = initialState, action) => {
           }
         });
       } else { // if there is already, update it
-        console.log([...state.finds[action.index].photos, ...action[action.index].photos]);
         return update(state, {
           finds: {
             [action.index]: {

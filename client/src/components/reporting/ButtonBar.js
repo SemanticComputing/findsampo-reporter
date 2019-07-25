@@ -35,21 +35,19 @@ const ButtonBar = (props) => (
  */
 const isButtonDisabled = (props) => {
   const hasDependencies = !!props.dependentOn;
-  const { dependentOn, hasFindSitePhotos, finds, currentFindIndex } = props;
+  const { dependentOn, finds, currentFindIndex } = props;
   if (hasDependencies) {
     switch (dependentOn) {
       case QuestionDependencies.LOCATION:
-        if (finds[currentFindIndex]) {
-          if (finds[currentFindIndex].findSite.coords) {
-            return false;
-          }
-        } else {
-          return true;
+        if (finds[currentFindIndex] && finds[currentFindIndex].findSite.coords) {
+          return false;
         }
-        break;
+        return true;
       case QuestionDependencies.FIND_SITE_PHOTO:
-        if (!hasFindSitePhotos) return true;
-        break;
+        if (finds[currentFindIndex].findSite.photos && finds[currentFindIndex].findSite.photos.length > 0) {
+          return false;
+        }
+        return true;
       case QuestionDependencies.FIND_PHOTO:
         if (finds.length > 0 && finds[currentFindIndex]) {
           if (finds[currentFindIndex].photos && finds[currentFindIndex].photos.length > 0) return false;
@@ -91,8 +89,7 @@ const mapStateToProps = (state) => ({
   buttons: state.report.questions[state.report.currentStep].buttons,
   dependentOn: state.report.questions[state.report.currentStep].dependentOn,
   currentFindIndex: state.findNotification.currentFindIndex,
-  //hasLocation: !!state.findNotification.finds[state.findNotification.currentFindIndex].findSite.coords,
-  hasFindSitePhotos: state.findNotification.photoghraphs.length > 0,
+  //hasFindSitePhotos: state.findNotification.photoghraphs.length > 0,
   finds: state.findNotification.finds,
 });
 

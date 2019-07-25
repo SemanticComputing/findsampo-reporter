@@ -41,9 +41,12 @@ export const changeFindIndex = (index) => ({
   index
 });
 
-export const setFindSitePhotos = (photos) => ({
+export const setFindSitePhotos = (photos, index) => ({
   type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  photos
+  index,
+  [index]: {
+    photos
+  }
 });
 
 export const setAdditionalMaterial = (additionalMaterials, index) => ({
