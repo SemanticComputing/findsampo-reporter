@@ -26,6 +26,9 @@ app.use(shrinkRay());
 // Define static files path
 app.use(express.static(publicPath));
 
+// Use express.json middleware
+app.use(express.json());
+
 
 /* FIXME
 // Find Notifications API
@@ -59,20 +62,20 @@ app.get(FINDS_END_POINT, async (req, res, next) => {
     });
     const mappedResults = mapFinds(response.data.results.bindings);
     res.send(mappedResults);
-  } catch(error) {
+  } catch (error) {
     if (error.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
       console.log(error.response.data);
-    //console.log(error.response.status);
-    //console.log(error.response.headers);
+      //console.log(error.response.status);
+      //console.log(error.response.headers);
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
       console.log(error.request);
     } else {
-    // Something happened in setting up the request that triggered an Error
+      // Something happened in setting up the request that triggered an Error
       console.log('Error', error.message);
     }
     console.log(error.config);
@@ -135,7 +138,8 @@ const defaultreportHeaders = {
 
 app.post(REPORT_END_POINT, async (req, res, next) => {
   try {
-    const update = report.postReport;
+    const update = report.postReport(req.body.user, req.body.data);
+    console.log(update);
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
@@ -143,21 +147,20 @@ app.post(REPORT_END_POINT, async (req, res, next) => {
       data: querystring.stringify({ update })
     });
     res.send(response.data);
-    console.log(response);
-  } catch(error) {
+  } catch (error) {
     if (error.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
       console.log(error.response.data);
-    //console.log(error.response.status);
-    //console.log(error.response.headers);
+      //console.log(error.response.status);
+      //console.log(error.response.headers);
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
       console.log(error.request);
     } else {
-    // Something happened in setting up the request that triggered an Error
+      // Something happened in setting up the request that triggered an Error
       console.log('Error', error.message);
     }
     console.log(error.config);
@@ -177,20 +180,20 @@ app.get(REPORT_END_POINT, async (req, res, next) => {
       data: querystring.stringify({ query })
     });
     res.send(response.data.results.bindings);
-  } catch(error) {
+  } catch (error) {
     if (error.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
       console.log(error.response.data);
-    //console.log(error.response.status);
-    //console.log(error.response.headers);
+      //console.log(error.response.status);
+      //console.log(error.response.headers);
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
       console.log(error.request);
     } else {
-    // Something happened in setting up the request that triggered an Error
+      // Something happened in setting up the request that triggered an Error
       console.log('Error', error.message);
     }
     console.log(error.config);

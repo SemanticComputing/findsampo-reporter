@@ -23,13 +23,20 @@ const getReport = createLogic({
 const postReport = createLogic({
   type: REPORT_POST,
   latest: true,
-  
+
   processOptions: {
     dispatchReturn: true,
   },
-  
-  async process() {
-    return await axios.post(REPORT_END_POINT);
+
+  async process({ getState }) {
+    return await axios.post(REPORT_END_POINT,
+      {
+        user: {
+          uid: getState().auth.uid,
+          email: getState().auth.email
+        },
+        data: getState().findNotification
+      });
   }
 });
 
