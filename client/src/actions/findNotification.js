@@ -9,6 +9,7 @@ import {
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
   FIND_NOTIFICATION_SET_FIND_TIMING,
   FIND_NOTIFICATION_SET_FIND_DEPTH,
+  FIND_NOTIFICATION_SET_MUNICIPALITY,
   FIND_NOTIFICATION_SEND
 } from '../constants/actionTypes';
 
@@ -22,7 +23,7 @@ export const setCoordinates = (coords, index) => ({
   index,
   coords,
   [index]: {
-    findSite : {
+    findSite: {
       coords
     }
   }
@@ -77,6 +78,11 @@ export const setFindDepth = (findDepth, index) => ({
   type: FIND_NOTIFICATION_SET_FIND_DEPTH,
   findDepth,
   index
+});
+
+export const setMunicipality = (coords) => ({
+  type: FIND_NOTIFICATION_SET_MUNICIPALITY,
+  coords
 });
 
 export const sendFindNotification = () => ({

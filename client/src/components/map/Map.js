@@ -33,7 +33,7 @@ import {
   DialogActions
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
-import { setCoordinates } from '../../actions/findNotification';
+import { setCoordinates, setMunicipality } from '../../actions/findNotification';
 import { fetchMapData, startMapSpinner } from '../../actions/map';
 import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
@@ -345,7 +345,10 @@ class Map extends Component {
    */
   setLocation = (lat, lng) => {
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
+    // Set coords
     this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
+    // Set also municapility
+    this.props.setMunicipality({ lat, lng });
   }
 
   /**
@@ -559,6 +562,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setCoordinates: (coords, index) => dispatch(setCoordinates(coords, index)),
+  setMunicipality: (coords) => dispatch(setMunicipality(coords)),
   fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds)),
   startMapSpinner: () => dispatch(startMapSpinner())
 });

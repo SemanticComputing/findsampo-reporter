@@ -10,7 +10,8 @@ import {
   FIND_NOTIFICATION_SET_FIND_TYPE,
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
   FIND_NOTIFICATION_SET_FIND_TIMING,
-  FIND_NOTIFICATION_SET_FIND_DEPTH
+  FIND_NOTIFICATION_SET_FIND_DEPTH,
+  FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   currentStep: 0,
   currentFindIndex: 0,
   date: new Date(),
+  municipality: null,
   finds: []
 };
 
@@ -84,8 +86,6 @@ export default (state = initialState, action) => {
               photos: {
                 $set: [...state.finds[action.index].photos, ...action[action.index].photos],
               }
-              //$push: { photos: action[action.index].photos }
-              //photos: [...state.finds[action.index].photos, ...action[action.index].photos]
             }
           }
         });
@@ -135,6 +135,15 @@ export default (state = initialState, action) => {
           }
         }
       });
+    case FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS: {
+      const city = action.payload.data.Response.View.length > 0 ?
+        action.payload.data.Response.View[0].Result[0].Location.Address.City :
+        'NotFound';
+      return {
+        ...state, // Check here maps reverse geocoding pages for more information
+        municipality: city
+      };
+    }
     default:
       return state;
   }
