@@ -17,9 +17,15 @@ export const setDate = (date) => ({
   date
 });
 
-export const setCoordinates = (coords) => ({
+export const setCoordinates = (coords, index) => ({
   type: FIND_NOTIFICATION_SET_COORDS,
-  coords
+  index,
+  coords,
+  [index]: {
+    findSite : {
+      coords
+    }
+  }
 });
 
 export const setFindPhotos = (photos, index) => ({

@@ -345,7 +345,7 @@ class Map extends Component {
    */
   setLocation = (lat, lng) => {
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
-    this.props.setCoordinates({ lat, lng });
+    this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
   }
 
   /**
@@ -553,11 +553,12 @@ const DEFAULT_ZOOM_LEVEL = 5;
 
 const mapStateToProps = (state) => ({
   wmtsData: state.map.fetchResults,
-  isFetchInProgress: state.map.fetchInProgress
+  isFetchInProgress: state.map.fetchInProgress,
+  currentFindIndex: state.findNotification.currentFindIndex
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCoordinates: (coords) => dispatch(setCoordinates(coords)),
+  setCoordinates: (coords, index) => dispatch(setCoordinates(coords, index)),
   fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds)),
   startMapSpinner: () => dispatch(startMapSpinner())
 });

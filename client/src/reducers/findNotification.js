@@ -17,7 +17,6 @@ const initialState = {
   status: 'draft',
   currentStep: 0,
   currentFindIndex: 0,
-  findSiteCoords: null,
   date: new Date(),
   photoghraphs: [],
   finds: []
@@ -26,10 +25,25 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case FIND_NOTIFICATION_SET_COORDS:
-      return {
-        ...state,
-        findSiteCoords: action.coords
-      };
+      // If there is no coordinates then create a new one
+      if (!state.finds[action.index]) {
+        return (
+          {
+            ...state,
+            finds: [...state.finds, action[action.index]]
+          }
+        );
+      } else { // if there is already, update it
+        return update(state, {
+          finds: {
+            [action.index]: {
+              findSite: {
+                $merge: { coords: action.coords }
+              }
+            }
+          }
+        });
+      }
     case FIND_NOTIFICATION_SET_DATE:
       return {
         ...state,
@@ -47,18 +61,24 @@ export default (state = initialState, action) => {
       };
     case FIND_NOTIFICATION_SET_FIND_PHOTOS:
       // If there is no photos then create a new objet
-      if (!state.finds[action.index]) {
-        return (
-          {
-            ...state,
-            finds: [...state.finds, action[action.index]]
-          }
-        );
-      } else { // if there is already, update it
+      if (!state.finds[action.index].photos) {
         return update(state, {
           finds: {
             [action.index]: {
-              photos: { $set: [...state.finds[action.index].photos, ...action[action.index].photos] }
+              photos: { $set: action[action.index].photos }
+            }
+          }
+        });
+      } else { // if there is already, update it
+        console.log([...state.finds[action.index].photos, ...action[action.index].photos]);
+        return update(state, {
+          finds: {
+            [action.index]: {
+              photos: {
+                $set: [...state.finds[action.index].photos, ...action[action.index].photos],
+              }
+              //$push: { photos: action[action.index].photos }
+              //photos: [...state.finds[action.index].photos, ...action[action.index].photos]
             }
           }
         });
