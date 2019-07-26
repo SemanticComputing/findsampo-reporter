@@ -5,6 +5,8 @@ const querystring = require('querystring');
 const axios = require('axios');
 const dotenv = require('dotenv');
 const shrinkRay = require('shrink-ray-current');
+const uuidv1 = require('uuid/v1');
+
 const finds = require('./sparql/queries/finds');
 const report = require('./sparql/queries/report');
 const mapFinds = require('./sparql/mappers/findsMapper');
@@ -131,6 +133,7 @@ app.get(FHA_WFS_END_POINT, async (req, res, next) => {
 
 //Report
 const REPORT_END_POINT = '/api/v1/report';
+const HTTP_OK = 200;
 const defaultreportHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded',
   'Accept': 'application/sparql-results+json; charset=utf-8',
@@ -138,15 +141,18 @@ const defaultreportHeaders = {
 
 app.post(REPORT_END_POINT, async (req, res, next) => {
   try {
-    const update = report.postReport(req.body.user, req.body.data);
-    console.log(update);
+    const reportId = req.body.data.reportId ? req.body.data.reportId : uuidv1();
+    const update = report.postReport(reportId, req.body.user, req.body.data);
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
       url: url.parse(`http://${process.env.FUSEKI_UPDATE_URL}`),
       data: querystring.stringify({ update })
     });
-    res.send(response.data);
+    // Send report id to client when saving is succeeded
+    if (response.status == HTTP_OK) {
+      res.send({ reportId });
+    }
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code
@@ -167,7 +173,6 @@ app.post(REPORT_END_POINT, async (req, res, next) => {
     next(error);
   }
 });
-
 
 
 app.get(REPORT_END_POINT, async (req, res, next) => {
@@ -201,6 +206,37 @@ app.get(REPORT_END_POINT, async (req, res, next) => {
   }
 });
 
+
+app.delete(REPORT_END_POINT, async (req, res, next) => {
+  try {
+    const update = report.deleteReport(req.body.user, req.body.data);
+    const response = await axios({
+      method: 'delete',
+      headers: defaultreportHeaders,
+      url: url.parse(`http://${process.env.FUSEKI_UPDATE_URL}`),
+      data: querystring.stringify({ update })
+    });
+    res.send(response.data.results.bindings);
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      //console.log(error.response.status);
+      //console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+    next(error);
+  }
+});
 
 // Application
 app.get('*', (req, res) => {

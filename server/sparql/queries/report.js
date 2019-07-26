@@ -8,21 +8,24 @@ const FIND_IMAGE_SCHEMA_TAG = 'fs-schema:find-image';
 const FIND_SITE_IMAGE_TAG = 'fs-find:find-site-image';
 const FIND_SITE_IMAGE_SCHEMA_TAG = 'fs-schema:find-site-image';
 
-const createPostQuery = (user, data) => {
+/**
+ * Create a post request for saving report information in database
+ * 
+ * @param {Report owner information} user 
+ * @param {Report Data} data 
+ */
+const createPostQuery = (reportId, user, data) => {
   const finds = new Map(data.finds.map(find => [uuidv1(), find]));
   const prefixes = getPrefixes();
-  const reportDetails = getReportDetails(user, data, finds);
-  const findsDetails = getFindsDetails(finds);
-
   return `
     ${prefixes}
     
     INSERT DATA {
-      GRAPH fs-user:${user.uid} {
+      GRAPH fs-report:${reportId} {
         # Report information
-        ${reportDetails}
+        ${getReportDetails(reportId, user, data, finds)}
         # Find information
-        ${findsDetails}
+        ${getFindsDetails(finds)}
       } 
     }  
   `;
@@ -37,7 +40,7 @@ const getPrefixes = () => (`
 
   PREFIX fs-schema: <http://ldf.fi/schema/findsampo/>
 	PREFIX fs-report: <http://ldf.fi/findsampo/report/>
-	PREFIX fs-user: <http://ldf.fi/findsampo/user/>
+	PREFIX fs-report-owner: <http://ldf.fi/findsampo/report-owner/>
 	PREFIX fs-find-site: <http://ldf.fi/findsampo/find-site/>
 	PREFIX fs-find: <http://ldf.fi/findsampo/find/>
 	PREFIX fs-find-image: <http://ldf.fi/findsampo/find-image/>
@@ -46,13 +49,16 @@ const getPrefixes = () => (`
 /**
  * Add report information to the query
  */
-const getReportDetails = (user, data, finds) => {
-  return `fs-report:${uuidv1()} a fs-schema:Report ;
+const getReportDetails = (reportId, user, data, finds) => {
+  return `fs-report:${reportId} a fs-schema:Report ;
   fs-schema:report-municipality "${data.municipality}" ;
-  fs-schema:report-owner "${user.email}" ;
   fs-schema:report-submission-date "${data.date}"^^xsd:date ;
   fs-schema:report-status "${data.status}" ;
-  fs-schema:report-current-step "${data.currentStep}" ; 
+  fs-schema:report-current-step "${data.currentStep}" ;
+  # Report owner details
+  fs-schema:report-owner fs-report-owner:${user.uid} .
+  ${getOwnerDetails(user)}
+  # Find details
   ${getProperties(FIND_SCHEMA_TAG, FIND_TAG, finds)}`;
 };
 
@@ -149,6 +155,15 @@ const getFindSiteImageDetails = (findSiteImages) => {
   }
 };
 
+/**
+ * Returns report owner details
+ */
+const getOwnerDetails = (user) => {
+  return `
+  fs-report-owner:${user.uid} a fs-schema:ReportOwner ;
+    fs-schema:report-owner-email "${user.email}" . 
+  `;
+};
 
 /**
  * Gets all available finds
@@ -164,7 +179,7 @@ const getReport = `
 /**
  * Delete the report
  */
-const deleteReport = (user) => (`
+const deleteReport = (user, report) => (`
   ${getPrefixes()}
   DROP GRAPH fs-user:${user.uid} 
 `);

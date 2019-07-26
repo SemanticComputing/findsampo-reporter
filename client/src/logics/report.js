@@ -3,6 +3,8 @@ import axios from 'axios';
 import {
   REPORT_GET,
   REPORT_POST,
+  REPORT_DELETE,
+  FIND_NOTIFICATION_SEND_SUCCESS
 } from '../constants/actionTypes';
 
 const REPORT_END_POINT = '/api/v1/report';
@@ -26,6 +28,7 @@ const postReport = createLogic({
 
   processOptions: {
     dispatchReturn: true,
+    successType: FIND_NOTIFICATION_SEND_SUCCESS,
   },
 
   async process({ getState }) {
@@ -40,7 +43,21 @@ const postReport = createLogic({
   }
 });
 
+const deleteReport = createLogic({
+  type: REPORT_DELETE,
+  latest: true,
+
+  processOptions: {
+    dispatchReturn: true,
+  },
+
+  async process({ getState }) {
+    return await axios.delete(REPORT_END_POINT, { data: getState().findNotification });
+  }
+});
+
 export default [
   getReport,
-  postReport
+  postReport,
+  deleteReport
 ];

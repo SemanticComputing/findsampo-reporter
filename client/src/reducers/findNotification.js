@@ -11,10 +11,12 @@ import {
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
   FIND_NOTIFICATION_SET_FIND_TIMING,
   FIND_NOTIFICATION_SET_FIND_DEPTH,
-  FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS
+  FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS,
+  FIND_NOTIFICATION_SEND_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
+  reportId: null,
   status: 'draft',
   currentStep: 0,
   currentFindIndex: 0,
@@ -144,6 +146,11 @@ export default (state = initialState, action) => {
         municipality: city
       };
     }
+    case FIND_NOTIFICATION_SEND_SUCCESS:
+      return {
+        ...state,
+        reportId: action.payload.data.reportId
+      };
     default:
       return state;
   }
