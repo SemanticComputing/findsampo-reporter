@@ -4,7 +4,8 @@ import {
   REPORT_GET,
   REPORT_POST,
   REPORT_DELETE,
-  FIND_NOTIFICATION_SEND_SUCCESS
+  FIND_NOTIFICATION_SEND_SUCCESS,
+  FIND_NOTIFICATION_DELETION_SUCCESS
 } from '../constants/actionTypes';
 
 const REPORT_END_POINT = '/api/v1/report';
@@ -48,11 +49,14 @@ const deleteReport = createLogic({
   latest: true,
 
   processOptions: {
+    successType: FIND_NOTIFICATION_DELETION_SUCCESS,
     dispatchReturn: true,
   },
 
   async process({ getState }) {
-    return await axios.delete(REPORT_END_POINT, { data: getState().findNotification });
+    if (getState().findNotification.reportId) {
+      return await axios.put(REPORT_END_POINT, { reportId: getState().findNotification.reportId });
+    }
   }
 });
 

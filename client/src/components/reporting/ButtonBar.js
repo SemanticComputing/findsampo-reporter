@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
-import { changeFindIndex, sendFindNotification } from '../../actions/findNotification';
+import { changeFindIndex /*sendFindNotification*/ } from '../../actions/findNotification';
 import { ButtonActions } from '../../helpers/enum/enums';
 import { QuestionDependencies } from '../../helpers/enum/enums';
 
@@ -67,9 +67,8 @@ const onButtonClick = (props, btn) => {
   if (btn.action) {
     executeButtonAction(props, btn.action);
   }
-  //Update current report
-  this.props.deleteReport();
-  this.props.postReport();
+  // Update find notification on every step
+  sendFindNotification(props);
 };
 
 /**
@@ -87,6 +86,11 @@ const executeButtonAction = (props, buttonAction) => {
       break;
   }
 };
+const sendFindNotification = (props) => {
+  //Update current report
+  props.deleteReport();
+  props.postReport();
+};
 
 const mapStateToProps = (state) => ({
   buttons: state.report.questions[state.report.currentStep].buttons,
@@ -99,7 +103,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   changeQuestion: (step) => dispatch(changeQuestion(step)),
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
-  sendFindNotification: () => dispatch(sendFindNotification()),
+  // FIXME !sendFindNotification: () => dispatch(sendFindNotification()),
   postReport: () => dispatch(postReport()),
   deleteReport: () => dispatch(deleteReport())
 });

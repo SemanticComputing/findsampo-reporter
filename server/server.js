@@ -136,7 +136,7 @@ const REPORT_END_POINT = '/api/v1/report';
 const HTTP_OK = 200;
 const defaultreportHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded',
-  'Accept': 'application/sparql-results+json; charset=utf-8',
+  'Accept': 'application/sparql-results+json; charset=utf-8'
 };
 
 app.post(REPORT_END_POINT, async (req, res, next) => {
@@ -207,16 +207,19 @@ app.get(REPORT_END_POINT, async (req, res, next) => {
 });
 
 
-app.delete(REPORT_END_POINT, async (req, res, next) => {
+app.put(REPORT_END_POINT, async (req, res, next) => {
   try {
-    const update = report.deleteReport(req.body.user, req.body.data);
+    const update = report.deleteReport(req.body.reportId);
     const response = await axios({
-      method: 'delete',
+      method: 'post',
       headers: defaultreportHeaders,
       url: url.parse(`http://${process.env.FUSEKI_UPDATE_URL}`),
       data: querystring.stringify({ update })
     });
-    res.send(response.data.results.bindings);
+    // Ensure that deletion is succeed
+    if (response.status == HTTP_OK) {
+      res.send('Deletion is done!');
+    }
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code

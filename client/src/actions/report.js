@@ -10,20 +10,14 @@ export const changeQuestion = (step) => ({
   step
 });
 
-export const getReport = () => {
-  return ({
-    type: REPORT_GET
-  });
-};
+export const getReport = () => ({
+  type: REPORT_GET
+});
 
-export const postReport = () => {
-  return ({
-    type: REPORT_POST
-  });
-};
+export const postReport = () => ({
+  type: REPORT_POST
+});
 
-export const deleteReport = () => {
-  return ({
-    type: REPORT_DELETE
-  });
-};
+export const deleteReport = () => ({
+  type: REPORT_DELETE
+});

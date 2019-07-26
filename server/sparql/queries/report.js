@@ -179,9 +179,9 @@ const getReport = `
 /**
  * Delete the report
  */
-const deleteReport = (user, report) => (`
+const deleteReport = (reportId) => (`
   ${getPrefixes()}
-  DROP GRAPH fs-user:${user.uid} 
+  DROP GRAPH fs-report:${reportId}
 `);
 
 exports.getReport = getReport;
