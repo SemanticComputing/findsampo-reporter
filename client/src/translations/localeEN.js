@@ -296,5 +296,9 @@ export default {
     'nearby': 'Nearby',
     'report': 'Report',
     'more': 'More'
+  },
+  'helpBar': {
+    'saveAs': 'Save as draft',
+    'delete': 'Delete'
   }
 };

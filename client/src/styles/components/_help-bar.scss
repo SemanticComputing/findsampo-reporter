@@ -1,6 +1,24 @@
 .help-bar {
+  & &__button-panel {
+    display: flex;
+    &__buttons {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: inherit;
+    }
+    &__more {
+      &__menu-icon {
+        color: $color-bottom-bar-icon-grey;
+        margin-right: 8px;
+      }
+    }
+  }
   & &__icon{
     color: $color-bottom-bar-icon-grey;
     font-size: 1.8rem;
+  }
+  & &__popper {
+    z-index: 1;
   }
 }
