@@ -88,3 +88,8 @@ export const Colors = Object.freeze({
   ORANGE: '#ff9800',
   BROWN: '#795548',
 });
+
+export const ReportStatuses = Object.freeze({
+  DRAFT: 'DRAFT',
+  AWAIT_REVIEW: 'AWAIT_REVIEW'
+});

@@ -1,4 +1,5 @@
 import update from 'immutability-helper';
+import { ReportStatuses } from '../helpers/enum/enums';
 import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,
@@ -12,12 +13,13 @@ import {
   FIND_NOTIFICATION_SET_FIND_TIMING,
   FIND_NOTIFICATION_SET_FIND_DEPTH,
   FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS,
-  FIND_NOTIFICATION_SEND_SUCCESS
-} from '../constants/actionTypes';
+  FIND_NOTIFICATION_SEND_SUCCESS,
+  FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW
+} from '../constants/actionTypes'; 
 
 const initialState = {
   reportId: null,
-  status: 'draft',
+  status: ReportStatuses.DRAFT,
   currentStep: 0,
   currentFindIndex: 0,
   date: new Date(),
@@ -151,7 +153,13 @@ export default (state = initialState, action) => {
         ...state,
         reportId: action.payload.data.reportId
       };
+    case FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW:
+      return {
+        ...state,
+        status: ReportStatuses.AWAIT_REVIEW
+      };
     default:
       return state;
   }
+
 };

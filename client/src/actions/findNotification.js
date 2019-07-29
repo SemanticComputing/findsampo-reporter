@@ -10,7 +10,7 @@ import {
   FIND_NOTIFICATION_SET_FIND_TIMING,
   FIND_NOTIFICATION_SET_FIND_DEPTH,
   FIND_NOTIFICATION_SET_MUNICIPALITY,
-  FIND_NOTIFICATION_SEND
+  FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -85,6 +85,6 @@ export const setMunicipality = (coords) => ({
   coords
 });
 
-export const sendFindNotification = () => ({
-  type: FIND_NOTIFICATION_SEND
+export const setStatusToAwaitReview = () => ({
+  type: FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW
 });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
-import { changeFindIndex /*sendFindNotification*/ } from '../../actions/findNotification';
+import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
 import { ButtonActions } from '../../helpers/enum/enums';
 import { QuestionDependencies } from '../../helpers/enum/enums';
 
@@ -72,7 +72,7 @@ const onButtonClick = (props, btn) => {
 };
 
 /**
- * This function is responsible to execute all button requests
+ * This function is responsible to execute all button actions
  * 
  * @param {Action to execute} buttonAction 
  */
@@ -82,10 +82,12 @@ const executeButtonAction = (props, buttonAction) => {
       props.changeFindIndex(props.currentFindIndex + 1);
       break;
     case ButtonActions.SEND_FIND_NOTIFICATION:
-      props.sendFindNotification();
+      props.setStatusToAwaitReview();
+      sendFindNotification(props);
       break;
   }
 };
+
 const sendFindNotification = (props) => {
   //Update current report
   props.deleteReport();
@@ -96,14 +98,13 @@ const mapStateToProps = (state) => ({
   buttons: state.report.questions[state.report.currentStep].buttons,
   dependentOn: state.report.questions[state.report.currentStep].dependentOn,
   currentFindIndex: state.findNotification.currentFindIndex,
-  //hasFindSitePhotos: state.findNotification.photoghraphs.length > 0,
   finds: state.findNotification.finds,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeQuestion: (step) => dispatch(changeQuestion(step)),
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
-  // FIXME !sendFindNotification: () => dispatch(sendFindNotification()),
+  setStatusToAwaitReview: () => dispatch(setStatusToAwaitReview()),
   postReport: () => dispatch(postReport()),
   deleteReport: () => dispatch(deleteReport())
 });
