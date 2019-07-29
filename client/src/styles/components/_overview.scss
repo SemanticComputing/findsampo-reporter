@@ -3,6 +3,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  & &__header {
+    text-align: center;
+    font-size: 1rem;
+  }
   & &__find-site {
     padding: 0.5rem;
     margin-bottom: 1rem;
@@ -17,11 +21,20 @@
       flex: 3;
       display: flex;
       flex-direction: column;
+      min-height: 13rem;
     }
   }
   & &__find {
     padding: 0.5rem;
+    margin: 0.5rem;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    &__details-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
   }
   & &__properties {
     padding: 0.5rem 0.5rem 0.5rem 0;

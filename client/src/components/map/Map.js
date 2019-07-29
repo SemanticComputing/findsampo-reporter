@@ -48,6 +48,7 @@ import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/fu
  * layers: Default active layers to show on the map
  * checkPointInPolygons: Show notification that user is at ancient monument area
  * legalityResultHandler: Function which is used to send legality result to parent component
+ * id: Defines the id of map element. Used in case of viewing multiple maps on the same page
  */
 class Map extends Component {
   state = {
@@ -86,7 +87,7 @@ class Map extends Component {
         (this.props.showCurrentLocation && this.state.hasCurrentLocation) ||
           this.props.markerData ||
           this.props.location ? (
-            <div id="map">
+            <div id={this.props.id || 'map'} className="map-container">
               {
                 this.props.isFetchInProgress &&
                 <CircularProgress className="map__data-loader-spiner" size="5rem" />
@@ -226,7 +227,7 @@ class Map extends Component {
       [intl.get('nearByPage.map.overLays.rky_viiva')]: rkyLineLayer,
     };
 
-    this.map = L.map('map', {
+    this.map = L.map(this.props.id || 'map', {
       center: [64.9, 26.0],
       zoom: DEFAULT_ZOOM_LEVEL,
       zoomControl: false,
@@ -269,7 +270,6 @@ class Map extends Component {
     // If current location is provided show it
     if (position) {
       this.setLocation(position.coords.latitude, position.coords.longitude);
-      this.map.setView(L.latLng(position.coords.latitude, position.coords.longitude), this.props.zoomLevel);
     }
     // If a location is given
     if (this.props.location) {
@@ -345,6 +345,8 @@ class Map extends Component {
    */
   setLocation = (lat, lng) => {
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
+    // Set the view on the map
+    this.map.setView(L.latLng(lat, lng), this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
     // Set coords
     this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
     // Set also municapility

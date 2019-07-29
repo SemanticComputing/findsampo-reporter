@@ -45,7 +45,6 @@ body {
     "content"
     "footer";
   height: 100%;
-  background-color: $color-app-background;
 }
 
 .appbar {
@@ -55,6 +54,7 @@ body {
 .content {
   grid-area: content;
   display: flex;
+  background-color: $color-app-background;
   /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
   min-height: 0px;
   //overflow-y: auto; */
