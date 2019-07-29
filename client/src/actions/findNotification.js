@@ -33,7 +33,7 @@ export const setFindPhotos = (photos, index) => ({
   type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
   index,
   [index]: {
-    photos
+    photos: [photos]
   }
 });
 
@@ -46,7 +46,7 @@ export const setFindSitePhotos = (photos, index) => ({
   type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
   index,
   [index]: {
-    photos
+    photos: [photos]
   }
 });
 

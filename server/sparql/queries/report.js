@@ -51,15 +51,16 @@ const getPrefixes = () => (`
  */
 const getReportDetails = (reportId, user, data, finds) => {
   return `fs-report:${reportId} a fs-schema:Report ;
-  fs-schema:report-municipality "${data.municipality}" ;
-  fs-schema:report-submission-date "${data.date}"^^xsd:date ;
-  fs-schema:report-status "${data.status}" ;
-  fs-schema:report-current-step "${data.currentStep}" ;
-  # Report owner details
-  fs-schema:report-owner fs-report-owner:${user.uid} .
-  ${getOwnerDetails(user)}
-  # Find details
-  ${getProperties(FIND_SCHEMA_TAG, FIND_TAG, finds)}`;
+    ${data.municipality ? `fs-schema:report-municipality "${data.municipality}" ;` : ''}
+    ${data.date ? `fs-schema:report-submission-date "${data.date}"^^xsd:date ;` : ''}
+    ${data.status ? `fs-schema:report-status "${data.status}" ;` : ''}
+    ${data.currentStep ? `fs-schema:report-current-step "${data.currentStep}" ;` : ''}
+    fs-schema:report-owner fs-report-owner:${user.uid} ${finds.size > 0 ? ';' : '.'}
+    # Find details
+    ${getProperties(FIND_SCHEMA_TAG, FIND_TAG, finds)}
+    # Report owner details
+    ${getOwnerDetails(user)}`;
+
 };
 
 
@@ -68,15 +69,12 @@ const getReportDetails = (reportId, user, data, finds) => {
  * Returns all available properties
  */
 const getProperties = (schema, tag, container) => {
-  let result = '';
+  let result = ' ';
   if (container.size > 0) {
     result += schema;
     for (let k = 0; k < container.size; k++) {
-      if (k === container.size - 1) {
-        result += ` ${tag}:${container.keys()[k]} .`;
-      } else {
-        result += ` ${tag}:${container.keys()[k]},`;
-      }
+      const key = Array.from(container.keys())[k];
+      result += k === container.size - 1 ? ` ${tag}:${key} .` : ` ${tag}:${key},`;
     }
   }
   return result;
@@ -90,19 +88,19 @@ const getFindsDetails = (finds) => {
   let findsDetails = '';
   for (let [id, find] of finds.entries()) {
     const findSiteId = uuidv1();
-    const findImages = new Map(find.photos.map(img => [uuidv1(), img]));
+    const findImages = find.photos && new Map(find.photos.map(img => [uuidv1(), img]));
 
     findsDetails += `fs-find:${id} a fs-schema:Find ;
-      fs-schema:find-depth "${find.depth}" ;
-      fs-schema:find-additional-materials "${find.additionalMaterials}" ;
-      fs-schema:find-material "${find.material}" ;
-      fs-schema:find-type "${find.type}" ;
-      fs-schema:find-period "${find.timing}" ;
-      fs-schema:find-site fs-find-site:${findSiteId} ;
-      ${getProperties(FIND_IMAGE_SCHEMA_TAG, FIND_IMAGE_TAG, findImages)}
+      ${find.depth ? `fs-schema:find-depth "${find.depth}" ;` : ''}
+      ${find.additionalMaterials ? `fs-schema:find-additional-materials "${find.additionalMaterials}" ;` : ''}
+      ${find.material ? `fs-schema:find-material "${find.material}" ;` : ''}
+      ${find.type ? `fs-schema:find-type "${find.type}" ;` : ''}
+      ${find.timing ? `fs-schema:find-period "${find.timing}" ;` : ''}
+      fs-schema:find-site fs-find-site:${findSiteId} ${findImages ? ';' : '.'}
+      ${findImages ? getProperties(FIND_IMAGE_SCHEMA_TAG, FIND_IMAGE_TAG, findImages) : ''}
       
       # Find images
-      ${getFindImageDetails(findImages)}
+      ${findImages ? getFindImageDetails(findImages) : ''}
       
       # Find Site
       ${getFindSiteDetails(findSiteId, find.findSite)}
@@ -130,15 +128,15 @@ const getFindImageDetails = (findImages) => {
  * Returns find site details
  */
 const getFindSiteDetails = (id, findSite) => {
-  const findSiteImages = new Map(findSite.photos.map(img => [uuidv1(), img]));
+  const findSiteImages = findSite.photos && new Map(findSite.photos.map(img => [uuidv1(), img]));
 
   return `fs-find-site:${id} a fs-schema:FindSite ;
       wgs84:lat ${findSite.coords.lat} ;
       wgs84:long ${findSite.coords.lng} ;
-      ${getProperties(FIND_SITE_IMAGE_SCHEMA_TAG, FIND_SITE_IMAGE_TAG, findSiteImages)}
+      ${findSiteImages ? getProperties(FIND_SITE_IMAGE_SCHEMA_TAG, FIND_SITE_IMAGE_TAG, findSiteImages) : ''}
 
       # Find site images
-      ${getFindSiteImageDetails(findSiteImages)}`;
+      ${findSiteImages ? getFindSiteImageDetails(findSiteImages) : ''}`;
 };
 
 /**

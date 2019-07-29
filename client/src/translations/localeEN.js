@@ -78,7 +78,7 @@ export default {
     'notProvidedValue': 'Not Provided',
     'findSite': {
       'title': 'Find Site Details',
-      'photos': 'Photos',
+      'photos': 'Find Site Photos',
       'location': 'Location',
       'additionalMaterials': 'Additional Materials',
     },
@@ -88,7 +88,7 @@ export default {
       'photos': 'Photos',
       'depth': 'Depth',
       'type': 'Type',
-      'timing': 'Timing',
+      'timing': 'Period',
       'material': 'Material'
     }
   },
