@@ -50,6 +50,11 @@ const ReportPage = Loadable({
   loading: Loading
 });
 
+const MyFindsPage = Loadable({
+  loader: () => import('../components/MyFindsPage'),
+  loading: Loading
+});
+
 const NotFoundPage = Loadable({
   loader: () => import('../components/NotFoundPage'),
   loading: Loading
@@ -84,6 +89,7 @@ const AppRouter = () => (
           <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
           <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={NearbyPage} />
           <PrivateRoute path={RouterPaths.REPORT_PAGE} component={ReportPage} />
+          <PrivateRoute path={RouterPaths.MY_FINDS_PAGE} component={MyFindsPage} />
           <PrivateRoute path={RouterPaths.LEGALITY_CHECKER_PAGE} component={LegalityCheckerPage} />
           <Route component={NotFoundPage}></Route>
         </Switch>
