@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CircularProgress, Paper, Icon, Tabs, Tab, IconButton } from '@material-ui/core';
-import Map from './map/Map';
-import Table from './table/Table';
-import FacetDrawer from './FacetDrawer';
-import findsSelector from '../selectors/facet/facetResults';
-import { getValidatedFinds } from '../actions/find';
-import { isDesktopScreen, isMobileScreen } from '../helpers/functions/functions';
-import { MapMode } from '../helpers/enum/enums';
+import Map from '../map/Map';
+import Table from '../table/Table';
+import FacetDrawer from '../FacetDrawer';
+import findsSelector from '../../selectors/facet/facetResults';
+import { getValidatedFinds } from '../../actions/find';
+import { isDesktopScreen, isMobileScreen } from '../../helpers/functions/functions';
+import { MapMode } from '../../helpers/enum/enums';
 
 class NearbyPage extends Component {
   state = {

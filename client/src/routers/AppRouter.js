@@ -3,7 +3,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
-import AppHomePage from '../components/AppHomePage';
+import AppHomePage from '../components/pages/AppHomePage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BottomNav from '../components/BottomNav';
@@ -31,17 +31,17 @@ const Loading = ({ error }) => {
  *  React Loadable Components that are loaded only when needed
  */
 const LoginPage = Loadable({
-  loader: () => import('../components/authentication/LoginPage'),
+  loader: () => import('../components/pages/authentication/LoginPage'),
   loading: Loading
 });
 
 const SignupPage = Loadable({
-  loader: () => import('../components/authentication/SignupPage'),
+  loader: () => import('../components/pages/authentication/SignupPage'),
   loading: Loading
 });
 
 const NearbyPage = Loadable({
-  loader: () => import('../components/NearbyPage'),
+  loader: () => import('../components/pages/NearbyPage'),
   loading: Loading
 });
 
@@ -51,17 +51,17 @@ const ReportPage = Loadable({
 });
 
 const MyFindsPage = Loadable({
-  loader: () => import('../components/MyFindsPage'),
+  loader: () => import('../components/pages/MyFindsPage'),
   loading: Loading
 });
 
 const NotFoundPage = Loadable({
-  loader: () => import('../components/NotFoundPage'),
+  loader: () => import('../components/pages/NotFoundPage'),
   loading: Loading
 });
 
 const LegalityCheckerPage = Loadable({
-  loader: () => import('../components/LegalityCheckerPage'),
+  loader: () => import('../components/pages/LegalityCheckerPage'),
   loading: Loading
 });
 

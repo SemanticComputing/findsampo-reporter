@@ -9,9 +9,9 @@ import {
   //Avatar
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
-import { startGoogleLogin, startEmailLogin } from '../../actions/auth';
-import { enqueueSnackbar, changeSnipperStatus } from '../../actions/notifier';
-import Spinner from '../Spinner';
+import { startGoogleLogin, startEmailLogin } from '../../../actions/auth';
+import { enqueueSnackbar, changeSnipperStatus } from '../../../actions/notifier';
+import Spinner from '../../Spinner';
 class LoginPage extends Component {
   state = {
     email: '',

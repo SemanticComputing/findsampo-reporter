@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Typography, Button } from '@material-ui/core';
-import { RouterPaths } from '../helpers/enum/enums';
+import { RouterPaths } from '../../helpers/enum/enums';
 import intl from 'react-intl-universal';
 
 const NotFoundPage = () => (

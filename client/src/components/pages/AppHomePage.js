@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ContentContainer from './ContentContainer';
-import Slider from './reporting/Slider';
+import ContentContainer from '../ContentContainer';
+import Slider from '../reporting/Slider';
 
 class AppHomePage extends Component {
   render() {
