@@ -1,0 +1,24 @@
+.my-finds-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  & &__find {
+    margin: 10px;
+    &__actions {
+      justify-content: space-between;
+      &__status-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    &__details {
+      display: flex;
+    }
+  }
+  & &__header {
+    font-size: 1rem;
+    text-align: center;
+    margin: 10px;
+  }
+}

@@ -57,6 +57,19 @@ export default {
       }
     }
   },
+  'myFindsPage': {
+    'header': 'My Finds',
+    'more': 'View More',
+    'share': 'Share',
+    'status': 'Status',
+    'container': {
+      'municipality': 'Find in',
+      'time': 'at',
+      'material': 'Material',
+      'type': 'Type',
+      'period': 'Period'
+    }
+  },
   'notFoundPage': {
     'pageNotFound': 'Ooops! Page Not Found!',
     'goToHomePage': 'Go To HomePage'

@@ -3,9 +3,9 @@ const uuidv1 = require('uuid/v1');
 
 const FIND_TAG = 'fs-find';
 const FIND_SCHEMA_TAG = 'fs-schema:report-find';
-const FIND_IMAGE_TAG = 'fs-find:find-image';
+const FIND_IMAGE_TAG = 'fs-find-image';
 const FIND_IMAGE_SCHEMA_TAG = 'fs-schema:find-image';
-const FIND_SITE_IMAGE_TAG = 'fs-find:find-site-image';
+const FIND_SITE_IMAGE_TAG = 'fs-find-site-image';
 const FIND_SITE_IMAGE_SCHEMA_TAG = 'fs-schema:find-site-image';
 
 /**
@@ -41,9 +41,10 @@ const getPrefixes = () => (`
   PREFIX fs-schema: <http://ldf.fi/schema/findsampo/>
 	PREFIX fs-report: <http://ldf.fi/findsampo/report/>
 	PREFIX fs-report-owner: <http://ldf.fi/findsampo/report-owner/>
-	PREFIX fs-find-site: <http://ldf.fi/findsampo/find-site/>
 	PREFIX fs-find: <http://ldf.fi/findsampo/find/>
-	PREFIX fs-find-image: <http://ldf.fi/findsampo/find-image/>
+  PREFIX fs-find-image: <http://ldf.fi/findsampo/find-image/>
+  PREFIX fs-find-site: <http://ldf.fi/findsampo/find-site/>
+  PREFIX fs-find-site-image: <http://ldf.fi/findsampo/find-site-image/>
 `);
 
 /**
@@ -119,9 +120,9 @@ const getFindImageDetails = (findImages) => {
     findImageResult += `fs-find-image:${id} a fs-schema:FindImage ;
       fs-schema:find-image-url "${image}" .
     `;
-
-    return findImageResult;
   }
+
+  return findImageResult;
 };
 
 /**
@@ -145,12 +146,12 @@ const getFindSiteDetails = (id, findSite) => {
 const getFindSiteImageDetails = (findSiteImages) => {
   let findSiteImageResult = '';
   for (let [id, image] of findSiteImages.entries()) {
-    findSiteImageResult += `fs-find:find-site-image:${id} a fs-schema:FindSiteImage ;
+    findSiteImageResult += `fs-find-site-image:${id} a fs-schema:FindSiteImage ;
         fs-schema:find-site-image-url "${image}" .
       `;
-
-    return findSiteImageResult;
   }
+
+  return findSiteImageResult;
 };
 
 /**

@@ -14,8 +14,9 @@ export const getReport = () => ({
   type: REPORT_GET
 });
 
-export const postReport = () => ({
-  type: REPORT_POST
+export const postReport = (isFinalised) => ({
+  type: REPORT_POST,
+  isFinalised
 });
 
 export const deleteReport = () => ({

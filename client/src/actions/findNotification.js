@@ -11,6 +11,7 @@ import {
   FIND_NOTIFICATION_SET_FIND_DEPTH,
   FIND_NOTIFICATION_SET_MUNICIPALITY,
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
+  FIND_NOTIFICATION_RESET
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -33,7 +34,7 @@ export const setFindPhotos = (photos, index) => ({
   type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
   index,
   [index]: {
-    photos: [photos]
+    photos: [...photos]
   }
 });
 
@@ -46,7 +47,7 @@ export const setFindSitePhotos = (photos, index) => ({
   type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
   index,
   [index]: {
-    photos: [photos]
+    photos: [...photos]
   }
 });
 
@@ -87,4 +88,8 @@ export const setMunicipality = (coords) => ({
 
 export const setStatusToAwaitReview = () => ({
   type: FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW
+});
+
+export const resetFindNotification = () => ({
+  type: FIND_NOTIFICATION_RESET
 });

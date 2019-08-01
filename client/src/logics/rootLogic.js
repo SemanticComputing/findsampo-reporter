@@ -4,6 +4,8 @@ import findNotification from './findNotification';
 import find from './find';
 import map from './map';
 import report from './report';
+import myFinds from './myFinds';
+
 
 // Combines all logic files
 export default [
@@ -12,5 +14,6 @@ export default [
   ...findNotification,
   ...find,
   ...map,
-  ...report
+  ...report,
+  ...myFinds
 ];

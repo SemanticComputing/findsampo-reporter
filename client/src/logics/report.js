@@ -5,8 +5,11 @@ import {
   REPORT_POST,
   REPORT_DELETE,
   FIND_NOTIFICATION_SEND_SUCCESS,
-  FIND_NOTIFICATION_DELETION_SUCCESS
+  FIND_NOTIFICATION_RESET,
+  FIND_NOTIFICATION_SEND_FAIL,
+  FIND_NOTIFICATION_DELETION_SUCCESS,
 } from '../constants/actionTypes';
+import { enqueueSnackbar } from '../actions/notifier';
 
 const REPORT_END_POINT = '/api/v1/report';
 
@@ -27,12 +30,8 @@ const postReport = createLogic({
   type: REPORT_POST,
   latest: true,
 
-  processOptions: {
-    dispatchReturn: true,
-    successType: FIND_NOTIFICATION_SEND_SUCCESS,
-  },
-
-  async process({ getState }) {
+  async process({ getState, action }, dispatch, done) {
+    console.log('isfinalised ', action.isFinalised);
     return await axios.post(REPORT_END_POINT,
       {
         user: {
@@ -40,7 +39,24 @@ const postReport = createLogic({
           email: getState().auth.email
         },
         data: getState().findNotification
-      });
+      })
+      .then((result) => {
+        dispatch({ type: FIND_NOTIFICATION_SEND_SUCCESS, payload: result });
+        // If find notification is sent totally, reset it
+        if (action.isFinalised) {
+          dispatch({ type: FIND_NOTIFICATION_RESET });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: FIND_NOTIFICATION_SEND_FAIL, payload: error });
+        dispatch(enqueueSnackbar({
+          message: error.message,
+          options: {
+            variant: 'error',
+          },
+        }));
+      })
+      .then(() => done());
   }
 });
 

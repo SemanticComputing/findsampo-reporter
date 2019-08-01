@@ -10,6 +10,7 @@ const uuidv1 = require('uuid/v1');
 const finds = require('./sparql/queries/finds');
 const report = require('./sparql/queries/report');
 const mapFinds = require('./sparql/mappers/findsMapper');
+const getMyFinds = require('./sparql/queries/myFinds');
 
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
@@ -240,6 +241,49 @@ app.put(REPORT_END_POINT, async (req, res, next) => {
     next(error);
   }
 });
+
+
+
+// Get My Finds
+const MY_FINDS_END_POINT = '/api/v1/myfinds';
+const defaultMyFindsHeaders = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Accept': 'application/sparql-results+json; charset=utf-8'
+};
+
+app.get(MY_FINDS_END_POINT, async (req, res, next) => {
+  try {
+    const query = getMyFinds(req.query.uid);
+    const response = await axios({
+      method: 'post',
+      headers: defaultMyFindsHeaders,
+      url: url.parse(`http://${process.env.FUSEKI_SPARQL_URL}`),
+      data: querystring.stringify({ query })
+    });
+    //const mappedResults = mapFinds(response.data.results.bindings);
+    res.send(response.data.results.bindings);
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      //console.log(error.response.status);
+      //console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+    next(error);
+  }
+});
+
+
 
 // Application
 app.get('*', (req, res) => {

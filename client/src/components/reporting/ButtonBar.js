@@ -2,10 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
+import { withRouter } from 'react-router-dom';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
 import { ButtonActions } from '../../helpers/enum/enums';
 import { QuestionDependencies } from '../../helpers/enum/enums';
+import { enqueueSnackbar } from '../../actions/notifier';
+import { RouterPaths } from '../../helpers/enum/enums';
+
+const REPORT_LAST_STEP = 15;
 
 const ButtonBar = (props) => (
   <div className="button-bar">
@@ -68,7 +73,9 @@ const onButtonClick = (props, btn) => {
     executeButtonAction(props, btn.action);
   }
   // Update find notification on every step
-  sendFindNotification(props);
+  if (btn.nextStep !== REPORT_LAST_STEP) {
+    sendFindNotification(props);
+  }
 };
 
 /**
@@ -82,16 +89,39 @@ const executeButtonAction = (props, buttonAction) => {
       props.changeFindIndex(props.currentFindIndex + 1);
       break;
     case ButtonActions.SEND_FIND_NOTIFICATION:
-      props.setStatusToAwaitReview();
-      sendFindNotification(props);
+      finaliseNotification(props, true);
       break;
   }
 };
 
-const sendFindNotification = (props) => {
+/**
+ * Upsert find notification
+ * @param {props} props
+ * @param {isFinalised} tells if report is totally filled in
+ */
+const sendFindNotification = (props, isFinalised = false) => {
   //Update current report
   props.deleteReport();
-  props.postReport();
+  props.postReport(isFinalised);
+};
+
+/**
+ * Upsert find notification and finalise reporting process
+ * @param {props} props 
+ * @param {isFinalised} tells if report is totally filled in
+ */
+const finaliseNotification = (props, isFinalised) => {
+  props.setStatusToAwaitReview();
+  sendFindNotification(props, isFinalised);
+  //Show confirmation notification
+  props.enqueueSnackbar({
+    message: 'Your report has been sent successfully!',
+    options: {
+      variant: 'success',
+    },
+  });
+  // Redirect user to myfinds
+  props.history.push(RouterPaths.MY_FINDS_PAGE);
 };
 
 const mapStateToProps = (state) => ({
@@ -105,8 +135,9 @@ const mapDispatchToProps = (dispatch) => ({
   changeQuestion: (step) => dispatch(changeQuestion(step)),
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
   setStatusToAwaitReview: () => dispatch(setStatusToAwaitReview()),
-  postReport: () => dispatch(postReport()),
-  deleteReport: () => dispatch(deleteReport())
+  postReport: (isFinalised) => dispatch(postReport(isFinalised)),
+  deleteReport: () => dispatch(deleteReport()),
+  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ButtonBar));

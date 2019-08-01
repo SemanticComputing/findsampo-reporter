@@ -14,8 +14,9 @@ import {
   FIND_NOTIFICATION_SET_FIND_DEPTH,
   FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS,
   FIND_NOTIFICATION_SEND_SUCCESS,
-  FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW
-} from '../constants/actionTypes'; 
+  FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
+  FIND_NOTIFICATION_RESET
+} from '../constants/actionTypes';
 
 const initialState = {
   reportId: null,
@@ -158,8 +159,10 @@ export default (state = initialState, action) => {
         ...state,
         status: ReportStatuses.AWAIT_REVIEW
       };
+    case FIND_NOTIFICATION_RESET:
+      console.log('Find Notification Reset');
+      return initialState;
     default:
       return state;
   }
-
 };

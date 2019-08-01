@@ -1,5 +1,7 @@
 import initalState from '../helpers/data/report';
-import { REPORT_CHANGE_QUESTION } from '../constants/actionTypes';
+import { REPORT_CHANGE_QUESTION, FIND_NOTIFICATION_RESET } from '../constants/actionTypes';
+
+const DEFAULT_CURRENT_STEP = 0;
 
 export default (state = initalState, action) => {
   switch (action.type) {
@@ -7,6 +9,11 @@ export default (state = initalState, action) => {
       return {
         ...state,
         currentStep: action.step
+      };
+    case FIND_NOTIFICATION_RESET:
+      return {
+        ...state,
+        currentStep: DEFAULT_CURRENT_STEP
       };
     default:
       return state;
