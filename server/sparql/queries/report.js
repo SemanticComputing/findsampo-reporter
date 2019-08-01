@@ -64,8 +64,6 @@ const getReportDetails = (reportId, user, data, finds) => {
 
 };
 
-
-
 /**
  * Returns all available properties
  */

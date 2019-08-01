@@ -63,7 +63,7 @@ export default {
     'share': 'Share',
     'status': 'Status',
     'container': {
-      'municipality': 'Find in',
+      'municipality': 'Report',
       'time': 'at',
       'material': 'Material',
       'type': 'Type',
