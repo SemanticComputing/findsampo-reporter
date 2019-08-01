@@ -10,6 +10,7 @@ const uuidv1 = require('uuid/v1');
 const finds = require('./sparql/queries/finds');
 const report = require('./sparql/queries/report');
 const mapFinds = require('./sparql/mappers/findsMapper');
+const mapMyFinds = require('./sparql/mappers/myFindsMapper');
 const getMyFinds = require('./sparql/queries/myFinds');
 
 const app = express();
@@ -260,8 +261,8 @@ app.get(MY_FINDS_END_POINT, async (req, res, next) => {
       url: url.parse(`http://${process.env.FUSEKI_SPARQL_URL}`),
       data: querystring.stringify({ query })
     });
-    //const mappedResults = mapFinds(response.data.results.bindings);
-    res.send(response.data.results.bindings);
+    const mappedResults = mapMyFinds(response.data.results.bindings);
+    res.send(mappedResults);
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code
