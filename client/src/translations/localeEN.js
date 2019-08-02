@@ -63,11 +63,18 @@ export default {
     'share': 'Share',
     'status': 'Status',
     'container': {
-      'municipality': 'Report',
-      'time': 'at',
-      'material': 'Material',
-      'type': 'Type',
-      'period': 'Period'
+      'report': 'Report',
+      'municipality': 'Municipality',
+      'time': 'on {d, date, short}',
+      'finds': 'Contains {number} finds'
+    },
+    'statuses': {
+      'draft': 'Draft',
+      'await_review': 'Await Review',
+      'in_review': 'In Review',
+      'validated': 'Validated',
+      'rejected': 'Rejected',
+      'peding_user': 'Pending User'
     }
   },
   'notFoundPage': {

@@ -87,9 +87,19 @@ export const Colors = Object.freeze({
   YELLOW: '#ffeb3b',
   ORANGE: '#ff9800',
   BROWN: '#795548',
+  GREY: '#e0e0e0',
+  DARK_YELLOW: '#ffc107',
+  DARK_LIME: '#eeff41',
+  DARK_GREEN: '#43a047',
+  DARK_RED: '#dd2c00',
+  INDIGO: '#3f51b5'
 });
 
 export const ReportStatuses = Object.freeze({
-  DRAFT: 'DRAFT',
-  AWAIT_REVIEW: 'AWAIT_REVIEW'
+  DRAFT: 'draft',
+  AWAIT_REVIEW: 'await_review',
+  IN_REVIEW: 'in_review',
+  VALIDATED: 'validated',
+  REJECTED: 'rejected',
+  PENDING_USER: 'peding_user'
 });
