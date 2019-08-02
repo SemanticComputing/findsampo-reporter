@@ -8,8 +8,12 @@ import {
   FIND_NOTIFICATION_RESET,
   FIND_NOTIFICATION_SEND_FAIL,
   FIND_NOTIFICATION_DELETION_SUCCESS,
+  NOTIFIER_CHANGE_STATUS
 } from '../constants/actionTypes';
 import { enqueueSnackbar } from '../actions/notifier';
+import { history } from '../routers/AppRouter';
+import { RouterPaths } from '../helpers/enum/enums';
+
 
 const REPORT_END_POINT = '/api/v1/report';
 
@@ -31,7 +35,6 @@ const postReport = createLogic({
   latest: true,
 
   async process({ getState, action }, dispatch, done) {
-    console.log('isfinalised ', action.isFinalised);
     return await axios.post(REPORT_END_POINT,
       {
         user: {
@@ -44,7 +47,19 @@ const postReport = createLogic({
         dispatch({ type: FIND_NOTIFICATION_SEND_SUCCESS, payload: result });
         // If find notification is sent totally, reset it
         if (action.isFinalised) {
+          // Reset notification
           dispatch({ type: FIND_NOTIFICATION_RESET });
+          // Disable spinner
+          dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false});
+          // Redirect user to my finds page
+          history.push(RouterPaths.MY_FINDS_PAGE);
+          // Show confirmation
+          dispatch(enqueueSnackbar({
+            message: 'Your report has been sent successfully!',
+            options: {
+              variant: 'success',
+            }
+          }));
         }
       })
       .catch((error) => {

@@ -35,48 +35,54 @@ class MyFindsPage extends Component {
           </Paper>
         </div>
         {
-          this.props.reports.map((report, index) => {
-            return (
-              <Card className="my-finds-page__find" key={index}>
-                <CardActionArea className="my-finds-page__find__details">
-                  <CardContent className="my-finds-page__find__details__content">
-                    <Typography gutterBottom variant="h5" component="h2" className="my-finds-page__find__details__card-header">
-                      {intl.get('myFindsPage.container.report')} {intl.get('myFindsPage.container.time', { d: new Date(report.date) })}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {intl.get('myFindsPage.container.municipality')}: {report.municipality}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {intl.get('myFindsPage.container.finds', { number: report.finds.length })}
-                    </Typography>
-                  </CardContent>
-                  <div className="my-finds-page__find__actions__status-container">
-                    <Tooltip title="No Image" placement="top">
-                      <Icon className="my-finds-page__find__actions__status-container__icon">{statusIconDeterminer(report.status.toLowerCase())}</Icon>
-                    </Tooltip>
-                    <div className="my-finds-page__find__actions__status-container__text">
-                      <Chip
-                        label={intl.get(`myFindsPage.statuses.${report.status.toLowerCase()}`).toUpperCase()}
-                        className="my-finds-page__find__actions__status-container__text__chip"
-                        style={statusColorDeterminer(report.status.toLowerCase())}
-                      />
+          this.props.reports.length > 0 ?
+            this.props.reports.map((report, index) => {
+              return (
+                <Card className="my-finds-page__find" key={index}>
+                  <CardActionArea className="my-finds-page__find__details">
+                    <CardContent className="my-finds-page__find__details__content">
+                      <Typography gutterBottom variant="h5" component="h2" className="my-finds-page__find__details__card-header">
+                        {intl.get('myFindsPage.container.report')} {intl.get('myFindsPage.container.time', { d: new Date(report.date) })}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        {intl.get('myFindsPage.container.municipality')}: {report.municipality}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        {intl.get('myFindsPage.container.finds', { number: report.finds.length })}
+                      </Typography>
+                    </CardContent>
+                    <div className="my-finds-page__find__actions__status-container">
+                      <Tooltip title="No Image" placement="top">
+                        <Icon className="my-finds-page__find__actions__status-container__icon">{statusIconDeterminer(report.status.toLowerCase())}</Icon>
+                      </Tooltip>
+                      <div className="my-finds-page__find__actions__status-container__text">
+                        <Chip
+                          label={intl.get(`myFindsPage.statuses.${report.status.toLowerCase()}`).toUpperCase()}
+                          className="my-finds-page__find__actions__status-container__text__chip"
+                          style={statusColorDeterminer(report.status.toLowerCase())}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </CardActionArea>
-                <Divider />
-                <CardActions className="my-finds-page__find__actions">
-                  <div>
-                    <Button size="small" color="primary">
-                      {intl.get('myFindsPage.more')}
-                    </Button>
-                    <Button size="small" color="primary">
-                      {intl.get('myFindsPage.share')}
-                    </Button>
-                  </div>
-                </CardActions>
-              </Card>
-            );
-          })
+                  </CardActionArea>
+                  <Divider />
+                  <CardActions className="my-finds-page__find__actions">
+                    <div>
+                      <Button size="small" color="primary">
+                        {intl.get('myFindsPage.more')}
+                      </Button>
+                      <Button size="small" color="primary">
+                        {intl.get('myFindsPage.share')}
+                      </Button>
+                    </div>
+                  </CardActions>
+                </Card>
+              );
+            }) :
+            <Paper className="my-finds-page__header-container__paper">
+              <Typography className="my-finds-page__header-container__header" variant="overline">
+                {intl.get('myFindsPage.noFindsError')}
+              </Typography>
+            </Paper>
         }
       </div>
     );

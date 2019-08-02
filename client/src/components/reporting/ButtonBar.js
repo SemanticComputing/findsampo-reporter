@@ -5,10 +5,9 @@ import intl from 'react-intl-universal';
 import { withRouter } from 'react-router-dom';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
-import { ButtonActions } from '../../helpers/enum/enums';
-import { QuestionDependencies } from '../../helpers/enum/enums';
+import { QuestionDependencies, ButtonActions } from '../../helpers/enum/enums';
 import { enqueueSnackbar } from '../../actions/notifier';
-import { RouterPaths } from '../../helpers/enum/enums';
+import { changeSnipperStatus } from '../../actions/notifier';
 
 const REPORT_LAST_STEP = 15;
 
@@ -113,15 +112,8 @@ const sendFindNotification = (props, isFinalised = false) => {
 const finaliseNotification = (props, isFinalised) => {
   props.setStatusToAwaitReview();
   sendFindNotification(props, isFinalised);
-  //Show confirmation notification
-  props.enqueueSnackbar({
-    message: 'Your report has been sent successfully!',
-    options: {
-      variant: 'success',
-    },
-  });
-  // Redirect user to myfinds
-  props.history.push(RouterPaths.MY_FINDS_PAGE);
+  // Show loading spinner
+  props.changeSnipperStatus(true);
 };
 
 const mapStateToProps = (state) => ({
@@ -138,6 +130,7 @@ const mapDispatchToProps = (dispatch) => ({
   postReport: (isFinalised) => dispatch(postReport(isFinalised)),
   deleteReport: () => dispatch(deleteReport()),
   enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
+  changeSnipperStatus: (status) => dispatch(changeSnipperStatus(status))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ButtonBar));

@@ -14,6 +14,48 @@ import PrivateRoute from './PrivateRoute';
 import { RouterPaths } from '../helpers/enum/enums';
 
 /**
+ * Support for managing session history
+ */
+export const history = createBrowserHistory();
+
+
+/**
+ *  Root component where is also router defined.
+ */
+const AppRouter = () => (
+  <Router history={history}>
+    <div className="app">
+      <div className="appbar">
+        <Header />
+        <Notifier />
+      </div>
+      <div className="content">
+        <Switch>
+          <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
+          <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />
+          <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
+          <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={NearbyPage} />
+          <PrivateRoute path={RouterPaths.REPORT_PAGE} component={ReportPage} />
+          <PrivateRoute path={RouterPaths.MY_FINDS_PAGE} component={MyFindsPage} />
+          <PrivateRoute path={RouterPaths.LEGALITY_CHECKER_PAGE} component={LegalityCheckerPage} />
+          <Route component={NotFoundPage}></Route>
+        </Switch>
+      </div>
+      <div className="footer">
+        <BottomNav />
+        <Footer />
+      </div>
+    </div>
+  </Router>
+);
+
+const mapStateToProps = (state) => ({
+  locale: state.locale
+});
+
+export default connect(mapStateToProps)(AppRouter);
+
+/**
  * Helper function for react lodable.
  * Called when compenent loading is in process.
  * In case of error, the given error text is thrown.
@@ -64,46 +106,3 @@ const LegalityCheckerPage = Loadable({
   loader: () => import('../components/pages/LegalityCheckerPage'),
   loading: Loading
 });
-
-
-/**
- * Support for managing session history
- */
-export const history = createBrowserHistory();
-
-
-/**
- *  Root component where is also router defined.
- */
-const AppRouter = () => (
-  <Router history={history}>
-    <div className="app">
-      <div className="appbar">
-        <Header />
-        <Notifier />
-      </div>
-      <div className="content">
-        <Switch>
-          <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
-          <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />
-          <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
-          <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={NearbyPage} />
-          <PrivateRoute path={RouterPaths.REPORT_PAGE} component={ReportPage} />
-          <PrivateRoute path={RouterPaths.MY_FINDS_PAGE} component={MyFindsPage} />
-          <PrivateRoute path={RouterPaths.LEGALITY_CHECKER_PAGE} component={LegalityCheckerPage} />
-          <Route component={NotFoundPage}></Route>
-        </Switch>
-      </div>
-      <div className="footer">
-        <BottomNav />
-        <Footer />
-      </div>
-    </div>
-  </Router>
-);
-
-const mapStateToProps = (state) => ({
-  locale: state.locale
-});
-
-export default connect(mapStateToProps)(AppRouter);

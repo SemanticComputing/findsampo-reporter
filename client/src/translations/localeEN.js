@@ -62,6 +62,7 @@ export default {
     'more': 'View More',
     'share': 'Share',
     'status': 'Status',
+    'noFindsError': 'No finds found!',
     'container': {
       'report': 'Report',
       'municipality': 'Municipality',
