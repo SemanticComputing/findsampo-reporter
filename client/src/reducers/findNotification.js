@@ -160,7 +160,6 @@ export default (state = initialState, action) => {
         status: ReportStatuses.AWAIT_REVIEW
       };
     case FIND_NOTIFICATION_RESET:
-      console.log('Find Notification Reset');
       return initialState;
     default:
       return state;

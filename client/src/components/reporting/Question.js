@@ -6,6 +6,7 @@ import { Icon, Paper } from '@material-ui/core';
 import AnswerOptions from './AnswerOptions';
 import ButtonBar from './ButtonBar';
 import StepMaker from '../reporting/StepMaker';
+import Spinner from '../Spinner';
 
 class Question extends Component {
 
@@ -40,39 +41,12 @@ class Question extends Component {
             </Paper>
           )
         }
+        {
+          this.props.isLoading &&
+          <Spinner />
+        }
       </div>
     );
-
-  /*
-    if (Component) {
-      return (
-        <div className="question">
-          <Component />
-          <ButtonBar />
-        </div>
-      );
-    } else {
-      return (
-        <div className="question">
-          {
-            help &&
-            <HelpBar />
-          }
-          <div className="question__properties">
-            {
-              icon &&
-              <Icon className="question__icon" size="large">{icon}</Icon>
-            }
-            {
-              question &&
-              <p>{intl.get(question)}</p>
-            }
-          </div>
-          <AnswerOptions />
-          <ButtonBar />
-        </div>
-      );
-    }*/
   }
 
   render() {
@@ -85,7 +59,8 @@ class Question extends Component {
 
 const mapStateToProps = (state) => ({
   currentStep: state.report.currentStep,
-  questions: state.report.questions
+  questions: state.report.questions,
+  isLoading: state.notifier.isLoading
 });
 
 export default connect(mapStateToProps)(Question);
