@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import {
   Card,
@@ -15,7 +16,7 @@ import {
   Paper
 } from '@material-ui/core';
 import { getMyFinds } from '../../actions/myFinds';
-import { ReportStatuses, Colors } from '../../helpers/enum/enums';
+import { ReportStatuses, Colors, RouterPaths } from '../../helpers/enum/enums';
 
 
 class MyFindsPage extends Component {
@@ -23,6 +24,13 @@ class MyFindsPage extends Component {
   componentDidMount() {
     this.props.getMyFinds();
   }
+
+  onReportClick = (index) => () => {
+    this.props.history.push(
+      RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE,
+      { index }
+    );
+  };
 
   render() {
     return (
@@ -38,8 +46,8 @@ class MyFindsPage extends Component {
           this.props.reports.length > 0 ?
             this.props.reports.map((report, index) => {
               return (
-                <Card className="my-finds-page__find" key={index}>
-                  <CardActionArea className="my-finds-page__find__details">
+                <Card className="my-finds-page__find" key={index} >
+                  <CardActionArea className="my-finds-page__find__details" onClick={this.onReportClick(index)}>
                     <CardContent className="my-finds-page__find__details__content">
                       <Typography gutterBottom variant="h5" component="h2" className="my-finds-page__find__details__card-header">
                         {intl.get('myFindsPage.container.report')} {intl.get('myFindsPage.container.time', { d: new Date(report.date) })}
@@ -162,4 +170,4 @@ const mapDispatchToProps = (dispatch) => ({
   getMyFinds: () => dispatch(getMyFinds())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyFindsPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyFindsPage));

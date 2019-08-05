@@ -37,6 +37,7 @@ const AppRouter = () => (
           <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={NearbyPage} />
           <PrivateRoute path={RouterPaths.REPORT_PAGE} component={ReportPage} />
           <PrivateRoute path={RouterPaths.MY_FINDS_PAGE} component={MyFindsPage} />
+          <PrivateRoute path={RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE} component={MyFindsReportOverviewPage} />
           <PrivateRoute path={RouterPaths.LEGALITY_CHECKER_PAGE} component={LegalityCheckerPage} />
           <Route component={NotFoundPage}></Route>
         </Switch>
@@ -94,6 +95,11 @@ const ReportPage = Loadable({
 
 const MyFindsPage = Loadable({
   loader: () => import('../components/pages/MyFindsPage'),
+  loading: Loading
+});
+
+const MyFindsReportOverviewPage = Loadable({
+  loader: () => import('../components/pages/MyFindsReportOverviewPage'),
   loading: Loading
 });
 

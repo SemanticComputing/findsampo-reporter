@@ -67,7 +67,6 @@ class HelpBar extends Component {
     this.setState({ menuOpen: false });
 
     this.props.history.push(RouterPaths.MY_FINDS_PAGE);
-
   };
 
   saveReportAsDraft = () => {

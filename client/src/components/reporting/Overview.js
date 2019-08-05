@@ -28,7 +28,7 @@ const OverView = (props) => {
                   <Typography variant="caption" className="overview__properties">
                     {intl.get('overview.findSite.location')}
                   </Typography>
-                  <Map location={find.findSite.coords} id={'map' + index} zoomLevel={DEFAULT_ZOOM_LEVEL}/>
+                  <Map location={find.findSite.coords} id={'map' + index} zoomLevel={DEFAULT_ZOOM_LEVEL} />
                 </div>
                 <div className="overview__find-site__photos">
                   <Typography variant="caption" className="overview__properties">

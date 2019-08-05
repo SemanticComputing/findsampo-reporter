@@ -12,11 +12,12 @@ const report = require('./sparql/queries/report');
 const mapFinds = require('./sparql/mappers/findsMapper');
 const mapMyFinds = require('./sparql/mappers/myFindsMapper');
 const getMyFinds = require('./sparql/queries/myFinds');
+const getCertainFinds = require('./sparql/queries/certainFinds');
+const mapReportFinds = require('./sparql/mappers/myFindsReportFindMapper');
 
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3001;
-
 
 // Define Environment Variables
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -34,19 +35,6 @@ app.use(express.static(publicPath));
 app.use(express.json());
 
 
-/* FIXME
-// Find Notifications API
-const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
-// TODO: Get data to database
-app.get(FIND_NOTIFICATION_END_POINT, (req, res) => {
-  res.send('Your GET request has been received!');
-});
-// TODO: Save received data to database
-app.post(FIND_NOTIFICATION_END_POINT, (req, res) => {
-  res.send('Your POST request has been received!');
-});*/
-
-
 //Finds
 const FINDS_END_POINT = '/api/v1/finds';
 const defaultSelectHeaders = {
@@ -55,6 +43,9 @@ const defaultSelectHeaders = {
   'Authorization': `Basic ${process.env.FHA_FINDS_AUTH}`
 };
 
+/**
+ * Get all validated finds
+ */
 app.get(FINDS_END_POINT, async (req, res, next) => {
   try {
     const query = finds.getValidatedFinds;
@@ -208,7 +199,7 @@ app.get(REPORT_END_POINT, async (req, res, next) => {
   }
 });
 
-
+// Delete a report
 app.put(REPORT_END_POINT, async (req, res, next) => {
   try {
     const update = report.deleteReport(req.body.reportId);
@@ -263,6 +254,58 @@ app.get(MY_FINDS_END_POINT, async (req, res, next) => {
     });
     const mappedResults = mapMyFinds(response.data.results.bindings);
     res.send(mappedResults);
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      //console.log(error.response.status);
+      //console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+    next(error);
+  }
+});
+
+/**
+ * Get certain number of my finds
+ */
+app.post(MY_FINDS_END_POINT, async (req, res, next) => {
+  const requestFinds = req.body.finds;
+  const findRequests = [];
+
+  // Create post requests for fetching finds information
+  for (const find of requestFinds) {
+    const query = getCertainFinds(find);
+    findRequests.push(
+      axios({
+        method: 'post',
+        headers: defaultMyFindsHeaders,
+        url: url.parse(`http://${process.env.FUSEKI_SPARQL_URL}`),
+        data: querystring.stringify({ query })
+      })
+    );
+  }
+  // Fetch data in parallel
+  try {
+    // Fetch find information
+    const fetchedFinds = await Promise.all(findRequests);
+    const findsToBeReturned = [];
+    // Go through fetched finds and map them
+    for (const find of fetchedFinds) {
+      findsToBeReturned.push(
+        mapReportFinds(find.data.results.bindings)
+      );
+    }
+    res.send(...findsToBeReturned);
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code
