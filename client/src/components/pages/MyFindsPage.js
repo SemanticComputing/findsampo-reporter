@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core';
 import { getMyFinds } from '../../actions/myFinds';
 import { ReportStatuses, Colors, RouterPaths } from '../../helpers/enum/enums';
+import { getIdfromUri, getIdsfromArrayUri } from '../../helpers/functions/functions';
 
 
 class MyFindsPage extends Component {
@@ -24,13 +25,6 @@ class MyFindsPage extends Component {
   componentDidMount() {
     this.props.getMyFinds();
   }
-
-  onReportClick = (index) => () => {
-    this.props.history.push(
-      RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE,
-      { index }
-    );
-  };
 
   render() {
     return (
@@ -95,6 +89,20 @@ class MyFindsPage extends Component {
       </div>
     );
   }
+
+  /**
+   * Change current URI on report click
+   */
+  onReportClick = (index) => () => {
+    const reportId = this.props.reports[index].id;
+    const findsIds = this.props.reports[index].finds;
+    const path = `${RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE}?r=${getIdfromUri(REPORT_SEPRATOR, reportId)}&f=${getIdsfromArrayUri(FIND_SEPRATOR, findsIds)}`;
+
+    this.props.history.push(
+      path,
+      { index }
+    );
+  };
 }
 
 /**
@@ -161,6 +169,9 @@ const statusIconDeterminer = (status) => {
   }
   return icon;
 };
+
+const REPORT_SEPRATOR = 'report';
+const FIND_SEPRATOR = 'find';
 
 const mapStateToProps = (state) => ({
   reports: state.myFinds.reports,

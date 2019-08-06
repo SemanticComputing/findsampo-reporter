@@ -302,10 +302,10 @@ app.post(MY_FINDS_END_POINT, async (req, res, next) => {
     // Go through fetched finds and map them
     for (const find of fetchedFinds) {
       findsToBeReturned.push(
-        mapReportFinds(find.data.results.bindings)
+        mapReportFinds(find.data.results.bindings)[0]
       );
     }
-    res.send(...findsToBeReturned);
+    res.send(findsToBeReturned);
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code

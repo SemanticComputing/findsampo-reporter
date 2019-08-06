@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Overview from '../reporting/Overview';
-import { getCertainFinds } from '../../actions/myFinds';
+import { getMyFinds, getCertainFinds } from '../../actions/myFinds';
+import { isEqual, isEmpty, differenceWith } from 'lodash';
 
 class MyFindsReportOverviewPage extends Component {
 
   componentDidMount() {
+    // If there is already report data fetch its finds otherwise fetch all reports
     if (this.props.reports.length > 0) {
-      const reportIndex = this.props.history.location.state.index;
-      const unorganisedFinds = this.props.reports[reportIndex].finds;
-      let finds = [];
-      if (unorganisedFinds.length <= 1) {
-        finds = unorganisedFinds;
-      } else {
-        finds = unorganisedFinds.split(';');
-      }
-      // Fetch finds information
-      this.props.getCertainFinds(reportIndex, finds);
+      this.fetchfindsData();
+    } else {
+      this.props.getMyFinds();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Fetch finds data when they are not available
+    if (!isEmpty(differenceWith(this.props.reports, prevProps.reports, isEqual))) {
+      this.fetchfindsData();
     }
   }
 
@@ -25,25 +28,31 @@ class MyFindsReportOverviewPage extends Component {
       <div className="myFindsReportOverviewPage">
         {
           this.props.reportFinds &&
-          <Overview isOverview={true} findNotificationData={this.props.reportFinds} />
+          <Overview isOverview={true} findNotificationData={this.props.reportFinds.findsData} />
         }
       </div>
     );
   }
 
+  /**
+   * Fetch find data of the selected report
+   */
+  fetchfindsData = () => {
+    const reportIndex = this.props.history.location.state.index;
+    const finds = this.props.reports[reportIndex].finds;
+    // Fetch finds information
+    this.props.getCertainFinds(reportIndex, finds);
+  }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    reportFinds: state.myFinds.reports[ownProps.history.location.state.index].findsData,
-    reports: state.myFinds.reports
-  };
-};
-
-
+const mapStateToProps = (state, ownProps) => ({
+  reportFinds: state.myFinds.reports[ownProps.history.location.state.index],
+  reports: state.myFinds.reports
+});
 
 const mapDispatchToProps = (dispatch) => ({
+  getMyFinds: () => dispatch(getMyFinds()),
   getCertainFinds: (index, finds) => dispatch(getCertainFinds(index, finds))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyFindsReportOverviewPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyFindsReportOverviewPage));

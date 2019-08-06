@@ -10,6 +10,14 @@ export const isDesktopScreen = (window) => {
   return window.innerWidth > MOBILE_SCREEN_MAX_WIDTH;
 };
 
+export const getIdfromUri = (seperator, text) => {
+  return text.split(`${seperator}/`).pop();
+};
+
+export const getIdsfromArrayUri = (seperator, array) => {
+  return array.map((id) => id.split(`${seperator}/`).pop());
+};
+
 export const getWMTSLayerKeyByValue = (value) => {
   const names = {
     arkeologiset_loydot: 'Arkeologiset löydöt',
