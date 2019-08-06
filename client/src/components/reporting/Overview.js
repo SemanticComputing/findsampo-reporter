@@ -4,13 +4,21 @@ import { Paper, Typography, Divider, Icon } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import Map from '../map/Map';
 
+/**
+ * findNotification: Find notification content
+ */
 const OverView = (props) => {
-  const { finds } = props.findNotification;
+  const finds = props.findNotificationData ?
+    props.findNotificationData :
+    props.findNotification.finds;
+
   return (
     <div className="overview">
-      <Typography className="overview__header" variant="overline">
-        {intl.get('overview.title')}
-      </Typography>
+      <Paper className="overview__paper">
+        <Typography className="overview__header" variant="overline">
+          {intl.get('overview.title')}
+        </Typography>
+      </Paper>
       {
         finds.map((find, index) => {
           return (

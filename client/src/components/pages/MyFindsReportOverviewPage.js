@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//import Overview from '../reporting/Overview';
+import Overview from '../reporting/Overview';
 import { getCertainFinds } from '../../actions/myFinds';
 
 class MyFindsReportOverviewPage extends Component {
@@ -22,17 +22,25 @@ class MyFindsReportOverviewPage extends Component {
 
   render() {
     return (
-      <div>
-        This is my finds report page
+      <div className="myFindsReportOverviewPage">
+        {
+          this.props.reportFinds &&
+          <Overview isOverview={true} findNotificationData={this.props.reportFinds} />
+        }
       </div>
     );
   }
 
 }
 
-const mapStateToProps = (state) => ({
-  reports: state.myFinds.reports
-});
+const mapStateToProps = (state, ownProps) => {
+  return {
+    reportFinds: state.myFinds.reports[ownProps.history.location.state.index].findsData,
+    reports: state.myFinds.reports
+  };
+};
+
+
 
 const mapDispatchToProps = (dispatch) => ({
   getCertainFinds: (index, finds) => dispatch(getCertainFinds(index, finds))

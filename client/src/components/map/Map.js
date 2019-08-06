@@ -269,7 +269,7 @@ class Map extends Component {
     }
     // If current location is provided show it
     if (position) {
-      this.setLocation(position.coords.latitude, position.coords.longitude);
+      this.setLocation(position.coords.latitude, position.coords.longitude, true);
     }
     // If a location is given
     if (this.props.location) {
@@ -337,20 +337,21 @@ class Map extends Component {
    */
   onMapTapped = (e) => {
     this.clearAllMarkers();
-    this.setLocation(e.latlng.lat, e.latlng.lng);
+    this.setLocation(e.latlng.lat, e.latlng.lng, true);
   }
 
   /**
    * Sets a location on the map
    */
-  setLocation = (lat, lng) => {
+  setLocation = (lat, lng, updateState = false) => {
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
     // Set the view on the map
     this.map.setView(L.latLng(lat, lng), this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
-    // Set coords
-    this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
-    // Set also municapility
-    this.props.setMunicipality({ lat, lng });
+    // Set coords and municapility in redux
+    if (updateState) {
+      this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
+      this.props.setMunicipality({ lat, lng });
+    }
   }
 
   /**
