@@ -3,7 +3,7 @@ module.exports = (sparqlBindings) => {
     return {
       id: b.reportId.value,
       status: b.status.value,
-      municipality: b.municipality.value,
+      municipality: b.hasOwnProperty('municipality') && b.municipality.value,
       date: b.date.value,
       currentStep: b.currentStep.value,
       currentFindIndex: b.currentFindIndex.value,
