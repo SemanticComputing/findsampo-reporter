@@ -6,6 +6,7 @@ module.exports = (sparqlBindings) => {
       municipality: b.municipality.value,
       date: b.date.value,
       currentStep: b.currentStep.value,
+      currentFindIndex: b.currentFindIndex.value,
       finds: b.hasOwnProperty('finds') && b.finds.value.split(';'),
     };
   });
