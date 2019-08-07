@@ -16,14 +16,15 @@ module.exports = (uid) => {
           { 
               SELECT *
               WHERE {
-                  ?reportId a fs-schema:Report ; 
-                    fs-schema:report-owner fs-report-owner:${uid} ;
-                    fs-schema:report-submission-date ?date ;
-                    fs-schema:report-municipality ?municipality ;
-                    fs-schema:report-status ?status ;
-                    fs-schema:report-current-step ?currentStep ;
-                    fs-schema:report-current-find-index ?currentFindIndex ;
-                    fs-schema:report-find ?find_ .
+                ?reportId a fs-schema:Report ; 
+                  fs-schema:report-owner fs-report-owner:${uid} ;
+                  fs-schema:report-status ?status ;
+                  fs-schema:report-current-step ?currentStep ;
+                  fs-schema:report-current-find-index ?currentFindIndex ;
+                  fs-schema:report-submission-date ?date .
+          
+                OPTIONAL {?reportId fs-schema:report-municipality ?municipality}
+                OPTIONAL {?reportId fs-schema:report-find ?find_}
               }
           }
         } 
