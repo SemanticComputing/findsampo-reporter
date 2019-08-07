@@ -141,7 +141,7 @@ class Header extends Component {
                     color="inherit"
                   >
                     <Button className="appbar__button" variant="contained" size="small">
-                      <Avatar className="appbar__avatar" color="primary" size="small">{this.props.username.substring(0, 2).toUpperCase()}</Avatar>
+                      <Avatar className="appbar__avatar" color="primary" size="small">{this.getAvatarText()}</Avatar>
                       <Icon className="appbar__button__icon">arrow_drop_down</Icon>
                     </Button>
                   </IconButton>
@@ -181,12 +181,22 @@ class Header extends Component {
       </div>
     );
   }
+
+  /**
+   * Get first two characters for the avatar icon
+   */
+  getAvatarText = () => {
+    const avatarText = this.props.username ? this.props.username : this.props.email;
+    return avatarText.substring(0, 2).toUpperCase();
+  };
 }
+
 
 
 const mapStateToProps = (state) => ({
   isAuthenticated: !!state.auth.uid,
-  username: state.auth.displayName
+  username: state.auth.displayName,
+  email: state.auth.email
 });
 
 const mapDispatchToProps = (dispatch) => ({
