@@ -17,12 +17,12 @@ module.exports = (id) => {
     
     WHERE {
       # Find information
-      <${id}> a fs-schema:Find ;
-        fs-schema:find-site ?findSite ;
-        fs-schema:find-image ?findImage .
+      <${id}> a fs-schema:Find .
+       OPTIONAL {<${id}> fs-schema:find-site ?findSite}
+       OPTIONAL {<${id}> fs-schema:find-image ?findImage}
       
       # Find id
-      ?find fs-schema:find-image ?findImage .
+  	  OPTIONAL {?find fs-schema:find-image ?findImage}
     
       # Optional Find Information
       OPTIONAL {<${id}> fs-schema:find-depth ?depth} 
@@ -32,15 +32,15 @@ module.exports = (id) => {
       OPTIONAL {<${id}> fs-schema:find-additional-materials ?additionalMaterials}
       
       #Find image information
-      ?findImage fs-schema:find-image-url ?findImageUrl_ .
+      OPTIONAL {?findImage fs-schema:find-image-url ?findImageUrl_}
     
       #Find site information
-      ?findSite wgs84:lat ?lat ;
-        wgs84:long ?long ;
-        fs-schema:find-site-image ?findSiteImage .
+  	  OPTIONAL {?findSite wgs84:lat ?lat}
+  	  OPTIONAL {?findSite wgs84:long ?long}
+      OPTIONAL {?findSite fs-schema:find-site-image ?findSiteImage}
       
       # Find site image details
-      ?findSiteImage fs-schema:find-site-image-url ?findSiteImageUrl_ .    
+  	  OPTIONAL {?findSiteImage fs-schema:find-site-image-url ?findSiteImageUrl_}
     } 
     GROUP BY ?find ?depth ?material ?type ?period  ?additionalMaterials ?findSite ?lat ?long
     `;
