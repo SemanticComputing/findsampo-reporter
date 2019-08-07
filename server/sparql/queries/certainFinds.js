@@ -22,7 +22,7 @@ module.exports = (id) => {
        OPTIONAL {<${id}> fs-schema:find-image ?findImage}
       
       # Find id
-  	  OPTIONAL {?find fs-schema:find-image ?findImage}
+  	  BIND(<${id}> AS ?find)
     
       # Optional Find Information
       OPTIONAL {<${id}> fs-schema:find-depth ?depth} 

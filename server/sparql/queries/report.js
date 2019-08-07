@@ -55,8 +55,8 @@ const getReportDetails = (reportId, user, data, finds) => {
     ${data.municipality ? `fs-schema:report-municipality "${data.municipality}" ;` : ''}
     ${data.date ? `fs-schema:report-submission-date "${data.date}"^^xsd:date ;` : ''}
     ${data.status ? `fs-schema:report-status "${data.status}" ;` : ''}
-    ${(data.currentStep || data.currentStep === 0) ? `fs-schema:report-current-step "${data.currentStep}" ;` : ''}
-    ${(data.currentFindIndex || data.currentFindIndex === 0) ? `fs-schema:report-current-find-index "${data.currentFindIndex}" ;` : ''}
+    ${(data.currentStep || data.currentStep === 0) ? `fs-schema:report-current-step ${data.currentStep} ;` : ''}
+    ${(data.currentFindIndex || data.currentFindIndex === 0) ? `fs-schema:report-current-find-index ${data.currentFindIndex} ;` : ''}
     fs-schema:report-owner fs-report-owner:${user.uid} ${finds.size > 0 ? ';' : '.'}
     # Find details
     ${getProperties(FIND_SCHEMA_TAG, FIND_TAG, finds)}
@@ -91,7 +91,7 @@ const getFindsDetails = (finds) => {
     const findImages = find.photos && new Map(find.photos.map(img => [uuidv1(), img]));
 
     findsDetails += `fs-find:${id} a fs-schema:Find ;
-      ${find.depth ? `fs-schema:find-depth "${find.depth}" ;` : ''}
+      ${find.depth ? `fs-schema:find-depth ${find.depth} ;` : ''}
       ${find.additionalMaterials ? `fs-schema:find-additional-materials "${find.additionalMaterials}" ;` : ''}
       ${find.material ? `fs-schema:find-material "${find.material}" ;` : ''}
       ${find.type ? `fs-schema:find-type "${find.type}" ;` : ''}

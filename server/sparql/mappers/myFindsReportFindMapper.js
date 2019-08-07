@@ -9,12 +9,12 @@ module.exports = (finds) => {
       additionalMaterials: f.hasOwnProperty('additionalMaterials') && f.additionalMaterials.value,
       findSite: {
         coords: {
-          lat: f.lat.value,
-          lng: f.long.value
+          lat: f.hasOwnProperty('lat') && f.lat.value,
+          lng: f.hasOwnProperty('long') && f.long.value
         },
-        photos: f.findImageUrl.value.split(';')
+        photos: f.hasOwnProperty('findSiteImageUrl') && f.findSiteImageUrl.value.split(';')
       },
-      photos: f.findImageUrl.value.split(';')
+      photos: f.hasOwnProperty('findImageUrl') && f.findImageUrl.value.split(';')
     };
   });
 

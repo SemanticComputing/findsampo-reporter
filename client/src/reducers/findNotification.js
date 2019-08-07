@@ -15,7 +15,8 @@ import {
   FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS,
   FIND_NOTIFICATION_SEND_SUCCESS,
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
-  FIND_NOTIFICATION_RESET
+  FIND_NOTIFICATION_RESET,
+  MY_FINDS_CONTINUE_FILLING_OUT
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -159,6 +160,8 @@ export default (state = initialState, action) => {
         ...state,
         status: ReportStatuses.AWAIT_REVIEW
       };
+    case MY_FINDS_CONTINUE_FILLING_OUT:
+      return action.report;
     case FIND_NOTIFICATION_RESET:
       return initialState;
     default:

@@ -15,15 +15,33 @@ import {
   Icon,
   Paper
 } from '@material-ui/core';
-import { getMyFinds } from '../../actions/myFinds';
+import { isEqual, isEmpty, differenceWith } from 'lodash';
+import { getMyFinds, getCertainFinds, continueFillingOut } from '../../actions/myFinds';
 import { ReportStatuses, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getIdfromUri, getIdsfromArrayUri } from '../../helpers/functions/functions';
 
 
 class MyFindsPage extends Component {
 
+  state = {
+    selectedIndex: null
+  }
+
   componentDidMount() {
     this.props.getMyFinds();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.reports.length > 0 &&
+      (this.state.selectedIndex || this.state.selectedIndex === 0) &&
+      !isEmpty(differenceWith(this.props.reports, prevProps.reports, isEqual))) {
+      // Get current report
+      const currentReport = createReportObject(this.props.reports[this.state.selectedIndex]);
+      // Change redux state 
+      this.props.continueFillingOut(currentReport);
+      // And redirect
+      this.props.history.push(RouterPaths.REPORT_PAGE);
+    }
   }
 
   render() {
@@ -41,7 +59,7 @@ class MyFindsPage extends Component {
             this.props.reports.map((report, index) => {
               return (
                 <Card className="my-finds-page__find" key={index} >
-                  <CardActionArea className="my-finds-page__find__details" onClick={this.onReportClick(index)}>
+                  <CardActionArea className="my-finds-page__find__details" onClick={this.onReportPressed(index)}>
                     <CardContent className="my-finds-page__find__details__content">
                       <Typography gutterBottom variant="h5" component="h2" className="my-finds-page__find__details__card-header">
                         {intl.get('myFindsPage.container.report')} {intl.get('myFindsPage.container.time', { d: new Date(report.date) })}
@@ -69,13 +87,19 @@ class MyFindsPage extends Component {
                   <Divider />
                   <CardActions className="my-finds-page__find__actions">
                     <div>
-                      <Button size="small" color="primary">
+                      <Button size="small" color="primary" onClick={this.onReportPressed(index)}>
                         {intl.get('myFindsPage.more')}
                       </Button>
                       <Button size="small" color="primary">
                         {intl.get('myFindsPage.share')}
                       </Button>
                     </div>
+                    {
+                      report.status.toLowerCase() === ReportStatuses.DRAFT &&
+                      <Button size="small" color="primary" onClick={this.onContinuePressed(index, report)}>
+                        {intl.get('myFindsPage.continue')}
+                      </Button>
+                    }
                   </CardActions>
                 </Card>
               );
@@ -91,9 +115,9 @@ class MyFindsPage extends Component {
   }
 
   /**
-   * Change current URI on report click
+   * Change current URI on report pressed
    */
-  onReportClick = (index) => () => {
+  onReportPressed = (index) => () => {
     const reportId = this.props.reports[index].id;
     const findsIds = this.props.reports[index].finds;
     const path = `${RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE}?r=${getIdfromUri(REPORT_SEPRATOR, reportId)}&f=${getIdsfromArrayUri(FIND_SEPRATOR, findsIds)}`;
@@ -103,6 +127,16 @@ class MyFindsPage extends Component {
       { index }
     );
   };
+
+  /**
+   * Continues filling out the report
+   */
+  onContinuePressed = (selectedIndex) => () => {
+    this.setState({ selectedIndex });
+    const finds = this.props.reports[selectedIndex].finds;
+    // Fetch finds information
+    this.props.getCertainFinds(selectedIndex, finds);
+  }
 }
 
 /**
@@ -173,12 +207,42 @@ const statusIconDeterminer = (status) => {
 const REPORT_SEPRATOR = 'report';
 const FIND_SEPRATOR = 'find';
 
+const createReportObject = (report) => {
+  const finds = [];
+  for (let find of report.findsData) {
+    finds.push({
+      depth: find.depth,
+      material: find.material,
+      type: find.type,
+      period: find.period,
+      additionalMaterials: find.additionalMaterials,
+      photos: find.photos,
+      findSite: {
+        coords: find.findSite.coords,
+        photos: find.findSite.photos
+      }
+    });
+  }
+
+  return {
+    reportId: getIdfromUri('report', report.id),
+    status: report.status,
+    currentStep: report.currentStep,
+    currentFindIndex: report.currentFindIndex,
+    date: report.date,
+    municipality: report.municipality,
+    finds
+  };
+};
+
 const mapStateToProps = (state) => ({
   reports: state.myFinds.reports,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getMyFinds: () => dispatch(getMyFinds())
+  getMyFinds: () => dispatch(getMyFinds()),
+  getCertainFinds: (index, finds) => dispatch(getCertainFinds(index, finds)),
+  continueFillingOut: (report) => dispatch(continueFillingOut(report))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyFindsPage));

@@ -61,6 +61,7 @@ export default {
     'header': 'My Finds',
     'more': 'View More',
     'share': 'Share',
+    'continue': 'Continue',
     'status': 'Status',
     'noFindsError': 'No finds found!',
     'container': {
