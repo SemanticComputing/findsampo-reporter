@@ -19,7 +19,7 @@ import { isEqual, isEmpty, differenceWith } from 'lodash';
 import { getMyFinds, getCertainFinds, continueFillingOut } from '../../actions/myFinds';
 import { ReportStatuses, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getIdfromUri, getIdsfromArrayUri } from '../../helpers/functions/functions';
-
+import { enqueueSnackbar } from '../../actions/notifier';
 
 class MyFindsPage extends Component {
 
@@ -118,15 +118,23 @@ class MyFindsPage extends Component {
    * Change current URI on report pressed
    */
   onReportPressed = (index) => () => {
-    const reportId = this.props.reports[index].id;
     const findsIds = this.props.reports[index].finds;
-    const path = `${RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE}?r=${getIdfromUri(REPORT_SEPRATOR, reportId)}&f=${getIdsfromArrayUri(FIND_SEPRATOR, findsIds)}`;
-
-    this.props.history.push(
-      path,
-      { index }
-    );
+    if (findsIds.length > 0) {
+      const reportId = this.props.reports[index].id;
+      const path = `${RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE}?r=${getIdfromUri(REPORT_SEPRATOR, reportId)}&f=${getIdsfromArrayUri(FIND_SEPRATOR, findsIds)}`;
+      // Redirect to overview pageq
+      this.props.history.push(
+        path,
+        { index }
+      );
+    } else {
+      // Show info notification
+      this.props.enqueueSnackbar({
+        message: intl.get('myFindsPage.noFindsInfo')
+      });
+    }
   };
+
 
   /**
    * Continues filling out the report
@@ -242,7 +250,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getMyFinds: () => dispatch(getMyFinds()),
   getCertainFinds: (index, finds) => dispatch(getCertainFinds(index, finds)),
-  continueFillingOut: (report) => dispatch(continueFillingOut(report))
+  continueFillingOut: (report) => dispatch(continueFillingOut(report)),
+  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyFindsPage));

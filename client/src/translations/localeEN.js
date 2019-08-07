@@ -63,6 +63,7 @@ export default {
     'share': 'Share',
     'continue': 'Continue',
     'status': 'Status',
+    'noFindsInfo': 'The selected report does not have any finds.',
     'noFindsError': 'No finds found!',
     'container': {
       'report': 'Report',
