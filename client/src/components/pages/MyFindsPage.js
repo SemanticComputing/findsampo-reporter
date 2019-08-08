@@ -96,9 +96,9 @@ class MyFindsPage extends Component {
                     </div>
                     {
                       report.status.toLowerCase() === ReportStatuses.DRAFT &&
-                      <Button 
-                        size="small" 
-                        color="primary" 
+                      <Button
+                        size="small"
+                        color="primary"
                         onClick={this.onContinuePressed(index, report)}
                         className="my-finds-page__find__actions__continue-container"
                       >
@@ -239,11 +239,13 @@ const createReportObject = (report) => {
     });
   }
 
+  console.log(report);
+
   return {
     reportId: getIdfromUri('report', report.id),
     status: report.status,
-    currentStep: report.currentStep,
-    currentFindIndex: report.currentFindIndex,
+    currentStep: parseInt(report.currentStep),
+    currentFindIndex: parseInt(report.currentFindIndex),
     date: report.date,
     municipality: report.municipality,
     finds
