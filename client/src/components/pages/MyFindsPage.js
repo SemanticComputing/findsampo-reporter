@@ -86,7 +86,7 @@ class MyFindsPage extends Component {
                   </CardActionArea>
                   <Divider />
                   <CardActions className="my-finds-page__find__actions">
-                    <div>
+                    <div className="my-finds-page__find__actions__more-container">
                       <Button size="small" color="primary" onClick={this.onReportPressed(index)}>
                         {intl.get('myFindsPage.more')}
                       </Button>
@@ -96,7 +96,12 @@ class MyFindsPage extends Component {
                     </div>
                     {
                       report.status.toLowerCase() === ReportStatuses.DRAFT &&
-                      <Button size="small" color="primary" onClick={this.onContinuePressed(index, report)}>
+                      <Button 
+                        size="small" 
+                        color="primary" 
+                        onClick={this.onContinuePressed(index, report)}
+                        className="my-finds-page__find__actions__continue-container"
+                      >
                         {intl.get('myFindsPage.continue')}
                       </Button>
                     }
@@ -142,8 +147,10 @@ class MyFindsPage extends Component {
   onContinuePressed = (selectedIndex) => () => {
     this.setState({ selectedIndex });
     const finds = this.props.reports[selectedIndex].finds;
-    // Fetch finds information
-    this.props.getCertainFinds(selectedIndex, finds);
+    if (finds) {
+      // Fetch finds information
+      this.props.getCertainFinds(selectedIndex, finds);
+    }
   }
 }
 

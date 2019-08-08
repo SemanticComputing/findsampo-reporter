@@ -72,7 +72,7 @@ const onButtonClick = (props, btn) => {
     executeButtonAction(props, btn.action);
   }
   // Update find notification on every step
-  if (btn.nextStep !== REPORT_LAST_STEP) {
+  if (btn.nextStep !== REPORT_LAST_STEP && props.currentStep >= 2) {
     sendFindNotification(props);
   }
 };
@@ -121,6 +121,7 @@ const mapStateToProps = (state) => ({
   dependentOn: state.report.questions[state.report.currentStep].dependentOn,
   currentFindIndex: state.findNotification.currentFindIndex,
   finds: state.findNotification.finds,
+  currentStep: state.report.currentStep
 });
 
 const mapDispatchToProps = (dispatch) => ({
