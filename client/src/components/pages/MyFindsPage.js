@@ -40,7 +40,7 @@ class MyFindsPage extends Component {
       // Change redux state 
       this.props.continueFillingOut(currentReport);
       // And redirect
-      this.props.history.push(RouterPaths.REPORT_PAGE);
+      this.props.history.push(RouterPaths.REPORT_PAGE, { isContinuing: true });
     }
   }
 
@@ -238,9 +238,7 @@ const createReportObject = (report) => {
       }
     });
   }
-
-  console.log(report);
-
+  
   return {
     reportId: getIdfromUri('report', report.id),
     status: report.status,

@@ -124,7 +124,7 @@ app.get(FHA_WFS_END_POINT, async (req, res, next) => {
 
 
 
-//Report
+// Save a report
 const REPORT_END_POINT = '/api/v1/report';
 const HTTP_OK = 200;
 const defaultreportHeaders = {
@@ -136,12 +136,14 @@ app.post(REPORT_END_POINT, async (req, res, next) => {
   try {
     const reportId = req.body.data.reportId ? req.body.data.reportId : uuidv1();
     const update = report.postReport(reportId, req.body.user, req.body.data);
+
     const response = await axios({
       method: 'post',
       headers: defaultreportHeaders,
       url: url.parse(`http://${process.env.FUSEKI_UPDATE_URL}`),
       data: querystring.stringify({ update })
     });
+
     // Send report id to client when saving is succeeded
     if (response.status == HTTP_OK) {
       res.send({ reportId });

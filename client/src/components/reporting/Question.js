@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import HelpBar from './HelpBar';
 import { Icon, Paper } from '@material-ui/core';
@@ -14,17 +15,25 @@ import { isEqual, isEmpty, differenceWith } from 'lodash';
 class Question extends Component {
 
   componentDidMount() {
-    if (this.props.myReports.length > 0) {
-      this.props.skipHelpTutorialSteps();
+    if (this.props.history.location.state && this.props.history.location.state.isContinuing) {
+      return;
     } else {
-      this.props.getMyFinds();
+      if (this.props.myReports.length > 0) {
+        this.props.skipHelpTutorialSteps();
+      } else {
+        this.props.getMyFinds();
+      }
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.myReports.length > 0 &&
-      !isEmpty(differenceWith(this.props.myReports, prevProps.myReports, isEqual))) {
-      this.props.skipHelpTutorialSteps();
+    if (this.props.history.location.state && this.props.history.location.state.isContinuing) {
+      return;
+    } else {
+      if (this.props.myReports.length > 0 &&
+        !isEmpty(differenceWith(this.props.myReports, prevProps.myReports, isEqual))) {
+        this.props.skipHelpTutorialSteps();
+      }
     }
   }
 
@@ -87,4 +96,4 @@ const mapDispatchToProps = (dispatch) => ({
   skipHelpTutorialSteps: () => dispatch(skipHelpTutorialSteps())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Question);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Question));

@@ -35,43 +35,19 @@ const postReport = createLogic({
   latest: true,
 
   async process({ getState, action }, dispatch, done) {
-    return await axios.post(REPORT_END_POINT,
-      {
-        user: {
-          uid: getState().auth.uid,
-          email: getState().auth.email
-        },
-        data: getState().findNotification
-      })
-      .then((result) => {
-        dispatch({ type: FIND_NOTIFICATION_SEND_SUCCESS, payload: result });
-        // If find notification is sent totally, reset it
-        if (action.isFinalised) {
-          // Reset notification
-          dispatch({ type: FIND_NOTIFICATION_RESET });
-          // Disable spinner
-          dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false});
-          // Redirect user to my finds page
-          history.push(RouterPaths.MY_FINDS_PAGE);
-          // Show confirmation
-          dispatch(enqueueSnackbar({
-            message: 'Your report has been sent successfully!',
-            options: {
-              variant: 'success',
-            }
-          }));
-        }
-      })
-      .catch((error) => {
-        dispatch({ type: FIND_NOTIFICATION_SEND_FAIL, payload: error });
-        dispatch(enqueueSnackbar({
-          message: error.message,
-          options: {
-            variant: 'error',
-          },
-        }));
-      })
-      .then(() => done());
+    // If there is a report with the same id firstly delete it and then post the same report with the new attributes
+    if (getState().findNotification.reportId) {
+      await axios.put(REPORT_END_POINT, { reportId: getState().findNotification.reportId })
+        .then(() => {
+          dispatch({ type: FIND_NOTIFICATION_DELETION_SUCCESS });
+          postMyReport(dispatch, getState, action, done);
+        })
+        .catch((error) => {
+          console.log(`Deleting the report with failed with error ${error}`);
+        });
+    } else {
+      postMyReport(dispatch, getState, action, done);
+    }
   }
 });
 
@@ -90,6 +66,53 @@ const deleteReport = createLogic({
     }
   }
 });
+
+/**
+ * Helper function for posting a report
+ * @param {*} dispatch 
+ * @param {*} getState 
+ * @param {*} action 
+ * @param {*} done 
+ */
+const postMyReport = async (dispatch, getState, action, done) => {
+  return await axios.post(REPORT_END_POINT,
+    {
+      user: {
+        uid: getState().auth.uid,
+        email: getState().auth.email
+      },
+      data: getState().findNotification
+    })
+    .then((result) => {
+      dispatch({ type: FIND_NOTIFICATION_SEND_SUCCESS, payload: result });
+      // If find notification is sent totally, reset it
+      if (action.isFinalised) {
+        // Reset notification
+        dispatch({ type: FIND_NOTIFICATION_RESET });
+        // Disable spinner
+        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
+        // Redirect user to my finds page
+        history.push(RouterPaths.MY_FINDS_PAGE);
+        // Show confirmation
+        dispatch(enqueueSnackbar({
+          message: 'Your report has been sent successfully!',
+          options: {
+            variant: 'success',
+          }
+        }));
+      }
+    })
+    .catch((error) => {
+      dispatch({ type: FIND_NOTIFICATION_SEND_FAIL, payload: error });
+      dispatch(enqueueSnackbar({
+        message: error.message,
+        options: {
+          variant: 'error',
+        },
+      }));
+    })
+    .then(() => done());
+};
 
 export default [
   getReport,

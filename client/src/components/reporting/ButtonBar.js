@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
 import { withRouter } from 'react-router-dom';
-import { changeQuestion, postReport, deleteReport } from '../../actions/report';
+import { changeQuestion, postReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
 import { QuestionDependencies, ButtonActions } from '../../helpers/enum/enums';
 import { enqueueSnackbar } from '../../actions/notifier';
@@ -99,8 +99,6 @@ const executeButtonAction = (props, buttonAction) => {
  * @param {isFinalised} tells if report is totally filled in
  */
 const sendFindNotification = (props, isFinalised = false) => {
-  //Update current report
-  props.deleteReport();
   props.postReport(isFinalised);
 };
 
@@ -129,7 +127,6 @@ const mapDispatchToProps = (dispatch) => ({
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
   setStatusToAwaitReview: () => dispatch(setStatusToAwaitReview()),
   postReport: (isFinalised) => dispatch(postReport(isFinalised)),
-  deleteReport: () => dispatch(deleteReport()),
   enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
   changeSnipperStatus: (status) => dispatch(changeSnipperStatus(status))
 });
