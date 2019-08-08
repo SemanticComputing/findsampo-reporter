@@ -7,8 +7,26 @@ import AnswerOptions from './AnswerOptions';
 import ButtonBar from './ButtonBar';
 import StepMaker from '../reporting/StepMaker';
 import Spinner from '../Spinner';
+import { getMyFinds } from '../../actions/myFinds';
+import { skipHelpTutorialSteps } from '../../actions/findNotification';
+import { isEqual, isEmpty, differenceWith } from 'lodash';
 
 class Question extends Component {
+
+  componentDidMount() {
+    if (this.props.myReports.length > 0) {
+      this.props.skipHelpTutorialSteps();
+    } else {
+      this.props.getMyFinds();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.myReports.length > 0 &&
+      !isEmpty(differenceWith(this.props.myReports, prevProps.myReports, isEqual))) {
+      this.props.skipHelpTutorialSteps();
+    }
+  }
 
   renderQuestion(currentQuestion) {
     const { icon, question, component: Component } = currentQuestion;
@@ -60,7 +78,13 @@ class Question extends Component {
 const mapStateToProps = (state) => ({
   currentStep: state.report.currentStep,
   questions: state.report.questions,
-  isLoading: state.notifier.isLoading
+  isLoading: state.notifier.isLoading,
+  myReports: state.myFinds.reports
 });
 
-export default connect(mapStateToProps)(Question);
+const mapDispatchToProps = (dispatch) => ({
+  getMyFinds: () => dispatch(getMyFinds()),
+  skipHelpTutorialSteps: () => dispatch(skipHelpTutorialSteps())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Question);

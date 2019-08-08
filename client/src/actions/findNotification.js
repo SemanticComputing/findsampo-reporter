@@ -11,7 +11,8 @@ import {
   FIND_NOTIFICATION_SET_FIND_DEPTH,
   FIND_NOTIFICATION_SET_MUNICIPALITY,
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
-  FIND_NOTIFICATION_RESET
+  FIND_NOTIFICATION_RESET,
+  FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -88,6 +89,10 @@ export const setMunicipality = (coords) => ({
 
 export const setStatusToAwaitReview = () => ({
   type: FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW
+});
+
+export const skipHelpTutorialSteps = () => ({
+  type: FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS
 });
 
 export const resetFindNotification = () => ({

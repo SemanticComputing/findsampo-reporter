@@ -116,7 +116,7 @@ export default {
     }
   },
   'report': {
-    'stepOne': 'Start',
+    'stepOne': 'Help',
     'stepTwo': 'Details',
     'stepThree': 'Additionals',
     'stepFour': 'Done!',

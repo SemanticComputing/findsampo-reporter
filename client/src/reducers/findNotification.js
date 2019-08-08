@@ -16,7 +16,8 @@ import {
   FIND_NOTIFICATION_SEND_SUCCESS,
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
   FIND_NOTIFICATION_RESET,
-  MY_FINDS_CONTINUE_FILLING_OUT
+  MY_FINDS_CONTINUE_FILLING_OUT,
+  FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -28,6 +29,8 @@ const initialState = {
   municipality: null,
   finds: []
 };
+
+const DEFAULT_STEP_WITHOUT_HELP = 3;
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -162,6 +165,11 @@ export default (state = initialState, action) => {
       };
     case MY_FINDS_CONTINUE_FILLING_OUT:
       return action.report;
+    case FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS:
+      return {
+        ...state,
+        currentStep: DEFAULT_STEP_WITHOUT_HELP
+      };
     case FIND_NOTIFICATION_RESET:
       return initialState;
     default:
