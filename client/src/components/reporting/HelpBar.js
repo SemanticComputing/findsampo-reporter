@@ -118,9 +118,12 @@ class HelpBar extends Component {
             >
               <Icon>more_vert</Icon>
             </IconButton>
-
-
-            <Popper open={this.state.menuOpen} anchorEl={this.anchorEl} transition disablePortal className="help-bar__popper">
+            <Popper 
+              open={this.state.menuOpen}
+              anchorEl={this.anchorEl}
+              transition disablePortal className="help-bar__popper"
+              placement="bottom-end"
+            >
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}
