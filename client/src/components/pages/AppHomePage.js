@@ -10,7 +10,7 @@ class AppHomePage extends Component {
         <ContentContainer
           stylingClass="content-container--justified"
           header='findsampo'
-          headerStyle={{ color: '#eeeeee', margin: '0', fontSize: '3.5rem', textTransform: 'uppercase', fontWeight: 'bold' }}
+          headerStyle={{ color: '#eeeeee', margin: '0', fontSize: '3rem', textTransform: 'uppercase', fontWeight: 'bold' }}
           description='Archeological finds studying and reporting platform'
           descriptionStyle={{ color: '#fff', fontStyle: 'italic', fontVariant: 'small-caps', background: '#0009', opacity: 0.8, padding: '3px' }}
           bgImage='./images/others/home_bg.jpg'
