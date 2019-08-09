@@ -7,7 +7,6 @@ import { changeQuestion, postReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
 import { QuestionDependencies, ButtonActions } from '../../helpers/enum/enums';
 import { enqueueSnackbar } from '../../actions/notifier';
-import { changeSnipperStatus } from '../../actions/notifier';
 
 const REPORT_LAST_STEP = 15;
 
@@ -110,8 +109,6 @@ const sendFindNotification = (props, isFinalised = false) => {
 const finaliseNotification = (props, isFinalised) => {
   props.setStatusToAwaitReview();
   sendFindNotification(props, isFinalised);
-  // Show loading spinner
-  props.changeSnipperStatus(true);
 };
 
 const mapStateToProps = (state) => ({
@@ -127,8 +124,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
   setStatusToAwaitReview: () => dispatch(setStatusToAwaitReview()),
   postReport: (isFinalised) => dispatch(postReport(isFinalised)),
-  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
-  changeSnipperStatus: (status) => dispatch(changeSnipperStatus(status))
+  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ButtonBar));

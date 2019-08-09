@@ -17,10 +17,9 @@ import {
   MenuItem
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
-import { withRouter } from 'react-router-dom';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
 import { enqueueSnackbar } from '../../actions/notifier';
-import { RouterPaths } from '../../helpers/enum/enums';
+
 
 class HelpBar extends Component {
   state = {
@@ -55,8 +54,8 @@ class HelpBar extends Component {
     this.setState({ menuOpen: false });
   };
 
-  deleteReport = () => {    
-    this.props.deleteReport();
+  deleteReport = () => {
+    this.props.deleteReport(true);
     this.props.enqueueSnackbar({
       message: 'The report has been deleted succesfully!',
       options: {
@@ -65,8 +64,6 @@ class HelpBar extends Component {
     });
 
     this.setState({ menuOpen: false });
-
-    this.props.history.push(RouterPaths.MY_FINDS_PAGE);
   };
 
   saveReportAsDraft = () => {
@@ -118,7 +115,7 @@ class HelpBar extends Component {
             >
               <Icon>more_vert</Icon>
             </IconButton>
-            <Popper 
+            <Popper
               open={this.state.menuOpen}
               anchorEl={this.anchorEl}
               transition disablePortal className="help-bar__popper"
@@ -181,7 +178,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeQuestion: (step) => dispatch(changeQuestion(step)),
   enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
   postReport: () => dispatch(postReport()),
-  deleteReport: () => dispatch(deleteReport())
+  deleteReport: (isOnlyDelete) => dispatch(deleteReport(isOnlyDelete))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HelpBar));
+export default connect(mapStateToProps, mapDispatchToProps)(HelpBar);

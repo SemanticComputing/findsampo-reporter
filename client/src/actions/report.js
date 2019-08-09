@@ -19,6 +19,7 @@ export const postReport = (isFinalised) => ({
   isFinalised
 });
 
-export const deleteReport = () => ({
-  type: REPORT_DELETE
+export const deleteReport = (isOnlyDelete = false) => ({
+  type: REPORT_DELETE,
+  isOnlyDelete
 });

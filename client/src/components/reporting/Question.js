@@ -70,7 +70,7 @@ class Question extends Component {
         }
         {
           this.props.isLoading &&
-          <Spinner />
+          <Spinner styles={{ backgroundColor: 'transparent', color: 'grey' }} />
         }
       </div>
     );

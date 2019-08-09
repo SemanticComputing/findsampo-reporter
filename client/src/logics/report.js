@@ -60,9 +60,15 @@ const deleteReport = createLogic({
     dispatchReturn: true,
   },
 
-  async process({ getState }) {
+  async process({ getState, action }) {
     if (getState().findNotification.reportId) {
-      return await axios.put(REPORT_END_POINT, { reportId: getState().findNotification.reportId });
+      return await axios.put(REPORT_END_POINT, { reportId: getState().findNotification.reportId })
+        .then(() => {
+          if (action.isOnlyDelete) {
+            // Redirect user to my finds page if it is only delete
+            history.push(RouterPaths.MY_FINDS_PAGE);
+          }
+        });
     }
   }
 });
@@ -75,6 +81,7 @@ const deleteReport = createLogic({
  * @param {*} done 
  */
 const postMyReport = async (dispatch, getState, action, done) => {
+  dispatch({ type: NOTIFIER_CHANGE_STATUS, status: true });
   return await axios.post(REPORT_END_POINT,
     {
       user: {
@@ -89,8 +96,6 @@ const postMyReport = async (dispatch, getState, action, done) => {
       if (action.isFinalised) {
         // Reset notification
         dispatch({ type: FIND_NOTIFICATION_RESET });
-        // Disable spinner
-        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
         // Redirect user to my finds page
         history.push(RouterPaths.MY_FINDS_PAGE);
         // Show confirmation
@@ -111,7 +116,11 @@ const postMyReport = async (dispatch, getState, action, done) => {
         },
       }));
     })
-    .then(() => done());
+    .then(() => {
+      // Disable spinner
+      dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
+      done();
+    });
 };
 
 export default [
