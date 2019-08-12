@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import Icon from '@material-ui/core/Icon';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Dialog,
+  Icon,
+  Button
+} from '@material-ui/core/';
+import intl from 'react-intl-universal';
 import { PhotosOf } from '../../helpers/enum/enums';
 import { setFindSitePhotos, setFindPhotos } from '../../actions/findNotification';
 
@@ -20,6 +27,7 @@ class PhotoRenderer extends Component {
 
   state = {
     isPhotoDialogOpen: false,
+    isPhotoAlertDialogOpen: false,
     findSitePhotos: [],
     findPhotos: [],
   }
@@ -28,10 +36,21 @@ class PhotoRenderer extends Component {
     this.setState({ isPhotoDialogOpen: !this.state.isPhotoDialogOpen });
   }
 
+  onOpenPhotoAlertDialogPressed = () => {
+    this.setState({
+      isPhotoAlertDialogOpen: !this.state.isPhotoAlertDialogOpen,
+    });
+  }
+
   onFilesSelected = (files) => {
     // Loop through the FileList
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      // If file size is bigger than the limit stop the process
+      if (file.size > MAX_FILE_SIZE) {
+        this.setState({ isPhotoAlertDialogOpen: true });
+        return;
+      }
       const reader = new FileReader();
       // Closure to capture the file information.
       reader.onload = (() => {
@@ -84,6 +103,29 @@ class PhotoRenderer extends Component {
         </span>
       );
     }
+  }
+
+  renderAlertDialog = () => {
+    return (
+      <Dialog
+        open={this.state.isPhotoAlertDialogOpen}
+        onClose={this.onOpenPhotoAlertDialogPressed}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{intl.get('photoRenderer.errorHeader')}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {intl.get('photoRenderer.errorText')}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.onOpenPhotoAlertDialogPressed} color="primary" autoFocus>
+            {intl.get('photoRenderer.confirmationBtn')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   }
 
   render() {
@@ -146,10 +188,13 @@ class PhotoRenderer extends Component {
         <output>
           <div>{this.renderPhotos()}</div>
         </output>
+        {this.renderAlertDialog()}
       </div>
     );
   }
 }
+
+const MAX_FILE_SIZE = 1024 * 1024 * 5;
 
 const mapStateToProps = (state) => ({
   currentFindIndex: state.findNotification.currentFindIndex

@@ -323,5 +323,10 @@ export default {
   'helpBar': {
     'saveAs': 'Save as draft',
     'delete': 'Delete'
+  },
+  'photoRenderer': {
+    'errorHeader': 'Photo too large',
+    'errorText': 'The photo exceeds the maximum upload size for this site. Photos cannot exceed 5 MB. Please try again!',
+    'confirmationBtn': 'OK'
   }
 };
