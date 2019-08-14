@@ -4,7 +4,6 @@ import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,
   REPORT_CHANGE_QUESTION,
-  FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS,
   FIND_NOTIFICATION_CHANGE_FIND_INDEX,
@@ -79,27 +78,29 @@ export default (state = initialState, action) => {
         }
       });
     }
-    case FIND_NOTIFICATION_SET_FIND_PHOTOS:
+    case FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS: {
+      const { currentFindIndex, uploads } = action.payload.data;
       // If there is no photos then create a new objet
-      if (!state.finds[action.index].photos) {
+      if (!state.finds[currentFindIndex].photos) {
         return update(state, {
           finds: {
-            [action.index]: {
-              photos: { $set: action[action.index].photos }
+            [currentFindIndex]: {
+              photos: { $set: uploads }
             }
           }
         });
       } else { // if there is already, update it
         return update(state, {
           finds: {
-            [action.index]: {
+            [currentFindIndex]: {
               photos: {
-                $set: [...state.finds[action.index].photos, ...action[action.index].photos],
+                $set: [...state.finds[currentFindIndex].photos, ...uploads],
               }
             }
           }
         });
       }
+    }
     case FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS:
       return update(state, {
         finds: {
@@ -171,10 +172,6 @@ export default (state = initialState, action) => {
         ...state,
         currentStep: DEFAULT_STEP_WITHOUT_HELP
       };
-    case FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS:
-      console.log(action.payload.data);
-      console.log('Succeed run');
-      break;
     case FIND_NOTIFICATION_RESET:
       return initialState;
     default:

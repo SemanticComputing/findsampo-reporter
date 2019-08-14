@@ -117,7 +117,7 @@ const getFindImageDetails = (findImages) => {
   let findImageResult = '';
   for (let [id, image] of findImages.entries()) {
     findImageResult += `fs-find-image:${id} a fs-schema:FindImage ;
-      fs-schema:find-image-url "${id}" .
+      fs-schema:find-image-url "${image}" .
     `; // TODO REPLACE id WITH image url
   }
 
@@ -146,7 +146,7 @@ const getFindSiteImageDetails = (findSiteImages) => {
   let findSiteImageResult = '';
   for (let [id, image] of findSiteImages.entries()) {
     findSiteImageResult += `fs-find-site-image:${id} a fs-schema:FindSiteImage ;
-        fs-schema:find-site-image-url "${id}" .
+        fs-schema:find-site-image-url "${image}" .
       `;// TODO REPLACE id WITH image url
   }
 

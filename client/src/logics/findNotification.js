@@ -72,6 +72,9 @@ const setFindPhotos = createLogic({
       formData.append(fileName, photo);
     }
 
+    // Add current find index
+    formData.append('currentFindIndex', currentFindIndex);
+
     // And send them to server
     return axios({
       method: 'post',

@@ -13,8 +13,7 @@ const FILE_MAX_NUMBERS = 10;
  */
 router.post('/find', async (req, res, next) => {
   try {
-    const uplodedPhotos = savePhotos(req, res);
-    console.log(uplodedPhotos);
+    savePhotos(req, res);
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code
@@ -38,19 +37,29 @@ router.post('/find', async (req, res, next) => {
 
 const savePhotos = (req, res) => {
   // This array will accumulate all the uploaded files by their name.
+  //const findUrlOutset = 
   const uploads = [];
   const fileWrites = [];
+  let currentFindIndex = null;
 
   // Create a new Busboy object with some limitations
   const busboy = new Busboy({ headers: req.headers, limit: { files: FILE_MAX_LIMIT, fileSize: FILE_MAX_NUMBERS } });
+
+  // This code will process each non-file field in the form.
+  busboy.on('field', (fieldname, val) => {
+    if (fieldname === 'currentFindIndex') {
+      currentFindIndex = val;
+    }
+  });
 
   // This code will process each file uploaded.
   busboy.on('file', async (fieldname, file, filename) => {
     const dirPath = path.join(__dirname, '..', '..', 'users', 'applications', 'images');
     const filePath = path.join(dirPath, filename);
 
-    // Save uploaded files
-    uploads.push(fieldname);
+    // Save uploaded files to a container with relevant urls
+    const uploadUrl = `${req.protocol}://${req.get('host')}/data/images/${fieldname}.png`;
+    uploads.push(uploadUrl);
 
     // Save file on the disk
     const writeStream = fs.createWriteStream(filePath);
@@ -74,7 +83,10 @@ const savePhotos = (req, res) => {
   // Triggered once all uploaded files are processed by Busboy.
   busboy.on('finish', async () => {
     Promise.all(fileWrites).then(() => {
-      res.send(uploads);
+      res.send({
+        currentFindIndex,
+        uploads
+      });
     });
   });
   req.pipe(busboy);
