@@ -11,7 +11,7 @@ const FILE_MAX_NUMBERS = 10;
 /**
  * Find images
  */
-router.post('/find', async (req, res, next) => {
+router.post(['/find', '/find-site'], async (req, res, next) => {
   try {
     savePhotos(req, res);
   } catch (error) {
@@ -35,9 +35,15 @@ router.post('/find', async (req, res, next) => {
   }
 });
 
+
+/**
+ * Saves photos on disk and returns reference urls to them
+ * 
+ * @param {request} req 
+ * @param {response} res 
+ */
 const savePhotos = (req, res) => {
   // This array will accumulate all the uploaded files by their name.
-  //const findUrlOutset = 
   const uploads = [];
   const fileWrites = [];
   let currentFindIndex = null;

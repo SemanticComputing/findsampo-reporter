@@ -4,7 +4,6 @@ import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,
   REPORT_CHANGE_QUESTION,
-  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS,
   FIND_NOTIFICATION_CHANGE_FIND_INDEX,
   FIND_NOTIFICATION_SET_FIND_TYPE,
@@ -17,7 +16,8 @@ import {
   FIND_NOTIFICATION_RESET,
   MY_FINDS_CONTINUE_FILLING_OUT,
   FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
-  FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS
+  FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
+  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -64,14 +64,15 @@ export default (state = initialState, action) => {
         ...state,
         currentStep: action.step
       };
-    case FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS: {
-      const currentPhotos = !state.finds[action.index].findSite.photos ? [] : state.finds[action.index].findSite.photos;
+    case FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS: {
+      const { currentFindIndex, uploads } = action.payload.data;
+      const currentPhotos = !state.finds[currentFindIndex].findSite.photos ? [] : state.finds[currentFindIndex].findSite.photos;
       return update(state, {
         finds: {
-          [action.index]: {
+          [currentFindIndex]: {
             findSite: {
               photos: {
-                $set: [...currentPhotos, ...action[action.index].photos],
+                $set: [...currentPhotos, ...uploads],
               }
             }
           }
