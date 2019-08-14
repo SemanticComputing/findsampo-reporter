@@ -68,6 +68,11 @@ class LoginPage extends Component {
           variant="outlined"
           value={this.state.password}
           onChange={this.onTextFieldChange}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              this.onLoginPress(e);
+            }
+          }}
           fullWidth
           className='login-form__text-field'
         />
