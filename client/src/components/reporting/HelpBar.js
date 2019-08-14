@@ -14,7 +14,8 @@ import {
   Grow,
   ClickAwayListener,
   MenuList,
-  MenuItem
+  MenuItem,
+  Drawer
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
@@ -24,7 +25,8 @@ import { enqueueSnackbar } from '../../actions/notifier';
 class HelpBar extends Component {
   state = {
     open: false,
-    menuOpen: false
+    menuOpen: false,
+    drawerOpen: false
   }
 
   onOpenPressed = () => {
@@ -54,6 +56,10 @@ class HelpBar extends Component {
     this.setState({ menuOpen: false });
   };
 
+  onDrawerButtonPressed = () => {
+    this.setState((prevState) => ({ drawerOpen: !prevState.drawerOpen }));
+  }
+
   deleteReport = () => {
     this.props.deleteReport(true);
     this.props.enqueueSnackbar({
@@ -77,6 +83,18 @@ class HelpBar extends Component {
     this.setState({ menuOpen: false });
   };
 
+  renderSuggestionDrawer = () => {
+    return (
+      <Drawer
+        anchor="bottom"
+        open={this.state.drawerOpen}
+        onClose={this.onDrawerButtonPressed}
+      >
+        <p>Some test data</p>
+      </Drawer>
+    );
+  }
+
   render() {
     return (
       <div className="help-bar">
@@ -96,7 +114,12 @@ class HelpBar extends Component {
             >
               help_outlined
             </Icon>
-
+            <Icon
+              onClick={this.onDrawerButtonPressed}
+              className="help-bar__icon"
+            >
+              wb_incandescent
+            </Icon>
             <Button
               disabled={!this.props.hasSkipStep}
               onClick={this.onSkipButtonPressed}
@@ -162,6 +185,7 @@ class HelpBar extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        {this.renderSuggestionDrawer()}
       </div>
     );
   }

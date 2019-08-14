@@ -76,9 +76,9 @@ class PhotoRenderer extends Component {
     const files = event.target.files;
     this.onFilesSelected(files);
     if (this.props.for === PhotosOf.FIND_SITE) {
-      this.props.setFindSitePhotos(files, this.props.currentFindIndex);
+      this.props.setFindSitePhotos(files, this.props.currentFindIndex, this.state.findSitePhotos.length);
     } else {
-      this.props.setFindPhotos(files, this.props.currentFindIndex);
+      this.props.setFindPhotos(files, this.props.currentFindIndex, this.state.findPhotos.length);
     }
     this.onOpenPhotoDialogPressed();
   }
@@ -201,8 +201,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setFindSitePhotos: (photos, findIndex) => dispatch(setFindSitePhotos(photos, findIndex)),
-  setFindPhotos: (photos, findIndex) => dispatch(setFindPhotos(photos, findIndex))
+  setFindSitePhotos: (photos, findIndex, imgIndex) => dispatch(setFindSitePhotos(photos, findIndex, imgIndex)),
+  setFindPhotos: (photos, findIndex, imgIndex) => dispatch(setFindPhotos(photos, findIndex, imgIndex))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoRenderer);

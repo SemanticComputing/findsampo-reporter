@@ -9,8 +9,7 @@ const nlsofMapLayersController = require('./controllers/nlsofMapLayersController
 const fhaWfsMapLayerController = require('./controllers/fhaWfsMapLayerController');
 const reportController = require('./controllers/reportController');
 const myFindsController = require('./controllers/myFindsController');
-const imageController = require('./controllers/imageController');
-
+const photoController = require('./controllers/photoController');
 
 /*************************** APP settings  ***********************************/
 const app = express();
@@ -28,6 +27,8 @@ app.use(shrinkRay());
 
 // Define static files path
 app.use(express.static(publicPath));
+// Provide images through data url
+app.use('/data', express.static(path.join(__dirname, '..', 'users', 'applications')));
 
 // Use express.json middleware
 app.use(express.json());
@@ -67,8 +68,8 @@ app.use(MY_FINDS_END_POINT, myFindsController);
 /**
  * APIs for handling report images related requests
  */
-const IMAGE_END_POINT = '/api/v1/image';
-app.use(IMAGE_END_POINT, imageController);
+const PHOTO_END_POINT = '/api/v1/photo';
+app.use(PHOTO_END_POINT, photoController);
 
 
 /*************************** LISTEN APPLICATION ***********************************/

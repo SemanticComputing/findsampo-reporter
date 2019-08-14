@@ -31,12 +31,13 @@ export const setCoordinates = (coords, index) => ({
   }
 });
 
-export const setFindPhotos = (photos, index) => ({
+export const setFindPhotos = (photos, index, imgIndex) => ({
   type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
   index,
   [index]: {
     photos: [...photos]
-  }
+  },
+  imgIndex
 });
 
 export const changeFindIndex = (index) => ({
@@ -44,12 +45,13 @@ export const changeFindIndex = (index) => ({
   index
 });
 
-export const setFindSitePhotos = (photos, index) => ({
+export const setFindSitePhotos = (photos, index, imgIndex) => ({
   type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
   index,
   [index]: {
     photos: [...photos]
-  }
+  },
+  imgIndex
 });
 
 export const setAdditionalMaterial = (additionalMaterials, index) => ({

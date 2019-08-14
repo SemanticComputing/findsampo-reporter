@@ -5,10 +5,13 @@ import {
   FIND_NOTIFICATION_SEND_SUCCESS,
   FIND_NOTIFICATION_SEND_FAIL,
   FIND_NOTIFICATION_SET_MUNICIPALITY,
-  FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS
+  FIND_NOTIFICATION_SET_MUNICIPALITY_SUCCESS,
+  FIND_NOTIFICATION_SET_FIND_PHOTOS,
+  FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS
 } from '../constants/actionTypes';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
+const FIND_NOTIFICATION_IMAGE_END_POINT = '/api/v1/photo/find';
 
 const sendFindNotification = createLogic({
   type: FIND_NOTIFICATION_SEND,
@@ -47,9 +50,42 @@ const getFindMunicapility = createLogic({
   }
 });
 
+const setFindPhotos = createLogic({
+  type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
+  latest: true,
+
+  processOptions: {
+    dispatchReturn: true,
+    successType: FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS
+  },
+
+  process({ action, getState }) {
+    // Add images to formdata
+    const formData = new FormData();
+    const currentFindIndex = getState().findNotification.currentFindIndex;
+    const currentFind = action[currentFindIndex];
+
+    for (let i in currentFind.photos) {
+      const imgIndex = parseInt(i) + parseInt(action.imgIndex);
+      const fileName = `${getState().findNotification.reportId}_find-${currentFindIndex}_img-${imgIndex}`;
+      const photo = currentFind.photos[i];
+      formData.append(fileName, photo);
+    }
+
+    // And send them to server
+    return axios({
+      method: 'post',
+      url: FIND_NOTIFICATION_IMAGE_END_POINT,
+      data: formData,
+      config: { headers: { 'Content-Type': 'multipart/form-data' } }
+    });
+  }
+});
+
 export default [
   sendFindNotification,
-  getFindMunicapility
+  getFindMunicapility,
+  setFindPhotos
 ];
 
 

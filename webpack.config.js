@@ -55,7 +55,7 @@ module.exports = (env) => {
     plugins: getPlugins(isProduction),
     devtool: isProduction ? 'source-map ' : 'inline-source-map',
     devServer: {
-      contentBase: path.join(__dirname, 'public'),
+      contentBase: [path.join(__dirname, 'public'), path.join(__dirname, 'users')],
       historyApiFallback: true,
       publicPath: '/dist/',
       proxy: {

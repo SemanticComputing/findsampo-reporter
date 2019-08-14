@@ -17,7 +17,8 @@ import {
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
   FIND_NOTIFICATION_RESET,
   MY_FINDS_CONTINUE_FILLING_OUT,
-  FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS
+  FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
+  FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -170,6 +171,10 @@ export default (state = initialState, action) => {
         ...state,
         currentStep: DEFAULT_STEP_WITHOUT_HELP
       };
+    case FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS:
+      console.log(action.payload.data);
+      console.log('Succeed run');
+      break;
     case FIND_NOTIFICATION_RESET:
       return initialState;
     default:
