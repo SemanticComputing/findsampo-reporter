@@ -116,7 +116,8 @@ class HelpBar extends Component {
             </Icon>
             <Icon
               onClick={this.onDrawerButtonPressed}
-              className="help-bar__icon"
+              className={this.props.hasSmartHelpData ?
+                'help-bar__icon__smart-helper' : 'help-bar__icon'}
             >
               wb_incandescent
             </Icon>
@@ -195,7 +196,8 @@ const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],
   hasSkipStep: !!state.report.questions[state.report.currentStep].skipStep,
   hasBackStep: state.report.questions[state.report.currentStep].backStep === 0 ||
-    !!state.report.questions[state.report.currentStep].backStep
+    !!state.report.questions[state.report.currentStep].backStep,
+  hasSmartHelpData: state.findNotification.smartHelpData.length > 0
 });
 
 const mapDispatchToProps = (dispatch) => ({

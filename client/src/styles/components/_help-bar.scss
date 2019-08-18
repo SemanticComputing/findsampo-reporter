@@ -17,6 +17,19 @@
   & &__icon{
     color: $color-bottom-bar-icon-grey;
     font-size: 1.8rem;
+    cursor: pointer;
+    &__smart-helper {
+      cursor: pointer;
+      animation: color-changer 1s infinite;
+    }
+    @keyframes color-changer {
+      0% {
+        color: white;
+      }
+      100% {
+        color: $color-primary;
+      }
+    }
   }
   & &__popper {
     z-index: 1;

@@ -17,7 +17,8 @@ import {
   MY_FINDS_CONTINUE_FILLING_OUT,
   FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
   FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
-  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS
+  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
+  FIND_NOTIFICATION_SET_SMART_HELP
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -27,7 +28,8 @@ const initialState = {
   currentFindIndex: 0,
   date: new Date(),
   municipality: null,
-  finds: []
+  finds: [],
+  smartHelpData: []
 };
 
 const DEFAULT_STEP_WITHOUT_HELP = 3;
@@ -172,6 +174,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentStep: DEFAULT_STEP_WITHOUT_HELP
+      };
+    case FIND_NOTIFICATION_SET_SMART_HELP:
+      return {
+        ...state,
+        smartHelpData: action.payload
       };
     case FIND_NOTIFICATION_RESET:
       return initialState;

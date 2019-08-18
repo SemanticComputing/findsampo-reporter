@@ -1,5 +1,6 @@
 import { createLogic } from 'redux-logic';
 import axios from 'axios';
+import L from 'leaflet';
 import {
   FIND_NOTIFICATION_SEND,
   FIND_NOTIFICATION_SEND_SUCCESS,
@@ -9,13 +10,15 @@ import {
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
-  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS
+  FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
+  FIND_NOTIFICATION_SET_COORDS,
+  FIND_NOTIFICATION_SET_SMART_HELP
 } from '../constants/actionTypes';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find';
-
+const NEARBY_FINDS_DISTANCE_LIMIT = 50000;
 
 const sendFindNotification = createLogic({
   type: FIND_NOTIFICATION_SEND,
@@ -124,11 +127,68 @@ const setFindSitePhotos = createLogic({
   }
 });
 
+/********************* Helper Methods for providing smart assistant *********************/
+
+const getMaterialBasedSmartHelp = createLogic({
+  type: FIND_NOTIFICATION_SET_COORDS,
+  latest: true,
+
+  processOptions: {
+    dispatchReturn: true,
+    successType: FIND_NOTIFICATION_SET_SMART_HELP
+  },
+
+  async process({ action, getState }) {
+    if (getState().finds.validatedFinds && getState().finds.validatedFinds.length > 0) {
+      return getNearByFinds(action.coords, getState().finds.validatedFinds);
+    } else {
+      const validatedFindsResult = await getValidatedFinds();
+      if (validatedFindsResult.data.length > 0) {
+        return getNearByFinds(action.coords, validatedFindsResult.data);
+      }
+    }
+  }
+});
+
+/**
+ * Helper method for fetching the date of validated finds
+ */
+const getValidatedFinds = async () => {
+  const FINDS_END_POINT = '/api/v1/finds';
+  try {
+    return await axios.get(FINDS_END_POINT);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
+ *  Helper method for finding nearby finds of a certain point
+ * @param {*} coords 
+ * @param {*} validatedFinds 
+ */
+const getNearByFinds = (coords, validatedFinds) => {
+  const result = [];
+  for (const find of validatedFinds) {
+    if (find.lat && find.long) {
+      const distance = L.latLng(coords.lat, coords.lng).distanceTo(L.latLng(parseInt(find.lat), parseInt(find.long)));
+      distance < NEARBY_FINDS_DISTANCE_LIMIT && result.push(find);
+    }
+  }
+  return result;
+};
+
+
+
+
+
+
 export default [
   sendFindNotification,
   getFindMunicapility,
   setFindPhotos,
-  setFindSitePhotos
+  setFindSitePhotos,
+  getMaterialBasedSmartHelp
 ];
 
 
