@@ -32,6 +32,14 @@
       }
     }
   }
+
+  // change order of elements
+  // This makes pagination the first element
+  & > div:first-of-type {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
   // Hide search bar of material ui
   & > div:first-of-type > div:first-of-type {
     display: none;

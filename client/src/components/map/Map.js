@@ -229,7 +229,7 @@ class Map extends Component {
 
     this.map = L.map(this.props.id || 'map', {
       center: [64.9, 26.0],
-      zoom: DEFAULT_ZOOM_LEVEL,
+      zoom: this.props.zoomLevel || DEFAULT_ZOOM_LEVEL,
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,

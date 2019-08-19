@@ -12,7 +12,10 @@ import {
   FIND_NOTIFICATION_SET_MUNICIPALITY,
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
   FIND_NOTIFICATION_RESET,
-  FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS
+  FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
+  FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP,
+  FIND_NOTIFICATION_SET_TYPE_SMART_HELP,
+  FIND_NOTIFICATION_SET_PERIOD_SMART_HELP
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -91,6 +94,18 @@ export const setMunicipality = (coords) => ({
 
 export const setStatusToAwaitReview = () => ({
   type: FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW
+});
+
+export const setMaterialSmartData = () => ({
+  type: FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP
+});
+
+export const setTypeSmartData = () => ({
+  type: FIND_NOTIFICATION_SET_TYPE_SMART_HELP
+});
+
+export const setPeriodSmartData = () => ({
+  type: FIND_NOTIFICATION_SET_PERIOD_SMART_HELP
 });
 
 export const skipHelpTutorialSteps = () => ({

@@ -53,3 +53,23 @@ export const getWMTSLayerValueByKey = (value) => {
 
   return names[value];
 };
+
+export const convertToTableData = (data) => {
+  const tableData = [];
+  for (let d of data) {
+    tableData.push(
+      {
+        title: d.title,
+        material: d.main_material ? d.main_material : '-',
+        type: d.type ? d.type : '-',
+        period: d.period ? d.period : '-',
+        municipality: d.municipality ? d.municipality : '-',
+        description: d.description ? d.description : 'Not additional information found!', // FIXME
+        image: d.image_url ? d.image_url : '',
+        specification: d.specification ? d.specification : 'Not Provided',
+        province: d.province ? d.province : 'Not Provided'
+      }
+    );
+  }
+  return tableData;
+};

@@ -10,6 +10,12 @@ import {
   Tooltip
 } from '@material-ui/core';
 
+/**
+ * Parameters
+ * 
+ * tableData: The data which is given to table to show
+ * setBodyHeight: Defines max body heigh which is 600px by default
+ */
 const Table = (props) => {
   return (
     <div className="table">
@@ -38,7 +44,7 @@ const Table = (props) => {
           pageSizeOptions: [10, 50, 100, 1000],
           search: false,
           showTitle: false,
-          maxBodyHeight: 600,
+          maxBodyHeight: props.setBodyHeight && 600,
         }}
         onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />

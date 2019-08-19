@@ -12,7 +12,9 @@ import {
   FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_COORDS,
-  FIND_NOTIFICATION_SET_SMART_HELP
+  FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
+  //FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP,
+  //FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP_SUCCESS
 } from '../constants/actionTypes';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
@@ -129,13 +131,13 @@ const setFindSitePhotos = createLogic({
 
 /********************* Helper Methods for providing smart assistant *********************/
 
-const getMaterialBasedSmartHelp = createLogic({
+const getLocationBasedSmartHelp = createLogic({
   type: FIND_NOTIFICATION_SET_COORDS,
   latest: true,
 
   processOptions: {
     dispatchReturn: true,
-    successType: FIND_NOTIFICATION_SET_SMART_HELP
+    successType: FIND_NOTIFICATION_SET_NEARBY_SMART_HELP
   },
 
   async process({ action, getState }) {
@@ -180,16 +182,36 @@ const getNearByFinds = (coords, validatedFinds) => {
 
 
 
+/*const getMaterialBasedSmartHelp = createLogic({
+  type: FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP,
+  latest: true,
 
+  processOptions: {
+    dispatchReturn: true,
+    successType: FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP_SUCCESS
+  },
 
+  async process({ action, getState }) {
+    if (getState().finds.validatedFinds && getState().finds.validatedFinds.length > 0) {
+      //return getNearByFinds(action.coords, getState().finds.validatedFinds);
+    } else {
+      const validatedFindsResult = await getValidatedFinds();
+      if (validatedFindsResult.data.length > 0) {
+        //return getNearByFinds(action.coords, validatedFindsResult.data);
+      }
+    }
+  }
+});
+
+const getMaterialHelpdata = () => {
+
+}; */
 
 export default [
   sendFindNotification,
   getFindMunicapility,
   setFindPhotos,
   setFindSitePhotos,
-  getMaterialBasedSmartHelp
+  getLocationBasedSmartHelp,
+  //getMaterialBasedSmartHelp
 ];
-
-
-

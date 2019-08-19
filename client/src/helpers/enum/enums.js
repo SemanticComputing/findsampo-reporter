@@ -104,3 +104,17 @@ export const ReportStatuses = Object.freeze({
   REJECTED: 'rejected',
   PENDING_USER: 'peding_user'
 });
+
+export const ReportSteps = Object.freeze({
+  LOCATION: 3,
+  MATERIAL: 9,
+  TYPE: 10,
+  PERIOD: 11
+});
+
+export const SmartHelpers = Object.freeze({
+  NEARBY_HELPER: 'nearby_helper',
+  MATERIAL_HELPER: 'material_helper',
+  TYPE_HELPER: 'type_helper',
+  PERIOD_HELPER: 'period_helper'
+});

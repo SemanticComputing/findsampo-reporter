@@ -6,7 +6,7 @@ import Table from '../table/Table';
 import FacetDrawer from '../FacetDrawer';
 import findsSelector from '../../selectors/facet/facetResults';
 import { getValidatedFinds } from '../../actions/find';
-import { isDesktopScreen, isMobileScreen } from '../../helpers/functions/functions';
+import { isDesktopScreen, isMobileScreen, convertToTableData } from '../../helpers/functions/functions';
 import { MapMode } from '../../helpers/enum/enums';
 
 class NearbyPage extends Component {
@@ -44,7 +44,7 @@ class NearbyPage extends Component {
     } else if (this.state.mode == 1) {
       return <Map markerData={this.props.finds.results} mode={MapMode.HEATMAP} />;
     } else {
-      return <Table tableData={convertToTableData(this.props.finds.results)} />;
+      return <Table tableData={convertToTableData(this.props.finds.results)} setBodyHeight />;
     }
   }
 
@@ -94,26 +94,6 @@ class NearbyPage extends Component {
     );
   }
 }
-
-const convertToTableData = (data) => {
-  const tableData = [];
-  for (let d of data) {
-    tableData.push(
-      {
-        title: d.title,
-        material: d.main_material ? d.main_material : '-',
-        type: d.type ? d.type : '-',
-        period: d.period ? d.period : '-',
-        municipality: d.municipality ? d.municipality : '-',
-        description: d.description ? d.description : 'Not additional information found!', // FIXME
-        image: d.image_url ? d.image_url : '',
-        specification: d.specification ? d.specification : 'Not Provided',
-        province: d.province ? d.province : 'Not Provided'
-      }
-    );
-  }
-  return tableData;
-};
 
 const mapStateToProps = (state) => ({
   finds: findsSelector(state)

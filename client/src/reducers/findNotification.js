@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { ReportStatuses } from '../helpers/enum/enums';
+import { ReportStatuses, SmartHelpers } from '../helpers/enum/enums';
 import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,
@@ -18,7 +18,7 @@ import {
   FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
   FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
-  FIND_NOTIFICATION_SET_SMART_HELP
+  FIND_NOTIFICATION_SET_NEARBY_SMART_HELP
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -29,7 +29,12 @@ const initialState = {
   date: new Date(),
   municipality: null,
   finds: [],
-  smartHelpData: []
+  smartHelper: {
+    nearbyFinds: {
+      data: []
+    },
+    activeHelper: null
+  }
 };
 
 const DEFAULT_STEP_WITHOUT_HELP = 3;
@@ -175,11 +180,19 @@ export default (state = initialState, action) => {
         ...state,
         currentStep: DEFAULT_STEP_WITHOUT_HELP
       };
-    case FIND_NOTIFICATION_SET_SMART_HELP:
-      return {
-        ...state,
-        smartHelpData: action.payload
-      };
+    case FIND_NOTIFICATION_SET_NEARBY_SMART_HELP:
+      return update(state, {
+        smartHelper: {
+          nearbyFinds: {
+            data: {
+              $set: [...state.smartHelper.nearbyFinds.data, ...action.payload],
+            }
+          },
+          activeHelper: {
+            $set: SmartHelpers.NEARBY_HELPER
+          }
+        }
+      });
     case FIND_NOTIFICATION_RESET:
       return initialState;
     default:

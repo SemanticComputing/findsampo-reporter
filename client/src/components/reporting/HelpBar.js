@@ -14,10 +14,10 @@ import {
   Grow,
   ClickAwayListener,
   MenuList,
-  MenuItem,
-  Drawer
+  MenuItem
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
+import SmartHelper from '../SmartHelper';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
 import { enqueueSnackbar } from '../../actions/notifier';
 
@@ -82,18 +82,6 @@ class HelpBar extends Component {
     });
     this.setState({ menuOpen: false });
   };
-
-  renderSuggestionDrawer = () => {
-    return (
-      <Drawer
-        anchor="bottom"
-        open={this.state.drawerOpen}
-        onClose={this.onDrawerButtonPressed}
-      >
-        <p>Some test data</p>
-      </Drawer>
-    );
-  }
 
   render() {
     return (
@@ -186,7 +174,8 @@ class HelpBar extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-        {this.renderSuggestionDrawer()}
+        {/** Smart Helper */}
+        <SmartHelper open={this.state.drawerOpen} onClose={this.onDrawerButtonPressed} />
       </div>
     );
   }
@@ -197,7 +186,7 @@ const mapStateToProps = (state) => ({
   hasSkipStep: !!state.report.questions[state.report.currentStep].skipStep,
   hasBackStep: state.report.questions[state.report.currentStep].backStep === 0 ||
     !!state.report.questions[state.report.currentStep].backStep,
-  hasSmartHelpData: state.findNotification.smartHelpData.length > 0
+  hasSmartHelpData: state.findNotification.smartHelper.nearbyFinds.data.length > 0
 });
 
 const mapDispatchToProps = (dispatch) => ({

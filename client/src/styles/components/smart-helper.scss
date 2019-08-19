@@ -1,0 +1,7 @@
+.smart-helper {
+  // Override all the div classses that start with MuiDrawer-paperAnchorBottom
+  div[class*="MuiDrawer-paperAnchorBottom"] {
+    height: 100%;
+    max-height: 75%;
+  }
+}
