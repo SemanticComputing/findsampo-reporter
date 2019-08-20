@@ -20,7 +20,7 @@ import {
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find';
-const NEARBY_FINDS_DISTANCE_LIMIT = 50000;
+const NEARBY_FINDS_DISTANCE_LIMIT = 30000;
 
 const sendFindNotification = createLogic({
   type: FIND_NOTIFICATION_SEND,
@@ -130,7 +130,6 @@ const setFindSitePhotos = createLogic({
 });
 
 /********************* Helper Methods for providing smart assistant *********************/
-
 const getLocationBasedSmartHelp = createLogic({
   type: FIND_NOTIFICATION_SET_COORDS,
   latest: true,
@@ -173,13 +172,12 @@ const getNearByFinds = (coords, validatedFinds) => {
   const result = [];
   for (const find of validatedFinds) {
     if (find.lat && find.long) {
-      const distance = L.latLng(coords.lat, coords.lng).distanceTo(L.latLng(parseInt(find.lat), parseInt(find.long)));
+      const distance = L.latLng(coords.lat, coords.lng).distanceTo(L.latLng(parseFloat(find.lat), parseFloat(find.long)));
       distance < NEARBY_FINDS_DISTANCE_LIMIT && result.push(find);
     }
   }
   return result;
 };
-
 
 
 /*const getMaterialBasedSmartHelp = createLogic({
