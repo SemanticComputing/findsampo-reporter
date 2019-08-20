@@ -20,7 +20,7 @@ import intl from 'react-intl-universal';
 import SmartHelper from '../SmartHelper';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
 import { enqueueSnackbar } from '../../actions/notifier';
-
+import { ReportSteps } from '../../helpers/enum/enums';
 
 class HelpBar extends Component {
   state = {
@@ -57,7 +57,13 @@ class HelpBar extends Component {
   };
 
   onDrawerButtonPressed = () => {
-    this.setState((prevState) => ({ drawerOpen: !prevState.drawerOpen }));
+    if (this.hasSmartHelpData()) {
+      this.setState((prevState) => ({ drawerOpen: !prevState.drawerOpen }));
+    } else {
+      this.props.enqueueSnackbar({
+        message: 'Smart help data is not available yet!'
+      });
+    }
   }
 
   deleteReport = () => {
@@ -66,7 +72,7 @@ class HelpBar extends Component {
       message: 'The report has been deleted succesfully!',
       options: {
         variant: 'success',
-      },
+      }
     });
 
     this.setState({ menuOpen: false });
@@ -78,9 +84,28 @@ class HelpBar extends Component {
       message: 'The report has been saved as draft succesfully!',
       options: {
         variant: 'success',
-      },
+      }
     });
     this.setState({ menuOpen: false });
+  };
+
+  hasSmartHelpData = () => {
+    switch (this.props.currentStep) {
+      case ReportSteps.LOCATION:
+        if (this.props.smartHelpData.nearbyFinds.data.length > 0) {
+          return true;
+        }
+        break;
+      case ReportSteps.MATERIAL:
+        break;
+      case ReportSteps.TYPE:
+        break;
+      case ReportSteps.PERIOD:
+        break;
+      default:
+        break;
+    }
+    return false;
   };
 
   render() {
@@ -104,7 +129,7 @@ class HelpBar extends Component {
             </Icon>
             <Icon
               onClick={this.onDrawerButtonPressed}
-              className={this.props.hasSmartHelpData ?
+              className={this.hasSmartHelpData() ?
                 'help-bar__icon__smart-helper' : 'help-bar__icon'}
             >
               wb_incandescent
@@ -183,10 +208,11 @@ class HelpBar extends Component {
 
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],
+  currentStep: state.findNotification.currentStep,
   hasSkipStep: !!state.report.questions[state.report.currentStep].skipStep,
   hasBackStep: state.report.questions[state.report.currentStep].backStep === 0 ||
     !!state.report.questions[state.report.currentStep].backStep,
-  hasSmartHelpData: state.findNotification.smartHelper.nearbyFinds.data.length > 0
+  smartHelpData: state.findNotification.smartHelper
 });
 
 const mapDispatchToProps = (dispatch) => ({
