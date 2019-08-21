@@ -2,16 +2,13 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const querystring = require('querystring');
-
-const finds = require('../sparql/queries/finds');
-const mapFinds = require('../sparql/mappers/findsMapper');
+const getSmartHelpData = require('../sparql/queries/smartHelper');
+const mapSmartHelpData = require('../sparql/mappers/smartHelperMapper');
 
 const FINDS_END_POINT = 'https://ldf.fi/sualt-fha-finds/sparql';
 
-/**
- * Get all validated finds
- */
-router.get('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
+  // Header Settings
   const defaultSelectHeaders = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'application/sparql-results+json; charset=utf-8',
@@ -19,14 +16,14 @@ router.get('/', async (req, res, next) => {
   };
 
   try {
-    const query = finds.getValidatedFinds;
+    const query = getSmartHelpData(req.body.property);
     const response = await axios({
       method: 'post',
       headers: defaultSelectHeaders,
       url: FINDS_END_POINT,
       data: querystring.stringify({ query })
     });
-    const mappedResults = mapFinds(response.data.results.bindings);
+    const mappedResults = mapSmartHelpData(response.data.results.bindings);
     res.send(mappedResults);
   } catch (error) {
     if (error.response) {

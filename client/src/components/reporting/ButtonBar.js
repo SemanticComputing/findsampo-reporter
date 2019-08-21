@@ -66,11 +66,11 @@ const isButtonDisabled = (props) => {
 const onButtonClick = (props, btn) => {
   // Change the question
   props.changeQuestion(btn.nextStep);
-  // And check if the button has any action to execute
+  // Check if the button has any action to execute
   if (btn.action) {
     executeButtonAction(props, btn.action);
   }
-  // Update find notification on every step
+  // Update find notification on every step but not last step
   if (btn.nextStep !== REPORT_LAST_STEP && props.currentStep >= 2) {
     sendFindNotification(props);
   }

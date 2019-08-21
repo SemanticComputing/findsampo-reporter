@@ -20,7 +20,7 @@ import intl from 'react-intl-universal';
 import SmartHelper from '../SmartHelper';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
 import { enqueueSnackbar } from '../../actions/notifier';
-import { ReportSteps } from '../../helpers/enum/enums';
+import { ReportSteps, SmartHelpers } from '../../helpers/enum/enums';
 
 class HelpBar extends Component {
   state = {
@@ -90,22 +90,23 @@ class HelpBar extends Component {
   };
 
   hasSmartHelpData = () => {
-    switch (this.props.currentStep) {
-      case ReportSteps.LOCATION:
-        if (this.props.smartHelpData.nearbyFinds.data.length > 0) {
-          return true;
-        }
-        break;
-      case ReportSteps.MATERIAL:
-        break;
-      case ReportSteps.TYPE:
-        break;
-      case ReportSteps.PERIOD:
-        break;
-      default:
-        break;
+    const { nearbyFinds, activeHelper } = this.props.smartHelpData;
+    
+    if (this.props.currentStep === ReportSteps.LOCATION) {
+      if (nearbyFinds.data.length > 0) {
+        return true;
+      }
+    } else if (this.props.currentStep === ReportSteps.MATERIAL ||
+      this.props.currentStep === ReportSteps.TYPE ||
+      this.props.currentStep === ReportSteps.PERIOD) {
+      if (activeHelper && activeHelper !== SmartHelpers.NEARBY_HELPER &&
+        (Object.keys(this.props.smartHelpData[activeHelper].nearby).length > 0 ||
+          Object.keys(this.props.smartHelpData[activeHelper].overall).length > 0)) {
+        return true;
+      }
+    } else {
+      return false;
     }
-    return false;
   };
 
   render() {

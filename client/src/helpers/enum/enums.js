@@ -113,8 +113,8 @@ export const ReportSteps = Object.freeze({
 });
 
 export const SmartHelpers = Object.freeze({
-  NEARBY_HELPER: 'nearby_helper',
-  MATERIAL_HELPER: 'material_helper',
-  TYPE_HELPER: 'type_helper',
-  PERIOD_HELPER: 'period_helper'
+  NEARBY_HELPER: 'nearby',
+  MATERIAL_HELPER: 'material',
+  TYPE_HELPER: 'type',
+  PERIOD_HELPER: 'period'
 });

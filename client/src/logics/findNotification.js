@@ -1,5 +1,6 @@
 import { createLogic } from 'redux-logic';
 import axios from 'axios';
+import { countBy } from 'lodash';
 import L from 'leaflet';
 import {
   FIND_NOTIFICATION_SEND,
@@ -13,14 +14,15 @@ import {
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_COORDS,
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
-  //FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP,
-  //FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP_SUCCESS
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS
 } from '../constants/actionTypes';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find';
-const NEARBY_FINDS_DISTANCE_LIMIT = 30000;
+const SMART_HELPER_END_POINT = '/api/v1/smart-helper';
+const NEARBY_FINDS_DISTANCE_LIMIT = 30000; // 30km
 
 const sendFindNotification = createLogic({
   type: FIND_NOTIFICATION_SEND,
@@ -165,8 +167,8 @@ const getValidatedFinds = async () => {
 
 /**
  *  Helper method for finding nearby finds of a certain point
- * @param {*} coords 
- * @param {*} validatedFinds 
+ * @param {current location coords} coords 
+ * @param {validated finds from db} validatedFinds 
  */
 const getNearByFinds = (coords, validatedFinds) => {
   const result = [];
@@ -180,30 +182,45 @@ const getNearByFinds = (coords, validatedFinds) => {
 };
 
 
-/*const getMaterialBasedSmartHelp = createLogic({
-  type: FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP,
+const getFindPropertyBasedSmartHelp = createLogic({
+  type: FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
   latest: true,
 
   processOptions: {
     dispatchReturn: true,
-    successType: FIND_NOTIFICATION_SET_MATERIAL_SMART_HELP_SUCCESS
+    successType: FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS
   },
 
   async process({ action, getState }) {
-    if (getState().finds.validatedFinds && getState().finds.validatedFinds.length > 0) {
-      //return getNearByFinds(action.coords, getState().finds.validatedFinds);
-    } else {
-      const validatedFindsResult = await getValidatedFinds();
-      if (validatedFindsResult.data.length > 0) {
-        //return getNearByFinds(action.coords, validatedFindsResult.data);
+    // If nearby data is available group them by property
+    let nearByData = {};
+    const nearbyFinds = getState().findNotification.smartHelper.nearbyFinds.data;
+    if (nearbyFinds.length > 0) {
+      nearByData = getNearbyFindsSummary(action.property, nearbyFinds);
+    }
+    // Fetch data for creating a summary chart
+    const helpData = await axios.post(SMART_HELPER_END_POINT, { property: action.property });
+    const summaryHelpData = {};
+
+    // Reorganise the data
+    for (const e of helpData.data) {
+      if (e.property) {
+        summaryHelpData[e.property] = e.count;
       }
     }
+
+    return {
+      property: action.property,
+      summaryHelpData,
+      nearByData
+    };
   }
 });
 
-const getMaterialHelpdata = () => {
-
-}; */
+const getNearbyFindsSummary = (property, finds) => {
+  const filteredFinds = finds.filter((f) => f[property]);
+  return countBy(filteredFinds, (f) => f[property]);
+};
 
 export default [
   sendFindNotification,
@@ -211,5 +228,5 @@ export default [
   setFindPhotos,
   setFindSitePhotos,
   getLocationBasedSmartHelp,
-  //getMaterialBasedSmartHelp
+  getFindPropertyBasedSmartHelp
 ];

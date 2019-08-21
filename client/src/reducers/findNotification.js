@@ -18,7 +18,8 @@ import {
   FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
   FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
-  FIND_NOTIFICATION_SET_NEARBY_SMART_HELP
+  FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -32,6 +33,18 @@ const initialState = {
   smartHelper: {
     nearbyFinds: {
       data: []
+    },
+    material: {
+      nearby: {},
+      overall: {}
+    },
+    type: {
+      nearby: {},
+      overall: {}
+    },
+    period: {
+      nearby: {},
+      overall: {}
     },
     activeHelper: null
   }
@@ -193,6 +206,28 @@ export default (state = initialState, action) => {
           }
         }
       });
+    case FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS: {
+      const { property, nearByData, summaryHelpData } = action.payload;
+      const findProperty = property === 'main_material' ? SmartHelpers.MATERIAL_HELPER
+        : property === 'type' ? SmartHelpers.TYPE_HELPER
+          : SmartHelpers.PERIOD_HELPER;
+
+      return update(state, {
+        smartHelper: {
+          [findProperty]: {
+            nearby: {
+              $set: nearByData,
+            },
+            overall: {
+              $set: summaryHelpData,
+            }
+          },
+          activeHelper: {
+            $set: findProperty
+          }
+        }
+      });
+    }
     case FIND_NOTIFICATION_RESET:
       return initialState;
     default:

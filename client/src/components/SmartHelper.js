@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Chart from 'react-apexcharts';
 import {
   Drawer,
   Tabs,
@@ -9,24 +10,26 @@ import Map from './map/Map';
 import Table from './table/Table';
 import { ReportSteps, SmartHelpers } from '../helpers/enum/enums';
 import { convertToTableData } from './../helpers/functions/functions';
-import { setMaterialSmartData, setTypeSmartData, setPeriodSmartData } from '../actions/findNotification';
+import { setPropertySmartData } from '../actions/findNotification';
 
 class SmartHelper extends Component {
   state = {
     currentTab: 0
   }
 
-  componentDidUpdate() {
-    switch (this.props.currentStep) {
-      case ReportSteps.MATERIAL:
-        this.props.setMaterialSmartData();
-        break;
-      case ReportSteps.TYPE:
-        this.props.setTypeSmartData();
-        break;
-      case ReportSteps.PERIOD:
-        this.props.setPeriodSmartData();
-        break;
+  componentDidUpdate(prevProps) {
+    if (this.props.currentStep !== prevProps.currentStep) {
+      switch (this.props.currentStep) {
+        case ReportSteps.MATERIAL:
+          this.props.setPropertySmartData('main_material');
+          break;
+        case ReportSteps.TYPE:
+          this.props.setPropertySmartData('type');
+          break;
+        case ReportSteps.PERIOD:
+          this.props.setPropertySmartData('period');
+          break;
+      }
     }
   }
 
@@ -64,21 +67,25 @@ class SmartHelper extends Component {
   };
 
   renderTabContents = () => {
-    if (this.props.activeSmartHelper === SmartHelpers.NEARBY_HELPER) {
-      switch (this.state.currentTab) {
-        case 0:
-          return <Table tableData={convertToTableData(this.props.nearbySmartHelpData)} />;
-        case 1:
-          return <Map
-            id="mapSmartHelper"
-            markerData={this.props.nearbySmartHelpData} />;
-      }
-    } else {
-      switch (this.state.currentTab) {
-        case 0:
-          break;
-        case 1:
-          break;
+    const { nearbyFinds, activeHelper } = this.props.smartHelperData;
+    const currentActiveHelpData = this.props.smartHelperData[activeHelper];
+    if (activeHelper) {
+      if (activeHelper === SmartHelpers.NEARBY_HELPER) {
+        switch (this.state.currentTab) {
+          case 0:
+            return <Table tableData={convertToTableData(nearbyFinds.data)} />;
+          case 1:
+            return <Map id="mapSmartHelper" markerData={nearbyFinds.data} />;
+        }
+      } else {
+        const chartSettings = createChartData(currentActiveHelpData, this.state.currentTab);
+        return <Chart
+          options={chartSettings.options}
+          series={chartSettings.series}
+          type="pie"
+          id={this.state.currentTab}
+          className="smart-helper__chart"
+          height="75%" />;
       }
     }
   };
@@ -88,16 +95,27 @@ class SmartHelper extends Component {
   };
 }
 
+const createChartData = (data, tabIndex) => {
+  const type = tabIndex === 0 ? 'nearby' : 'overall';
+  // Chart settings
+  return {
+    options: {
+      labels: Object.keys(data[type]),
+      legend: {
+        position: 'bottom'
+      }
+    },
+    series: Object.values(data[type]),
+  };
+};
+
 const mapStateToProps = (state) => ({
   currentStep: state.findNotification.currentStep,
-  activeSmartHelper: state.findNotification.smartHelper.activeHelper,
-  nearbySmartHelpData: state.findNotification.smartHelper.nearbyFinds.data
+  smartHelperData: state.findNotification.smartHelper
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setMaterialSmartData: () => dispatch(setMaterialSmartData()),
-  setTypeSmartData: () => dispatch(setTypeSmartData()),
-  setPeriodSmartData: () => dispatch(setPeriodSmartData())
+  setPropertySmartData: (property) => dispatch(setPropertySmartData(property))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SmartHelper);

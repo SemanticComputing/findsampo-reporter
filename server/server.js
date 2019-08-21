@@ -10,6 +10,8 @@ const fhaWfsMapLayerController = require('./controllers/fhaWfsMapLayerController
 const reportController = require('./controllers/reportController');
 const myFindsController = require('./controllers/myFindsController');
 const photoController = require('./controllers/photoController');
+const smartHelper = require('./controllers/smartHelpController');
+
 
 /*************************** APP settings  ***********************************/
 const app = express();
@@ -35,6 +37,7 @@ app.use(express.json());
 
 
 /*************************** APIs ***********************************/
+
 /**
  * APIs for fetching validated finds
  */
@@ -71,6 +74,11 @@ app.use(MY_FINDS_END_POINT, myFindsController);
 const PHOTO_END_POINT = '/api/v1/photo';
 app.use(PHOTO_END_POINT, photoController);
 
+/**
+ * APIs for handling report smart helper related requests
+ */
+const SMART_HELPER_END_POINT = '/api/v1/smart-helper';
+app.use(SMART_HELPER_END_POINT, smartHelper);
 
 /*************************** LISTEN APPLICATION ***********************************/
 app.get('*', (req, res) => {
