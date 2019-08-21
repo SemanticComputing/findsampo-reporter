@@ -4,7 +4,7 @@ Main reposity of the FindSampo project.
 
 ## Initialization
 
-Before starting ensure that you have node v.10.15 and yarn v.1.16.<br>
+Before starting ensure that you have node v.10.15 and yarn v.1.17.<br>
 
 In this project yarn is used as a package manager tool. Please avoid using NPM<br>
 
