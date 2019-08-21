@@ -1,6 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Paper, Typography, Divider, Icon } from '@material-ui/core/';
+import {
+  Paper,
+  Typography,
+  Divider,
+  Icon,
+  GridList,
+  GridListTile
+} from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import Map from '../map/Map';
 
@@ -31,6 +38,7 @@ const OverView = (props) => {
                 <Typography variant="caption" className="overview__properties">
                   {intl.get('overview.find.photos')}
                 </Typography>
+                {renderPhotos(find.photos)}
                 {/* Find Site Details */}
                 <div className="overview__find-site__map">
                   <Typography variant="caption" className="overview__properties">
@@ -42,8 +50,7 @@ const OverView = (props) => {
                   <Typography variant="caption" className="overview__properties">
                     {intl.get('overview.findSite.photos')}
                   </Typography>
-                  <output>
-                  </output>
+                  {renderPhotos(find.findSite.photos)}
                 </div>
                 {/* Find properties */}
                 <Typography variant="caption" className="overview__properties">
@@ -87,6 +94,26 @@ const OverView = (props) => {
         }
         )}
     </div>
+  );
+};
+
+/**
+ * Used to render photos
+ * 
+ * @param {photos} photos 
+ */
+const renderPhotos = (photos) => {
+  return (
+    <GridList cellHeight={130} cols={3}>
+      {photos.map((tile, index) => {
+        const thumbUrl = `${tile.split('.png')[0]}_thumb.png`;
+        return (
+          <GridListTile key={index} cols={1}>
+            <img src={thumbUrl} />
+          </GridListTile>
+        );
+      })}
+    </GridList>
   );
 };
 
