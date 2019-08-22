@@ -75,7 +75,7 @@ class SmartHelper extends Component {
           case 0:
             return <Table tableData={convertToTableData(nearbyFinds.data)} />;
           case 1:
-            return <Map id="mapSmartHelper" markerData={nearbyFinds.data} />;
+            return <Map id="mapSmartHelper" markerData={nearbyFinds.data} setViewForMarkerData />;
         }
       } else {
         const chartSettings = createChartData(currentActiveHelpData, this.state.currentTab);

@@ -43,6 +43,7 @@ import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/fu
  * Parameters
  * showCurrentLocation: If true user's current location is shown on the map
  * markerData: Marker points which will be shown on the map
+ * setViewForMarkerData: If true it sets view for a range of coordinates
  * location: The location where map component adds a marker
  * zoomLevel: Defines the default zoom level of the map
  * layers: Default active layers to show on the map
@@ -382,6 +383,13 @@ class Map extends Component {
         this.clusterMap.addLayer(markerToMap);
       }
     }
+
+    // Set view for a range of coordinates
+    if (this.props.setViewForMarkerData) {
+      var mapBounds = new L.LatLngBounds(latLngs);
+      this.map.fitBounds(mapBounds);
+    }
+
     // HeatMap Mode
     this.heatMap = this.initialiseHeatMap(latLngs);
 
