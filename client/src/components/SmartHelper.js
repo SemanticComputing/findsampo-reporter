@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Chart from 'react-apexcharts';
 import {
   Drawer,
   Tabs,
@@ -8,6 +7,8 @@ import {
 } from '@material-ui/core/';
 import Map from './map/Map';
 import Table from './table/Table';
+import Chart from './Chart';
+import { createPieChartOptions, createDonutOptions } from '../helpers/data/chart';
 import { ReportSteps, SmartHelpers } from '../helpers/enum/enums';
 import { convertToTableData } from './../helpers/functions/functions';
 import { setPropertySmartData } from '../actions/findNotification';
@@ -50,8 +51,10 @@ class SmartHelper extends Component {
   }
 
   renderTabs = () => {
-    const firstTabText = this.props.activeSmartHelper === SmartHelpers.NEARBY_HELPER ? 'Table' : 'Special';
-    const secondTabText = this.props.activeSmartHelper === SmartHelpers.NEARBY_HELPER ? 'Map' : 'Overall';
+    const { activeHelper } = this.props.smartHelperData;
+    const firstTabText = activeHelper === SmartHelpers.NEARBY_HELPER ? 'Table' : 'Nearby Specific';
+    const secondTabText = activeHelper === SmartHelpers.NEARBY_HELPER ? 'Map' : 'Overall';
+
     return (
       <Tabs
         value={this.state.currentTab}
@@ -78,14 +81,8 @@ class SmartHelper extends Component {
             return <Map id="mapSmartHelper" markerData={nearbyFinds.data} setViewForMarkerData />;
         }
       } else {
-        const chartSettings = createChartData(currentActiveHelpData, this.state.currentTab);
-        return <Chart
-          options={chartSettings.options}
-          series={chartSettings.series}
-          type="pie"
-          id={this.state.currentTab}
-          className="smart-helper__chart"
-          height="75%" />;
+        const options = createChartData(currentActiveHelpData, this.state.currentTab);
+        return <Chart options={options} />;
       }
     }
   };
@@ -97,16 +94,14 @@ class SmartHelper extends Component {
 
 const createChartData = (data, tabIndex) => {
   const type = tabIndex === 0 ? 'nearby' : 'overall';
-  // Chart settings
-  return {
-    options: {
-      labels: Object.keys(data[type]),
-      legend: {
-        position: 'bottom'
-      }
-    },
-    series: Object.values(data[type]),
-  };
+  const labels = Object.keys(data[type]);
+  const series = Object.values(data[type]);
+  
+  if (type === 'nearby') {
+    return createPieChartOptions(labels, series);
+  } else if (type === 'overall') {
+    return createDonutOptions(labels, series);
+  }
 };
 
 const mapStateToProps = (state) => ({

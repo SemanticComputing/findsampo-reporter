@@ -17,7 +17,7 @@ class MyFindsReportOverviewPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Fetch finds data when they are not available
+    // Fetch finds data when the reports are empty
     if (!isEmpty(differenceWith(this.props.reports, prevProps.reports, isEqual))) {
       this.fetchfindsData();
     }

@@ -4,7 +4,6 @@ import Slider from '../reporting/Slider';
 
 class AppHomePage extends Component {
   render() {
-
     return (
       <div style={{ display: 'flex', flex: '1', flexDirection: 'column' }}>
         <ContentContainer
