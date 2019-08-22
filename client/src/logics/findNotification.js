@@ -1,7 +1,6 @@
 import { createLogic } from 'redux-logic';
 import axios from 'axios';
 import { countBy } from 'lodash';
-import L from 'leaflet';
 import {
   FIND_NOTIFICATION_SEND,
   FIND_NOTIFICATION_SEND_SUCCESS,
@@ -22,7 +21,7 @@ const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find';
 const SMART_HELPER_END_POINT = '/api/v1/smart-helper';
-const NEARBY_FINDS_DISTANCE_LIMIT = 30000; // 30km
+const SMART_HELPER_NEARBY_END_POINT = '/api/v1/smart-helper/nearby';
 
 const sendFindNotification = createLogic({
   type: FIND_NOTIFICATION_SEND,
@@ -38,7 +37,6 @@ const sendFindNotification = createLogic({
     axios.post(FIND_NOTIFICATION_END_POINT, getState().findNotification);
   }
 });
-
 
 const getFindMunicapility = createLogic({
   type: FIND_NOTIFICATION_SET_MUNICIPALITY,
@@ -131,7 +129,7 @@ const setFindSitePhotos = createLogic({
   }
 });
 
-/********************* Helper Methods for providing smart assistant *********************/
+/********************* Helper Methods for providing help with the smart assistant *********************/
 const getLocationBasedSmartHelp = createLogic({
   type: FIND_NOTIFICATION_SET_COORDS,
   latest: true,
@@ -141,45 +139,10 @@ const getLocationBasedSmartHelp = createLogic({
     successType: FIND_NOTIFICATION_SET_NEARBY_SMART_HELP
   },
 
-  async process({ action, getState }) {
-    if (getState().finds.validatedFinds && getState().finds.validatedFinds.length > 0) {
-      return getNearByFinds(action.coords, getState().finds.validatedFinds);
-    } else {
-      const validatedFindsResult = await getValidatedFinds();
-      if (validatedFindsResult.data.length > 0) {
-        return getNearByFinds(action.coords, validatedFindsResult.data);
-      }
-    }
+  async process({ action }) {
+    return await axios.post(SMART_HELPER_NEARBY_END_POINT, { coords: action.coords });
   }
 });
-
-/**
- * Helper method for fetching the date of validated finds
- */
-const getValidatedFinds = async () => {
-  const FINDS_END_POINT = '/api/v1/finds';
-  try {
-    return await axios.get(FINDS_END_POINT);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-/**
- *  Helper method for finding nearby finds of a certain point
- * @param {current location coords} coords 
- * @param {validated finds from db} validatedFinds 
- */
-const getNearByFinds = (coords, validatedFinds) => {
-  const result = [];
-  for (const find of validatedFinds) {
-    if (find.lat && find.long) {
-      const distance = L.latLng(coords.lat, coords.lng).distanceTo(L.latLng(parseFloat(find.lat), parseFloat(find.long)));
-      distance < NEARBY_FINDS_DISTANCE_LIMIT && result.push(find);
-    }
-  }
-  return result;
-};
 
 
 const getFindPropertyBasedSmartHelp = createLogic({
