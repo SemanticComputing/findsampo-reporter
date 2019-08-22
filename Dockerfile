@@ -25,6 +25,7 @@ COPY .babelrc ./
 
 # ESLint configuration
 COPY .eslintrc.js ./
+COPY .eslintignore ./
 
 # Env variables
 COPY .env.development ./
