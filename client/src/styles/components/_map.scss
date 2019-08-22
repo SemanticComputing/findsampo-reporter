@@ -50,6 +50,10 @@
   & .leaflet-control {
     border: 4px solid rgba(0,0,0,0.3);
   }
+  & .leaflet-left {
+    display: flex;
+    align-items: end;
+  }
   & .map__data-loader-spiner {
     width: 5rem;
     height: 5rem;
