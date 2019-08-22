@@ -52,9 +52,9 @@ const getFindMunicapility = createLogic({
   process({ action }) {
     return axios.get(
       'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox='
-      + action.coords.lat.toFixed(4).toString()
+      + action.coords.lat.toFixed(4)
       + ','
-      + action.coords.lng.toFixed(4).toString()
+      + action.coords.lng.toFixed(4)
       + ','
       + '30'
       + '&mode=retrieveAddresses&maxresults=1&gen=9&app_id=L9k8kxVsNc55DWwMOnT2&app_code=8kryvSwXkpsixfo9Pc-PgQ');

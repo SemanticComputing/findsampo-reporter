@@ -343,7 +343,11 @@ class Map extends Component {
   /**
    * Sets a location on the map
    */
-  setLocation = (lat, lng, updateState = false) => {
+  setLocation = (latitude, longitude, updateState = false) => {
+    // Limit number of decimals in the coordinates
+    const lat = parseFloat(latitude.toFixed(6));
+    const lng = parseFloat(longitude.toFixed(6));
+
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
     // Set the view on the map
     this.map.setView(L.latLng(lat, lng), this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
