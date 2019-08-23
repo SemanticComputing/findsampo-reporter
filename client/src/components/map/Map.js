@@ -82,6 +82,10 @@ class Map extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.map.remove();
+  }
+
   render() {
     {
       return (
