@@ -4646,11 +4646,6 @@ is-descriptor@^1.0.0, is-descriptor@^1.0.2:
     is-data-descriptor "^1.0.0"
     kind-of "^6.0.2"
 
-is-electron@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/is-electron/-/is-electron-2.2.0.tgz#8943084f09e8b731b3a7a0298a7b5d56f6b7eef0"
-  integrity sha512-SpMppC2XR3YdxSzczXReBjqs2zGscWQpBIKqwXYBFic0ERaxNVgwLCHwOLZeESfdJQjX0RDvrJ1lBXX2ij+G1Q==
-
 is-extendable@^0.1.0, is-extendable@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/is-extendable/-/is-extendable-0.1.1.tgz#62b110e289a471418e3ec36a617d472e301dfc89"
@@ -5207,11 +5202,6 @@ load-json-file@^2.0.0:
     parse-json "^2.2.0"
     pify "^2.0.0"
     strip-bom "^3.0.0"
-
-load-script@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
-  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
 
 loader-fs-cache@^1.0.0:
   version "1.0.2"
@@ -6912,10 +6902,10 @@ react-event-listener@^0.6.2, react-event-listener@^0.6.6:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
-react-intl-universal@^1.15.5:
-  version "1.16.2"
-  resolved "https://registry.yarnpkg.com/react-intl-universal/-/react-intl-universal-1.16.2.tgz#ee5f996c4253cdb86c79ff534c599452f95000a2"
-  integrity sha512-0GspMlo/URzCoWTHYSAYPMHbeV5mK87lU8QKZSDy7FgzeP82QDyCcpynjARRxnKVUssmzTYOHatzpPU9jxkkXw==
+react-intl-universal@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/react-intl-universal/-/react-intl-universal-2.1.3.tgz#5b4013343b2176669a0345772c7a79c25af7f148"
+  integrity sha512-9IM3eN47VPT6bZnzjCfqSWiH1K2PV3CJnO19mTp+Ky5OOxFCdYIeK0O0rLf2vravJ5p8Bj6GMz82siY3n7qqFQ==
   dependencies:
     console-polyfill "^0.3.0"
     cookie "^0.3.1"
@@ -6923,8 +6913,6 @@ react-intl-universal@^1.15.5:
     intl "^1.2.5"
     intl-messageformat "^2.2.0"
     invariant "^2.2.2"
-    is-electron "^2.1.0"
-    load-script "^1.0.0"
     lodash.merge "^4.6.1"
     object-keys "^1.0.11"
     querystring "^0.2.0"
