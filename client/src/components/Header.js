@@ -9,9 +9,13 @@ import {
   Icon,
   IconButton,
   Typography,
-  MenuItem,
-  Menu,
-  Avatar
+  Avatar,
+  Popper,
+  Grow,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  MenuItem
 } from '@material-ui/core/';
 import LangMenu from './LangMenu';
 import { logout } from '../actions/auth';
@@ -20,7 +24,7 @@ import { RouterPaths } from '../helpers/enum/enums';
 
 class Header extends Component {
   state = {
-    anchorEl: null,
+    menuOpen: false,
     innerWidth: 0
   };
 
@@ -36,17 +40,20 @@ class Header extends Component {
     this.setState({ innerWidth: window.innerWidth });
   }
 
-  onMenuPressed = (e) => {
-    this.setState({ anchorEl: e.currentTarget });
+  onMenuOpenPressed = () => {
+    this.setState(state => ({ menuOpen: !state.menuOpen }));
   };
 
-  onClosePresed = () => {
-    this.setState({ anchorEl: null });
-  }
+  onMenuClosePressed = event => {
+    if (this.anchorEl.contains(event.target)) {
+      return;
+    }
+    this.setState({ menuOpen: false });
+  };
 
   onLogoutPressed = () => {
-    this.onClosePresed();
     this.props.logout();
+    this.setState({ menuOpen: false });
   }
 
   renderIconContainer() {
@@ -115,10 +122,7 @@ class Header extends Component {
     );
   }
 
-
-
   render() {
-    const open = !!this.state.anchorEl;
     const titleclass = isDesktopScreen(window) ? 'appbar__typography' : 'appbar__typography--mobile';
     return (
       <div>
@@ -137,45 +141,50 @@ class Header extends Component {
               this.props.isAuthenticated ? (
                 <div>
                   <IconButton
-                    aria-owns={open ? 'menu-appbar' : undefined}
+                    buttonRef={node => { this.anchorEl = node; }}
+                    aria-owns={this.state.menuOpen ? 'menu-list-grow' : undefined}
                     aria-haspopup="true"
-                    onClick={this.onMenuPressed}
-                    component={Link}
-                    to="/"
+                    onClick={this.onMenuOpenPressed}
                     color="inherit"
+                    size="small"
+                    class="appbar__toolbar__log-out-button"
                   >
-                    <Button className="appbar__button" variant="contained" size="small">
-                      <Avatar className="appbar__avatar" color="primary" size="small">{this.getAvatarText()}</Avatar>
-                      <Icon className="appbar__button__icon">arrow_drop_down</Icon>
-                    </Button>
+                    <Avatar className="appbar__avatar" color="primary" size="small">{this.getAvatarText()}</Avatar>
+                    <Icon className="appbar__button__icon">arrow_drop_down</Icon>
                   </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    open={open}
-                    onClose={this.onClosePresed}
+                  <Popper
+                    open={this.state.menuOpen}
+                    anchorEl={this.anchorEl}
+                    transition disablePortal className="header__popper"
+                    placement="bottom-end"
                   >
-                    <MenuItem onClick={this.onLogoutPressed}>
-                      {intl.get('header.logout')}
-                    </MenuItem>
-                  </Menu>
+                    {({ TransitionProps, placement }) => (
+                      <Grow
+                        {...TransitionProps}
+                        id="menu-list-grow"
+                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                      >
+                        <Paper>
+                          <ClickAwayListener onClickAway={this.onMenuClosePressed}>
+                            <MenuList>
+                              <MenuItem onClick={this.onLogoutPressed}>
+                                {intl.get('header.logout')}
+                              </MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
                 </div>
-
               ) : (
                 <Button
                   component={Link}
                   to="/login"
                   color="inherit"
+                  className="appbar__login-button"
                 >
-                  <Icon className='appbar__icon'>input</Icon>
+                  <Icon className="appbar__icon">input</Icon>
                   {intl.get('header.login')}
                 </Button>
               )
@@ -194,8 +203,6 @@ class Header extends Component {
     return avatarText.substring(0, 2).toUpperCase();
   };
 }
-
-
 
 const mapStateToProps = (state) => ({
   isAuthenticated: !!state.auth.uid,
