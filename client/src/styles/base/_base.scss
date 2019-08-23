@@ -40,7 +40,7 @@ body {
 
 .app {
   display: grid;
-  grid-template-rows: 4.9rem auto fit-content(5rem);
+  grid-template-rows: 4.5rem auto fit-content(5rem);
   grid-template-areas: "appbar"
     "content"
     "footer";
