@@ -83,7 +83,7 @@ class Map extends Component {
   }
 
   componentWillUnmount() {
-    this.map.remove();
+    navigator.geolocation.clearWatch(this.geoLocationId);
   }
 
   render() {
@@ -162,6 +162,7 @@ class Map extends Component {
    * Initialise map and its settings
    */
   renderMap = (position) => {
+    if (this.map) { this.map.remove(); }
     this.initialiseIcon();
     this.initialiseMap();
     this.initialiseMarkers(position);
@@ -326,7 +327,7 @@ class Map extends Component {
    * Gets users current location and renders the map
    */
   getGeoLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
+    this.geoLocationId = navigator.geolocation.watchPosition((position) => {
       this.setState({ hasCurrentLocation: true });
       this.setState({ currentLocation: position });
       this.renderMap(position);
