@@ -238,7 +238,7 @@ const createReportObject = (report) => {
       }
     });
   }
-  
+
   return {
     reportId: getIdfromUri('report', report.id),
     status: report.status,

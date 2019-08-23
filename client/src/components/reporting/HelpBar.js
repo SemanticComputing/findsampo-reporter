@@ -57,7 +57,7 @@ class HelpBar extends Component {
   };
 
   onDrawerButtonPressed = () => {
-    if (this.hasSmartHelpData()) {
+    if (this.props.smartHelpData && this.hasSmartHelpData()) {
       this.setState((prevState) => ({ drawerOpen: !prevState.drawerOpen }));
     } else {
       this.props.enqueueSnackbar({
@@ -91,7 +91,6 @@ class HelpBar extends Component {
 
   hasSmartHelpData = () => {
     const { nearbyFinds, activeHelper } = this.props.smartHelpData;
-    
     if (this.props.currentStep === ReportSteps.LOCATION) {
       if (nearbyFinds.data.length > 0) {
         return true;
@@ -168,10 +167,10 @@ class HelpBar extends Component {
                   <Paper>
                     <ClickAwayListener onClickAway={this.onMenuClosePressed}>
                       <MenuList>
-                        <MenuItem onClick={this.saveReportAsDraft}>
+                        <MenuItem disabled={this.props.currentStep <= 3 || this.props.currentStep >= 15} onClick={this.saveReportAsDraft}>
                           <Icon className="help-bar__button-panel__more__menu-icon">drafts</Icon>{intl.get('helpBar.saveAs')}
                         </MenuItem>
-                        <MenuItem onClick={this.deleteReport}>
+                        <MenuItem disabled={this.props.currentStep <= 3 || this.props.currentStep >= 15} onClick={this.deleteReport}>
                           <Icon className="help-bar__button-panel__more__menu-icon">delete_forever</Icon>{intl.get('helpBar.delete')}
                         </MenuItem>
                       </MenuList>

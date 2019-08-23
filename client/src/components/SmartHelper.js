@@ -43,8 +43,8 @@ class SmartHelper extends Component {
           onClose={this.props.onClose}
           className="smart-helper"
         >
-          {this.renderTabs()}
-          {this.renderTabContents()}
+          {this.props.smartHelperData && this.renderTabs()}
+          {this.props.smartHelperData && this.renderTabContents()}
         </Drawer>
       </div >
     );
@@ -96,7 +96,7 @@ const createChartData = (data, tabIndex) => {
   const type = tabIndex === 0 ? 'nearby' : 'overall';
   const labels = Object.keys(data[type]);
   const series = Object.values(data[type]);
-  
+
   if (type === 'nearby') {
     return createPieChartOptions(labels, series);
   } else if (type === 'overall') {
