@@ -6,7 +6,7 @@
   }
   & &__toolbar {
     padding-right: 0;
-    &__log-out-button {
+    &__log-out-button, &__log-out-button:hover {
       background: $color-ligher-grey;
       padding: 3px 7px;
       border-radius: 4px;
