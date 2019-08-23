@@ -42,7 +42,7 @@ class LangMenu extends Component {
 
   render() {
     return (
-      <div>
+      <div className="lang-menu">
         <Fab variant='round' size='small'
           aria-controls='lang-button'
           className="lang-menu__button"

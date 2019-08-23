@@ -30,6 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 0;
     /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
     min-height: 0px;*/
     &__container {
