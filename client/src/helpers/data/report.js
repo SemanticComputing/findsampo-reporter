@@ -176,7 +176,7 @@ export default {
       backStep: 7,
       skipStep: 9,
       options: {
-        type: OptionTypes.NUMBER_FIELD,
+        type: OptionTypes.SLIDER,
       },
       buttons: [
         {
@@ -299,4 +299,5 @@ export default {
       help: 'report.questionReportSent.help',
       buttons: []
     }
-  ]};
+  ]
+};

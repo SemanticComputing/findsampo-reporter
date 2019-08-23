@@ -6,7 +6,8 @@ export const OptionTypes = Object.freeze({
   FIELD: 'field',
   PHOTOGRAPH: 'photograph',
   EXPANSION_PANEL: 'expansion-panel',
-  TREE_VIEW: 'tree-view'
+  TREE_VIEW: 'tree-view',
+  SLIDER: 'slider'
 });
 
 export const ButtonTypes = Object.freeze({

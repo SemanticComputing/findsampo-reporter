@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import {
+  Switch,
+  Slider,
+  FormControlLabel,
+  TextField,
+  InputAdornment
+} from '@material-ui/core/';
 import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import intl from 'react-intl-universal';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
-import { OptionTypes } from '../../helpers/enum/enums';
-import { setDate, setAdditionalMaterial, setFindDepth } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
 import TreeView from '../../components/TreeView';
+import { OptionTypes } from '../../helpers/enum/enums';
+import { setDate, setAdditionalMaterial, setFindDepth } from '../../actions/findNotification';
+
 
 class AnswerOptions extends Component {
-
   state = {
     isExactDay: true
   }
 
-
-  onFindDepthChanged = (event) => {
-    this.props.setFindDepth(event.target.value, this.props.currentFindIndex);
+  onFindDepthChanged = (event, value) => {
+    this.props.setFindDepth(value, this.props.currentFindIndex);
   }
 
   onExactDayChanged = () => {
@@ -136,6 +138,20 @@ class AnswerOptions extends Component {
             <TreeView content={options.treeData} for={options.for} />
           );
           break;
+        case OptionTypes.SLIDER: {
+          const marks = [{ value: 0, label: '0cm', }, { value: 300, label: '300cm', }];
+          container = (
+            <Slider
+              defaultValue={30}
+              max={300}
+              aria-labelledby="discrete-slider-always"
+              marks={marks}
+              valueLabelDisplay="on"
+              onChangeCommitted={this.onFindDepthChanged}
+              className="answer-options__slider"
+            />
+          );
+        }
       }
     }
     return container;

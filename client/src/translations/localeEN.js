@@ -166,7 +166,7 @@ export default {
       "selectionText": "I know the exact day."
     },
     "questionFindDepth": {
-      "question": "Please input the find depth.",
+      "question": "Please select the find depth.",
       "help": "Some explenation about find depth.",
       "label": "Find Depth",
       "buttonOne": "Continue",
