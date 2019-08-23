@@ -351,8 +351,8 @@ class Map extends Component {
    */
   setLocation = (latitude, longitude, updateState = false) => {
     // Limit number of decimals in the coordinates
-    const lat = parseFloat(latitude.toFixed(6));
-    const lng = parseFloat(longitude.toFixed(6));
+    const lat = parseFloat(parseFloat(latitude).toFixed(6));
+    const lng = parseFloat(parseFloat(longitude).toFixed(6));
 
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
     // Set the view on the map
