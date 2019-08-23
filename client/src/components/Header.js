@@ -50,11 +50,15 @@ class Header extends Component {
   }
 
   renderIconContainer() {
+    // The usage of React.forwardRef will no longer be required for react-router-dom v6.
+    // see https://github.com/ReactTraining/react-router/issues/6056
+    const AdapterLink = React.forwardRef((props, ref) => <NavLink innerRef={ref} {...props} />);
+
     return (
       isDesktopScreen(window) && <div className="appbar__icon-container">
         <Button
           className="appbar__icon-container__icon"
-          component={NavLink}
+          component={AdapterLink}
           to={RouterPaths.HOME_PAGE}
           isActive={(match, location) => location.pathname === RouterPaths.HOME_PAGE}
           activeClassName="appbar__icon-container__icon--selected"
@@ -65,7 +69,7 @@ class Header extends Component {
         </Button>
         <Button
           className="appbar__icon-container__icon"
-          component={NavLink}
+          component={AdapterLink}
           to={RouterPaths.MY_FINDS_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.MY_FINDS_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"
@@ -76,7 +80,7 @@ class Header extends Component {
         </Button>
         <Button
           className="appbar__icon-container__icon"
-          component={NavLink}
+          component={AdapterLink}
           to={RouterPaths.NEARBY_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.NEARBY_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"
@@ -87,7 +91,7 @@ class Header extends Component {
         </Button>
         <Button
           className="appbar__icon-container__icon"
-          component={NavLink}
+          component={AdapterLink}
           to={RouterPaths.REPORT_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.REPORT_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"
@@ -98,7 +102,7 @@ class Header extends Component {
         </Button>
         <Button
           className="appbar__icon-container__icon"
-          component={NavLink}
+          component={AdapterLink}
           to={RouterPaths.MORE_PAGE}
           isActive={(match, location) => location.pathname.startsWith(RouterPaths.MORE_PAGE)}
           activeClassName="appbar__icon-container__icon--selected"

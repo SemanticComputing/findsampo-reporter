@@ -46,6 +46,10 @@ class LoginPage extends Component {
   }
 
   render() {
+    // The usage of React.forwardRef will no longer be required for react-router-dom v6.
+    // see https://github.com/ReactTraining/react-router/issues/6056
+    const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+
     return (
       <div className='login-form'>
         <Typography className="login-form__title" variant="overline">
@@ -101,7 +105,7 @@ class LoginPage extends Component {
             {intl.get('loginPage.notAMemberYet')}
           </Typography>
           <Button
-            component={Link}
+            component={AdapterLink}
             to="/signup"
             variant="contained"
             color="primary"
