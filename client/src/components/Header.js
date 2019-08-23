@@ -147,7 +147,7 @@ class Header extends Component {
                     onClick={this.onMenuOpenPressed}
                     color="inherit"
                     size="small"
-                    class="appbar__toolbar__log-out-button"
+                    className="appbar__toolbar__log-out-button"
                   >
                     <Avatar className="appbar__avatar" color="primary" size="small">{this.getAvatarText()}</Avatar>
                     <Icon className="appbar__button__icon">arrow_drop_down</Icon>
