@@ -18,6 +18,7 @@
         height: 12rem;
         background-size: cover;
         @media screen and (max-width: $size-max-mobile) {
+          flex: unset;
           width: 100%;
         }
       }
