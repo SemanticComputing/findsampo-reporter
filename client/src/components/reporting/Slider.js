@@ -11,6 +11,8 @@ const MOBILE_SCREEN_PERSENTAGE = 95;
  * 
  * Props:
  * slideItems: The array of image data to be shown
+ * infiniteLoop: True if Infinite loop sliding is enabled
+ * centerSlidePercentage: Specifies percentage width (as an integer) of the slides in centerMode
  */
 class Slider extends Component {
   render() {
@@ -23,9 +25,9 @@ class Slider extends Component {
           autoPlay
           showThumbs={false}
           showStatus={false}
-          infiniteLoop={true}
+          infiniteLoop={this.props.infiniteLoop}
           showArrows={true}
-          centerSlidePercentage={centerPercentage}
+          centerSlidePercentage={this.props.centerSlidePercentage || centerPercentage}
         >
           {
             this.props.slideItems.map((slider, index) => (

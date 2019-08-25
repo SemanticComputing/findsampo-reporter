@@ -19,7 +19,7 @@ class AppHomePage extends Component {
           header='Recent Finds'
           headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', marginTop: '2rem', fontSize: '1.2rem', marginBottom: '0' }}
           bgColor='#f7f7f7'
-          component={() => <Slider slideItems={sliderData} />}
+          component={() => <Slider slideItems={sliderData} infiniteLoop />}
         />
 
         <ContentContainer

@@ -554,9 +554,7 @@ class Map extends Component {
    */
   generateMarkerPopup = (marker) => {
     let popupText = '';
-    // FIXME: SHOW ALL IMAGES
-    const firstImage = marker.image_url ? Array.isArray(marker.image_url) ? marker.image_url[0] : marker.image_url : '';
-    const image = marker.image_url ? `<img class="leaflet-popup-content__image" src=${firstImage} />` : '';
+    const image = getImageForPopup(marker.image_url);
     const title = marker.title ? `<h2 class="leaflet-popup-content__text-container__title">${marker.title}</h2>` : '';
     const description = marker.description ? `<p class="leaflet-popup-content__text-container__description">${marker.description}</p>` : '';
 
@@ -570,6 +568,20 @@ class Map extends Component {
     return popupText;
   }
 }
+
+/**
+ * Check if there are more than one image and then return the first image
+ *
+ * @param {*} imageData 
+ */
+const getImageForPopup = (imageData) => {
+  if (imageData) {
+    const image = imageData.split(';')[0];
+    return `<img class="leaflet-popup-content__image" src=${image} />`;
+  } else {
+    return '';
+  }
+};
 
 const MIN_ZOOM_LEVEL = 13;
 const DEFAULT_ZOOM_LEVEL = 5;
