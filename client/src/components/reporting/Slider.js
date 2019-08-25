@@ -6,6 +6,12 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const DESKTOP_SCREEN_PERSENTAGE = 30;
 const MOBILE_SCREEN_PERSENTAGE = 95;
 
+/**
+ * Show images in a slider
+ * 
+ * Props:
+ * slideItems: The array of image data to be shown
+ */
 class Slider extends Component {
   render() {
     const centerPercentage = isDesktopScreen(window) ? DESKTOP_SCREEN_PERSENTAGE : MOBILE_SCREEN_PERSENTAGE;
