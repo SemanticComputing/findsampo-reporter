@@ -577,7 +577,7 @@ class Map extends Component {
 const getImageForPopup = (imageData) => {
   if (imageData) {
     const image = imageData.split(';')[0];
-    return `<img class="leaflet-popup-content__image" src=${image} />`;
+    return `<img class="leaflet-popup-content__image" src="${image}"/>`;
   } else {
     return '';
   }
