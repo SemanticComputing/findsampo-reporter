@@ -20,7 +20,7 @@ const StepMaker = (props) => {
 };
 
 // Step boundaries
-const START_MAX = 2;
+const START_MAX = 1;
 const DETAILS_MAX = 6;
 const ADDITIONALS_MAX = 14;
 

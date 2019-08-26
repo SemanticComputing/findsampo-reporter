@@ -50,7 +50,7 @@ const initialState = {
   }
 };
 
-const DEFAULT_STEP_WITHOUT_HELP = 3;
+const DEFAULT_STEP_WITHOUT_HELP = 2;
 
 export default (state = initialState, action) => {
   switch (action.type) {

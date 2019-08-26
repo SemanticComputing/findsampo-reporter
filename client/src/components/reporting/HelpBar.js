@@ -129,7 +129,7 @@ class HelpBar extends Component {
             </Icon>
             <Icon
               onClick={this.onDrawerButtonPressed}
-              className={this.hasSmartHelpData() ?
+              className={this.props.smartHelpData && this.hasSmartHelpData() ?
                 'help-bar__icon__smart-helper' : 'help-bar__icon'}
             >
               wb_incandescent

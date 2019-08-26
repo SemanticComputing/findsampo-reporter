@@ -7,7 +7,7 @@ import {
 } from '../constants/actionTypes';
 
 const DEFAULT_CURRENT_STEP = 0;
-const DEFAULT_STEP_WITHOUT_HELP = 3;
+const DEFAULT_STEP_WITHOUT_HELP = 2;
 
 export default (state = initalState, action) => {
   switch (action.type) {
