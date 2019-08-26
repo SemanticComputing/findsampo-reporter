@@ -37,8 +37,8 @@ const getValidatedFind = createLogic({
     failType: FIND_GET_VALIDATED_FIND_FAIL,
   },
 
-  async process() {
-    return await axios.get(FINDS_END_POINT);
+  async process({ action }) {
+    return await axios.post(FINDS_END_POINT, { id: action.id });
   }
 });
 
