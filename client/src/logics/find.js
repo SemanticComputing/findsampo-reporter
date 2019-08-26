@@ -3,7 +3,10 @@ import axios from 'axios';
 import {
   FIND_GET_VALIDATED_FINDS,
   FIND_GET_VALIDATED_SUCCESS,
-  FIND_NOTIFICATION_SEND_FAIL
+  FIND_NOTIFICATION_SEND_FAIL,
+  FIND_GET_VALIDATED_FIND,
+  FIND_GET_VALIDATED_FIND_SUCCESS,
+  FIND_GET_VALIDATED_FIND_FAIL
 
 } from '../constants/actionTypes';
 
@@ -24,6 +27,22 @@ const getValidatedFinds = createLogic({
   }
 });
 
+const getValidatedFind = createLogic({
+  type: FIND_GET_VALIDATED_FIND,
+  latest: true,
+
+  processOptions: {
+    dispatchReturn: true,
+    successType: FIND_GET_VALIDATED_FIND_SUCCESS,
+    failType: FIND_GET_VALIDATED_FIND_FAIL,
+  },
+
+  async process() {
+    return await axios.get(FINDS_END_POINT);
+  }
+});
+
 export default [
-  getValidatedFinds
+  getValidatedFinds,
+  getValidatedFind
 ];

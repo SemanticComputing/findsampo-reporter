@@ -35,7 +35,7 @@ import {
 import intl from 'react-intl-universal';
 import { setCoordinates, setMunicipality } from '../../actions/findNotification';
 import { fetchMapData, startMapSpinner } from '../../actions/map';
-import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
+import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
 
 
@@ -564,6 +564,7 @@ class Map extends Component {
                   <div class="leaflet-popup-content__text-container">
                   ${title} 
                   ${description}
+                  <a href="${RouterPaths.FIND_PAGE}?id=${id}">More</a>
                   </div>
                   `;
 
