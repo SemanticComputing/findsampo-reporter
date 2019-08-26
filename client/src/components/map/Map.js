@@ -550,15 +550,17 @@ class Map extends Component {
   }
 
   /**
-   * Generates marker popup
+   * Generates marker popupText
    */
   generateMarkerPopup = (marker) => {
     let popupText = '';
+    const id = marker.id.split('sualt-fha-finds/')[1];
     const image = getImageForPopup(marker.image_url);
     const title = marker.title ? `<h2 class="leaflet-popup-content__text-container__title">${marker.title}</h2>` : '';
     const description = marker.description ? `<p class="leaflet-popup-content__text-container__description">${marker.description}</p>` : '';
 
     popupText += `${image}
+                  <span id="leaflet-popup-content__id" class="leaflet-popup-content__id">${id}</span>
                   <div class="leaflet-popup-content__text-container">
                   ${title} 
                   ${description}
