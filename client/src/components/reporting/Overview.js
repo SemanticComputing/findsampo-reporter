@@ -38,7 +38,7 @@ const OverView = (props) => {
                 <Typography variant="caption" className="overview__properties">
                   {intl.get('overview.find.photos')}
                 </Typography>
-                {renderPhotos(find.photos)}
+                {find.photos.length > 0 && renderPhotos(find.photos)}
                 {/* Find Site Details */}
                 <div className="overview__find-site__map">
                   <Typography variant="caption" className="overview__properties">
@@ -50,7 +50,7 @@ const OverView = (props) => {
                   <Typography variant="caption" className="overview__properties">
                     {intl.get('overview.findSite.photos')}
                   </Typography>
-                  {renderPhotos(find.findSite.photos)}
+                  {find.findSite.photos > 0 && renderPhotos(find.findSite.photos)}
                 </div>
                 {/* Find properties */}
                 <Typography variant="caption" className="overview__properties">
