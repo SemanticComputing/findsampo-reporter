@@ -34,6 +34,7 @@ const AppRouter = () => (
           <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
           <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />
           <PublicRoute path={RouterPaths.SIGNUP_PAGE} component={SignupPage} />
+          <PrivateRoute path={RouterPaths.FIND_PAGE} component={FindPage} />
           <PrivateRoute path={RouterPaths.NEARBY_PAGE} component={NearbyPage} />
           <PrivateRoute path={RouterPaths.REPORT_PAGE} component={ReportPage} />
           <PrivateRoute path={RouterPaths.MY_FINDS_PAGE} component={MyFindsPage} />
@@ -110,5 +111,10 @@ const NotFoundPage = Loadable({
 
 const LegalityCheckerPage = Loadable({
   loader: () => import('../components/pages/LegalityCheckerPage'),
+  loading: Loading
+});
+
+const FindPage = Loadable({
+  loader: () => import('../components/pages/FindPage'),
   loading: Loading
 });
