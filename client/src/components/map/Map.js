@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+//import { withRouter } from 'react-router-dom';
 import { isEqual, difference } from 'lodash';
 
 // JS files
@@ -22,6 +23,7 @@ import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import 'leaflet-fullscreen/dist/fullscreen.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import { history } from '../../routers/AppRouter';
 
 // Others
 import {
@@ -491,7 +493,21 @@ class Map extends Component {
         this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
       }
     });
+
+    // Fired when marker popup more button is clicked
+    this.map.on('popupopen', () => {
+      document.getElementById('leaflet-popup-content-more-button').addEventListener('click', this.popupMorePressListener);
+    });
+    this.map.on('popupclose', () => {
+      document.getElementById('leaflet-popup-content-more-button').removeEventListener('click', this.popupMorePressListener);
+    });
   }
+
+  popupMorePressListener = () => {
+    const id = document.getElementById('leaflet-popup-content__id').textContent;
+    history.push(`${RouterPaths.FIND_PAGE}?id=${id}`, { id });
+  };
+
 
   /**
    * Returs default color of the selected overlay
@@ -564,7 +580,7 @@ class Map extends Component {
                   <div class="leaflet-popup-content__text-container">
                   ${title} 
                   ${description}
-                  <a href="${RouterPaths.FIND_PAGE}?id=${id}">More</a>
+                  <a id="leaflet-popup-content-more-button">More</a>
                   </div>
                   `;
 

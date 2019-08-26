@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
   };
 
   try {
-    const query = finds.getValidatedFinds;
+    const query = finds.getValidatedFinds();
     const response = await axios({
       method: 'post',
       headers: defaultSelectHeaders,
