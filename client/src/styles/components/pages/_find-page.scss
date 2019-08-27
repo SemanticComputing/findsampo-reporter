@@ -2,6 +2,10 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  @media screen and (min-width: $size-max-mobile) {
+    margin: $size-full-screen-margin;
+    max-width: $size-full-screeen-max-size;
+  }
   &__main-container {
     display: flex;
     @media screen and (max-width: $size-max-mobile) {
@@ -23,12 +27,14 @@
       display: flex;
       flex-wrap: wrap;
       &__property{
-        margin: 0 1rem;
+        width: 8rem;
+        margin: 6px 1rem;
       }
     }
     &__map {
       display: flex;
       flex: 1;
+      min-height: 20rem;
     }
   }
 }

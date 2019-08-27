@@ -77,7 +77,7 @@ class FindPage extends Component {
             </Paper>
           </div>
           <Paper className="find-page__property-container__map find-page__card">
-            <Map markerData={[this.props.find]} />
+            <Map markerData={[this.props.find]} setViewForMarkerData zoomLevel={13}/>
           </Paper>
         </div>
       </div>

@@ -1,6 +1,6 @@
 .myFindsReportOverviewPage {
   display: flex;
   flex: 1;
-  margin: 0 25%;
-  max-width: 940px;
+  margin: $size-full-screen-margin;
+  max-width: $size-full-screeen-max-size;
 }

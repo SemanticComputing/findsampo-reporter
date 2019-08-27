@@ -393,8 +393,12 @@ class Map extends Component {
 
     // Set view for a range of coordinates
     if (this.props.setViewForMarkerData) {
-      var mapBounds = new L.LatLngBounds(latLngs);
-      this.map.fitBounds(mapBounds);
+      if(markerData.length === 1) {
+        this.map.setView(latLngs[0], this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
+      }else {
+        var mapBounds = new L.LatLngBounds(latLngs);
+        this.map.fitBounds(mapBounds);
+      }
     }
 
     // HeatMap Mode
