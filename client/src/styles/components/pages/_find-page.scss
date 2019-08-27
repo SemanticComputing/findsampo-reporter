@@ -1,0 +1,34 @@
+.find-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  &__main-container {
+    display: flex;
+    @media screen and (max-width: $size-max-mobile) {
+      flex-direction: column;
+    }
+  }
+  &__card {
+    margin: 0.5rem 1rem;
+    padding: 1rem;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    border-radius: 8px;
+  }
+  &__property-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    &__properties{
+      flex: 2;
+      display: flex;
+      flex-wrap: wrap;
+      &__property{
+        margin: 0 1rem;
+      }
+    }
+    &__map {
+      display: flex;
+      flex: 1;
+    }
+  }
+}

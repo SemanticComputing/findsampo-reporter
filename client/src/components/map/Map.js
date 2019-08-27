@@ -496,18 +496,20 @@ class Map extends Component {
 
     // Fired when marker popup more button is clicked
     this.map.on('popupopen', () => {
-      document.getElementById('leaflet-popup-content-more-button').addEventListener('click', this.popupMorePressListener);
+      document.getElementById('leaflet-popup-content__more-button').addEventListener('click', this.popupMorePressListener);
     });
     this.map.on('popupclose', () => {
-      document.getElementById('leaflet-popup-content-more-button').removeEventListener('click', this.popupMorePressListener);
+      document.getElementById('leaflet-popup-content__more-button').removeEventListener('click', this.popupMorePressListener);
     });
   }
 
+  /**
+   * Listener for navigating popup more link presses
+   */
   popupMorePressListener = () => {
     const id = document.getElementById('leaflet-popup-content__id').textContent;
     history.push(`${RouterPaths.FIND_PAGE}?id=${id}`, { id });
   };
-
 
   /**
    * Returs default color of the selected overlay
@@ -580,7 +582,7 @@ class Map extends Component {
                   <div class="leaflet-popup-content__text-container">
                   ${title} 
                   ${description}
-                  <a id="leaflet-popup-content-more-button">More</a>
+                  <p id="leaflet-popup-content__more-button" class="leaflet-popup-content__more-button">More</p>
                   </div>
                   `;
 
