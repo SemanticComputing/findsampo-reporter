@@ -37,6 +37,7 @@ export const RouterPaths = Object.freeze({
   LOGIN_PAGE: '/login',
   SIGNUP_PAGE: '/signup',
   MY_FINDS_PAGE: '/myfinds',
+  FIND_PAGE: '/find',
   MY_FINDS_REPORT_OVERVIEW_PAGE: '/myfinds-report-overview',
   MORE_PAGE: '/more',
   NEARBY_PAGE: '/nearby',

@@ -1,3 +1,4 @@
+// Components
 @import './base/settings';
 @import './base/base';
 @import './components/footer';
@@ -26,3 +27,6 @@
 @import './components/pages/my-finds-report-overview-page';
 @import './components/smart-helper';
 @import './components/chart';
+@import './components/pages/find-page';
+// Third party
+@import "~react-image-gallery/styles/scss/image-gallery.scss";

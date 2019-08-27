@@ -1,0 +1,69 @@
+.find-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  @media screen and (min-width: $size-max-mobile) {
+    margin: $size-full-screen-margin;
+    max-width: $size-full-screeen-max-size;
+  }
+  &__header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin: 1rem 1rem 0.6rem 1rem;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+    border-radius: 8px;
+    & &__id-text {
+      color: $color-ligher-dark-grey;
+    }
+    & &__text {
+      font-size: 1rem;
+      @media screen and (max-width: $size-max-mobile) {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  &__main-container {
+    display: flex;
+    z-index: 0;
+    @media screen and (max-width: $size-max-mobile) {
+      flex-direction: column;
+    }
+  }
+  &__card {
+    margin: 0.5rem 1rem;
+    padding: 1rem;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    border-radius: 8px;
+  }
+  &__description {
+    padding-left: 2rem;
+  }
+  &__property-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    &__properties{
+      flex: 2;
+      display: flex;
+      flex-wrap: wrap;
+      &__property{
+        width: 8rem;
+        margin: 6px 1rem;
+      }
+    }
+    &__map {
+      display: flex;
+      flex: 1;
+      min-height: 20rem;
+    }
+  }
+
+  // Slider CSS
+  .image-gallery-content {
+    margin: 0.5rem 1rem;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    border-radius: 8px;
+  }
+}

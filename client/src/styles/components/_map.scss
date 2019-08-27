@@ -46,6 +46,19 @@
         font-weight: 400;
         text-align: center;
       }
+      &__more-button {
+        padding: 5px 16px;
+        margin: 0;
+        margin-top: 10px;
+        border: 1px solid $color-primary;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 500;
+        line-height: 1.75;
+        border-radius: 4px;
+        letter-spacing: 0.02857em;
+        text-transform: uppercase;
+      }
     }
   }
   & .leaflet-popup-close-button {

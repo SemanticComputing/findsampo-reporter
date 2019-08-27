@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+//import { withRouter } from 'react-router-dom';
 import { isEqual, difference } from 'lodash';
 
 // JS files
@@ -22,6 +23,7 @@ import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import 'leaflet-fullscreen/dist/fullscreen.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import { history } from '../../routers/AppRouter';
 
 // Others
 import {
@@ -35,7 +37,7 @@ import {
 import intl from 'react-intl-universal';
 import { setCoordinates, setMunicipality } from '../../actions/findNotification';
 import { fetchMapData, startMapSpinner } from '../../actions/map';
-import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
+import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
 
 
@@ -391,8 +393,12 @@ class Map extends Component {
 
     // Set view for a range of coordinates
     if (this.props.setViewForMarkerData) {
-      var mapBounds = new L.LatLngBounds(latLngs);
-      this.map.fitBounds(mapBounds);
+      if(markerData.length === 1) {
+        this.map.setView(latLngs[0], this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
+      }else {
+        var mapBounds = new L.LatLngBounds(latLngs);
+        this.map.fitBounds(mapBounds);
+      }
     }
 
     // HeatMap Mode
@@ -491,7 +497,23 @@ class Map extends Component {
         this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
       }
     });
+
+    // Fired when marker popup more button is clicked
+    this.map.on('popupopen', () => {
+      document.getElementById('leaflet-popup-content__more-button').addEventListener('click', this.popupMorePressListener);
+    });
+    this.map.on('popupclose', () => {
+      document.getElementById('leaflet-popup-content__more-button').removeEventListener('click', this.popupMorePressListener);
+    });
   }
+
+  /**
+   * Listener for navigating popup more link presses
+   */
+  popupMorePressListener = () => {
+    const id = document.getElementById('leaflet-popup-content__id').textContent;
+    history.push(`${RouterPaths.FIND_PAGE}?id=${id}`, { id });
+  };
 
   /**
    * Returs default color of the selected overlay
@@ -564,6 +586,7 @@ class Map extends Component {
                   <div class="leaflet-popup-content__text-container">
                   ${title} 
                   ${description}
+                  <p id="leaflet-popup-content__more-button" class="leaflet-popup-content__more-button">More</p>
                   </div>
                   `;
 
