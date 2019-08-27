@@ -37,6 +37,9 @@
     box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
     border-radius: 8px;
   }
+  &__description {
+    padding-left: 2rem;
+  }
   &__property-container {
     display: flex;
     flex-direction: column;

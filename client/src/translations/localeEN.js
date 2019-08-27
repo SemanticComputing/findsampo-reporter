@@ -96,6 +96,17 @@ export default {
       }
     }
   },
+  "findPage": {
+    "id": "Id",
+    "material": "Material",
+    "type": "Type",
+    "municipality": "Municipality",
+    "specification": "specification",
+    "period": "Period",
+    "site": "Historical Site",
+    "link": "Link",
+    "description": "Description"
+  },
   "overview": {
     "title": "Summary",
     "notProvidedValue": "Not Provided",

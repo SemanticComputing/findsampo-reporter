@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
+import intl from 'react-intl-universal';
 import { getValidatedFind } from '../../actions/find';
 import { RouterPaths } from '../../helpers/enum/enums';
 import { isDesktopScreen } from '../../helpers/functions/functions';
@@ -31,7 +32,7 @@ class FindPage extends Component {
             {this.props.find.title}
           </Typography>
           <Typography className="find-page__header-container__id-text" variant="caption" display="block" gutterBottom>
-            {`ID: ${this.props.find.id.split('sualt-fha-finds/')[1]}`}
+            {`${intl.get('findPage.id')}: ${this.props.find.id.split('sualt-fha-finds/')[1]}`}
           </Typography>
         </Paper>
         {
@@ -49,7 +50,7 @@ class FindPage extends Component {
             <Paper className="find-page__property-container__properties find-page__card">
               <div className="find-page__property-container__properties__property">
                 <Typography variant="overline" gutterBottom>
-                  Material
+                  {intl.get('findPage.material')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {this.props.find.main_material}
@@ -57,7 +58,7 @@ class FindPage extends Component {
               </div>
               <div className="find-page__property-container__properties__property">
                 <Typography variant="overline" gutterBottom>
-                  Type
+                  {intl.get('findPage.type')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {this.props.find.type}
@@ -65,7 +66,7 @@ class FindPage extends Component {
               </div>
               <div className="find-page__property-container__properties__property">
                 <Typography variant="overline" gutterBottom>
-                  Municipality
+                  {intl.get('findPage.municipality')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {this.props.find.municipality}
@@ -73,7 +74,7 @@ class FindPage extends Component {
               </div>
               <div className="find-page__property-container__properties__property">
                 <Typography variant="overline" gutterBottom>
-                  Specification
+                  {intl.get('findPage.specification')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {this.props.find.specification}
@@ -81,7 +82,7 @@ class FindPage extends Component {
               </div>
               <div className="find-page__property-container__properties__property">
                 <Typography variant="overline" gutterBottom>
-                  Period
+                  {intl.get('findPage.period')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {this.props.find.period}
@@ -89,18 +90,18 @@ class FindPage extends Component {
               </div>
               <div className="find-page__property-container__properties__property">
                 <Typography variant="overline" gutterBottom>
-                  Historical Site
+                  {intl.get('findPage.site')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   <Link href={this.props.find.archaeological_site_url} target="_blank" rel="noreferrer">
-                    Link
+                    {intl.get('findPage.link')}
                   </Link>
                 </Typography>
               </div>
             </Paper>
             <Paper className="find-page__description find-page__card">
               <Typography variant="overline" gutterBottom>
-                Description
+                {intl.get('findPage.description')}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 {this.props.find.description}
