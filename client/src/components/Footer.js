@@ -1,12 +1,13 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { AppBar, Slide, Toolbar } from '@material-ui/core';
 import { isMobileScreen } from '../helpers/functions/functions';
 import { RouterPaths } from '../helpers/enum/enums';
 
-const Footer = () => {
+const Footer = (props) => {
   return (
     !isMobileScreen(window) &&
-    <Slide direction="up" in={window.location.pathname !== RouterPaths.NEARBY_PAGE} mountOnEnter unmountOnExit>
+    <Slide direction="up" in={props.location.pathname !== RouterPaths.NEARBY_PAGE} mountOnEnter unmountOnExit>
       <div>
         <AppBar position="static" className='footer'>
           <Toolbar className="footer__toolbar">
@@ -81,4 +82,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default withRouter(Footer);
