@@ -6,8 +6,27 @@
     margin: $size-full-screen-margin;
     max-width: $size-full-screeen-max-size;
   }
+  &__header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin: 1rem 1rem 0.6rem 1rem;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+    border-radius: 8px;
+    & &__id-text {
+      color: $color-ligher-dark-grey;
+    }
+    & &__text {
+      font-size: 1rem;
+      @media screen and (max-width: $size-max-mobile) {
+        font-size: 0.9rem;
+      }
+    }
+  }
   &__main-container {
     display: flex;
+    z-index: 0;
     @media screen and (max-width: $size-max-mobile) {
       flex-direction: column;
     }
@@ -36,5 +55,12 @@
       flex: 1;
       min-height: 20rem;
     }
+  }
+
+  // Slider CSS
+  .image-gallery-content {
+    margin: 0.5rem 1rem;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    border-radius: 8px;
   }
 }

@@ -6609,6 +6609,11 @@ lodash.clonedeep@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
+
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -6659,7 +6664,7 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
-lodash.throttle@^4.0.1:
+lodash.throttle@^4.0.1, lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
@@ -8587,6 +8592,17 @@ react-event-listener@^0.6.6:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
+react-image-gallery@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-image-gallery/-/react-image-gallery-0.9.1.tgz#3ac75af700ce671d82aae1e2ad8226c0e1379ad1"
+  integrity sha512-J0ZDp12QwcHxK/De//Cx0lXvkPk2bL2voNm6xmZItCZ5TWTKJyNAa9U/iOtfi/RKJEpSLsTb2kP/4Lr5wgkJZA==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+    prop-types "^15.5.8"
+    react-swipeable "^5.2.0"
+    resize-observer-polyfill "^1.5.0"
+
 react-intl-universal@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/react-intl-universal/-/react-intl-universal-2.1.3.tgz#5b4013343b2176669a0345772c7a79c25af7f148"
@@ -8706,6 +8722,13 @@ react-sortable-tree@^2.6.0, react-sortable-tree@^2.6.2:
     react-lifecycles-compat "^3.0.4"
     react-sortable-tree "^2.6.0"
     react-virtualized "^9.19.1"
+
+react-swipeable@^5.2.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-5.4.0.tgz#3c2421296a993b8fc6cb05051b9bf025cb6af9e4"
+  integrity sha512-TUbldupF3cxMF+pBWfz24TlQa23K4CecqQ8EA+onxEiAg+UEPSJ5IousOjMm0IVBYz62KX1klHL8p7SGSR3CiQ==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-text-mask@^5.4.3:
   version "5.4.3"
@@ -9091,6 +9114,11 @@ reselect@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.0.0.tgz#f2529830e5d3d0e021408b246a206ef4ea4437f7"
   integrity sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
+
+resize-observer-polyfill@^1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
