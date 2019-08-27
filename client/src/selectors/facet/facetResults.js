@@ -115,13 +115,13 @@ const getFilterValuesWithAmount = (results, searchResults, filterType, finds, gr
   let res;
 
   if (searchResults.length > 0) {
-    if (size(filtersWithoutTitle) === 1 && filtersWithoutTitle.hasOwnProperty(filterType)) {
+    if (size(filtersWithoutTitle) === 1 && Object.prototype.hasOwnProperty.call(filtersWithoutTitle, filterType)) {
       res = searchResults;
     } else {
       res = results;
     }
   } else {
-    if (size(filtersWithoutTitle) === 1 && filtersWithoutTitle.hasOwnProperty(filterType)) {
+    if (size(filtersWithoutTitle) === 1 && Object.prototype.hasOwnProperty.call(filtersWithoutTitle, filterType)) {
       res = finds;
     } else {
       res = results;
