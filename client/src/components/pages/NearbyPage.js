@@ -44,7 +44,7 @@ class NearbyPage extends Component {
     } else if (this.state.mode == 1) {
       return <Map markerData={this.props.finds.results} mode={MapMode.HEATMAP} />;
     } else {
-      return <Table tableData={convertToTableData(this.props.finds.results)} setBodyHeight />;
+      return <Table tableData={convertToTableData(this.props.finds.results)} />;
     }
   }
 
