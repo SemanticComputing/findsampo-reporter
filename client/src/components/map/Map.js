@@ -502,9 +502,12 @@ class Map extends Component {
     this.map.on('popupopen', () => {
       document.getElementById('leaflet-popup-content__more-button').addEventListener('click', this.popupMorePressListener);
     });
+
+    /* TODO: Enable remove event listener
     this.map.on('popupclose', () => {
       document.getElementById('leaflet-popup-content__more-button').removeEventListener('click', this.popupMorePressListener);
     });
+    */
   }
 
   /**

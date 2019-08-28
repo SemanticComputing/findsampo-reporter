@@ -53,7 +53,7 @@ class FindPage extends Component {
                   {intl.get('findPage.material')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {this.props.find.main_material}
+                  {getPropertyvalue(this.props.find.main_material)}
                 </Typography>
               </div>
               <div className="find-page__property-container__properties__property">
@@ -61,7 +61,7 @@ class FindPage extends Component {
                   {intl.get('findPage.type')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {this.props.find.type}
+                  {getPropertyvalue(this.props.find.type)}
                 </Typography>
               </div>
               <div className="find-page__property-container__properties__property">
@@ -69,7 +69,7 @@ class FindPage extends Component {
                   {intl.get('findPage.municipality')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {this.props.find.municipality}
+                  {getPropertyvalue(this.props.find.municipality)}
                 </Typography>
               </div>
               <div className="find-page__property-container__properties__property">
@@ -77,7 +77,7 @@ class FindPage extends Component {
                   {intl.get('findPage.specification')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {this.props.find.specification}
+                  {getPropertyvalue(this.props.find.specification)}
                 </Typography>
               </div>
               <div className="find-page__property-container__properties__property">
@@ -85,7 +85,7 @@ class FindPage extends Component {
                   {intl.get('findPage.period')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {this.props.find.period}
+                  {getPropertyvalue(this.props.find.period)}
                 </Typography>
               </div>
               <div className="find-page__property-container__properties__property">
@@ -93,9 +93,13 @@ class FindPage extends Component {
                   {intl.get('findPage.site')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  <Link href={this.props.find.archaeological_site_url} target="_blank" rel="noreferrer">
-                    {intl.get('findPage.link')}
-                  </Link>
+                  {this.props.find.archaeological_site_url ? (
+                    <Link href={this.props.find.archaeological_site_url} target="_blank" rel="noreferrer">
+                      {getPropertyvalue(intl.get('findPage.link'))}
+                    </Link>
+                  ) :
+                    EMPY_VALUE_PLACEHOLDER
+                  }
                 </Typography>
               </div>
             </Paper>
@@ -104,18 +108,23 @@ class FindPage extends Component {
                 {intl.get('findPage.description')}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {this.props.find.description}
+                {getPropertyvalue(this.props.find.description)}
               </Typography>
             </Paper>
           </div>
           <Paper className="find-page__property-container__map find-page__card">
-            <Map markerData={[this.props.find]} setViewForMarkerData zoomLevel={13} />
+            {this.props.find.lat && this.props.find.long && <Map markerData={[this.props.find]} setViewForMarkerData zoomLevel={13} />}
           </Paper>
         </div>
       </div>
     );
   }
 }
+
+const EMPY_VALUE_PLACEHOLDER = '-';
+const getPropertyvalue = (value) => {
+  return value ? value : EMPY_VALUE_PLACEHOLDER;
+};
 
 const renderGalleryImages = (images) => {
   const imgs = [];
