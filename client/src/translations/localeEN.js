@@ -55,6 +55,18 @@ export default {
         "link": "Link",
         "more": "More"
       }
+    },
+    "tabs": {
+      "map": "Map",
+      "heatmap": "HeatMap",
+      "table": "Table",
+      "statistics": "Statistics"
+    },
+    "chart": {
+      "selectProperty": "Select Property",
+      "material": "Material",
+      "type": "Type",
+      "period": "Period"
     }
   },
   "myFindsPage": {

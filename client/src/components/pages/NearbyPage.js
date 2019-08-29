@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CircularProgress, Paper, Icon, Tabs, Tab, IconButton } from '@material-ui/core';
 import Map from '../map/Map';
 import Table from '../table/Table';
+import Chart from '../Chart';
 import FacetDrawer from '../FacetDrawer';
 import findsSelector from '../../selectors/facet/facetResults';
+import {
+  CircularProgress,
+  Paper,
+  Icon,
+  Tabs,
+  Tab,
+  IconButton,
+  FormControl,
+  InputLabel,
+  Select,
+  OutlinedInput,
+  MenuItem
+} from '@material-ui/core';
+import intl from 'react-intl-universal';
 import { getValidatedFinds } from '../../actions/find';
-import { isDesktopScreen, isMobileScreen, convertToTableData } from '../../helpers/functions/functions';
+import { isDesktopScreen, isMobileScreen, convertToTableData, convertToChartData } from '../../helpers/functions/functions';
 import { MapMode } from '../../helpers/enum/enums';
+import { createDonutOptions } from '../../helpers/data/chart';
 
 class NearbyPage extends Component {
   state = {
     isFacetOpen: false,
     showMap: true,
-    mode: 0 // Default mode is clustered map mode
+    selectedChartProperty: 'main_material', // Default chart is material
+    mode: 0 // Default mode is clustered map
   }
 
   componentDidMount() {
@@ -38,14 +54,46 @@ class NearbyPage extends Component {
     this.setState({ mode });
   }
 
+  onChartPropertyChangePressed = (event) => {
+    this.setState({ selectedChartProperty: event.target.value });
+  }
+
   renderSelectedMode = () => {
+    // Modes are based on the order of the Tab elements
     if (this.state.mode == 0) {
       return <Map markerData={this.props.finds.results} mode={MapMode.CLUSTURED_MAP} />;
     } else if (this.state.mode == 1) {
       return <Map markerData={this.props.finds.results} mode={MapMode.HEATMAP} />;
-    } else {
+    } else if (this.state.mode == 2) {
       return <Table tableData={convertToTableData(this.props.finds.results)} />;
+    } else {
+      return this.renderChart();
     }
+  }
+
+  renderChart = () => {
+    const data = convertToChartData(this.props.finds.results, this.state.selectedChartProperty);
+    return (
+      <div className="nearby__map__container__chart-container">
+        <Paper className="nearby__map__container__chart-container__paper">
+          <FormControl className="nearby__map__container__chart-container__paper__form-control" variant="outlined">
+            <InputLabel htmlFor="outlined-property-simple">
+              {intl.get('nearByPage.chart.selectProperty')}
+            </InputLabel>
+            <Select
+              onChange={this.onChartPropertyChangePressed}
+              value={this.state.selectedChartProperty}
+              input={<OutlinedInput name="property" id="outlined-property-simple" labelWidth={120} />}
+            >
+              <MenuItem value="main_material">{intl.get('nearByPage.chart.material')}</MenuItem>
+              <MenuItem value="type">{intl.get('nearByPage.chart.type')}</MenuItem>
+              <MenuItem value="period">{intl.get('nearByPage.chart.period')}</MenuItem>
+            </Select>
+          </FormControl>
+        </Paper>
+        <Chart options={createDonutOptions(data.labels, data.series)} />
+      </div>
+    );
   }
 
   render() {
@@ -64,9 +112,10 @@ class NearbyPage extends Component {
                 indicatorColor="primary"
                 textColor="primary"
               >
-                <Tab icon={<Icon>map</Icon>} label="MAP" className="nearby__tool-bar__paper__tabs__tab" />
-                <Tab icon={<Icon>wb_sunny</Icon>} label="HEATMAP" className="nearby__tool-bar__paper__tabs__tab" />
-                <Tab icon={<Icon>table_chart</Icon>} label="TABLE" className="nearby__tool-bar__paper__tabs__tab" />
+                <Tab icon={<Icon>map</Icon>} label={intl.get('nearByPage.tabs.map')} className="nearby__tool-bar__paper__tabs__tab" />
+                <Tab icon={<Icon>wb_sunny</Icon>} label={intl.get('nearByPage.tabs.heatmap')} className="nearby__tool-bar__paper__tabs__tab" />
+                <Tab icon={<Icon>table_chart</Icon>} label={intl.get('nearByPage.tabs.table')} className="nearby__tool-bar__paper__tabs__tab" />
+                <Tab icon={<Icon>pie_chart</Icon>} label={intl.get('nearByPage.tabs.statistics')} className="nearby__tool-bar__paper__tabs__tab" />
               </Tabs>
             </div>
           </Paper>

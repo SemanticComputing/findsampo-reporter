@@ -1,4 +1,4 @@
-import { invert } from 'lodash';
+import { invert, countBy, filter } from 'lodash';
 
 const MOBILE_SCREEN_MAX_WIDTH = 650;
 
@@ -72,4 +72,14 @@ export const convertToTableData = (data) => {
     );
   }
   return tableData;
+};
+
+export const convertToChartData = (data, activeProperty) => {
+  const dataWithPropery = filter(data, (d) => d[activeProperty]);
+  const result = countBy(dataWithPropery, (d) => d[activeProperty]);
+
+  return {
+    labels: Object.keys(result),
+    series: Object.values(result)
+  };
 };

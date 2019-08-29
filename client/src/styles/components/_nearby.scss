@@ -54,6 +54,17 @@
         flex: 1;
         display: flex;
       }
+      &__chart-container {
+        flex: 1;
+        &__paper {
+          display: flex;
+          align-items: center;
+          & &__form-control {
+            min-width: 9rem;
+            margin: 1rem;
+          }
+        }
+      }
     }
   }
 }
