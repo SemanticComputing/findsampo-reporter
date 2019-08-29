@@ -2,19 +2,19 @@ module.exports = (finds) => {
   const result = finds.map(f => {
     return {
       id: f.find.value,
-      depth: f.hasOwnProperty('depth') && f.depth.value,
-      material: f.hasOwnProperty('material') && f.material.value,
-      type: f.hasOwnProperty('type') && f.type.value,
-      period: f.hasOwnProperty('period') && f.period.value,
-      additionalMaterials: f.hasOwnProperty('additionalMaterials') && f.additionalMaterials.value,
+      ...(Object.prototype.hasOwnProperty.call(f, 'depth') && { depth: f.depth.value }),
+      ...(Object.prototype.hasOwnProperty.call(f, 'material') && { material: f.material.value }),
+      ...(Object.prototype.hasOwnProperty.call(f, 'type') && { type: f.type.value }),
+      ...(Object.prototype.hasOwnProperty.call(f, 'period') && { period: f.period.value }),
+      ...(Object.prototype.hasOwnProperty.call(f, 'additionalMaterials') && { additionalMaterials: f.additionalMaterials.value }),
       findSite: {
         coords: {
-          lat: f.hasOwnProperty('lat') && f.lat.value,
-          lng: f.hasOwnProperty('long') && f.long.value
+          ...(Object.prototype.hasOwnProperty.call(f, 'lat') && { lat: f.lat.value }),
+          ...(Object.prototype.hasOwnProperty.call(f, 'long') && { lng: f.long.value }),
         },
-        photos: f.hasOwnProperty('findSiteImageUrl') && f.findSiteImageUrl.value.split(';')
+        photos: Object.prototype.hasOwnProperty.call(f, 'findSiteImageUrl') && f.findSiteImageUrl.value.split(';')
       },
-      photos: f.hasOwnProperty('findImageUrl') && f.findImageUrl.value.split(';')
+      photos: Object.prototype.hasOwnProperty.call(f, 'findImageUrl') && f.findImageUrl.value.split(';')
     };
   });
 
