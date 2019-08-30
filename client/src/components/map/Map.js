@@ -40,7 +40,6 @@ import { fetchMapData, startMapSpinner } from '../../actions/map';
 import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
 
-
 /**
  * Parameters
  * showCurrentLocation: If true user's current location is shown on the map
@@ -89,42 +88,40 @@ class Map extends Component {
   }
 
   render() {
-    {
-      return (
-        (this.props.showCurrentLocation && this.state.hasCurrentLocation) ||
-          this.props.markerData ||
-          this.props.location ? (
-            <div id={this.props.id || 'map'} className="map-container">
-              {
-                this.props.isFetchInProgress &&
-                <CircularProgress className="map__data-loader-spiner" size="5rem" />
-              }
-              <Dialog
-                open={this.state.isDialogOpen}
-                onClose={this.onDialogClosedPressed}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {intl.get('nearByPage.map.alert.zoomAlertTitle')}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    {intl.get('nearByPage.map.alert.zoomAlertContent')}
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.onDialogClosedPressed} color="primary" autoFocus>
-                    {intl.get('nearByPage.map.alert.zoomAlertConfirmation')}
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-          ) : (
-            <CircularProgress className="answer-options__progress" size="5rem" />
-          )
-      );
-    }
+    return (
+      (this.props.showCurrentLocation && this.state.hasCurrentLocation) ||
+        this.props.markerData ||
+        this.props.location ? (
+          <div id={this.props.id || 'map'} className="map-container">
+            {
+              this.props.isFetchInProgress &&
+              <CircularProgress className="map__data-loader-spiner" size="5rem" />
+            }
+            <Dialog
+              open={this.state.isDialogOpen}
+              onClose={this.onDialogClosedPressed}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {intl.get('nearByPage.map.alert.zoomAlertTitle')}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {intl.get('nearByPage.map.alert.zoomAlertContent')}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.onDialogClosedPressed} color="primary" autoFocus>
+                  {intl.get('nearByPage.map.alert.zoomAlertConfirmation')}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        ) : (
+          <CircularProgress className="answer-options__progress" size="5rem" />
+        )
+    );
   }
 
   loadFetchedLayers = () => {
@@ -164,11 +161,12 @@ class Map extends Component {
    * Initialise map and its settings
    */
   renderMap = (position) => {
-    if (this.map) { this.map.remove(); }
-    this.initialiseIcon();
-    this.initialiseMap();
-    this.initialiseMarkers(position);
-    this.initialiseLayers();
+    if (!this.map) {
+      this.initialiseIcon();
+      this.initialiseMap();
+      this.initialiseMarkers(position);
+      this.initialiseLayers();
+    }
   }
 
   /**
@@ -393,9 +391,9 @@ class Map extends Component {
 
     // Set view for a range of coordinates
     if (this.props.setViewForMarkerData) {
-      if(markerData.length === 1) {
+      if (markerData.length === 1) {
         this.map.setView(latLngs[0], this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
-      }else {
+      } else {
         var mapBounds = new L.LatLngBounds(latLngs);
         this.map.fitBounds(mapBounds);
       }
@@ -502,12 +500,6 @@ class Map extends Component {
     this.map.on('popupopen', () => {
       document.getElementById('leaflet-popup-content__more-button').addEventListener('click', this.popupMorePressListener);
     });
-
-    /* TODO: Enable remove event listener
-    this.map.on('popupclose', () => {
-      document.getElementById('leaflet-popup-content__more-button').removeEventListener('click', this.popupMorePressListener);
-    });
-    */
   }
 
   /**
