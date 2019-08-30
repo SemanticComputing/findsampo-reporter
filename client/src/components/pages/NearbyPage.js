@@ -78,16 +78,16 @@ class NearbyPage extends Component {
         <Paper className="nearby__map__container__chart-container__paper">
           <FormControl className="nearby__map__container__chart-container__paper__form-control" variant="outlined">
             <InputLabel htmlFor="outlined-property-simple">
-              {intl.get('nearByPage.chart.selectProperty')}
+              {intl.get('nearByPage.statistics.chart.selectProperty')}
             </InputLabel>
             <Select
               onChange={this.onChartPropertyChangePressed}
               value={this.state.selectedChartProperty}
               input={<OutlinedInput name="property" id="outlined-property-simple" labelWidth={120} />}
             >
-              <MenuItem value="main_material">{intl.get('nearByPage.chart.material')}</MenuItem>
-              <MenuItem value="type">{intl.get('nearByPage.chart.type')}</MenuItem>
-              <MenuItem value="period">{intl.get('nearByPage.chart.period')}</MenuItem>
+              <MenuItem value="main_material">{intl.get('nearByPage.statistics.chart.material')}</MenuItem>
+              <MenuItem value="type">{intl.get('nearByPage.statistics.chart.type')}</MenuItem>
+              <MenuItem value="period">{intl.get('nearByPage.statistics.chart.period')}</MenuItem>
             </Select>
           </FormControl>
         </Paper>

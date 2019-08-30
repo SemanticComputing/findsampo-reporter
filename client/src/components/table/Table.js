@@ -1,5 +1,6 @@
 import React from 'react';
 import MaterialTable from 'material-table';
+import intl from 'react-intl-universal';
 import {
   Card,
   CardActionArea,
@@ -27,11 +28,11 @@ const Table = (props) => {
               <img src={rowData.image} className="table__column__icon" /> :
               <Icon className="table__column__icon">crop_original</Icon>
           },
-          { title: 'Title', field: 'title' },
-          { title: 'Material', field: 'material' },
-          { title: 'Type', field: 'type' },
-          { title: 'Period', field: 'period' },
-          { title: 'Town', field: 'municipality' },
+          { title: intl.get('nearByPage.table.title'), field: 'title' },
+          { title: intl.get('nearByPage.table.material'), field: 'material' },
+          { title: intl.get('nearByPage.table.type'), field: 'type' },
+          { title: intl.get('nearByPage.table.period'), field: 'period' },
+          { title: intl.get('nearByPage.table.municipality'), field: 'municipality' },
         ]}
         data={props.tableData}
         title="Finds"
@@ -69,10 +70,10 @@ const renderDetailPanel = (row) => {
         }
         <CardContent className="table__detail-panel__container__content">
           <Typography gutterBottom variant="subtitle1">
-            Province: {row.province}
+            {intl.get('nearByPage.table.province')}: {row.province}
           </Typography>
           <Typography gutterBottom variant="subtitle1">
-            Specification: {row.specification}
+            {intl.get('nearByPage.table.specification')}: {row.specification}
           </Typography>
           <Typography component="p">
             {row.description}

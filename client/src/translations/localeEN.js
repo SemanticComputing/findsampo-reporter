@@ -62,11 +62,29 @@ export default {
       "table": "Table",
       "statistics": "Statistics"
     },
-    "chart": {
-      "selectProperty": "Select Property",
+    "statistics": {
+      "chart": {
+        "selectProperty": "Select Property",
+        "material": "Material",
+        "type": "Type",
+        "period": "Period"
+      }
+    },
+    "table": {
+      "title": "Title",
       "material": "Material",
       "type": "Type",
-      "period": "Period"
+      "period": "Period",
+      "municipality": "Municipality",
+      "province": "Province",
+      "specification": "Specification"
+    }
+  },
+  "morePage": {
+    "headers": {
+      "usefulTools": "Useful tools & Resources",
+      "tutorials": "Tutorials",
+      "recommendedApps": "Recommended Applciations"
     }
   },
   "myFindsPage": {
