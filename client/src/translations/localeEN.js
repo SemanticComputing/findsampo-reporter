@@ -89,7 +89,7 @@ export default {
     "headers": {
       "usefulTools": "Useful tools & Resources",
       "tutorials": "Tutorials",
-      "recommendedApps": "Recommended Applciations"
+      "recommendedApps": "Recommended Applications"
     }
   },
   "myFindsPage": {
