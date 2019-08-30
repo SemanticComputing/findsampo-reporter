@@ -13,7 +13,10 @@ export default {
     "forgotPassword": "Forgot your password?",
     "loginWith": "Log in with",
     "googleLogin": "G",
-    "notAMemberYet": "Not a member yet?"
+    "notAMemberYet": "Not a member yet?",
+    "error": {
+      "emptyField": "Password and email fields cannot be empty!"
+    }
   },
   "signupPage": {
     "title": "Sign Up",
@@ -22,7 +25,8 @@ export default {
     "password": "Password",
     "signup": "Sign Up",
     "alreadyAMember": "Already a member?",
-    "login": "Log In"
+    "login": "Log In",
+    "registrationDone": "Registration successfully completed!"
   },
   "nearByPage": {
     "map": {
@@ -71,6 +75,7 @@ export default {
       }
     },
     "table": {
+      "previewImage": "Preview Image",
       "title": "Title",
       "material": "Material",
       "type": "Type",
@@ -156,6 +161,26 @@ export default {
       "material": "Material"
     }
   },
+  "facetDrawer": {
+    "facetedSearch": "Faceted Search",
+    "searchResults": "search results",
+    "searchCriteria": "Search criteria",
+    "emptyBtn": "Empty",
+    "facetCriteria": {
+      "type": "Type",
+      "material": "Material",
+      "period": "Period",
+      "municipality": "Municipality",
+      "province": "Province"
+    }
+  },
+  "langMenu": {
+    "abbreviation": {
+      "english": "EN",
+      "finnish": "FI",
+      "swedish": "SV"
+    }
+  },
   "report": {
     "stepOne": "Help",
     "stepTwo": "Details",
@@ -163,6 +188,7 @@ export default {
     "stepFour": "Done!",
     "skip": "Skip",
     "back": "Back",
+    "reportSent": "Your report has been sent successfully!",
     "questionZero": {
       "question": "Would you like to get familiar with our starter kits before starting to add your find?",
       "help": "This questions is for providing some help. Please choose one of the choices",
@@ -363,11 +389,40 @@ export default {
   },
   "helpBar": {
     "saveAs": "Save as draft",
-    "delete": "Delete"
+    "delete": "Delete",
+    "notifications": {
+      "noDataAvailable": "Smart help data is not available yet!",
+      "reportSent": "The report has been saved as draft succesfully!",
+      "reportDeleted": "The report has been deleted succesfully!",
+    },
+    "dialog": {
+      "header": "Help",
+      "closeBtn": "Close"
+    }
   },
   "photoRenderer": {
+    "dialog": {
+      "title": "Add Photo",
+      "takePhoto": "Take Photo",
+      "selectFromGallery": "Select from gallery",
+      "cancel": "Cancel"
+    },
     "errorHeader": "Photo too large",
     "errorText": "The photo exceeds the maximum upload size for this site. Photos cannot exceed 5 MB. Please try again!",
     "confirmationBtn": "OK"
+  },
+  "smartHelper": {
+    "table": "Table",
+    "map": "Map",
+    "nearbySpecific": "Nearby Specific",
+    "overall": "Overall"
+  },
+  "contentContainer": {
+    "learnMore": "Learn More"
+  },
+  "answerOptions": {
+    "date": "Date",
+    "approximateDate": "Approximate Date",
+    "additionalMaterials": "Additional Materials"
   }
 };

@@ -45,7 +45,7 @@ class AnswerOptions extends Component {
         <DatePicker
           autoOk
           variant="outlined"
-          label="Date"
+          label={intl.get('answerOptions.date')}
           format="dd.MM.yyyy"
           value={this.props.findDate}
           onChange={this.onFindDateChange}
@@ -56,7 +56,7 @@ class AnswerOptions extends Component {
         <DatePicker
           autoOk
           variant="outlined"
-          label="Approximate date"
+          label={intl.get('answerOptions.approximateDate')}
           openTo="year"
           views={['year', 'month']}
           value={this.props.findDate}
@@ -118,7 +118,7 @@ class AnswerOptions extends Component {
         case OptionTypes.FIELD:
           container = (
             <TextField
-              label="Additional Materials"
+              label={intl.get('answerOptions.additionalMaterials')}
               multiline
               rows="3"
               margin="normal"

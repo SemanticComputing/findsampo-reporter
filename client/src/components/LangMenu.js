@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import intl from 'react-intl-universal';
 import {
   MenuItem,
   Popper,
@@ -11,17 +12,18 @@ import {
 import { connect } from 'react-redux';
 import { setLocale } from '../actions/locale';
 
-const langs = [
-  'EN',
-  'FI',
-  'SV'
-];
 
 class LangMenu extends Component {
   state = {
     langManuOpen: false,
     selectedIndex: 0
   };
+
+  langs = [
+    intl.get('langMenu.abbreviation.english'),
+    intl.get('langMenu.abbreviation.finnish'),
+    intl.get('langMenu.abbreviation.swedish')
+  ];
 
   onLangMenuOpenPressed = () => {
     this.setState(state => ({ langManuOpen: !state.langManuOpen }));
@@ -35,8 +37,8 @@ class LangMenu extends Component {
   };
 
   onMenuItemPressed = (e, index) => {
-    this.props.setLocale(langs[index].toLowerCase());
-    localStorage.setItem('locale', langs[index].toLowerCase());
+    this.props.setLocale(this.langs[index].toLowerCase());
+    localStorage.setItem('locale', this.langs[index].toLowerCase());
     this.setState({ langManuOpen: false, selectedIndex: index });
   };
 
@@ -51,7 +53,7 @@ class LangMenu extends Component {
           aria-haspopup="true"
           onClick={this.onLangMenuOpenPressed}
         >
-          {localStorage.getItem('locale') || langs[this.state.selectedIndex]}
+          {localStorage.getItem('locale') || this.langs[this.state.selectedIndex]}
         </Fab>
         <Popper
           open={this.state.langManuOpen}
@@ -68,7 +70,7 @@ class LangMenu extends Component {
               <Paper>
                 <ClickAwayListener onClickAway={this.onLangMenuClosePressed}>
                   <MenuList>
-                    {langs.map((option, index) => (
+                    {this.langs.map((option, index) => (
                       <MenuItem
                         key={option}
                         selected={index === this.state.selectedIndex}

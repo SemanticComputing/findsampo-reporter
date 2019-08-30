@@ -22,7 +22,7 @@ const Table = (props) => {
       <MaterialTable
         columns={[ // TODO: Add translations
           {
-            title: 'Preview Image',
+            title: intl.get('nearByPage.table.previewImage'),
             field: 'image',
             render: rowData => rowData.image ?
               <img src={rowData.image} className="table__column__icon" /> :

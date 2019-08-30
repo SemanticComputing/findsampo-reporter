@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import {
   List,
   ListItem,
-  ListItemText,
   ListItemAvatar,
   Avatar,
   DialogTitle,
@@ -137,7 +136,7 @@ class PhotoRenderer extends Component {
           aria-labelledby="photo-dialog"
           open={this.state.isPhotoDialogOpen}
         >
-          <DialogTitle id="photo-dialog">Add photo</DialogTitle>
+          <DialogTitle id="photo-dialog">{intl.get('photoRenderer.dialog.title')}</DialogTitle>
           <div>
             <List>
               <ListItem button onClick={() => this.captureInputRef.current.click()}>
@@ -155,7 +154,7 @@ class PhotoRenderer extends Component {
                   capture
                   ref={this.captureInputRef}
                 />
-                <label className="answer-options__label">Take Photo</label>
+                <label className="answer-options__label">{intl.get('photoRenderer.dialog.takePhoto')}</label>
               </ListItem>
               <ListItem button onClick={() => this.galleryInputRef.current.click()}>
                 <ListItemAvatar>
@@ -172,7 +171,7 @@ class PhotoRenderer extends Component {
                   multiple
                   ref={this.galleryInputRef}
                 />
-                <label className="answer-options__label">Select from gallery</label>
+                <label className="answer-options__label">{intl.get('photoRenderer.dialog.selectFromGallery')}</label>
               </ListItem>
               <ListItem button onClick={this.onOpenPhotoDialogPressed}>
                 <ListItemAvatar>
@@ -180,7 +179,7 @@ class PhotoRenderer extends Component {
                     <Icon>cancel</Icon>
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Cancel" />
+                <label className="answer-options__label">{intl.get('photoRenderer.dialog.cancel')}</label>
               </ListItem>
             </List>
           </div>

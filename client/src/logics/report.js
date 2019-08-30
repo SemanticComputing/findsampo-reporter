@@ -1,4 +1,5 @@
 import { createLogic } from 'redux-logic';
+import intl from 'react-intl-universal';
 import axios from 'axios';
 import {
   REPORT_GET,
@@ -100,7 +101,7 @@ const postMyReport = async (dispatch, getState, action, done) => {
         history.push(RouterPaths.MY_FINDS_PAGE);
         // Show confirmation
         dispatch(enqueueSnackbar({
-          message: 'Your report has been sent successfully!',
+          message: intl.get('report.reportSent'),
           options: {
             variant: 'success',
           }

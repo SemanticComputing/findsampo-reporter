@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import { changeQuestion, postReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
 import { QuestionDependencies, ButtonActions } from '../../helpers/enum/enums';
-import { enqueueSnackbar } from '../../actions/notifier';
 
 const REPORT_LAST_STEP = 15;
 
@@ -124,7 +123,6 @@ const mapDispatchToProps = (dispatch) => ({
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
   setStatusToAwaitReview: () => dispatch(setStatusToAwaitReview()),
   postReport: (isFinalised) => dispatch(postReport(isFinalised)),
-  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ButtonBar));

@@ -1,4 +1,5 @@
 import React from 'react';
+import intl from 'react-intl-universal';
 import {
   Card,
   CardActionArea,
@@ -70,7 +71,7 @@ const ContentContainer = (props) => {
             </CardActionArea>
             <CardActions>
               <Button size="small" color="primary">
-                Learn More
+                {intl.get('contentContainer.learnMore')}
               </Button>
             </CardActions>
           </Card>

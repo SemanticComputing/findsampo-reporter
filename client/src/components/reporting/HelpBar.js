@@ -61,7 +61,7 @@ class HelpBar extends Component {
       this.setState((prevState) => ({ drawerOpen: !prevState.drawerOpen }));
     } else {
       this.props.enqueueSnackbar({
-        message: 'Smart help data is not available yet!'
+        message: intl.get('helpBar.notifications.noDataAvailable')
       });
     }
   }
@@ -69,7 +69,7 @@ class HelpBar extends Component {
   deleteReport = () => {
     this.props.deleteReport(true);
     this.props.enqueueSnackbar({
-      message: 'The report has been deleted succesfully!',
+      message: intl.get('helpBar.notifications.reportDeleted'),
       options: {
         variant: 'success',
       }
@@ -81,7 +81,7 @@ class HelpBar extends Component {
   saveReportAsDraft = () => {
     this.props.postReport();
     this.props.enqueueSnackbar({
-      message: 'The report has been saved as draft succesfully!',
+      message: intl.get('helpBar.notifications.reportSent'),
       options: {
         variant: 'success',
       }
@@ -187,7 +187,7 @@ class HelpBar extends Component {
           onClose={this.onClosePressed}
           aria-labelledby="dialog-title"
         >
-          <DialogTitle id="dialog-title">Help</DialogTitle>
+          <DialogTitle id="dialog-title">{intl.get('helpBar.dialog.header')}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               {this.props.currentQuestion.help && intl.get(this.props.currentQuestion.help)}
@@ -195,7 +195,7 @@ class HelpBar extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.onClosePressed} color="primary">
-              Close
+              {intl.get('helpBar.dialog.closeBtn')}
             </Button>
           </DialogActions>
         </Dialog>

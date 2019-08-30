@@ -29,7 +29,7 @@ class LoginPage extends Component {
     e.preventDefault();
     if (this.state.email.length <= 0 && this.state.password.length <= 0) {
       this.props.enqueueSnackbar({
-        message: 'Password and email cannot be empty!',
+        message: intl.get('loginPage.error.emptyField'),
         options: {
           variant: 'error',
         },

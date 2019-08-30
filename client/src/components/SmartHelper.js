@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import intl from 'react-intl-universal';
 import {
   Drawer,
   Tabs,
@@ -9,7 +10,7 @@ import Map from './map/Map';
 import Table from './table/Table';
 import Chart from './Chart';
 import { createPieChartOptions, createDonutOptions } from '../helpers/data/chart';
-import { ReportSteps, SmartHelpers } from '../helpers/enum/enums';
+import { ReportSteps, SmartHelpers, SmartHelperMode } from '../helpers/enum/enums';
 import { convertToTableData } from './../helpers/functions/functions';
 import { setPropertySmartData } from '../actions/findNotification';
 
@@ -52,8 +53,10 @@ class SmartHelper extends Component {
 
   renderTabs = () => {
     const { activeHelper } = this.props.smartHelperData;
-    const firstTabText = activeHelper === SmartHelpers.NEARBY_HELPER ? 'Table' : 'Nearby Specific';
-    const secondTabText = activeHelper === SmartHelpers.NEARBY_HELPER ? 'Map' : 'Overall';
+    const firstTabText = activeHelper === SmartHelpers.NEARBY_HELPER ?
+      intl.get('smartHelper.table') : intl.get('smartHelper.nearbySpecific');
+    const secondTabText = activeHelper === SmartHelpers.NEARBY_HELPER ?
+      intl.get('smartHelper.map') : intl.get('smartHelper.overall');
 
     return (
       <Tabs
@@ -93,13 +96,13 @@ class SmartHelper extends Component {
 }
 
 const createChartData = (data, tabIndex) => {
-  const type = tabIndex === 0 ? 'nearby' : 'overall';
+  const type = tabIndex === 0 ? SmartHelperMode.NEARBY : SmartHelperMode.OVERALL;
   const labels = Object.keys(data[type]);
   const series = Object.values(data[type]);
 
-  if (type === 'nearby') {
+  if (type === SmartHelperMode.NEARBY) {
     return createPieChartOptions(labels, series);
-  } else if (type === 'overall') {
+  } else if (type === SmartHelperMode.OVERALL) {
     return createDonutOptions(labels, series);
   }
 };

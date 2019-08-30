@@ -120,3 +120,8 @@ export const SmartHelpers = Object.freeze({
   TYPE_HELPER: 'type',
   PERIOD_HELPER: 'period'
 });
+
+export const SmartHelperMode = Object.freeze({
+  NEARBY: 'nearby',
+  OVERALL: 'overall'
+});

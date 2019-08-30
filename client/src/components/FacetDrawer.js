@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import intl from 'react-intl-universal';
 import {
   Drawer,
   Button,
@@ -35,11 +36,11 @@ class FacetDrawer extends Component {
     open: this.props.open || false,
     searchText: '',
     facetCriteria: [
-      { criteria: FacetFilters.TYPE, label: 'Type' },
-      { criteria: FacetFilters.MATERIAL, label: 'Material' },
-      { criteria: FacetFilters.PERIOD, label: 'Period' },
-      { criteria: FacetFilters.MUNICIPALITY, label: 'Municipality' },
-      { criteria: FacetFilters.PROVINCE, label: 'Province' }
+      { criteria: FacetFilters.TYPE, label: intl.get('facetDrawer.facetCriteria.type') },
+      { criteria: FacetFilters.MATERIAL, label: intl.get('facetDrawer.facetCriteria.material') },
+      { criteria: FacetFilters.PERIOD, label: intl.get('facetDrawer.facetCriteria.period') },
+      { criteria: FacetFilters.MUNICIPALITY, label: intl.get('facetDrawer.facetCriteria.municipality') },
+      { criteria: FacetFilters.PROVINCE, label: intl.get('facetDrawer.facetCriteria.province') }
     ]
   };
 
@@ -188,7 +189,7 @@ class FacetDrawer extends Component {
         <Paper className="facet-drawer__container__paper">
           <div className="facet-drawer__container__paper__search-label">
             <Typography variant="overline">
-              Faceted Search
+              {intl.get('facetDrawer.facetedSearch')}
             </Typography>
             <IconButton onClick={this.props.toggleHandler}>
               <Icon>arrow_back_ios</Icon>
@@ -230,7 +231,7 @@ class FacetDrawer extends Component {
               color="textSecondary"
               gutterBottom
             >
-              {this.props.finds.results.length} search results.
+              {this.props.finds.results.length} {intl.get('facetDrawer.searchResults')}.
             </Typography>
           }
         </Paper>
@@ -238,7 +239,7 @@ class FacetDrawer extends Component {
           this.props.filters.length > 0 &&
           <Paper className="facet-drawer__container__paper facet-drawer__container__filter-box">
             <Typography variant="overline">
-              Search criteria
+              {intl.get('facetDrawer.searchCriteria')}
             </Typography>
             <div className="facet-drawer__container__paper__filters">
               {this.props.filters.map((data, index) => {
@@ -256,7 +257,7 @@ class FacetDrawer extends Component {
               variant="outlined"
               color="primary"
               onClick={this.onDeleteFiltersPressed}>
-              Empty
+              {intl.get('facetDrawer.emptyBtn')}
             </Button>
           </Paper>
         }
