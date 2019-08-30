@@ -1,4 +1,5 @@
 import { invert, countBy, filter } from 'lodash';
+import intl from 'react-intl-universal';
 
 const MOBILE_SCREEN_MAX_WIDTH = 650;
 
@@ -64,10 +65,10 @@ export const convertToTableData = (data) => {
         type: d.type ? d.type : '-',
         period: d.period ? d.period : '-',
         municipality: d.municipality ? d.municipality : '-',
-        description: d.description ? d.description : 'Not additional information found!', // FIXME
+        description: d.description ? d.description : intl.get('nearByPage.table.noAdditionalInformation'),
         image: d.image_url ? d.image_url : '',
-        specification: d.specification ? d.specification : 'Not Provided',
-        province: d.province ? d.province : 'Not Provided'
+        specification: d.specification ? d.specification : intl.get('nearByPage.table.notProvidedValue'),
+        province: d.province ? d.province : intl.get('nearByPage.table.notProvidedValue')
       }
     );
   }

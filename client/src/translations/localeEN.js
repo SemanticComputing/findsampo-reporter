@@ -82,7 +82,9 @@ export default {
       "period": "Period",
       "municipality": "Municipality",
       "province": "Province",
-      "specification": "Specification"
+      "specification": "Specification",
+      "notProvidedValue": "Not provided",
+      "noAdditionalInformation": "No additional information found!"
     }
   },
   "morePage": {
