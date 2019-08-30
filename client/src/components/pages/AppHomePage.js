@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import intl from 'react-intl-universal';
 import ContentContainer from '../ContentContainer';
 import Slider from '../reporting/Slider';
 
@@ -10,27 +11,27 @@ class AppHomePage extends Component {
           stylingClass="content-container--justified"
           header='findsampo'
           headerStyle={{ color: '#eeeeee', margin: '0', fontSize: '3rem', textTransform: 'uppercase', fontWeight: 'bold' }}
-          description='Archeological finds studying and reporting platform'
+          description={intl.get('appHomePage.contentContainer.headerTitle')}
           descriptionStyle={{ color: '#fff', fontStyle: 'italic', fontVariant: 'small-caps', background: '#0009', opacity: 0.8, padding: '3px' }}
           bgImage='./images/others/home_bg.jpg'
         />
 
         <ContentContainer
-          header='Recent Finds'
+          header={intl.get('appHomePage.contentContainer.recentFinds')}
           headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', marginTop: '2rem', fontSize: '1.2rem', marginBottom: '0' }}
           bgColor='#f7f7f7'
           component={() => <Slider slideItems={sliderData} infiniteLoop />}
         />
 
         <ContentContainer
-          header='Guides and Instructions'
+          header={intl.get('appHomePage.contentContainer.guides')}
           headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', marginTop: '2rem', fontSize: '1.2rem' }}
           cardData={data}
           bgColor='#fff'
         />
 
         <ContentContainer
-          header='Findsampo has received over x applications'
+          header={intl.get('appHomePage.contentContainer.applicationTagline')}
           headerStyle={{ textTransform: 'uppercase', fontWeight: 'bold', color: '#007A93', margin: '2rem 0' }}
           bgColor='#f7f7f7'
         />
@@ -81,7 +82,7 @@ const data = [
     image: 'https://www.museovirasto.fi/uploads/Arkeologiset_kokoelmat/_1600xAUTO_crop_center-center/Museovirasto_056_vaaka.jpg'
   },
   {
-    title: 'Enthusiast´s guide',
+    title: 'Enthusiast´s guide, Updated 2019',
     description: 'The archaeological collections of the historical era have been catalogued in the historical item collections of the National Museum of Finland until the end of 2010.',
     image: 'https://www.museovirasto.fi/uploads/Meista/_1600xAUTO_crop_center-center/Museovirasto_054-vaaka.jpg'
   },

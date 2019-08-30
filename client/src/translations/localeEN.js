@@ -115,6 +115,15 @@ export default {
       "peding_user": "Pending User"
     }
   },
+  "appHomePage": {
+    "contentContainer": {
+      "recentFinds": "Recent Finds",
+      "guides": "Guides and Instructions",
+      "applicationTagline": "Findsampo has received over x applications",
+      "headerTitle": "Archeological finds studying and reporting platform",
+      "learnMore": "Learn More"
+    },
+  },
   "notFoundPage": {
     "pageNotFound": "Ooops! Page Not Found!",
     "goToHomePage": "Go To HomePage"
@@ -416,9 +425,6 @@ export default {
     "map": "Map",
     "nearbySpecific": "Nearby Specific",
     "overall": "Overall"
-  },
-  "contentContainer": {
-    "learnMore": "Learn More"
   },
   "answerOptions": {
     "date": "Date",

@@ -49,7 +49,9 @@ const ContentContainer = (props) => {
       style={{ background: bgStyle }}
     >
       <p style={headerStyle}>{header}</p>
-      <p style={descriptionStyle}>{description}</p>
+      {
+        description && <p style={descriptionStyle}>{description}</p>
+      }
       {Component && <Component />}
       <div className="content-container__card-container">
         {cardData && cardData.map((data, index) => (
@@ -71,7 +73,7 @@ const ContentContainer = (props) => {
             </CardActionArea>
             <CardActions>
               <Button size="small" color="primary">
-                {intl.get('contentContainer.learnMore')}
+                {intl.get('appHomePage.contentContainer.learnMore')}
               </Button>
             </CardActions>
           </Card>
