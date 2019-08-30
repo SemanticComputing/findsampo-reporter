@@ -5,18 +5,24 @@ import { Fha_Wfs_Layer } from '../../helpers/enum/enums';
 
 const LegalityCheckerPage = () => {
   const [legalityResult, setLegalityResult] = useState(null);
+  const [isDataLoaded, setDataStatus] = useState(false);
 
+  const changeDataLoadingStatus = () => {
+    setDataStatus(true);
+  };
+  
   const legalityResultHandler = (result) => {
+    changeDataLoadingStatus(true);
     setLegalityResult(result);
   };
-
+  
   return (
     <div className="legality-cheker-page">
-      {legalityResult &&
+      {isDataLoaded &&
         <Grow
-          in={legalityResult}
+          in={isDataLoaded}
           style={{ transformOrigin: '0 0 0' }}
-          {...(legalityResult ? { timeout: 1000 } : {})}
+          {...(isDataLoaded ? { timeout: 1000 } : {})}
         >
           <Paper className={`legality-cheker-page__paper ${legalityResult.className}`}>
             <Typography variant="h5" component="h3">

@@ -1,5 +1,6 @@
 import React from 'react';
 import intl from 'react-intl-universal';
+import { NavLink } from 'react-router-dom';
 import {
   Link,
   Icon,
@@ -13,6 +14,9 @@ const FHA_HOW_TO_REPORT_PAGE = 'https://www.museovirasto.fi/en/cultural-environm
 const FHA_PROTECTING_CULTURAL_HERITAGE_PAGE = 'https://www.museovirasto.fi/en/cultural-environment/archaeological-cultural-heritage/protecting-the-archaeological-cultural-heritage';
 
 const MorePage = () => {
+  // The usage of React.forwardRef will no longer be required for react-router-dom v6.
+  // see https://github.com/ReactTraining/react-router/issues/6056
+  const AdapterLink = React.forwardRef((props, ref) => <NavLink innerRef={ref} {...props} />);
   return (
     <div className="more-page">
       <div className="more-page__container">
@@ -22,7 +26,8 @@ const MorePage = () => {
         <Divider className="more-page__container__divider" />
         <Paper className="more-page__container__paper">
           <Icon>settings_applications</Icon>
-          <Link href={RouterPaths.LEGALITY_CHECKER_PAGE}
+          <Link component={AdapterLink}
+            to={RouterPaths.LEGALITY_CHECKER_PAGE}
             className="more-page__container__paper__link"
           >
             {intl.get('morePage.checkLegality')}
