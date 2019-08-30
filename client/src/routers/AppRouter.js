@@ -40,6 +40,7 @@ const AppRouter = () => (
           <PrivateRoute path={RouterPaths.MY_FINDS_PAGE} component={MyFindsPage} />
           <PrivateRoute path={RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE} component={MyFindsReportOverviewPage} />
           <PrivateRoute path={RouterPaths.LEGALITY_CHECKER_PAGE} component={LegalityCheckerPage} />
+          <Route path={RouterPaths.MORE_PAGE} component={MorePage} />
           <Route component={NotFoundPage}></Route>
         </Switch>
       </div>
@@ -116,5 +117,10 @@ const LegalityCheckerPage = Loadable({
 
 const FindPage = Loadable({
   loader: () => import('../components/pages/FindPage'),
+  loading: Loading
+});
+
+const MorePage = Loadable({
+  loader: () => import('../components/pages/MorePage'),
   loading: Loading
 });

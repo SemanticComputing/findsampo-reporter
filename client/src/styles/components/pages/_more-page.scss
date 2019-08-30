@@ -1,0 +1,25 @@
+.more-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  &__container {
+    & &__header {
+      display: block;
+      margin: 0.5rem 1rem 0 1rem;
+      font-size: 0.9rem;
+    }
+    & &__divider {
+      margin: 0 1rem;
+      background-color: #007A93;
+    }
+    &__paper {
+      padding: 0.5rem 1rem;
+      margin: 0.4rem 1rem;
+      box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+      border-radius: 3px;
+    }
+    &__paper:hover {
+      transform: scale(1.05);
+    }
+  }
+}
