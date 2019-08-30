@@ -92,7 +92,10 @@ export default {
       "usefulTools": "Useful tools & Resources",
       "tutorials": "Tutorials",
       "recommendedApps": "Recommended Applications"
-    }
+    },
+    "checkLegality": "Check legality of the find site for digging",
+    "fhaHowToReport": "Finnish Heritage Agency: How to report a find?",
+    "fhaCulturalHeritageMaterial": "Finnish Heritage Agency: Protecting the archaeological cultural heritage"
   },
   "myFindsPage": {
     "header": "My Finds",

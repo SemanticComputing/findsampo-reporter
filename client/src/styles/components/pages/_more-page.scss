@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  @media screen and (min-width: $size-max-mobile) {
+    margin: $size-full-screen-margin;
+    max-width: $size-full-screeen-max-size;
+  }
   &__container {
     & &__header {
       display: block;
@@ -13,13 +17,17 @@
       background-color: #007A93;
     }
     &__paper {
-      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      padding: 1rem;
       margin: 0.4rem 1rem;
       box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
       border-radius: 3px;
-    }
-    &__paper:hover {
-      transform: scale(1.05);
+      color: $color-dark-grey;
+      & &__link{
+        padding-left: 1rem;
+        color: $color-dark-grey;
+      }
     }
   }
 }
