@@ -5,7 +5,7 @@ const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
 
-const FILE_MAX_LIMIT = 1024 * 1024 * 5;
+const FILE_MAX_LIMIT = 1024 * 1024 * 30;
 const FILE_MAX_NUMBERS = 10;
 
 /**

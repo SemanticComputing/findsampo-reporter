@@ -193,7 +193,7 @@ class PhotoRenderer extends Component {
   }
 }
 
-const MAX_FILE_SIZE = 1024 * 1024 * 5;
+const MAX_FILE_SIZE = 1024 * 1024 * 30;
 
 const mapStateToProps = (state) => ({
   currentFindIndex: state.findNotification.currentFindIndex
