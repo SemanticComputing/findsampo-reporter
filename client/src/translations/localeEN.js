@@ -94,6 +94,7 @@ export default {
       "recommendedApps": "Recommended Applications"
     },
     "checkLegality": "Check legality of the find site for digging",
+    "photoFrame": "Photo frame for taking find photos",
     "fhaHowToReport": "Finnish Heritage Agency: How to report a find?",
     "fhaCulturalHeritageMaterial": "Finnish Heritage Agency: Protecting the archaeological cultural heritage"
   },

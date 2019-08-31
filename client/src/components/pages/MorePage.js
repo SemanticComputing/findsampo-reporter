@@ -12,6 +12,7 @@ import { RouterPaths } from '../../helpers/enum/enums';
 
 const FHA_HOW_TO_REPORT_PAGE = 'https://www.museovirasto.fi/en/cultural-environment/archaeological-cultural-heritage/reporting-a-discovery';
 const FHA_PROTECTING_CULTURAL_HERITAGE_PAGE = 'https://www.museovirasto.fi/en/cultural-environment/archaeological-cultural-heritage/protecting-the-archaeological-cultural-heritage';
+const PHOTO_FRAME_PATH = 'files/photo_frame.pdf';
 
 const MorePage = () => {
   // The usage of React.forwardRef will no longer be required for react-router-dom v6.
@@ -31,6 +32,16 @@ const MorePage = () => {
             className="more-page__container__paper__link"
           >
             {intl.get('morePage.checkLegality')}
+          </Link>
+        </Paper>
+        <Paper className="more-page__container__paper">
+          <Icon>description</Icon>
+          <Link href={PHOTO_FRAME_PATH}
+            target="_blank"
+            rel="noreferrer"
+            className="more-page__container__paper__link"
+          >
+            {intl.get('morePage.photoFrame')}
           </Link>
         </Paper>
         <Paper className="more-page__container__paper">
