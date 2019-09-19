@@ -10,6 +10,9 @@ import {
 } from '../constants/actionTypes';
 
 const MY_FINDS_END_POINT = '/api/v1/myfinds';
+const headers = {
+  'Cache-Control': 'no-store'
+};
 
 const getMyFinds = createLogic({
   type: MY_FINDS_GET_REPORTS,
@@ -23,10 +26,12 @@ const getMyFinds = createLogic({
 
   async process({ getState }) {
     return await axios.get(MY_FINDS_END_POINT, {
-      params: { uid: getState().auth.uid }
+      params: { uid: getState().auth.uid },
+      headers
     });
   }
 });
+
 
 /**
  * Get certain finds by id
@@ -36,7 +41,7 @@ const getCertainFinds = createLogic({
   latest: true,
 
   async process({ action }, dispatch, done) {
-    await axios.post(MY_FINDS_END_POINT, { finds: action.finds })
+    await axios.post(MY_FINDS_END_POINT, { finds: action.finds }, { headers })
       .then((result) => {
         dispatch({ type: MY_FINDS_GET_CERTAIN_FINDS_SUCESS, result, index: action.index });
       })
