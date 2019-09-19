@@ -65,8 +65,17 @@ app.use(REPORT_END_POINT, reportController);
 /**
  * APIs for handling my finds related requests
  */
+
+// Disable Cathing in myfinds page
+const nocache = (req, res, next) => {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
+};
+
 const MY_FINDS_END_POINT = '/api/v1/myfinds';
-app.use(MY_FINDS_END_POINT, myFindsController);
+app.use(MY_FINDS_END_POINT, nocache, myFindsController);
 
 /**
  * APIs for handling report images related requests
@@ -88,3 +97,5 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
   console.log(`Express server started on port ${port}`);
 });
+
+

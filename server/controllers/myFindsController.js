@@ -14,8 +14,7 @@ const mapReportFinds = require('../sparql/mappers/myFindsReportFindMapper');
  */
 const defaultMyFindsHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded',
-  'Accept': 'application/sparql-results+json; charset=utf-8',
-  'Cache-Control': 'no-store'
+  'Accept': 'application/sparql-results+json; charset=utf-8'
 };
 
 router.get('/', async (req, res, next) => {
