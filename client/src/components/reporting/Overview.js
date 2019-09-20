@@ -50,7 +50,7 @@ const OverView = (props) => {
                   <Typography variant="caption" className="overview__properties">
                     {intl.get('overview.findSite.photos')}
                   </Typography>
-                  {find.findSite.photos > 0 && renderPhotos(find.findSite.photos)}
+                  {find.findSite.photos.length > 0 && renderPhotos(find.findSite.photos)}
                 </div>
                 {/* Find properties */}
                 <Typography variant="caption" className="overview__properties">
