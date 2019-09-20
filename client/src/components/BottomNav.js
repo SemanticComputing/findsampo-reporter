@@ -53,7 +53,7 @@ class BottomNav extends Component {
           <BottomNavigationAction
             className="bottom-nav__action"
             label={intl.get('bottomNavBar.nearby')}
-            icon={<Icon>pageview</Icon>}
+            icon={<Icon>search</Icon>}
             component={AdapterLink}
             to={RouterPaths.NEARBY_PAGE}
             isActive={(match, location) => location.pathname.startsWith(RouterPaths.NEARBY_PAGE)}
