@@ -20,13 +20,11 @@ module.exports = (id) => {
         BIND(<${id}> AS ?find)
         ?find a fs-schema:Find .
         # Find Information
-        OPTIONAL {
-        ?find fs-schema:find-depth ?depth ;
-          fs-schema:find-material ?material;
-          fs-schema:find-type ?type;
-          fs-schema:find-period ?period;
-          fs-schema:find-additional-materials ?additionalMaterials.
-        }
+        OPTIONAL { ?find fs-schema:find-depth ?depth . }
+  		  OPTIONAL { ?find fs-schema:find-material ?material . }
+  		  OPTIONAL { ?find fs-schema:find-type ?type . }
+  		  OPTIONAL { ?find fs-schema:find-period ?period . }
+  		  OPTIONAL { ?find fs-schema:find-additional-materials ?additionalMaterials . }
         #Find image information
         OPTIONAL {
           ?find fs-schema:find-image ?findImage .
