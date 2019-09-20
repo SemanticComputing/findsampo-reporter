@@ -398,7 +398,7 @@ export default {
   "bottomNavBar": {
     "home": "Home",
     "mine": "MyFinds",
-    "nearby": "Nearby",
+    "nearby": "Search",
     "report": "Report",
     "more": "More"
   },
