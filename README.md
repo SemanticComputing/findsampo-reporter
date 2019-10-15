@@ -2,9 +2,13 @@
 
 Main reposity of the FindSampo project.
 
+Project homepage: https://blogs.helsinki.fi/sualt-project
+
+test branch visible at https://test.löytösampo.fi
+
 ## Initialization
 
-Before starting ensure that you have node v.10.15 and yarn v.1.17.<br>
+Before starting, ensure that you have installed node v.10.15^ and yarn v.1.17^.<br>
 
 In this project yarn is used as a package manager tool. Please avoid using NPM<br>
 
