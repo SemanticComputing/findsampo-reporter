@@ -25,7 +25,7 @@ const createPostQuery = (reportId, user, data) => {
         # Report information
         ${getReportDetails(reportId, user, data, finds)}
         # Find information
-        ${getFindsDetails(finds)}
+        ${getFindsDetails(finds, data.date)}
       } 
     }  
   `;
@@ -52,8 +52,8 @@ const getPrefixes = () => (`
  */
 const getReportDetails = (reportId, user, data, finds) => {
   return `fs-report:${reportId} a fs-schema:Report ;
+    fs-schema:report-submission-date "${new Date().toISOString()}"^^xsd:dateTime ;
     ${data.municipality ? `fs-schema:report-municipality "${data.municipality}" ;` : ''}
-    ${data.date ? `fs-schema:report-submission-date "${data.date}"^^xsd:date ;` : ''}
     ${data.status ? `fs-schema:report-status "${data.status}" ;` : ''}
     ${(data.currentStep || data.currentStep === 0) ? `fs-schema:report-current-step ${data.currentStep} ;` : ''}
     ${(data.currentFindIndex || data.currentFindIndex === 0) ? `fs-schema:report-current-find-index ${data.currentFindIndex} ;` : ''}
@@ -84,13 +84,14 @@ const getProperties = (schema, tag, container) => {
  * 
  * Returns find, find site, find image and find site image details
  */
-const getFindsDetails = (finds) => {
+const getFindsDetails = (finds, date) => {
   let findsDetails = '';
   for (let [id, find] of finds.entries()) {
     const findSiteId = uuidv1();
     const findImages = find.photos && new Map(find.photos.map(img => [uuidv1(), img]));
 
     findsDetails += `fs-find:${id} a fs-schema:Find ;
+      fs-schema:find-date ${date} ;
       ${find.depth ? `fs-schema:find-depth ${find.depth} ;` : ''}
       ${find.additionalMaterials ? `fs-schema:find-additional-materials "${find.additionalMaterials}" ;` : ''}
       ${find.material ? `fs-schema:find-material "${find.material}" ;` : ''}
