@@ -91,7 +91,7 @@ const getFindsDetails = (finds, date) => {
     const findImages = find.photos && new Map(find.photos.map(img => [uuidv1(), img]));
 
     findsDetails += `fs-find:${id} a fs-schema:Find ;
-      fs-schema:find-date ${date} ;
+      fs-schema:find-date "${date}"^^xsd:dateTime ;
       ${find.depth ? `fs-schema:find-depth ${find.depth} ;` : ''}
       ${find.additionalMaterials ? `fs-schema:find-additional-materials "${find.additionalMaterials}" ;` : ''}
       ${find.material ? `fs-schema:find-material "${find.material}" ;` : ''}
