@@ -1,9 +1,9 @@
 .chart-container {
   display: flex;
+  flex: 1;
   justify-content: center;
   &__chart {
     flex: 1;
-    max-width: 550px;
     margin-top: 1.5rem;
   }
 }

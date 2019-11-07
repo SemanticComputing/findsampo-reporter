@@ -36,6 +36,8 @@ export const createDonutOptions = (labels, series) => {
   return {
     chart: {
       type: 'donut',
+      height: '90%',
+      width: '100%'
     },
     legend: {
       position: 'bottom'
@@ -51,7 +53,7 @@ export const createDonutOptions = (labels, series) => {
             value: {
               show: true
             },
-            total: {
+            total: { 
               show: true
             }
           }
