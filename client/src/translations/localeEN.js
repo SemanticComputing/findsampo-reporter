@@ -51,7 +51,8 @@ export default {
       "alert": {
         "zoomAlertTitle": "Zoom Level Alert",
         "zoomAlertContent": "Please change the zoom level to 13 to view selected layer as shown below.",
-        "zoomAlertConfirmation": "OK"
+        "zoomAlertConfirmation": "OK",
+        "gettingLocationFailed": "Unable to retrieve your location. Please make sure that GPS is turned on."
       },
       "mapContent": {
         "name": "Name",

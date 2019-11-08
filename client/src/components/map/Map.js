@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//import { withRouter } from 'react-router-dom';
 import { isEqual, difference } from 'lodash';
 
 // JS files
@@ -39,6 +38,7 @@ import { setCoordinates, setMunicipality } from '../../actions/findNotification'
 import { fetchMapData, startMapSpinner } from '../../actions/map';
 import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
+import { enqueueSnackbar } from '../../actions/notifier';
 
 /**
  * Parameters
@@ -327,15 +327,28 @@ class Map extends Component {
    * Gets users current location and renders the map
    */
   getGeoLocation = () => {
+    // GeoLocation Options
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    };
+    // Start getting geolocation
     this.geoLocationId = navigator.geolocation.watchPosition((position) => {
       this.setState({ hasCurrentLocation: true });
       this.setState({ currentLocation: position });
       this.renderMap(position);
-      // On fail
-    }, () => {
-      // TODO Add error handler
-      console.log('Getting current location is failed');
-    });
+    // On fail
+    }, (err) => {
+      const message = `Error(${err.code}) ${intl.get('nearByPage.map.alert.gettingLocationFailed')}` ;
+      this.props.enqueueSnackbar({
+        message,
+        options: {
+          variant: 'error',
+        },
+      });
+      console.warn('ERROR(' + err.code + '): ' + err.message);
+    }, options);
   }
 
   /**
@@ -620,7 +633,8 @@ const mapDispatchToProps = (dispatch) => ({
   setCoordinates: (coords, index) => dispatch(setCoordinates(coords, index)),
   setMunicipality: (coords) => dispatch(setMunicipality(coords)),
   fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds)),
-  startMapSpinner: () => dispatch(startMapSpinner())
+  startMapSpinner: () => dispatch(startMapSpinner()),
+  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
