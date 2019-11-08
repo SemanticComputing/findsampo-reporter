@@ -343,20 +343,24 @@ class Map extends Component {
    */
   onMapTapped = (e) => {
     this.clearAllMarkers();
-    this.setLocation(e.latlng.lat, e.latlng.lng, true);
+    this.setLocation(e.latlng.lat, e.latlng.lng, true, true);
   }
 
   /**
    * Sets a location on the map
    */
-  setLocation = (latitude, longitude, updateState = false) => {
+  setLocation = (latitude, longitude, updateState = false, isMapTapped = false) => {
     // Limit number of decimals in the coordinates
     const lat = parseFloat(parseFloat(latitude).toFixed(6));
     const lng = parseFloat(parseFloat(longitude).toFixed(6));
 
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
     // Set the view on the map
-    this.map.setView(L.latLng(lat, lng), this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
+    if (isMapTapped) {
+      this.map.setView(L.latLng(lat, lng), this.map.getZoom());
+    } else {
+      this.map.setView(L.latLng(lat, lng), this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
+    }
     // Set coords and municapility in redux
     if (updateState) {
       this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
