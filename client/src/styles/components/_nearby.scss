@@ -11,6 +11,7 @@
       justify-content: space-between;
       margin-bottom: 2px;
       &__tabs {
+        display: grid;
         &__tab {
           padding: 0;
           font-size: 0.75rem;

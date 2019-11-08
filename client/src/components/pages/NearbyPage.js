@@ -104,20 +104,20 @@ class NearbyPage extends Component {
             <IconButton color="primary" onClick={this.onToggleDrawerPressed} component="span">
               <Icon className="nearby__tool-bar__icon" >tune</Icon>
             </IconButton>
-            <div>
-              <Tabs
-                value={this.state.mode}
-                onChange={this.onChangeModePressed}
-                variant="fullWidth"
-                indicatorColor="primary"
-                textColor="primary"
-              >
-                <Tab icon={<Icon>map</Icon>} label={intl.get('nearByPage.tabs.map')} className="nearby__tool-bar__paper__tabs__tab" />
-                <Tab icon={<Icon>wb_sunny</Icon>} label={intl.get('nearByPage.tabs.heatmap')} className="nearby__tool-bar__paper__tabs__tab" />
-                <Tab icon={<Icon>table_chart</Icon>} label={intl.get('nearByPage.tabs.table')} className="nearby__tool-bar__paper__tabs__tab" />
-                <Tab icon={<Icon>pie_chart</Icon>} label={intl.get('nearByPage.tabs.statistics')} className="nearby__tool-bar__paper__tabs__tab" />
-              </Tabs>
-            </div>
+            <Tabs
+              value={this.state.mode}
+              onChange={this.onChangeModePressed}
+              indicatorColor="primary"
+              textColor="primary"
+              variant="scrollable"
+              scrollButtons="auto"
+              className="nearby__tool-bar__paper__tabs"
+            >
+              <Tab icon={<Icon>map</Icon>} label={intl.get('nearByPage.tabs.map')} className="nearby__tool-bar__paper__tabs__tab" />
+              <Tab icon={<Icon>wb_sunny</Icon>} label={intl.get('nearByPage.tabs.heatmap')} className="nearby__tool-bar__paper__tabs__tab" />
+              <Tab icon={<Icon>table_chart</Icon>} label={intl.get('nearByPage.tabs.table')} className="nearby__tool-bar__paper__tabs__tab" />
+              <Tab icon={<Icon>pie_chart</Icon>} label={intl.get('nearByPage.tabs.statistics')} className="nearby__tool-bar__paper__tabs__tab" />
+            </Tabs>
           </Paper>
         </div>
         <div className="nearby__map">
