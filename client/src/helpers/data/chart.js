@@ -1,3 +1,5 @@
+import { isDesktopScreen } from '../functions/functions';
+
 /**
  * This files contains helper functions for creating charts
  */
@@ -36,8 +38,8 @@ export const createDonutOptions = (labels, series) => {
   return {
     chart: {
       type: 'donut',
-      height: '90%',
-      width: '100%'
+      height: isDesktopScreen(window) ? '90%' : '',
+      width: '100%',
     },
     legend: {
       position: 'bottom'
