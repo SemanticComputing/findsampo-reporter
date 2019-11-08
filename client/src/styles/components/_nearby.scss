@@ -70,4 +70,11 @@
       }
     }
   }
+  // Override apexchart stylings
+  .apexcharts-legend .bottom{
+    bottom: 20px !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+  }
 }
