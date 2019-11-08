@@ -24,12 +24,12 @@ const Table = (props) => {
           {
             title: intl.get('nearByPage.table.previewImage'),
             field: 'image',
-            render: rowData => rowData.image ?
-              <img src={rowData.image} className="table__column__icon" /> :
+            render: rowData => rowData.image_url ?
+              <img src={rowData.image_url} className="table__column__icon" /> :
               <Icon className="table__column__icon">crop_original</Icon>
           },
           { title: intl.get('nearByPage.table.title'), field: 'title' },
-          { title: intl.get('nearByPage.table.material'), field: 'material' },
+          { title: intl.get('nearByPage.table.material'), field: 'main_material' },
           { title: intl.get('nearByPage.table.type'), field: 'type' },
           { title: intl.get('nearByPage.table.period'), field: 'period' },
           { title: intl.get('nearByPage.table.municipality'), field: 'municipality' },
@@ -56,10 +56,10 @@ const renderDetailPanel = (row) => {
     <Card className="table__detail-panel">
       <CardActionArea className="table__detail-panel__container">
         {
-          row.image ? (
+          row.image_url ? (
             <CardMedia
               className="table__detail-panel__container__image"
-              image={row.image}
+              image={row.image_url}
               title={row.title}
             />
           ) : (
@@ -70,13 +70,13 @@ const renderDetailPanel = (row) => {
         }
         <CardContent className="table__detail-panel__container__content">
           <Typography gutterBottom variant="subtitle1">
-            {intl.get('nearByPage.table.province')}: {row.province}
+            {intl.get('nearByPage.table.province')}: {row.province ? row.province : intl.get('nearByPage.table.notProvidedValue')}
           </Typography>
           <Typography gutterBottom variant="subtitle1">
-            {intl.get('nearByPage.table.specification')}: {row.specification}
+            {intl.get('nearByPage.table.specification')}: {row.specification ? row.specification : intl.get('nearByPage.table.notProvidedValue')}
           </Typography>
           <Typography component="p">
-            {row.description}
+            {row.description ? row.description : intl.get('nearByPage.table.noAdditionalInformation')}
           </Typography>
         </CardContent>
       </CardActionArea>

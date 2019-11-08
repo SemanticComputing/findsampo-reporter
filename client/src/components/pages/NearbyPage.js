@@ -20,7 +20,7 @@ import {
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
 import { getValidatedFinds } from '../../actions/find';
-import { isDesktopScreen, isMobileScreen, convertToTableData, convertToChartData } from '../../helpers/functions/functions';
+import { isDesktopScreen, isMobileScreen, convertToChartData } from '../../helpers/functions/functions';
 import { MapMode } from '../../helpers/enum/enums';
 import { createDonutOptions } from '../../helpers/data/chart';
 
@@ -65,7 +65,7 @@ class NearbyPage extends Component {
     } else if (this.state.mode == 1) {
       return <Map markerData={this.props.finds.results} mode={MapMode.HEATMAP} />;
     } else if (this.state.mode == 2) {
-      return <Table tableData={convertToTableData(this.props.finds.results)} />;
+      return <Table tableData={this.props.finds.results} />;
     } else {
       return this.renderChart();
     }
