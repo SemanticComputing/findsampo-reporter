@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Icon, BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import intl from 'react-intl-universal';
-import { isMobileScreen } from '../helpers/functions/functions';
+import { isMobileScreen, isIOSDevice } from '../helpers/functions/functions';
 import { RouterPaths } from '../helpers/enum/enums';
 
 class BottomNav extends Component {
@@ -28,7 +28,7 @@ class BottomNav extends Component {
     const AdapterLink = React.forwardRef((props, ref) => <NavLink innerRef={ref} {...props} />);
 
     return (
-      isMobileScreen(window) && <div className="bottom-nav">
+      isMobileScreen(window) && !isIOSDevice(window) && <div className="bottom-nav">
         <BottomNavigation
           showLabels
         >

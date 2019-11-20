@@ -40,7 +40,7 @@ body {
 
 .app {
   display: grid;
-  grid-template-rows: 4.5rem auto fit-content(5rem);
+  grid-template-rows: fit-content(4.5rem) auto fit-content(5rem);
   grid-template-areas: "appbar"
     "content"
     "footer";
@@ -55,13 +55,15 @@ body {
   grid-area: content;
   display: flex;
   background-color: $color-app-background;
-  /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
-  min-height: 0px;
-  //overflow-y: auto; */
-
   @media screen and (max-width: $size-max-mobile) {
     position: relative;
     margin-bottom: 56px;
+  }
+}
+
+.ios {
+  @media screen and (max-width: $size-max-mobile) {
+    margin-bottom: 0;
   }
 }
 

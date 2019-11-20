@@ -11,6 +11,10 @@ export const isDesktopScreen = (window) => {
   return window.innerWidth > MOBILE_SCREEN_MAX_WIDTH;
 };
 
+export const isIOSDevice = (window) => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+};
+
 export const getIdfromUri = (seperator, text) => {
   return text.split(`${seperator}/`).pop();
 };

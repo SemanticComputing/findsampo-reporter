@@ -12,6 +12,7 @@ import Spinner from '../components/Spinner';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import { RouterPaths } from '../helpers/enum/enums';
+import { isIOSDevice } from '../helpers/functions/functions';
 
 /**
  * Support for managing session history
@@ -29,7 +30,7 @@ const AppRouter = () => (
         <Header />
         <Notifier />
       </div>
-      <div className="content">
+      <div className={isIOSDevice(window) ? 'content ios' : 'content'}>
         <Switch>
           <Route path={RouterPaths.HOME_PAGE} component={AppHomePage} exact={true} />
           <PublicRoute path={RouterPaths.LOGIN_PAGE} component={LoginPage} />

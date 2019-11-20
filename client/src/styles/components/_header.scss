@@ -59,4 +59,11 @@
       flex-direction: column;
     }
   }
+  & &__more-icon {
+    padding: 0;
+    margin: 0 12px;
+  }
+  & &__ios--popper {
+    z-index: 1;
+  }
 }
