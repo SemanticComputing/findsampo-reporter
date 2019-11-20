@@ -12,6 +12,8 @@ import {
 } from '../constants/actionTypes';
 import { loginLoggedUser } from '../actions/auth';
 import { enqueueSnackbar } from '../actions/notifier';
+import intl from 'react-intl-universal';
+
 
 // Auth Login
 const startGoogleLogin = createLogic({
@@ -38,11 +40,11 @@ const startEmailLogin = createLogic({
       action.credentials.password
     )
       .then((res) => {
-        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false});
+        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
         dispatch({ type: AUTH_LOGIN_SUCCESS, payload: res });
       })
       .catch((error) => {
-        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false});
+        dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
         dispatch(enqueueSnackbar({
           message: error.message,
           options: {
@@ -58,13 +60,21 @@ const logout = createLogic({
   type: AUTH_LOGOUT,
   latest: true,
 
-  processOptions: {
-    dispatchReturn: true,
-    successType: AUTH_LOGOUT_SUCCESS
-  },
-
-  process() {
-    return firebase.auth().signOut();
+  process({ action }, dispatch, done) {
+    firebase.auth().signOut()
+      .then(() => {
+        dispatch({ type: AUTH_LOGOUT_SUCCESS });
+        dispatch(enqueueSnackbar({
+          message: intl.get('header.notification.logoutSuccess'),
+          options: {
+            variant: 'success',
+          },
+        }));
+      })
+      .catch(() => {
+        console.log('Error in action', action);
+      })
+      .then(() => done());
   }
 });
 

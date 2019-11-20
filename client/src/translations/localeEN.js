@@ -2,7 +2,10 @@ export default {
   "header": {
     "title": "FindSampo",
     "login": "Log In",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "notification": {
+      "logoutSuccess": "You've been successfully logged out!"
+    }
   },
   "loginPage": {
     "title": "Log In",
