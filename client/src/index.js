@@ -6,7 +6,7 @@ import { SnackbarProvider } from 'notistack';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import firebase from './firebase/firebase';
-import { logout, loginLoggedUser } from './actions/auth';
+import { loginLoggedUser } from './actions/auth';
 import { setLocale } from './actions/locale';
 import { isDesktopScreen, isMobileScreen } from './helpers/functions/functions';
 import 'normalize.css/normalize.css';
@@ -82,11 +82,6 @@ firebase.auth().onAuthStateChanged((user) => {
       email: user.email,
       displayName: user.displayName
     }));
-    renderApp();
-  } else {
-    store.dispatch(logout());
-    renderApp();
-    // TODO: Add here navigation
-    // After logging out 
   }
+  renderApp();
 });
