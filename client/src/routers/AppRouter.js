@@ -68,7 +68,7 @@ const Loading = ({ error }) => {
   if (error) {
     return 'Router does not work. Please contact your administrator!';
   } else {
-    return <Spinner />;
+    return <Spinner horizontalSpinner/>;
   }
 };
 
