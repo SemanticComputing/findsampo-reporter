@@ -1,6 +1,7 @@
 import { createLogic } from 'redux-logic';
 import intl from 'react-intl-universal';
 import axios from 'axios';
+import { omit } from 'lodash';
 import {
   REPORT_GET,
   REPORT_POST,
@@ -88,8 +89,8 @@ const postMyReport = async (dispatch, getState, action, done) => {
       user: {
         uid: getState().auth.uid,
         email: getState().auth.email
-      },
-      data: getState().findNotification
+      }, // Remove smartHelper data from the report before sending
+      data: omit(getState().findNotification, 'smartHelper')
     })
     .then((result) => {
       dispatch({ type: FIND_NOTIFICATION_SEND_SUCCESS, payload: result });
