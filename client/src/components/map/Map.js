@@ -10,6 +10,7 @@ import 'leaflet.markercluster/dist/leaflet.markercluster';
 import 'leaflet.zoominfo/dist/L.Control.Zoominfo';
 import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min';
 import 'leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant';
+import 'leaflet.locatecontrol/src/L.Control.Locate';
 
 // CSS files
 import 'leaflet/dist/leaflet.css';
@@ -62,11 +63,7 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    if (this.props.showCurrentLocation) {
-      this.getGeoLocation();
-    } else {
-      this.renderMap();
-    }
+    this.renderMap();
   }
 
   componentDidUpdate(prevProps) {
@@ -89,7 +86,7 @@ class Map extends Component {
 
   render() {
     return (
-      (this.props.showCurrentLocation && this.state.hasCurrentLocation) ||
+      this.props.showCurrentLocation ||
         this.props.markerData ||
         this.props.location ? (
           <div id={this.props.id || 'map'} className="map-container">
@@ -160,11 +157,11 @@ class Map extends Component {
   /**
    * Initialise map and its settings
    */
-  renderMap = (position) => {
+  renderMap = () => {
     if (!this.map) {
       this.initialiseIcon();
       this.initialiseMap();
-      this.initialiseMarkers(position);
+      this.initialiseMarkers();
       this.initialiseLayers();
     }
   }
@@ -239,20 +236,32 @@ class Map extends Component {
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,
-      layers: [nationalSurveyOfFinland]
+      layers: [nationalSurveyOfFinland],
+      attributionControl: false
     });
 
     // Add overlay layers to map
     L.control.layers(baseMaps, this.overlayLayers).addTo(this.map);
     // Add control scale
     L.control.scale().addTo(this.map);
-    // Active overlay layer
-    this.findsLayer.addTo(this.map);
+    // Add locate scate
+    const locateOptions = {
+      enableHighAccuracy: true,
+      position: 'topright',
+      cacheLocation: false,
+      icon: 'material-icons location-icon',
+      iconLoading: 'material-icons w3-spin w3-jumbo loading-icon',
+    };
+    this.locateControl = L.control.locate(locateOptions).addTo(this.map);
 
-    // Add a click listener which is setted only if user's current location is viewed
-    if (this.props.showCurrentLocation && this.state.hasCurrentLocation) {
+    if (this.props.showCurrentLocation) {
+      this.locateControl.start();
+      // Add a click listener which is setted only if user's current location is viewed
       this.map.addEventListener('click', this.onMapTapped);
     }
+
+    // Active overlay layer
+    this.findsLayer.addTo(this.map);
 
     // Listen for changes
     this.initialiseMapListeners(this.overlayLayers);
@@ -270,15 +279,16 @@ class Map extends Component {
     return L.circleMarker(latlng, geojsonMarkerOptions);
   }
 
-  initialiseMarkers = (position) => {
+  initialiseMarkers = () => {
     // If markerData is provided show them
     if (this.props.markerData && this.props.markerData.length > 0) {
       this.showMarkersOnMap(this.props.markerData);
     }
     // If current location is provided show it
+    /*
     if (position) {
       this.setLocation(position.coords.latitude, position.coords.longitude, true);
-    }
+    }*/
     // If a location is given
     if (this.props.location) {
       this.setLocation(this.props.location.lat, this.props.location.lng);
@@ -328,6 +338,7 @@ class Map extends Component {
   /**
    * Gets users current location and renders the map
    */
+  /*
   getGeoLocation = () => {
     // GeoLocation Options
     const options = {
@@ -339,10 +350,10 @@ class Map extends Component {
     this.geoLocationId = navigator.geolocation.watchPosition((position) => {
       this.setState({ hasCurrentLocation: true });
       this.setState({ currentLocation: position });
-      this.renderMap(position);
-    // On fail
+      //this.renderMap(position);
+      // On fail
     }, (err) => {
-      const message = `Error(${err.code}) ${intl.get('nearByPage.map.alert.gettingLocationFailed')}` ;
+      const message = `Error(${err.code}) ${intl.get('nearByPage.map.alert.gettingLocationFailed')}`;
       this.props.enqueueSnackbar({
         message,
         options: {
@@ -351,7 +362,7 @@ class Map extends Component {
       });
       console.warn('ERROR(' + err.code + '): ' + err.message);
     }, options);
-  }
+  }*/
 
   /**
    * Clears current markers on the map and sets users current location
@@ -518,6 +529,24 @@ class Map extends Component {
     // Fired when marker popup more button is clicked
     this.map.on('popupopen', () => {
       document.getElementById('leaflet-popup-content__more-button').addEventListener('click', this.popupMorePressListener);
+    });
+
+    this.map.on('locationfound', (pos) => {
+      const { lat, lng } = pos.latlng;
+      this.setState({ hasCurrentLocation: true });
+      this.setState({ currentLocation: pos });
+      this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
+      this.props.setMunicipality({ lat, lng });
+    });
+
+    this.map.on('locationerror', (err) => {
+      const message = `Error(${err.code}) ${intl.get('nearByPage.map.alert.gettingLocationFailed')}`;
+      this.props.enqueueSnackbar({
+        message,
+        options: {
+          variant: 'error',
+        },
+      });
     });
   }
 
