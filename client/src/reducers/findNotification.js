@@ -198,7 +198,7 @@ export default (state = initialState, action) => {
         smartHelper: {
           nearbyFinds: {
             data: {
-              $set: [...state.smartHelper.nearbyFinds.data, ...action.payload.data],
+              $set: [...action.payload.data],
             }
           },
           activeHelper: {
