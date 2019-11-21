@@ -244,6 +244,8 @@ class Map extends Component {
 
     // Add overlay layers to map
     L.control.layers(baseMaps, this.overlayLayers).addTo(this.map);
+    // Add control scale
+    L.control.scale().addTo(this.map);
     // Active overlay layer
     this.findsLayer.addTo(this.map);
 
