@@ -7,8 +7,6 @@ import { changeQuestion, postReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
 import { QuestionDependencies, ButtonActions } from '../../helpers/enum/enums';
 
-const REPORT_LAST_STEP = 14;
-
 const ButtonBar = (props) => (
   <div className="button-bar">
     {
@@ -71,10 +69,13 @@ const onButtonClick = (props, btn) => {
   if (btn.action) {
     executeButtonAction(props, btn.action);
   }
+  /* This feature is not anymore in use. It slows down the reporting process
   // Update find notification on every step but not last step
+  const REPORT_LAST_STEP = 14;
   if (btn.nextStep && btn.nextStep !== REPORT_LAST_STEP && props.currentStep >= 2) {
     sendFindNotification(props);
   }
+  */
 };
 
 /**
