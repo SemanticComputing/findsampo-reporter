@@ -88,7 +88,7 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.MAP:
           container = (
-            <Map showCurrentLocation zoomLevel={DEFAULT_ZOOM_LEVEL} />
+            <Map showCurrentLocation useSatellite zoomLevel={DEFAULT_ZOOM_LEVEL} />
           );
           break;
         case OptionTypes.DATE_PICKER:

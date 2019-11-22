@@ -192,7 +192,7 @@ class Map extends Component {
     });
 
     const googleMaps = L.gridLayer.googleMutant({
-      type: 'roadmap'
+      type: this.props.useSatellite ? 'satellite' : 'roadmap'
     });
 
     // Create a layergroup for adding markers
@@ -258,6 +258,7 @@ class Map extends Component {
       this.locateControl.start();
       // Add a click listener which is setted only if user's current location is viewed
       this.map.addEventListener('click', this.onMapTapped);
+      googleMaps.addTo(this.map);
     }
 
     // Active overlay layer
