@@ -81,6 +81,7 @@ class Map extends Component {
   }
 
   componentWillUnmount() {
+    this.locateControl.stop();
     navigator.geolocation.clearWatch(this.geoLocationId);
   }
 
