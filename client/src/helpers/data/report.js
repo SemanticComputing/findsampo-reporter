@@ -287,17 +287,9 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionOverview.buttonOne',
-          nextStep: 15,
           action: ButtonActions.SEND_FIND_NOTIFICATION
         },
       ]
-    },
-    {
-      step: 15,
-      icon: 'check_circle_outline',
-      question: 'report.questionReportSent.question',
-      help: 'report.questionReportSent.help',
-      buttons: []
     }
   ]
 };

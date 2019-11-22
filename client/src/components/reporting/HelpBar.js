@@ -167,10 +167,10 @@ class HelpBar extends Component {
                   <Paper>
                     <ClickAwayListener onClickAway={this.onMenuClosePressed}>
                       <MenuList>
-                        <MenuItem disabled={this.props.currentStep <= 3 || this.props.currentStep >= 15} onClick={this.saveReportAsDraft}>
+                        <MenuItem disabled={this.props.currentStep <= MIN_REPORT_STEP || this.props.currentStep >= MAX_REPORT_STEP} onClick={this.saveReportAsDraft}>
                           <Icon className="help-bar__button-panel__more__menu-icon">drafts</Icon>{intl.get('helpBar.saveAs')}
                         </MenuItem>
-                        <MenuItem disabled={this.props.currentStep <= 3 || this.props.currentStep >= 15} onClick={this.deleteReport}>
+                        <MenuItem disabled={this.props.currentStep <= MIN_REPORT_STEP || this.props.currentStep >= MAX_REPORT_STEP} onClick={this.deleteReport}>
                           <Icon className="help-bar__button-panel__more__menu-icon">delete_forever</Icon>{intl.get('helpBar.delete')}
                         </MenuItem>
                       </MenuList>
@@ -205,6 +205,9 @@ class HelpBar extends Component {
     );
   }
 }
+
+const MIN_REPORT_STEP = 3;
+const MAX_REPORT_STEP = 14;
 
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],

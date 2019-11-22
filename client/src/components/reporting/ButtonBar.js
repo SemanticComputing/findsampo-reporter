@@ -7,7 +7,7 @@ import { changeQuestion, postReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
 import { QuestionDependencies, ButtonActions } from '../../helpers/enum/enums';
 
-const REPORT_LAST_STEP = 15;
+const REPORT_LAST_STEP = 14;
 
 const ButtonBar = (props) => (
   <div className="button-bar">
@@ -64,13 +64,15 @@ const isButtonDisabled = (props) => {
 
 const onButtonClick = (props, btn) => {
   // Change the question
-  props.changeQuestion(btn.nextStep);
+  if (btn.nextStep) {
+    props.changeQuestion(btn.nextStep);
+  }
   // Check if the button has any action to execute
   if (btn.action) {
     executeButtonAction(props, btn.action);
   }
   // Update find notification on every step but not last step
-  if (btn.nextStep !== REPORT_LAST_STEP && props.currentStep >= 2) {
+  if (btn.nextStep && btn.nextStep !== REPORT_LAST_STEP && props.currentStep >= 2) {
     sendFindNotification(props);
   }
 };
