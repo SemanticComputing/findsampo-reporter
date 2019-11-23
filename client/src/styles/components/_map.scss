@@ -1,6 +1,7 @@
 .map-container {
   flex: 1;
   width: 100%;
+  min-height: 190px;
   // Styles for leaflet popup
   & .leaflet-popup-content-wrapper {
     // Material UI settings
