@@ -1,20 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Stepper, Step, StepLabel } from '@material-ui/core/';
 import intl from 'react-intl-universal';
+import { Stepper, Step, StepLabel, MobileStepper } from '@material-ui/core/';
+import { isDesktopScreen } from '../../helpers/functions/functions';
 
 const StepMaker = (props) => {
   const steps = getSteps();
   const activeStep = getActiveStep(props.currentStep);
   return (
     <div className="step-maker">
-      <Stepper className="step-maker__container" activeStep={activeStep} alternativeLabel>
-        {steps.map(label => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+      {
+        isDesktopScreen(window) ? (
+          <Stepper className="step-maker__desktop" activeStep={activeStep} alternativeLabel>
+            {steps.map(label => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        ) : (
+          <MobileStepper
+            className="step-maker__mobile"
+            variant="progress"
+            steps={props.totalSteps}
+            position="static"
+            activeStep={props.currentStep}
+          />
+        )
+      }
+
     </div>
   );
 };
@@ -44,6 +58,7 @@ const getActiveStep = (currentStep) => {
 
 const mapStateToProps = (state) => ({
   currentStep: state.report.currentStep,
+  totalSteps: state.report.questions.length,
 });
 
 export default connect(mapStateToProps)(StepMaker);

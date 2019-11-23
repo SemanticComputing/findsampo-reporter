@@ -1,6 +1,17 @@
 .step-maker {
-  & &__container {
+  & &__desktop {
     background-color: #ffffffcc;
     padding: 1.5rem 0;
   }
+  & &__mobile {
+    padding: 5px;
+    flex: 1;
+    & .MuiMobileStepper-progress {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: $size-max-mobile) {
+    display: flex;
+    flex: 1;
+  } 
 }

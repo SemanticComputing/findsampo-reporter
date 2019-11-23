@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import HelpBar from './HelpBar';
-import { Icon, Paper } from '@material-ui/core';
+import { Icon, Paper, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
 import AnswerOptions from './AnswerOptions';
 import ButtonBar from './ButtonBar';
 import StepMaker from '../reporting/StepMaker';
@@ -11,6 +11,7 @@ import Spinner from '../Spinner';
 import { getMyFinds } from '../../actions/myFinds';
 import { skipHelpTutorialSteps } from '../../actions/findNotification';
 import { isEqual, isEmpty, differenceWith } from 'lodash';
+import { isDesktopScreen } from '../../helpers/functions/functions';
 
 class Question extends Component {
 
@@ -42,17 +43,17 @@ class Question extends Component {
 
     return (
       <div className="question">
-        <HelpBar />
+        {isDesktopScreen(window) && <HelpBar />}
         {
           Component ? (
             <Paper className="question__paper">
-              <StepMaker />
+              {this.renderUpperBar()}
               <Component />
               <ButtonBar />
             </Paper>
           ) : (
             <Paper className="question__paper">
-              <StepMaker />
+              {this.renderUpperBar()}
               <div className="question__properties">
                 {
                   icon &&
@@ -73,6 +74,26 @@ class Question extends Component {
           <Spinner styles={{ backgroundColor: 'transparent', color: 'grey' }} />
         }
       </div>
+    );
+  }
+
+  renderUpperBar() {
+    return isDesktopScreen(window) ? (
+      <StepMaker />
+    ) : (
+      <ExpansionPanel className="question__paper__expansion-panel">
+        <ExpansionPanelSummary
+          expandIcon={<Icon>arrow_drop_down</Icon>}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          className="question__paper__expansion-panel__summary"
+        >
+          <StepMaker />
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails className="question__paper__expansion-panel__details">
+          <HelpBar />
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
     );
   }
 

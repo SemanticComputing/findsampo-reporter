@@ -6,6 +6,9 @@
       display: flex;
       align-items: center;
       justify-content: inherit;
+      @media screen and (max-width: $size-max-mobile) {
+        justify-content: space-between;
+      }
     }
     &__more {
       &__menu-icon {
@@ -33,5 +36,9 @@
   }
   & &__popper {
     z-index: 1;
+  }
+  @media screen and (max-width: $size-max-mobile) {
+    display: flex;
+    flex: 1;
   }
 }
