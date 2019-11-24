@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import intl from 'react-intl-universal';
-import { Stepper, Step, StepLabel, MobileStepper } from '@material-ui/core/';
+import { Stepper, Step, StepLabel, MobileStepper, Typography } from '@material-ui/core/';
 import { isDesktopScreen } from '../../helpers/functions/functions';
 
 const StepMaker = (props) => {
@@ -12,9 +12,16 @@ const StepMaker = (props) => {
       {
         isDesktopScreen(window) ? (
           <Stepper className="step-maker__desktop" activeStep={activeStep} alternativeLabel>
-            {steps.map(label => (
+            {steps.map((label, index) => (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel>{label}
+                  {
+                    index === 1 && 
+                  <Typography variant="caption" display="block">
+                    {intl.get('report.optionalSection')}
+                  </Typography>
+                  }
+                </StepLabel>
               </Step>
             ))}
           </Stepper>

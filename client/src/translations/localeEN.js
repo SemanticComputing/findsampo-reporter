@@ -207,6 +207,7 @@ export default {
     "stepFour": "Done!",
     "skip": "Skip",
     "back": "Back",
+    "optionalSection": "Optional",
     "reportSent": "Your report has been sent successfully!",
     "questionZero": {
       "question": "Would you like to get familiar with our starter kits before starting to add your find?",
