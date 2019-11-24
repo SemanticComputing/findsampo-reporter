@@ -34,25 +34,22 @@ const StepMaker = (props) => {
 };
 
 // Step boundaries
-const START_MAX = 1;
-const DETAILS_MAX = 6;
-const ADDITIONALS_MAX = 14;
+const DETAILS_SECTION_MAX = 4;
+const ADDITIONALS_SECTION_MAX = 14;
 
 // Get current report steps
 const getSteps = () => {
-  return [intl.get('report.stepOne'), intl.get('report.stepTwo'), intl.get('report.stepThree'), intl.get('report.stepFour')];
+  return [intl.get('report.stepTwo'), intl.get('report.stepThree'), intl.get('report.stepFour')];
 };
 
 // Get the step of the current question
 const getActiveStep = (currentStep) => {
-  if (currentStep <= START_MAX) {
+  if (currentStep <= DETAILS_SECTION_MAX) {
     return 0;
-  } else if (currentStep > START_MAX && currentStep <= DETAILS_MAX) {
+  } else if (currentStep > DETAILS_SECTION_MAX && currentStep <= ADDITIONALS_SECTION_MAX) {
     return 1;
-  } else if (currentStep > DETAILS_MAX && currentStep <= ADDITIONALS_MAX) {
-    return 2;
   } else {
-    return 3;
+    return 2;
   }
 };
 

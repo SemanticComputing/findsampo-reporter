@@ -9,8 +9,6 @@ import ButtonBar from './ButtonBar';
 import StepMaker from '../reporting/StepMaker';
 import Spinner from '../Spinner';
 import { getMyFinds } from '../../actions/myFinds';
-import { skipHelpTutorialSteps } from '../../actions/findNotification';
-import { isEqual, isEmpty, differenceWith } from 'lodash';
 import { isDesktopScreen } from '../../helpers/functions/functions';
 
 class Question extends Component {
@@ -19,22 +17,13 @@ class Question extends Component {
     if (this.props.history.location.state && this.props.history.location.state.isContinuing) {
       return;
     } else {
-      if (this.props.myReports.length > 0) {
-        this.props.skipHelpTutorialSteps();
-      } else {
-        this.props.getMyFinds();
-      }
+      this.props.getMyFinds();
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     if (this.props.history.location.state && this.props.history.location.state.isContinuing) {
       return;
-    } else {
-      if (this.props.myReports.length > 0 &&
-        !isEmpty(differenceWith(this.props.myReports, prevProps.myReports, isEqual))) {
-        this.props.skipHelpTutorialSteps();
-      }
     }
   }
 
@@ -113,8 +102,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getMyFinds: () => dispatch(getMyFinds()),
-  skipHelpTutorialSteps: () => dispatch(skipHelpTutorialSteps())
+  getMyFinds: () => dispatch(getMyFinds())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Question));
