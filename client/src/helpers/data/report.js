@@ -69,7 +69,6 @@ export default {
       icon: 'place',
       question: 'report.questionFindTimeDetermining.question',
       help: 'report.questionFindTimeDetermining.help',
-      backStep: 0,
       buttons: [
         {
           type: ButtonTypes.STEPPER,
