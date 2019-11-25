@@ -7,7 +7,7 @@ import {
   TextField,
   InputAdornment
 } from '@material-ui/core/';
-import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import intl from 'react-intl-universal';
 import Map from '../map/Map';
@@ -32,7 +32,7 @@ class AnswerOptions extends Component {
   }
 
   onFindDateChange = (selectedDate) => {
-    this.props.setDate(selectedDate._d);
+    this.props.setDate(selectedDate);
   }
 
   onAdditionalMaterialTyped = (event) => {
