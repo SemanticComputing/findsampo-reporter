@@ -543,6 +543,7 @@ class Map extends Component {
 
     this.map.on('locationerror', (err) => {
       const message = `Error(${err.code}) ${intl.get('nearByPage.map.alert.gettingLocationFailed')}`;
+      this.locateControl.stop();
       this.props.enqueueSnackbar({
         message,
         options: {
