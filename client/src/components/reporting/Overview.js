@@ -4,12 +4,11 @@ import {
   Paper,
   Typography,
   Divider,
-  Icon,
-  GridList,
-  GridListTile
+  Icon
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import Map from '../map/Map';
+import ImageViewer from '../ImageViewer';
 
 /**
  * findNotification: Find notification content
@@ -38,7 +37,9 @@ const OverView = (props) => {
                 <Typography variant="caption" className="overview__properties">
                   {intl.get('overview.find.photos')}
                 </Typography>
-                {find.photos.length > 0 && renderPhotos(find.photos)}
+                <div>
+                  {find.photos.length > 0 && renderPhotos(find.photos)}
+                </div>
                 {/* Find Site Details */}
                 <div className="overview__find-site__map">
                   <Typography variant="caption" className="overview__properties">
@@ -50,7 +51,9 @@ const OverView = (props) => {
                   <Typography variant="caption" className="overview__properties">
                     {intl.get('overview.findSite.photos')}
                   </Typography>
-                  {find.findSite.photos.length > 0 && renderPhotos(find.findSite.photos)}
+                  <div>
+                    {find.findSite.photos.length > 0 && renderPhotos(find.findSite.photos)}
+                  </div>
                 </div>
                 {/* Find properties */}
                 <Typography variant="caption" className="overview__properties">
@@ -103,18 +106,11 @@ const OverView = (props) => {
  * @param {photos} photos 
  */
 const renderPhotos = (photos) => {
-  return (
-    <GridList cellHeight={130} cols={3}>
-      {photos.map((tile, index) => {
-        const thumbUrl = `${tile.split('.png')[0]}_thumb.png`;
-        return (
-          <GridListTile key={index} cols={1}>
-            <img src={thumbUrl} />
-          </GridListTile>
-        );
-      })}
-    </GridList>
-  );
+  return photos.map((tile, index) => {
+    return (
+      <ImageViewer image={tile} key={index} />
+    );
+  });
 };
 
 const DEFAULT_ZOOM_LEVEL = 16;

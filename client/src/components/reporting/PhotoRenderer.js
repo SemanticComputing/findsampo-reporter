@@ -16,6 +16,7 @@ import {
 import intl from 'react-intl-universal';
 import { PhotosOf } from '../../helpers/enum/enums';
 import { setFindSitePhotos, setFindPhotos } from '../../actions/findNotification';
+import ImageViewer from '../ImageViewer';
 
 class PhotoRenderer extends Component {
   constructor(props) {
@@ -92,11 +93,7 @@ class PhotoRenderer extends Component {
         <span>
           {
             currentModePhotos.map((photo, index) => (
-              <img
-                className="photo-renderer__photo"
-                src={photo}
-                key={index}
-              />
+              <ImageViewer image={photo} key={index} />
             ))
           }
         </span>
