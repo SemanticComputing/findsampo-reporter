@@ -176,7 +176,7 @@ class AnswerOptions extends Component {
   }
 }
 
-const DEFAULT_ZOOM_LEVEL = 15;
+const DEFAULT_ZOOM_LEVEL = 4;
 
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],

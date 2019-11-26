@@ -237,12 +237,12 @@ class Map extends Component {
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,
-      layers: [nationalSurveyOfFinland],
+      layers: this.props.showCurrentLocation ? [googleMaps] : [nationalSurveyOfFinland],
       attributionControl: false
     });
-
     // Add overlay layers to map
     L.control.layers(baseMaps, this.overlayLayers).addTo(this.map);
+
     // Add control scale
     L.control.scale().addTo(this.map);
     // Add locate scate
@@ -259,7 +259,6 @@ class Map extends Component {
       this.locateControl.start();
       // Add a click listener which is setted only if user's current location is viewed
       this.map.addEventListener('click', this.onMapTapped);
-      googleMaps.addTo(this.map);
     }
 
     // Active overlay layer
