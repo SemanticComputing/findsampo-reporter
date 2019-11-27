@@ -28,7 +28,9 @@ export const TreeViewTypes = Object.freeze({
 
 export const ButtonActions = Object.freeze({
   CHANGE_CURRENT_FIND_INDEX: 'change-current-find-index',
-  SEND_FIND_NOTIFICATION: 'send-find-notification'
+  SEND_FIND_NOTIFICATION: 'send-find-notification',
+  SEND_FIND_IMAGES: 'send-find-images',
+  SEND_FIND_SITE_IMAGES: 'send-find-site-images'
 });
 
 export const RouterPaths = Object.freeze({
