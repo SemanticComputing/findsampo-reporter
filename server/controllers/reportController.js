@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const uuidv1 = require('uuid/v1');
+const nanoid = require('nanoid');
 const querystring = require('querystring');
 const url = require('url');
-
+const constants = require('../helpers/constants');
 const report = require('../sparql/queries/report');
 
 const HTTP_OK = 200;
@@ -15,7 +15,7 @@ const defaultreportHeaders = {
 
 router.post('/', async (req, res, next) => {
   try {
-    const reportId = req.body.data.reportId ? req.body.data.reportId : uuidv1();
+    const reportId = req.body.data.reportId ? req.body.data.reportId : (constants.PREFIX_REPORT + nanoid(12));
     const update = report.postReport(reportId, req.body.user, req.body.data);
 
     const response = await axios({

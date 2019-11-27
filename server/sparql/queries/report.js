@@ -1,5 +1,6 @@
 // Creates unique IDs
-const uuidv1 = require('uuid/v1');
+const nanoid = require('nanoid');
+const constants = require('../../helpers/constants');
 
 const FIND_TAG = 'fs-find';
 const FIND_SCHEMA_TAG = 'fs-schema:report-find';
@@ -15,7 +16,7 @@ const FIND_SITE_IMAGE_SCHEMA_TAG = 'fs-schema:find-site-image';
  * @param {Report Data} data 
  */
 const createPostQuery = (reportId, user, data) => {
-  const finds = new Map(data.finds.map(find => [uuidv1(), find]));
+  const finds = new Map(data.finds.map(find => [createUniqueId(constants.PREFIX_FIND), find]));
   const prefixes = getPrefixes();
   return `
     ${prefixes}
@@ -87,8 +88,8 @@ const getProperties = (schema, tag, container) => {
 const getFindsDetails = (finds, date) => {
   let findsDetails = '';
   for (let [id, find] of finds.entries()) {
-    const findSiteId = uuidv1();
-    const findImages = find.photos && new Map(find.photos.map(img => [uuidv1(), img]));
+    const findSiteId = createUniqueId(constants.PREFIX_FIND_SITE);
+    const findImages = find.photos && new Map(find.photos.map(img => [createUniqueId(constants.PREFIX_FIND_IMAGE), img]));
 
     findsDetails += `fs-find:${id} a fs-schema:Find ;
       fs-schema:find-date "${date}"^^xsd:dateTime ;
@@ -129,7 +130,7 @@ const getFindImageDetails = (findImages) => {
  * Returns find site details
  */
 const getFindSiteDetails = (id, findSite) => {
-  const findSiteImages = findSite.photos && new Map(findSite.photos.map(img => [uuidv1(), img]));
+  const findSiteImages = findSite.photos && new Map(findSite.photos.map(img => [createUniqueId(constants.PREFIX_FIND_SITE_IMAGE), img]));
 
   return `fs-find-site:${id} a fs-schema:FindSite ;
       wgs84:lat ${findSite.coords.lat} ;
@@ -182,6 +183,15 @@ const deleteReport = (reportId) => (`
   ${getPrefixes()}
   DROP GRAPH fs-report:${reportId}
 `);
+
+/**
+ * Helper method for creating a unique id with the given prefix
+ * 
+ * @param {Prefix to be used} prefix 
+ */
+const createUniqueId = (prefix) => {
+  return prefix + nanoid(12);
+};
 
 exports.getReport = getReport;
 exports.postReport = createPostQuery;
