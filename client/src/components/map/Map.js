@@ -251,7 +251,8 @@ class Map extends Component {
       position: 'topright',
       cacheLocation: false,
       icon: 'material-icons location-icon',
-      iconLoading: 'material-icons w3-spin w3-jumbo loading-icon'
+      iconLoading: 'material-icons w3-spin w3-jumbo loading-icon',
+      flyTo: true
     };
     this.locateControl = L.control.locate(locateOptions).addTo(this.map);
 
