@@ -4,8 +4,12 @@ import { withRouter } from 'react-router-dom';
 import Overview from '../reporting/Overview';
 import { getMyFinds, getCertainFinds } from '../../actions/myFinds';
 import { isEqual, isEmpty, differenceWith } from 'lodash';
+import { getIdfromUri } from '../../helpers/functions/functions';
 
 class MyFindsReportOverviewPage extends Component {
+  state = {
+    reportIndex: null
+  }
 
   componentDidMount() {
     // If there is already report data fetch its finds otherwise fetch all reports
@@ -27,8 +31,8 @@ class MyFindsReportOverviewPage extends Component {
     return (
       <div className="myFindsReportOverviewPage">
         {
-          this.props.reportFinds &&
-          <Overview isOverview={true} findNotificationData={this.props.reportFinds.findsData} />
+          this.state.reportIndex &&
+          <Overview isOverview={true} findNotificationData={this.props.reports[this.state.reportIndex].findsData} />
         }
       </div>
     );
@@ -38,15 +42,18 @@ class MyFindsReportOverviewPage extends Component {
    * Fetch find data of the selected report
    */
   fetchfindsData = () => {
-    const reportIndex = this.props.history.location.state.index;
+    const selectedReportId = this.props.history.location.search.match(new RegExp('r=' + '(.*)' + '&f='))[1];
+    const reportIndex = this.props.reports.findIndex((r) => getIdfromUri('report', r.id) === selectedReportId);
+    if (reportIndex && reportIndex > 0) {
+      this.setState({ reportIndex });
+    }
     const finds = this.props.reports[reportIndex].finds;
     // Fetch finds information
     this.props.getCertainFinds(reportIndex, finds);
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  reportFinds: state.myFinds.reports[ownProps.history.location.state.index],
+const mapStateToProps = (state) => ({
   reports: state.myFinds.reports
 });
 
