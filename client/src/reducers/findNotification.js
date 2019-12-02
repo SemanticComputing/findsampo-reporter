@@ -19,7 +19,8 @@ import {
   FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
-  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
+  FIND_NOTIFICATION_SET_REPORT_ID
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -85,14 +86,14 @@ export default (state = initialState, action) => {
         currentStep: action.step
       };
     case FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS: {
-      const { currentFindIndex, uploads } = action.payload.data;
+      const { currentFindIndex, imageUrl } = action.payload.data;
       const currentPhotos = !state.finds[currentFindIndex].findSite.photos ? [] : state.finds[currentFindIndex].findSite.photos;
       return update(state, {
         finds: {
           [currentFindIndex]: {
             findSite: {
               photos: {
-                $set: [...currentPhotos, ...uploads],
+                $set: [...currentPhotos, imageUrl],
               }
             }
           }
@@ -100,13 +101,14 @@ export default (state = initialState, action) => {
       });
     }
     case FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS: {
-      const { currentFindIndex, uploads } = action.payload.data;
+      console.log(action.payload);
+      const { currentFindIndex, imageUrl } = action.payload.data;
       // If there is no photos then create a new objet
       if (!state.finds[currentFindIndex].photos) {
         return update(state, {
           finds: {
             [currentFindIndex]: {
-              photos: { $set: uploads }
+              photos: { $set: [imageUrl] }
             }
           }
         });
@@ -115,7 +117,7 @@ export default (state = initialState, action) => {
           finds: {
             [currentFindIndex]: {
               photos: {
-                $set: [...state.finds[currentFindIndex].photos, ...uploads],
+                $set: [...state.finds[currentFindIndex].photos, imageUrl],
               }
             }
           }
@@ -230,6 +232,11 @@ export default (state = initialState, action) => {
     }
     case FIND_NOTIFICATION_RESET:
       return initialState;
+    case FIND_NOTIFICATION_SET_REPORT_ID:
+      return {
+        ...state,
+        reportId: action.id
+      };
     default:
       return state;
   }

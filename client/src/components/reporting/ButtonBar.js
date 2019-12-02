@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import nanoid from 'nanoid';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
 import { withRouter } from 'react-router-dom';
 import { changeQuestion, postReport } from '../../actions/report';
-import { changeFindIndex, setStatusToAwaitReview } from '../../actions/findNotification';
-import { QuestionDependencies, ButtonActions } from '../../helpers/enum/enums';
+import { changeFindIndex, setStatusToAwaitReview, setReportId } from '../../actions/findNotification';
+import { QuestionDependencies, ButtonActions, ReportingIDs } from '../../helpers/enum/enums';
 
 const ButtonBar = (props) => (
   <div className="button-bar">
@@ -91,6 +92,11 @@ const executeButtonAction = (props, buttonAction) => {
     case ButtonActions.SEND_FIND_NOTIFICATION:
       finaliseNotification(props, true);
       break;
+    case ButtonActions.SET_REPORT_ID:
+      if (!props.reportId) {
+        props.setReportId(ReportingIDs.PREFIX_REPORT + nanoid(12));
+      }
+      break;
   }
 };
 
@@ -117,6 +123,7 @@ const mapStateToProps = (state) => ({
   buttons: state.report.questions[state.report.currentStep].buttons,
   dependentOn: state.report.questions[state.report.currentStep].dependentOn,
   currentFindIndex: state.findNotification.currentFindIndex,
+  reportId: state.findNotification.reportId,
   finds: state.findNotification.finds,
   currentStep: state.report.currentStep
 });
@@ -126,6 +133,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
   setStatusToAwaitReview: () => dispatch(setStatusToAwaitReview()),
   postReport: (isFinalised) => dispatch(postReport(isFinalised)),
+  setReportId: (id) => dispatch(setReportId(id))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ButtonBar));

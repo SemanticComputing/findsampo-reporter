@@ -95,7 +95,8 @@ export default {
         {
           type: ButtonTypes.STEPPER,
           text: 'report.questionFindLocation.buttonOne',
-          nextStep: 2
+          nextStep: 2,
+          action: ButtonActions.SET_REPORT_ID
         }
       ]
     },

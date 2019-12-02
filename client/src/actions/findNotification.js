@@ -13,7 +13,8 @@ import {
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
   FIND_NOTIFICATION_RESET,
   FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
-  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
+  FIND_NOTIFICATION_SET_REPORT_ID
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -105,4 +106,9 @@ export const skipHelpTutorialSteps = () => ({
 
 export const resetFindNotification = () => ({
   type: FIND_NOTIFICATION_RESET
+});
+
+export const setReportId = (id) => ({
+  type: FIND_NOTIFICATION_SET_REPORT_ID,
+  id
 });
