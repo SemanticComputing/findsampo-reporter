@@ -427,6 +427,7 @@ export default {
       "selectFromGallery": "Select from gallery",
       "cancel": "Cancel"
     },
+    "infoText": "Tap the icon to take or choose a photo",
     "errorHeader": "Photo too large",
     "errorText": "The photo exceeds the maximum upload size for this site. Photos cannot exceed 5 MB. Please try again!",
     "confirmationBtn": "OK"

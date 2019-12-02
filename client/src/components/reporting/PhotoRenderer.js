@@ -11,7 +11,8 @@ import {
   DialogActions,
   Dialog,
   Icon,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import { PhotosOf } from '../../helpers/enum/enums';
@@ -128,6 +129,9 @@ class PhotoRenderer extends Component {
     return (
       <div className="photo-renderer">
         <Icon onClick={this.onOpenPhotoDialogPressed} className="photo-renderer__icon">add_a_photo</Icon>
+        <Typography variant="caption" display="block" gutterBottom>
+          {intl.get('photoRenderer.infoText')}
+        </Typography>
         <Dialog
           onClose={this.onOpenPhotoDialogPressed}
           aria-labelledby="photo-dialog"
