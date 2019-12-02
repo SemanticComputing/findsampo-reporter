@@ -101,7 +101,6 @@ export default (state = initialState, action) => {
       });
     }
     case FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS: {
-      console.log(action.payload);
       const { currentFindIndex, imageUrl } = action.payload.data;
       // If there is no photos then create a new objet
       if (!state.finds[currentFindIndex].photos) {

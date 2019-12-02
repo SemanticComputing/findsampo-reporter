@@ -105,7 +105,6 @@ const setFindPhotos = createLogic({
       }
 
       axios.all(axiosPromiseArray).then(() => {
-        console.log(axiosPromiseArray);
         return axios({
           method: 'post',
           url: FIND_NOTIFICATION_FIND_IMAGE_MERGE_END_POINT,
