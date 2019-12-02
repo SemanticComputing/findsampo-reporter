@@ -19,7 +19,10 @@ import {
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
-const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find';
+const FIND_NOTIFICATION_FIND_IMAGE_MERGE_END_POINT = '/api/v1/photo/find-merge';
+const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find-site';
+const FIND_NOTIFICATION_FIND_SITE_IMAGE_MERGE_END_POINT = '/api/v1/photo/find-site-merge';
+
 const SMART_HELPER_END_POINT = '/api/v1/smart-helper';
 const SMART_HELPER_NEARBY_END_POINT = '/api/v1/smart-helper/nearby';
 
@@ -61,73 +64,148 @@ const getFindMunicapility = createLogic({
 
 const setFindPhotos = createLogic({
   type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
-  latest: true,
+  latest: false,
 
-  processOptions: {
-    dispatchReturn: true,
-    successType: FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS
-  },
-
-  process({ action, getState }) {
-    // Add images to formdata
-    const formData = new FormData();
+  process({ action, getState }, dispatch, done) {
     const currentFindIndex = getState().findNotification.currentFindIndex;
     const currentFind = action[currentFindIndex];
 
     for (let i in currentFind.photos) {
+      // Image information
+      const axiosPromiseArray = [];
       const imgIndex = parseInt(i) + parseInt(action.imgIndex);
       const fileName = `${getState().findNotification.reportId}_find-${currentFindIndex}_img-${imgIndex}`;
       const photo = currentFind.photos[i];
-      formData.append(fileName, photo);
+      const partNames = [];
+      // Chunk information
+      const chunkSize = 256 * 1000;
+      const blockCount = Math.ceil(photo.size / chunkSize);
+
+      for (let j = 0; j < blockCount; j++) {
+        const formData = new FormData();
+        const start = j * chunkSize;
+        const end = Math.min(photo.size, start + chunkSize);
+        const partName = fileName + '_part-' + j;
+
+        // Save partnames to sent afterwards
+        partNames.push(partName);
+        // Insert form data
+        formData.append('tempFolderName', `${getState().findNotification.reportId}_${i}`);
+        formData.append('partName', fileName + '_part-' + j);
+        formData.append('file', blobSlice.call(photo, start, end));
+
+        axiosPromiseArray.push(
+          axios({
+            method: 'post',
+            url: FIND_NOTIFICATION_FIND_IMAGE_END_POINT,
+            data: formData,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } }
+          })
+        );
+      }
+
+      axios.all(axiosPromiseArray).then(() => {
+        console.log(axiosPromiseArray);
+        return axios({
+          method: 'post',
+          url: FIND_NOTIFICATION_FIND_IMAGE_MERGE_END_POINT,
+          data: {
+            totalFileSize: photo.size,
+            tempFolderName: `${getState().findNotification.reportId}_${i}`,
+            fileName,
+            partNames,
+            currentFindIndex
+          }
+        })
+          .then((result) => {
+            dispatch({
+              type: FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
+              payload: result
+            });
+          })
+          .then(() => {
+            // Finish the process when all photos are received
+            if (i == currentFind.photos.length) {
+              done();
+            }
+          });
+      });
     }
-
-    // Add current find index
-    formData.append('currentFindIndex', currentFindIndex);
-
-    // And send them to server
-    return axios({
-      method: 'post',
-      url: FIND_NOTIFICATION_FIND_IMAGE_END_POINT,
-      data: formData,
-      config: { headers: { 'Content-Type': 'multipart/form-data' } }
-    });
   }
 });
+
 
 const setFindSitePhotos = createLogic({
   type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  latest: true,
+  latest: false,
 
-  processOptions: {
-    dispatchReturn: true,
-    successType: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS
-  },
-
-  process({ action, getState }) {
-    // Add images to formdata
-    const formData = new FormData();
+  process({ action, getState }, dispatch, done) {
     const currentFindIndex = getState().findNotification.currentFindIndex;
-    const findSite = action[currentFindIndex];
+    const currentFind = action[currentFindIndex];
 
-    for (let i in findSite.photos) {
+    for (let i in currentFind.photos) {
+      // Image information
+      const axiosPromiseArray = [];
       const imgIndex = parseInt(i) + parseInt(action.imgIndex);
       const fileName = `${getState().findNotification.reportId}_find-site_img-${imgIndex}`;
-      const photo = findSite.photos[i];
-      formData.append(fileName, photo);
+      const photo = currentFind.photos[i];
+      const partNames = [];
+      // Chunk information
+      const chunkSize = 256 * 1000;
+      const blockCount = Math.ceil(photo.size / chunkSize);
+
+      for (let j = 0; j < blockCount; j++) {
+        const formData = new FormData();
+        const start = j * chunkSize;
+        const end = Math.min(photo.size, start + chunkSize);
+        const partName = fileName + '_part-' + j;
+
+        // Save partnames to sent afterwards
+        partNames.push(partName);
+        // Insert form data
+        formData.append('tempFolderName', `${getState().findNotification.reportId}_${i}`);
+        formData.append('partName', fileName + '_part-' + j);
+        formData.append('file', blobSlice.call(photo, start, end));
+
+        axiosPromiseArray.push(
+          axios({
+            method: 'post',
+            url: FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT,
+            data: formData,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } }
+          })
+        );
+      }
+
+      axios.all(axiosPromiseArray).then(() => {
+        axios({
+          method: 'post',
+          url: FIND_NOTIFICATION_FIND_SITE_IMAGE_MERGE_END_POINT,
+          data: {
+            totalFileSize: photo.size,
+            tempFolderName: `${getState().findNotification.reportId}_${i}`,
+            fileName,
+            partNames,
+            currentFindIndex
+          }
+        })
+          .then((result) => {
+            dispatch({
+              type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
+              payload: result
+            });
+          })
+          .then(() => {
+            // Finish the process when all photos are received
+            if (i == currentFind.photos.length) {
+              done();
+            }
+          });
+      });
     }
-
-    // Add current find index
-    formData.append('currentFindIndex', currentFindIndex);
-
-    // And send them to server
-    return axios({
-      method: 'post',
-      url: FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT,
-      data: formData,
-      config: { headers: { 'Content-Type': 'multipart/form-data' } }
-    });
   }
 });
+
 
 /********************* Helper Methods for providing help with the smart assistant *********************/
 const getLocationBasedSmartHelp = createLogic({
@@ -179,6 +257,8 @@ const getFindPropertyBasedSmartHelp = createLogic({
     };
   }
 });
+
+const blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;
 
 const getNearbyFindsSummary = (property, finds) => {
   const filteredFinds = finds.filter((f) => f[property]);

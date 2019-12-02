@@ -28,7 +28,10 @@ export const TreeViewTypes = Object.freeze({
 
 export const ButtonActions = Object.freeze({
   CHANGE_CURRENT_FIND_INDEX: 'change-current-find-index',
-  SEND_FIND_NOTIFICATION: 'send-find-notification'
+  SET_REPORT_ID: 'set-report-id',
+  SEND_FIND_NOTIFICATION: 'send-find-notification',
+  SEND_FIND_IMAGES: 'send-find-images',
+  SEND_FIND_SITE_IMAGES: 'send-find-site-images'
 });
 
 export const RouterPaths = Object.freeze({
@@ -124,4 +127,12 @@ export const SmartHelpers = Object.freeze({
 export const SmartHelperMode = Object.freeze({
   NEARBY: 'nearby',
   OVERALL: 'overall'
+});
+
+export const ReportingIDs = Object.freeze({
+  PREFIX_REPORT: 'sam_r_',
+  PREFIX_FIND: 'sam_f_',
+  PREFIX_FIND_SITE: 'sam_fs_',
+  PREFIX_FIND_IMAGE: 'sam_fimg_',
+  PREFIX_FIND_SITE_IMAGE: 'sam_fsimg_'
 });
