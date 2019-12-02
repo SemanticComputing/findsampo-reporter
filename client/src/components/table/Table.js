@@ -1,5 +1,6 @@
 import React from 'react';
 import MaterialTable from 'material-table';
+import intl from 'react-intl-universal';
 import {
   Card,
   CardActionArea,
@@ -10,23 +11,28 @@ import {
   Tooltip
 } from '@material-ui/core';
 
+/**
+ * Parameters
+ * 
+ * tableData: The data which is given to table to show
+ */
 const Table = (props) => {
   return (
     <div className="table">
       <MaterialTable
         columns={[ // TODO: Add translations
           {
-            title: 'Preview Image',
+            title: intl.get('nearByPage.table.previewImage'),
             field: 'image',
-            render: rowData => rowData.image ?
-              <img src={rowData.image} className="table__column__icon" /> :
+            render: rowData => rowData.image_url ?
+              <img src={rowData.image_url} className="table__column__icon" /> :
               <Icon className="table__column__icon">crop_original</Icon>
           },
-          { title: 'Title', field: 'title' },
-          { title: 'Material', field: 'material' },
-          { title: 'Type', field: 'type' },
-          { title: 'Period', field: 'period' },
-          { title: 'Town', field: 'municipality' },
+          { title: intl.get('nearByPage.table.title'), field: 'title' },
+          { title: intl.get('nearByPage.table.material'), field: 'main_material' },
+          { title: intl.get('nearByPage.table.type'), field: 'type' },
+          { title: intl.get('nearByPage.table.period'), field: 'period' },
+          { title: intl.get('nearByPage.table.municipality'), field: 'municipality' },
         ]}
         data={props.tableData}
         title="Finds"
@@ -38,7 +44,6 @@ const Table = (props) => {
           pageSizeOptions: [10, 50, 100, 1000],
           search: false,
           showTitle: false,
-          maxBodyHeight: 600,
         }}
         onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
@@ -51,10 +56,10 @@ const renderDetailPanel = (row) => {
     <Card className="table__detail-panel">
       <CardActionArea className="table__detail-panel__container">
         {
-          row.image ? (
+          row.image_url ? (
             <CardMedia
               className="table__detail-panel__container__image"
-              image={row.image}
+              image={row.image_url}
               title={row.title}
             />
           ) : (
@@ -65,13 +70,13 @@ const renderDetailPanel = (row) => {
         }
         <CardContent className="table__detail-panel__container__content">
           <Typography gutterBottom variant="subtitle1">
-            Province: {row.province}
+            {intl.get('nearByPage.table.province')}: {row.province ? row.province : intl.get('nearByPage.table.notProvidedValue')}
           </Typography>
           <Typography gutterBottom variant="subtitle1">
-            Specification: {row.specification}
+            {intl.get('nearByPage.table.specification')}: {row.specification ? row.specification : intl.get('nearByPage.table.notProvidedValue')}
           </Typography>
           <Typography component="p">
-            {row.description}
+            {row.description ? row.description : intl.get('nearByPage.table.noAdditionalInformation')}
           </Typography>
         </CardContent>
       </CardActionArea>

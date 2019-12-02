@@ -11,6 +11,7 @@
       justify-content: space-between;
       margin-bottom: 2px;
       &__tabs {
+        display: grid;
         &__tab {
           padding: 0;
           font-size: 0.75rem;
@@ -30,6 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 0;
     /* More about this https://moduscreate.com/blog/how-to-fix-overflow-issues-in-css-flex-layouts/
     min-height: 0px;*/
     &__container {
@@ -53,6 +55,23 @@
         flex: 1;
         display: flex;
       }
+      &__chart-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        &__paper {
+          display: flex;
+          align-items: center;
+          & &__form-control {
+            min-width: 9rem;
+            margin: 1rem;
+          }
+        }
+      }
     }
+  }
+  // Override apexchart stylings
+  .apexcharts-legend {
+    bottom: 20px !important;
   }
 }

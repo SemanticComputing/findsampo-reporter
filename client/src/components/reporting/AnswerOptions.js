@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
+import {
+  Switch,
+  Slider,
+  FormControlLabel,
+  TextField,
+  InputAdornment
+} from '@material-ui/core/';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import intl from 'react-intl-universal';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
-import { OptionTypes } from '../../helpers/enum/enums';
-import { setDate, setAdditionalMaterial, setFindDepth } from '../../actions/findNotification';
 import ExpandPanel from '../ExpandPanel';
 import TreeView from '../../components/TreeView';
+import { OptionTypes } from '../../helpers/enum/enums';
+import { setDate, setAdditionalMaterial, setFindDepth } from '../../actions/findNotification';
+
 
 class AnswerOptions extends Component {
-
   state = {
     isExactDay: true
   }
 
-
-  onFindDepthChanged = (event) => {
-    this.props.setFindDepth(event.target.value, this.props.currentFindIndex);
+  onFindDepthChanged = (event, value) => {
+    this.props.setFindDepth(value, this.props.currentFindIndex);
   }
 
   onExactDayChanged = () => {
@@ -30,11 +32,11 @@ class AnswerOptions extends Component {
   }
 
   onFindDateChange = (selectedDate) => {
-    this.props.setDate(selectedDate._d);
+    this.props.setDate(selectedDate);
   }
 
   onAdditionalMaterialTyped = (event) => {
-    this.props.setAdditionalMaterial(event.target.value);
+    this.props.setAdditionalMaterial(event.target.value, this.props.currentFindIndex);
   }
 
   renderDatePickers() {
@@ -43,7 +45,7 @@ class AnswerOptions extends Component {
         <DatePicker
           autoOk
           variant="outlined"
-          label="Date"
+          label={intl.get('answerOptions.date')}
           format="dd.MM.yyyy"
           value={this.props.findDate}
           onChange={this.onFindDateChange}
@@ -54,7 +56,7 @@ class AnswerOptions extends Component {
         <DatePicker
           autoOk
           variant="outlined"
-          label="Approximate date"
+          label={intl.get('answerOptions.approximateDate')}
           openTo="year"
           views={['year', 'month']}
           value={this.props.findDate}
@@ -73,20 +75,20 @@ class AnswerOptions extends Component {
           container = (
             <TextField
               id="outlined-number"
-              label={intl.get('report.questionFourteen.label')}
+              label={intl.get('report.questionFindDepth.label')}
               onChange={this.onFindDepthChanged}
               type="number"
               margin="normal"
               variant="outlined"
               InputProps={{
-                endAdornment: <InputAdornment position="end">{intl.get('report.questionFourteen.depthUnit')}</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{intl.get('report.questionFindDepth.depthUnit')}</InputAdornment>,
               }}
             />
           );
           break;
         case OptionTypes.MAP:
           container = (
-            <Map showCurrentLocation/>
+            <Map showCurrentLocation useSatellite zoomLevel={DEFAULT_ZOOM_LEVEL} />
           );
           break;
         case OptionTypes.DATE_PICKER:
@@ -100,7 +102,7 @@ class AnswerOptions extends Component {
                     onChange={this.onExactDayChanged}
                   />
                 }
-                label={intl.get('report.questionFour.selectionText')}
+                label={intl.get('report.questionFindDate.selectionText')}
               />
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 {this.renderDatePickers()}
@@ -116,7 +118,7 @@ class AnswerOptions extends Component {
         case OptionTypes.FIELD:
           container = (
             <TextField
-              label="Additional Materials"
+              label={intl.get('answerOptions.additionalMaterials')}
               multiline
               rows="3"
               margin="normal"
@@ -136,6 +138,20 @@ class AnswerOptions extends Component {
             <TreeView content={options.treeData} for={options.for} />
           );
           break;
+        case OptionTypes.SLIDER: {
+          const marks = [{ value: 0, label: '0cm', }, { value: 300, label: '300cm', }];
+          container = (
+            <Slider
+              defaultValue={30}
+              max={300}
+              aria-labelledby="discrete-slider-always"
+              marks={marks}
+              valueLabelDisplay="on"
+              onChangeCommitted={this.onFindDepthChanged}
+              className="answer-options__slider"
+            />
+          );
+        }
       }
     }
     return container;
@@ -160,6 +176,8 @@ class AnswerOptions extends Component {
   }
 }
 
+const DEFAULT_ZOOM_LEVEL = 4;
+
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],
   findDate: state.findNotification.date,
@@ -168,7 +186,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setDate: (date) => dispatch(setDate(date)),
-  setAdditionalMaterial: (text) => dispatch(setAdditionalMaterial(text)),
+  setAdditionalMaterial: (additionalMaterial, index) => dispatch(setAdditionalMaterial(additionalMaterial, index)),
   setFindDepth: (depth, index) => dispatch(setFindDepth(depth, index))
 });
 

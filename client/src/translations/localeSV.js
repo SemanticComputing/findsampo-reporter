@@ -1,21 +1,21 @@
 export default {
-  'header': {
-    'title': '',
-    'login': '',
-    'logout': ''
+  "header": {
+    "title": "",
+    "login": "",
+    "logout": ""
   },
-  'loginPage': {
-    'title': '',
-    'email': '',
-    'password': '',
-    'login': '',
-    'signup': '',
+  "loginPage": {
+    "title": "",
+    "email": "",
+    "password": "",
+    "login": "",
+    "signup": "",
   },
-  'signupPage': {
-    'title': '',
-    'username': '',
-    'email': '',
-    'password': '',
-    'signup': '',
+  "signupPage": {
+    "title": "",
+    "username": "",
+    "email": "",
+    "password": "",
+    "signup": "",
   }
 };

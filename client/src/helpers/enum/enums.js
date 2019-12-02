@@ -6,7 +6,8 @@ export const OptionTypes = Object.freeze({
   FIELD: 'field',
   PHOTOGRAPH: 'photograph',
   EXPANSION_PANEL: 'expansion-panel',
-  TREE_VIEW: 'tree-view'
+  TREE_VIEW: 'tree-view',
+  SLIDER: 'slider'
 });
 
 export const ButtonTypes = Object.freeze({
@@ -27,7 +28,10 @@ export const TreeViewTypes = Object.freeze({
 
 export const ButtonActions = Object.freeze({
   CHANGE_CURRENT_FIND_INDEX: 'change-current-find-index',
-  SEND_FIND_NOTIFICATION: 'send-find-notification'
+  SET_REPORT_ID: 'set-report-id',
+  SEND_FIND_NOTIFICATION: 'send-find-notification',
+  SEND_FIND_IMAGES: 'send-find-images',
+  SEND_FIND_SITE_IMAGES: 'send-find-site-images'
 });
 
 export const RouterPaths = Object.freeze({
@@ -36,6 +40,8 @@ export const RouterPaths = Object.freeze({
   LOGIN_PAGE: '/login',
   SIGNUP_PAGE: '/signup',
   MY_FINDS_PAGE: '/myfinds',
+  FIND_PAGE: '/find',
+  MY_FINDS_REPORT_OVERVIEW_PAGE: '/myfinds-report-overview',
   MORE_PAGE: '/more',
   NEARBY_PAGE: '/nearby',
   LEGALITY_CHECKER_PAGE: '/amisafe',
@@ -87,4 +93,46 @@ export const Colors = Object.freeze({
   YELLOW: '#ffeb3b',
   ORANGE: '#ff9800',
   BROWN: '#795548',
+  GREY: '#e0e0e0',
+  DARK_YELLOW: '#ffc107',
+  DARK_LIME: '#eeff41',
+  DARK_GREEN: '#43a047',
+  DARK_RED: '#dd2c00',
+  INDIGO: '#3f51b5'
+});
+
+export const ReportStatuses = Object.freeze({
+  DRAFT: 'draft',
+  AWAIT_REVIEW: 'await_review',
+  IN_REVIEW: 'in_review',
+  VALIDATED: 'validated',
+  REJECTED: 'rejected',
+  PENDING_USER: 'peding_user'
+});
+
+export const ReportSteps = Object.freeze({
+  LOCATION: 3,
+  MATERIAL: 9,
+  TYPE: 10,
+  PERIOD: 11
+});
+
+export const SmartHelpers = Object.freeze({
+  NEARBY_HELPER: 'nearby',
+  MATERIAL_HELPER: 'material',
+  TYPE_HELPER: 'type',
+  PERIOD_HELPER: 'period'
+});
+
+export const SmartHelperMode = Object.freeze({
+  NEARBY: 'nearby',
+  OVERALL: 'overall'
+});
+
+export const ReportingIDs = Object.freeze({
+  PREFIX_REPORT: 'sam_r_',
+  PREFIX_FIND: 'sam_f_',
+  PREFIX_FIND_SITE: 'sam_fs_',
+  PREFIX_FIND_IMAGE: 'sam_fimg_',
+  PREFIX_FIND_SITE_IMAGE: 'sam_fsimg_'
 });

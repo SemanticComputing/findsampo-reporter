@@ -1,6 +1,44 @@
 .help-bar {
+  & &__button-panel {
+    display: flex;
+    &__buttons {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: inherit;
+      @media screen and (max-width: $size-max-mobile) {
+        justify-content: space-between;
+      }
+    }
+    &__more {
+      &__menu-icon {
+        color: $color-bottom-bar-icon-grey;
+        margin-right: 8px;
+      }
+    }
+  }
   & &__icon{
     color: $color-bottom-bar-icon-grey;
     font-size: 1.8rem;
+    cursor: pointer;
+    &__smart-helper {
+      cursor: pointer;
+      animation: color-changer 1s infinite;
+    }
+    @keyframes color-changer {
+      0% {
+        color: white;
+      }
+      100% {
+        color: $color-primary;
+      }
+    }
+  }
+  & &__popper {
+    z-index: 1;
+  }
+  @media screen and (max-width: $size-max-mobile) {
+    display: flex;
+    flex: 1;
   }
 }

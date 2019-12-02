@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import nanoid from 'nanoid';
 import Button from '@material-ui/core/Button';
 import intl from 'react-intl-universal';
-import { changeQuestion } from '../../actions/report';
-import { changeFindIndex, sendFindNotification } from '../../actions/findNotification';
-import { ButtonActions } from '../../helpers/enum/enums';
-import { QuestionDependencies } from '../../helpers/enum/enums';
+import { withRouter } from 'react-router-dom';
+import { changeQuestion, postReport } from '../../actions/report';
+import { changeFindIndex, setStatusToAwaitReview, setReportId } from '../../actions/findNotification';
+import { QuestionDependencies, ButtonActions, ReportingIDs } from '../../helpers/enum/enums';
 
 const ButtonBar = (props) => (
   <div className="button-bar">
@@ -35,18 +36,22 @@ const ButtonBar = (props) => (
  */
 const isButtonDisabled = (props) => {
   const hasDependencies = !!props.dependentOn;
-  const { dependentOn, hasLocation, hasFindSitePhotos, findPhotos, currentFindIndex } = props;
+  const { dependentOn, finds, currentFindIndex } = props;
   if (hasDependencies) {
     switch (dependentOn) {
       case QuestionDependencies.LOCATION:
-        if (!hasLocation) return true;
-        break;
+        if (finds[currentFindIndex] && finds[currentFindIndex].findSite.coords) {
+          return false;
+        }
+        return true;
       case QuestionDependencies.FIND_SITE_PHOTO:
-        if (!hasFindSitePhotos) return true;
-        break;
+        if (finds[currentFindIndex].findSite.photos && finds[currentFindIndex].findSite.photos.length > 0) {
+          return false;
+        }
+        return true;
       case QuestionDependencies.FIND_PHOTO:
-        if (findPhotos.length > 0 && findPhotos[currentFindIndex]) {
-          if (findPhotos[currentFindIndex].photos.length > 0) return false;
+        if (finds.length > 0 && finds[currentFindIndex]) {
+          if (finds[currentFindIndex].photos && finds[currentFindIndex].photos.length > 0) return false;
         }
         return true;
       default:
@@ -58,15 +63,24 @@ const isButtonDisabled = (props) => {
 
 const onButtonClick = (props, btn) => {
   // Change the question
-  props.changeQuestion(btn.nextStep);
-  // And check if the button has any action to execute
+  if (btn.nextStep) {
+    props.changeQuestion(btn.nextStep);
+  }
+  // Check if the button has any action to execute
   if (btn.action) {
     executeButtonAction(props, btn.action);
   }
+  /* This feature is not anymore in use. It slows down the reporting process
+  // Update find notification on every step but not last step
+  const REPORT_LAST_STEP = 14;
+  if (btn.nextStep && btn.nextStep !== REPORT_LAST_STEP && props.currentStep >= 2) {
+    sendFindNotification(props);
+  }
+  */
 };
 
 /**
- * This function is responsible to execute all button requests
+ * This function is responsible to execute all button actions
  * 
  * @param {Action to execute} buttonAction 
  */
@@ -76,24 +90,50 @@ const executeButtonAction = (props, buttonAction) => {
       props.changeFindIndex(props.currentFindIndex + 1);
       break;
     case ButtonActions.SEND_FIND_NOTIFICATION:
-      props.sendFindNotification();
+      finaliseNotification(props, true);
+      break;
+    case ButtonActions.SET_REPORT_ID:
+      if (!props.reportId) {
+        props.setReportId(ReportingIDs.PREFIX_REPORT + nanoid(12));
+      }
       break;
   }
+};
+
+/**
+ * Upsert find notification
+ * @param {props} props
+ * @param {isFinalised} tells if report is totally filled in
+ */
+const sendFindNotification = (props, isFinalised = false) => {
+  props.postReport(isFinalised);
+};
+
+/**
+ * Upsert find notification and finalise reporting process
+ * @param {props} props 
+ * @param {isFinalised} tells if report is totally filled in
+ */
+const finaliseNotification = (props, isFinalised) => {
+  props.setStatusToAwaitReview();
+  sendFindNotification(props, isFinalised);
 };
 
 const mapStateToProps = (state) => ({
   buttons: state.report.questions[state.report.currentStep].buttons,
   dependentOn: state.report.questions[state.report.currentStep].dependentOn,
   currentFindIndex: state.findNotification.currentFindIndex,
-  hasLocation: !!state.findNotification.findSiteCoords,
-  hasFindSitePhotos: state.findNotification.photoghraphs.length > 0,
-  findPhotos: state.findNotification.finds,
+  reportId: state.findNotification.reportId,
+  finds: state.findNotification.finds,
+  currentStep: state.report.currentStep
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeQuestion: (step) => dispatch(changeQuestion(step)),
   changeFindIndex: (index) => dispatch(changeFindIndex(index)),
-  sendFindNotification: () => dispatch(sendFindNotification())
+  setStatusToAwaitReview: () => dispatch(setStatusToAwaitReview()),
+  postReport: (isFinalised) => dispatch(postReport(isFinalised)),
+  setReportId: (id) => dispatch(setReportId(id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ButtonBar));

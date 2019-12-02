@@ -1,6 +1,7 @@
-#map {
+.map-container {
   flex: 1;
   width: 100%;
+  min-height: 190px;
   // Styles for leaflet popup
   & .leaflet-popup-content-wrapper {
     // Material UI settings
@@ -13,6 +14,13 @@
       &__image {
         max-height: 8rem;
         object-fit: cover;
+      }
+      &__id {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 10px;
+        color: $color-ligher-dark-grey;
       }
       &__text-container {
         color: $color-text-grey;
@@ -39,6 +47,19 @@
         font-weight: 400;
         text-align: center;
       }
+      &__more-button {
+        padding: 5px 16px;
+        margin: 0;
+        margin-top: 10px;
+        border: 1px solid $color-primary;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 500;
+        line-height: 1.75;
+        border-radius: 4px;
+        letter-spacing: 0.02857em;
+        text-transform: uppercase;
+      }
     }
   }
   & .leaflet-popup-close-button {
@@ -49,6 +70,18 @@
   }
   & .leaflet-control {
     border: 4px solid rgba(0,0,0,0.3);
+  }
+  & .leaflet-control-scale {
+    border: none;
+  }
+  & .leaflet-bar-part {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+  & .leaflet-left {
+    display: flex;
+    align-items: end;
   }
   & .map__data-loader-spiner {
     width: 5rem;
@@ -104,5 +137,20 @@
     @media screen and (max-width: $size-max-mobile) {
       height: 21rem !important;
     }
+  }
+  & .location-icon:before {
+    content: "gps_fixed";
+    color: $color-text-grey;
+  }
+  & .loading-icon:before  {
+    content: "sync";
+    color: $color-text-grey;
+  }
+  & .loading-icon {
+    animation: rotating 1s linear infinite;
+  }
+  @keyframes rotating {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg)}
   }
 }

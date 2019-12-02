@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import Icon from '@material-ui/core/Icon';
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Dialog,
+  Icon,
+  Button
+} from '@material-ui/core/';
+import intl from 'react-intl-universal';
 import { PhotosOf } from '../../helpers/enum/enums';
 import { setFindSitePhotos, setFindPhotos } from '../../actions/findNotification';
+import ImageViewer from '../ImageViewer';
 
 class PhotoRenderer extends Component {
   constructor(props) {
@@ -20,6 +27,7 @@ class PhotoRenderer extends Component {
 
   state = {
     isPhotoDialogOpen: false,
+    isPhotoAlertDialogOpen: false,
     findSitePhotos: [],
     findPhotos: [],
   }
@@ -28,10 +36,21 @@ class PhotoRenderer extends Component {
     this.setState({ isPhotoDialogOpen: !this.state.isPhotoDialogOpen });
   }
 
+  onOpenPhotoAlertDialogPressed = () => {
+    this.setState({
+      isPhotoAlertDialogOpen: !this.state.isPhotoAlertDialogOpen,
+    });
+  }
+
   onFilesSelected = (files) => {
     // Loop through the FileList
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      // If file size is bigger than the limit stop the process
+      if (file.size > MAX_FILE_SIZE) {
+        this.setState({ isPhotoAlertDialogOpen: true });
+        return;
+      }
       const reader = new FileReader();
       // Closure to capture the file information.
       reader.onload = (() => {
@@ -57,9 +76,9 @@ class PhotoRenderer extends Component {
     const files = event.target.files;
     this.onFilesSelected(files);
     if (this.props.for === PhotosOf.FIND_SITE) {
-      this.props.setFindSitePhotos(files);
+      this.props.setFindSitePhotos(files, this.props.currentFindIndex, this.state.findSitePhotos.length);
     } else {
-      this.props.setFindPhotos(files, this.props.currentFindIndex);
+      this.props.setFindPhotos(files, this.props.currentFindIndex, this.state.findPhotos.length);
     }
     this.onOpenPhotoDialogPressed();
   }
@@ -74,16 +93,35 @@ class PhotoRenderer extends Component {
         <span>
           {
             currentModePhotos.map((photo, index) => (
-              <img
-                className="photo-renderer__photo"
-                src={photo}
-                key={index}
-              />
+              <ImageViewer image={photo} key={index} />
             ))
           }
         </span>
       );
     }
+  }
+
+  renderAlertDialog = () => {
+    return (
+      <Dialog
+        open={this.state.isPhotoAlertDialogOpen}
+        onClose={this.onOpenPhotoAlertDialogPressed}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{intl.get('photoRenderer.errorHeader')}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {intl.get('photoRenderer.errorText')}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.onOpenPhotoAlertDialogPressed} color="primary" autoFocus>
+            {intl.get('photoRenderer.confirmationBtn')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   }
 
   render() {
@@ -95,7 +133,7 @@ class PhotoRenderer extends Component {
           aria-labelledby="photo-dialog"
           open={this.state.isPhotoDialogOpen}
         >
-          <DialogTitle id="photo-dialog">Add photo</DialogTitle>
+          <DialogTitle id="photo-dialog">{intl.get('photoRenderer.dialog.title')}</DialogTitle>
           <div>
             <List>
               <ListItem button onClick={() => this.captureInputRef.current.click()}>
@@ -113,7 +151,7 @@ class PhotoRenderer extends Component {
                   capture
                   ref={this.captureInputRef}
                 />
-                <label className="answer-options__label">Take Photo</label>
+                <label className="answer-options__label">{intl.get('photoRenderer.dialog.takePhoto')}</label>
               </ListItem>
               <ListItem button onClick={() => this.galleryInputRef.current.click()}>
                 <ListItemAvatar>
@@ -130,7 +168,7 @@ class PhotoRenderer extends Component {
                   multiple
                   ref={this.galleryInputRef}
                 />
-                <label className="answer-options__label">Select from gallery</label>
+                <label className="answer-options__label">{intl.get('photoRenderer.dialog.selectFromGallery')}</label>
               </ListItem>
               <ListItem button onClick={this.onOpenPhotoDialogPressed}>
                 <ListItemAvatar>
@@ -138,7 +176,7 @@ class PhotoRenderer extends Component {
                     <Icon>cancel</Icon>
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Cancel" />
+                <label className="answer-options__label">{intl.get('photoRenderer.dialog.cancel')}</label>
               </ListItem>
             </List>
           </div>
@@ -146,18 +184,21 @@ class PhotoRenderer extends Component {
         <output>
           <div>{this.renderPhotos()}</div>
         </output>
+        {this.renderAlertDialog()}
       </div>
     );
   }
 }
+
+const MAX_FILE_SIZE = 1024 * 1024 * 30;
 
 const mapStateToProps = (state) => ({
   currentFindIndex: state.findNotification.currentFindIndex
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setFindSitePhotos: (photos) => dispatch(setFindSitePhotos(photos)),
-  setFindPhotos: (photos, findIndex) => dispatch(setFindPhotos(photos, findIndex))
+  setFindSitePhotos: (photos, findIndex, imgIndex) => dispatch(setFindSitePhotos(photos, findIndex, imgIndex)),
+  setFindPhotos: (photos, findIndex, imgIndex) => dispatch(setFindPhotos(photos, findIndex, imgIndex))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoRenderer);

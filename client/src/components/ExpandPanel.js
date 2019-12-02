@@ -6,7 +6,7 @@ import { Icon } from '@material-ui/core';
 import intl from 'react-intl-universal';
 
 const ExpandPanel = (props) => (
-  <div>
+  <div className="answer-options__expand-panel">
     {
       props.content.map((element, index) => {
         const { header, component: Component } = element;

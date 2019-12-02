@@ -10,6 +10,7 @@ import 'leaflet.markercluster/dist/leaflet.markercluster';
 import 'leaflet.zoominfo/dist/L.Control.Zoominfo';
 import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min';
 import 'leaflet.gridlayer.googlemutant/Leaflet.GoogleMutant';
+import 'leaflet.locatecontrol/src/L.Control.Locate';
 
 // CSS files
 import 'leaflet/dist/leaflet.css';
@@ -22,6 +23,7 @@ import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import 'leaflet-fullscreen/dist/fullscreen.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import { history } from '../../routers/AppRouter';
 
 // Others
 import {
@@ -33,21 +35,23 @@ import {
   DialogActions
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
-import { setCoordinates } from '../../actions/findNotification';
+import { setCoordinates, setMunicipality } from '../../actions/findNotification';
 import { fetchMapData, startMapSpinner } from '../../actions/map';
-import { MapMode, Fha_Wfs_Layer, Colors } from '../../helpers/enum/enums';
+import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
-
+import { enqueueSnackbar } from '../../actions/notifier';
 
 /**
  * Parameters
  * showCurrentLocation: If true user's current location is shown on the map
  * markerData: Marker points which will be shown on the map
+ * setViewForMarkerData: If true it sets view for a range of coordinates
  * location: The location where map component adds a marker
  * zoomLevel: Defines the default zoom level of the map
  * layers: Default active layers to show on the map
  * checkPointInPolygons: Show notification that user is at ancient monument area
  * legalityResultHandler: Function which is used to send legality result to parent component
+ * id: Defines the id of map element. Used in case of viewing multiple maps on the same page
  */
 class Map extends Component {
   state = {
@@ -59,11 +63,7 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    if (this.props.showCurrentLocation) {
-      this.getGeoLocation();
-    } else {
-      this.renderMap();
-    }
+    this.renderMap();
   }
 
   componentDidUpdate(prevProps) {
@@ -80,43 +80,46 @@ class Map extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.locateControl.stop();
+    navigator.geolocation.clearWatch(this.geoLocationId);
+  }
+
   render() {
-    {
-      return (
-        (this.props.showCurrentLocation && this.state.hasCurrentLocation) ||
-          this.props.markerData ||
-          this.props.location ? (
-            <div id="map">
-              {
-                this.props.isFetchInProgress &&
-                <CircularProgress className="map__data-loader-spiner" size="5rem" />
-              }
-              <Dialog
-                open={this.state.isDialogOpen}
-                onClose={this.onDialogClosedPressed}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {intl.get('nearByPage.map.alert.zoomAlertTitle')}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    {intl.get('nearByPage.map.alert.zoomAlertContent')}
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.onDialogClosedPressed} color="primary" autoFocus>
-                    {intl.get('nearByPage.map.alert.zoomAlertConfirmation')}
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-          ) : (
-            <CircularProgress className="answer-options__progress" size="5rem" />
-          )
-      );
-    }
+    return (
+      this.props.showCurrentLocation ||
+        this.props.markerData ||
+        this.props.location ? (
+          <div id={this.props.id || 'map'} className="map-container">
+            {
+              this.props.isFetchInProgress &&
+              <CircularProgress className="map__data-loader-spiner" size="5rem" />
+            }
+            <Dialog
+              open={this.state.isDialogOpen}
+              onClose={this.onDialogClosedPressed}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {intl.get('nearByPage.map.alert.zoomAlertTitle')}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {intl.get('nearByPage.map.alert.zoomAlertContent')}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.onDialogClosedPressed} color="primary" autoFocus>
+                  {intl.get('nearByPage.map.alert.zoomAlertConfirmation')}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        ) : (
+          <CircularProgress className="answer-options__progress" size="5rem" />
+        )
+    );
   }
 
   loadFetchedLayers = () => {
@@ -155,11 +158,13 @@ class Map extends Component {
   /**
    * Initialise map and its settings
    */
-  renderMap = (position) => {
-    this.initialiseIcon();
-    this.initialiseMap();
-    this.initialiseMarkers(position);
-    this.initialiseLayers();
+  renderMap = () => {
+    if (!this.map) {
+      this.initialiseIcon();
+      this.initialiseMap();
+      this.initialiseMarkers();
+      this.initialiseLayers();
+    }
   }
 
   /**
@@ -188,7 +193,7 @@ class Map extends Component {
     });
 
     const googleMaps = L.gridLayer.googleMutant({
-      type: 'roadmap'
+      type: this.props.useSatellite ? 'satellite' : 'roadmap'
     });
 
     // Create a layergroup for adding markers
@@ -226,24 +231,39 @@ class Map extends Component {
       [intl.get('nearByPage.map.overLays.rky_viiva')]: rkyLineLayer,
     };
 
-    this.map = L.map('map', {
+    this.map = L.map(this.props.id || 'map', {
       center: [64.9, 26.0],
-      zoom: DEFAULT_ZOOM_LEVEL,
+      zoom: this.props.zoomLevel || DEFAULT_ZOOM_LEVEL,
       zoomControl: false,
       zoominfoControl: true,
       fullscreenControl: true,
-      layers: [nationalSurveyOfFinland]
+      layers: this.props.showCurrentLocation ? [googleMaps] : [nationalSurveyOfFinland],
+      attributionControl: false
     });
-
     // Add overlay layers to map
     L.control.layers(baseMaps, this.overlayLayers).addTo(this.map);
-    // Active overlay layer
-    this.findsLayer.addTo(this.map);
 
-    // Add a click listener which is setted only if user's current location is viewed
-    if (this.props.showCurrentLocation && this.state.hasCurrentLocation) {
+    // Add control scale
+    L.control.scale().addTo(this.map);
+    // Add locate scate
+    const locateOptions = {
+      enableHighAccuracy: true,
+      position: 'topright',
+      cacheLocation: false,
+      icon: 'material-icons location-icon',
+      iconLoading: 'material-icons w3-spin w3-jumbo loading-icon',
+      flyTo: true
+    };
+    this.locateControl = L.control.locate(locateOptions).addTo(this.map);
+
+    if (this.props.showCurrentLocation) {
+      this.locateControl.start();
+      // Add a click listener which is setted only if user's current location is viewed
       this.map.addEventListener('click', this.onMapTapped);
     }
+
+    // Active overlay layer
+    this.findsLayer.addTo(this.map);
 
     // Listen for changes
     this.initialiseMapListeners(this.overlayLayers);
@@ -261,16 +281,16 @@ class Map extends Component {
     return L.circleMarker(latlng, geojsonMarkerOptions);
   }
 
-  initialiseMarkers = (position) => {
+  initialiseMarkers = () => {
     // If markerData is provided show them
     if (this.props.markerData && this.props.markerData.length > 0) {
       this.showMarkersOnMap(this.props.markerData);
     }
     // If current location is provided show it
+    /*
     if (position) {
-      this.setLocation(position.coords.latitude, position.coords.longitude);
-      this.map.setView(L.latLng(position.coords.latitude, position.coords.longitude), this.props.zoomLevel);
-    }
+      this.setLocation(position.coords.latitude, position.coords.longitude, true);
+    }*/
     // If a location is given
     if (this.props.location) {
       this.setLocation(this.props.location.lat, this.props.location.lng);
@@ -320,32 +340,60 @@ class Map extends Component {
   /**
    * Gets users current location and renders the map
    */
+  /*
   getGeoLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
+    // GeoLocation Options
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    };
+    // Start getting geolocation
+    this.geoLocationId = navigator.geolocation.watchPosition((position) => {
       this.setState({ hasCurrentLocation: true });
       this.setState({ currentLocation: position });
-      this.renderMap(position);
+      //this.renderMap(position);
       // On fail
-    }, () => {
-      // TODO Add error handler
-      console.log('Getting current location is failed');
-    });
-  }
+    }, (err) => {
+      const message = `Error(${err.code}) ${intl.get('nearByPage.map.alert.gettingLocationFailed')}`;
+      this.props.enqueueSnackbar({
+        message,
+        options: {
+          variant: 'error',
+        },
+      });
+      console.warn('ERROR(' + err.code + '): ' + err.message);
+    }, options);
+  }*/
 
   /**
    * Clears current markers on the map and sets users current location
    */
   onMapTapped = (e) => {
     this.clearAllMarkers();
-    this.setLocation(e.latlng.lat, e.latlng.lng);
+    this.setLocation(e.latlng.lat, e.latlng.lng, true, true);
   }
 
   /**
    * Sets a location on the map
    */
-  setLocation = (lat, lng) => {
+  setLocation = (latitude, longitude, updateState = false, isMapTapped = false) => {
+    // Limit number of decimals in the coordinates
+    const lat = parseFloat(parseFloat(latitude).toFixed(6));
+    const lng = parseFloat(parseFloat(longitude).toFixed(6));
+
     L.marker(new L.LatLng(lat, lng)).addTo(this.findsLayer);
-    this.props.setCoordinates({ lat, lng });
+    // Set the view on the map
+    if (isMapTapped) {
+      this.map.setView(L.latLng(lat, lng), this.map.getZoom());
+    } else {
+      this.map.setView(L.latLng(lat, lng), this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
+    }
+    // Set coords and municapility in redux
+    if (updateState) {
+      this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
+      this.props.setMunicipality({ lat, lng });
+    }
   }
 
   /**
@@ -372,6 +420,17 @@ class Map extends Component {
         this.clusterMap.addLayer(markerToMap);
       }
     }
+
+    // Set view for a range of coordinates
+    if (this.props.setViewForMarkerData) {
+      if (markerData.length === 1) {
+        this.map.setView(latLngs[0], this.props.zoomLevel || DEFAULT_ZOOM_LEVEL);
+      } else {
+        var mapBounds = new L.LatLngBounds(latLngs);
+        this.map.fitBounds(mapBounds);
+      }
+    }
+
     // HeatMap Mode
     this.heatMap = this.initialiseHeatMap(latLngs);
 
@@ -468,7 +527,39 @@ class Map extends Component {
         this.props.fetchMapData(this.state.activeOverLays, this.map.getBounds());
       }
     });
+
+    // Fired when marker popup more button is clicked
+    this.map.on('popupopen', () => {
+      document.getElementById('leaflet-popup-content__more-button').addEventListener('click', this.popupMorePressListener);
+    });
+
+    this.map.on('locationfound', (pos) => {
+      const { lat, lng } = pos.latlng;
+      this.setState({ hasCurrentLocation: true });
+      this.setState({ currentLocation: pos });
+      this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
+      this.props.setMunicipality({ lat, lng });
+    });
+
+    this.map.on('locationerror', (err) => {
+      const message = `Error(${err.code}) ${intl.get('nearByPage.map.alert.gettingLocationFailed')}`;
+      this.locateControl.stop();
+      this.props.enqueueSnackbar({
+        message,
+        options: {
+          variant: 'error',
+        },
+      });
+    });
   }
+
+  /**
+   * Listener for navigating popup more link presses
+   */
+  popupMorePressListener = () => {
+    const id = document.getElementById('leaflet-popup-content__id').textContent;
+    history.push(`${RouterPaths.FIND_PAGE}?id=${id}`, { id });
+  };
 
   /**
    * Returs default color of the selected overlay
@@ -527,20 +618,21 @@ class Map extends Component {
   }
 
   /**
-   * Generates marker popup
+   * Generates marker popupText
    */
   generateMarkerPopup = (marker) => {
     let popupText = '';
-    // FIXME: SHOW ALL IMAGES
-    const firstImage = marker.image_url ? Array.isArray(marker.image_url) ? marker.image_url[0] : marker.image_url : '';
-    const image = marker.image_url ? `<img class="leaflet-popup-content__image" src=${firstImage} />` : '';
+    const id = marker.id.split('sualt-fha-finds/')[1];
+    const image = getImageForPopup(marker.image_url);
     const title = marker.title ? `<h2 class="leaflet-popup-content__text-container__title">${marker.title}</h2>` : '';
     const description = marker.description ? `<p class="leaflet-popup-content__text-container__description">${marker.description}</p>` : '';
 
     popupText += `${image}
+                  <span id="leaflet-popup-content__id" class="leaflet-popup-content__id">${id}</span>
                   <div class="leaflet-popup-content__text-container">
                   ${title} 
                   ${description}
+                  <p id="leaflet-popup-content__more-button" class="leaflet-popup-content__more-button">More</p>
                   </div>
                   `;
 
@@ -548,18 +640,35 @@ class Map extends Component {
   }
 }
 
+/**
+ * Check if there are more than one image and then return the first image
+ *
+ * @param {*} imageData 
+ */
+const getImageForPopup = (imageData) => {
+  if (imageData) {
+    const image = imageData.split(';')[0];
+    return `<img class="leaflet-popup-content__image" src="${image}"/>`;
+  } else {
+    return '';
+  }
+};
+
 const MIN_ZOOM_LEVEL = 13;
 const DEFAULT_ZOOM_LEVEL = 5;
 
 const mapStateToProps = (state) => ({
   wmtsData: state.map.fetchResults,
-  isFetchInProgress: state.map.fetchInProgress
+  isFetchInProgress: state.map.fetchInProgress,
+  currentFindIndex: state.findNotification.currentFindIndex
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCoordinates: (coords) => dispatch(setCoordinates(coords)),
+  setCoordinates: (coords, index) => dispatch(setCoordinates(coords, index)),
+  setMunicipality: (coords) => dispatch(setMunicipality(coords)),
   fetchMapData: (layer, bounds) => dispatch(fetchMapData(layer, bounds)),
-  startMapSpinner: () => dispatch(startMapSpinner())
+  startMapSpinner: () => dispatch(startMapSpinner()),
+  enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

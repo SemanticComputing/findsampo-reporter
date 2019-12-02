@@ -1,4 +1,5 @@
-import { invert } from 'lodash';
+import { invert, countBy, filter } from 'lodash';
+import intl from 'react-intl-universal';
 
 const MOBILE_SCREEN_MAX_WIDTH = 650;
 
@@ -8,6 +9,18 @@ export const isMobileScreen = (window) => {
 
 export const isDesktopScreen = (window) => {
   return window.innerWidth > MOBILE_SCREEN_MAX_WIDTH;
+};
+
+export const isIOSDevice = (window) => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+};
+
+export const getIdfromUri = (seperator, text) => {
+  return text.split(`${seperator}/`).pop();
+};
+
+export const getIdsfromArrayUri = (seperator, array) => {
+  return array.map((id) => id.split(`${seperator}/`).pop());
 };
 
 export const getWMTSLayerKeyByValue = (value) => {
@@ -44,4 +57,34 @@ export const getWMTSLayerValueByKey = (value) => {
   };
 
   return names[value];
+};
+
+export const convertToTableData = (data) => {
+  const tableData = [];
+  for (let d of data) {
+    tableData.push(
+      {
+        title: d.title,
+        material: d.main_material ? d.main_material : '-',
+        type: d.type ? d.type : '-',
+        period: d.period ? d.period : '-',
+        municipality: d.municipality ? d.municipality : '-',
+        description: d.description ? d.description : intl.get('nearByPage.table.noAdditionalInformation'),
+        image: d.image_url ? d.image_url : '',
+        specification: d.specification ? d.specification : intl.get('nearByPage.table.notProvidedValue'),
+        province: d.province ? d.province : intl.get('nearByPage.table.notProvidedValue')
+      }
+    );
+  }
+  return tableData;
+};
+
+export const convertToChartData = (data, activeProperty) => {
+  const dataWithPropery = filter(data, (d) => d[activeProperty]);
+  const result = countBy(dataWithPropery, (d) => d[activeProperty]);
+
+  return {
+    labels: Object.keys(result),
+    series: Object.values(result)
+  };
 };

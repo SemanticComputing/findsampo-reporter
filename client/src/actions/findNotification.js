@@ -3,13 +3,18 @@ import {
   FIND_NOTIFICATION_SET_COORDS,
   FIND_NOTIFICATION_SET_FIND_PHOTOS,
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
+  FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS,
   FIND_NOTIFICATION_CHANGE_FIND_INDEX,
   FIND_NOTIFICATION_SET_FIND_TYPE,
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
   FIND_NOTIFICATION_SET_FIND_TIMING,
   FIND_NOTIFICATION_SET_FIND_DEPTH,
-  FIND_NOTIFICATION_SEND
+  FIND_NOTIFICATION_SET_MUNICIPALITY,
+  FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
+  FIND_NOTIFICATION_RESET,
+  FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
+  FIND_NOTIFICATION_SET_REPORT_ID
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -17,17 +22,24 @@ export const setDate = (date) => ({
   date
 });
 
-export const setCoordinates = (coords) => ({
+export const setCoordinates = (coords, index) => ({
   type: FIND_NOTIFICATION_SET_COORDS,
-  coords
+  index,
+  coords,
+  [index]: {
+    findSite: {
+      coords
+    }
+  }
 });
 
-export const setFindPhotos = (photos, index) => ({
+export const setFindPhotos = (photos, index, imgIndex) => ({
   type: FIND_NOTIFICATION_SET_FIND_PHOTOS,
   index,
   [index]: {
-    photos
-  }
+    photos: [...photos]
+  },
+  imgIndex
 });
 
 export const changeFindIndex = (index) => ({
@@ -35,14 +47,19 @@ export const changeFindIndex = (index) => ({
   index
 });
 
-export const setFindSitePhotos = (photos) => ({
+export const setFindSitePhotos = (photos, index, imgIndex) => ({
   type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS,
-  photos
+  index,
+  [index]: {
+    photos: [...photos]
+  },
+  imgIndex
 });
 
-export const setAdditionalMaterial = (text) => ({
-  type: FIND_NOTIFICATION_SET_ADDITIONAL_MATERIALS,
-  text
+export const setAdditionalMaterial = (additionalMaterials, index) => ({
+  type: FIND_NOTIFICATION_SET_FIND_ADDITIONAL_MATERIALS,
+  additionalMaterials,
+  index
 });
 
 export const setFindType = (findType, index) => ({
@@ -69,6 +86,29 @@ export const setFindDepth = (findDepth, index) => ({
   index
 });
 
-export const sendFindNotification = () => ({
-  type: FIND_NOTIFICATION_SEND
+export const setMunicipality = (coords) => ({
+  type: FIND_NOTIFICATION_SET_MUNICIPALITY,
+  coords
+});
+
+export const setStatusToAwaitReview = () => ({
+  type: FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW
+});
+
+export const setPropertySmartData = (property) => ({
+  type: FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
+  property
+});
+
+export const skipHelpTutorialSteps = () => ({
+  type: FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS
+});
+
+export const resetFindNotification = () => ({
+  type: FIND_NOTIFICATION_RESET
+});
+
+export const setReportId = (id) => ({
+  type: FIND_NOTIFICATION_SET_REPORT_ID,
+  id
 });

@@ -6,13 +6,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
   z-index: 0;
-  & &__progress-bar {
-    color: white;
-  }
 }

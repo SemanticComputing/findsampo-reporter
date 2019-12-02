@@ -1,75 +1,90 @@
 import React, { Component } from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Fab from '@material-ui/core/Fab';
+import intl from 'react-intl-universal';
+import {
+  MenuItem,
+  Popper,
+  Grow,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  Fab
+} from '@material-ui/core';
 import { connect } from 'react-redux';
 import { setLocale } from '../actions/locale';
 
-const langs = [
-  'EN',
-  'FI',
-  'SV'
-];
 
 class LangMenu extends Component {
   state = {
-    anchorEl: null,
-    selectedIndex: 0,
+    langManuOpen: false,
+    selectedIndex: 0
+  };
+
+  langs = [
+    intl.get('langMenu.abbreviation.english'),
+    intl.get('langMenu.abbreviation.finnish'),
+    intl.get('langMenu.abbreviation.swedish')
+  ];
+
+  onLangMenuOpenPressed = () => {
+    this.setState(state => ({ langManuOpen: !state.langManuOpen }));
+  };
+
+  onLangMenuClosePressed = event => {
+    if (this.anchorEl.contains(event.target)) {
+      return;
+    }
+    this.setState({ langManuOpen: false });
   };
 
   onMenuItemPressed = (e, index) => {
-    this.props.setLocale(langs[index].toLowerCase());
-    this.setState(() => ({
-      selectedIndex: index,
-      anchorEl: null
-    }));
-    localStorage.setItem('locale', langs[index].toLowerCase());
-  };
-
-  onListItemPressed = (e) => {
-    this.setState({ anchorEl: e.currentTarget });
-  };
-
-  onClosePressed = () => {
-    this.setState(() => ({ anchorEl: null }));
+    this.props.setLocale(this.langs[index].toLowerCase());
+    localStorage.setItem('locale', this.langs[index].toLowerCase());
+    this.setState({ langManuOpen: false, selectedIndex: index });
   };
 
   render() {
     return (
-      <div>
-        <List className='lang-menu'>
-          <ListItem
-            aria-haspopup='true'
-            aria-controls='lang-button'
-            onClick={this.onListItemPressed}
-          >
-            <Fab variant='round' size='small'
-              aria-haspopup='true'
-              aria-controls='lang-button'
-              className="lang-menu__button"
-              onClick={this.onListItemPressed}>
-              {localStorage.getItem('locale') || langs[this.state.selectedIndex]}
-            </Fab>
-          </ListItem>
-        </List>
-        <Menu
-          id="lang-button"
-          anchorEl={this.state.anchorEl}
-          open={!!this.state.anchorEl}
-          onClose={this.onClosePressed}
+      <div className="lang-menu">
+        <Fab variant='round' size='small'
+          aria-controls='lang-button'
+          className="lang-menu__button"
+          buttonRef={node => { this.anchorEl = node; }}
+          aria-owns={this.state.langManuOpen ? 'menu-list-grow' : undefined}
+          aria-haspopup="true"
+          onClick={this.onLangMenuOpenPressed}
         >
-          {langs.map((option, index) => (
-            <MenuItem
-              key={option}
-              selected={index === this.state.selectedIndex}
-              onClick={event => this.onMenuItemPressed(event, index)}
+          {localStorage.getItem('locale') || this.langs[this.state.selectedIndex]}
+        </Fab>
+        <Popper
+          open={this.state.langManuOpen}
+          anchorEl={this.anchorEl}
+          transition disablePortal className="lang-menu__popper"
+          placement="bottom"
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              id="menu-list-grow"
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
             >
-              {option}
-            </MenuItem>
-          ))}
-        </Menu>
+              <Paper>
+                <ClickAwayListener onClickAway={this.onLangMenuClosePressed}>
+                  <MenuList>
+                    {this.langs.map((option, index) => (
+                      <MenuItem
+                        key={option}
+                        selected={index === this.state.selectedIndex}
+                        onClick={event => this.onMenuItemPressed(event, index)}
+                      >
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
       </div>
     );
   }

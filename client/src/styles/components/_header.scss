@@ -6,6 +6,12 @@
   }
   & &__toolbar {
     padding-right: 0;
+    &__log-out-button, &__log-out-button:hover {
+      background: $color-ligher-grey;
+      padding: 4px 7px;
+      border-radius: 4px;
+      margin: 0 12px;
+    }
   }
   & &__avatar {
     width: 2rem;
@@ -27,6 +33,9 @@
   mobile
   & &__icon {
     margin-right: $xss-size 
+  }
+  & &__login-button {
+    padding: 24px 8px;
   }
   & &__icon-container  {
     flex-grow: 1;
@@ -50,6 +59,11 @@
       flex-direction: column;
     }
   }
+  & &__more-icon {
+    padding: 0;
+    margin: 0 12px;
+  }
+  & &__ios--popper {
+    z-index: 1;
+  }
 }
-
-

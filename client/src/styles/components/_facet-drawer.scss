@@ -50,6 +50,9 @@
             color: black;
           }
         }
+        @media screen and (max-width: $size-max-mobile) {
+          max-width: 15rem;
+        }
       } 
       &__search {
         margin: 0;

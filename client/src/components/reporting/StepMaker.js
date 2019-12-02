@@ -1,44 +1,68 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Stepper, Step, StepLabel } from '@material-ui/core/';
 import intl from 'react-intl-universal';
+import { Stepper, Step, StepLabel, MobileStepper, Typography } from '@material-ui/core/';
+import { isDesktopScreen } from '../../helpers/functions/functions';
 
 const StepMaker = (props) => {
   const steps = getSteps();
-  const activeStep = getCurrentStep(props.currentStep);
+  const activeStep = getActiveStep(props.currentStep);
   return (
     <div className="step-maker">
-      <Stepper className="step-maker__container" activeStep={activeStep} alternativeLabel>
-        {steps.map(label => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+      {
+        isDesktopScreen(window) ? (
+          <Stepper className="step-maker__desktop" activeStep={activeStep} alternativeLabel>
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel>{label}
+                  {
+                    index === 1 && 
+                  <Typography variant="caption" display="block">
+                    {intl.get('report.optionalSection')}
+                  </Typography>
+                  }
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        ) : (
+          <MobileStepper
+            className="step-maker__mobile"
+            variant="progress"
+            steps={props.totalSteps}
+            position="static"
+            activeStep={props.currentStep}
+          />
+        )
+      }
+
     </div>
   );
 };
 
+// Step boundaries
+const DETAILS_SECTION_MAX = 4;
+const ADDITIONALS_SECTION_MAX = 14;
+
 // Get current report steps
 const getSteps = () => {
-  return [intl.get('report.stepOne'), intl.get('report.stepTwo'), intl.get('report.stepThree'), intl.get('report.stepFour')];
+  return [intl.get('report.stepTwo'), intl.get('report.stepThree'), intl.get('report.stepFour')];
 };
 
 // Get the step of the current question
-const getCurrentStep = (currentStep) => {
-  if (currentStep < 3) {
+const getActiveStep = (currentStep) => {
+  if (currentStep <= DETAILS_SECTION_MAX) {
     return 0;
-  } else if (currentStep > 2 && currentStep < 9) {
+  } else if (currentStep > DETAILS_SECTION_MAX && currentStep <= ADDITIONALS_SECTION_MAX) {
     return 1;
-  } else if (currentStep > 8 && currentStep < 17) {
-    return 2;
   } else {
-    return 3;
+    return 2;
   }
 };
 
 const mapStateToProps = (state) => ({
   currentStep: state.report.currentStep,
+  totalSteps: state.report.questions.length,
 });
 
 export default connect(mapStateToProps)(StepMaker);

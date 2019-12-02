@@ -17,6 +17,10 @@ export const removeSnackbar = (key) => ({
   key,
 });
 
+/**
+ * Change snipper status. 
+ * If loading something status is true otherwise false
+ */
 export const changeSnipperStatus = (status) => ({
   type: NOTIFIER_CHANGE_STATUS,
   status,

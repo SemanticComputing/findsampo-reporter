@@ -33,6 +33,7 @@ class Notifier extends Component {
       this.props.removeSnackbar(notification.key);
     });
   }
+  
   render() {
     return null;
   }

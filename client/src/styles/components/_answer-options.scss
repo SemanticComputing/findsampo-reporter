@@ -1,8 +1,16 @@
-.answer-options__input {
-  display: none;
-}
-
-.answer-options__label {
-  margin-left: 1rem;
-  margin-right: 1rem;
+.answer-options {
+  &__input {
+    display: none;
+  }
+  &__label {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  &__expand-panel {
+    flex: 1;
+    margin: 1rem;
+  }
+  &__slider {
+    margin: 2rem;
+  }
 }

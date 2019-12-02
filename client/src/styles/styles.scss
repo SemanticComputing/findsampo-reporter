@@ -1,10 +1,16 @@
+// Components
 @import './base/settings';
 @import './base/base';
 @import './components/footer';
 @import './components/header';
 @import './components/lang-menu';
-@import './components/login-page';
-@import './components/signup-page';
+@import './components/pages/login-page';
+@import './components/pages/signup-page';
+@import './components/pages/legality-checker-page';
+@import './components/pages/my-finds-page';
+@import './components/pages/my-finds-report-overview-page';
+@import './components/pages/more-page';
+@import './components/pages/not-found-page';
 @import './components/question';
 @import './components/help-bar';
 @import './components/map';
@@ -15,10 +21,15 @@
 @import './components/bottom-nav';
 @import './components/overview';
 @import './components/nearby';
-@import './components/not-found-page';
 @import './components/table';
 @import './components/facet-drawer';
 @import './components/spinner';
 @import './components/content-container';
 @import './components/slider';
-@import './components/legality-checker-page';
+@import './components/smart-helper';
+@import './components/chart';
+@import './components/pages/find-page';
+// Others
+@import './others/spinner';
+// Third party
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
