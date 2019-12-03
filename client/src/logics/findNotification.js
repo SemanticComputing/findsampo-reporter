@@ -69,6 +69,7 @@ const setFindPhotos = createLogic({
   process({ action, getState }, dispatch, done) {
     const currentFindIndex = getState().findNotification.currentFindIndex;
     const currentFind = action[currentFindIndex];
+    const results = [];
 
     for (let i in currentFind.photos) {
       // Image information
@@ -121,10 +122,11 @@ const setFindPhotos = createLogic({
               type: FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
               payload: result
             });
+            results.push(result.data.imageUrl);
           })
           .then(() => {
             // Finish the process when all photos are received
-            if (i == currentFind.photos.length) {
+            if (results.length == currentFind.photos.length) {
               done();
             }
           });
@@ -141,6 +143,7 @@ const setFindSitePhotos = createLogic({
   process({ action, getState }, dispatch, done) {
     const currentFindIndex = getState().findNotification.currentFindIndex;
     const currentFind = action[currentFindIndex];
+    const results = [];
 
     for (let i in currentFind.photos) {
       // Image information
@@ -193,10 +196,11 @@ const setFindSitePhotos = createLogic({
               type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
               payload: result
             });
+            results.push(result.data.imageUrl);
           })
           .then(() => {
             // Finish the process when all photos are received
-            if (i == currentFind.photos.length) {
+            if (results.length == currentFind.photos.length) {
               done();
             }
           });
