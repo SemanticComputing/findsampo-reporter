@@ -14,7 +14,8 @@ import {
   FIND_NOTIFICATION_SET_COORDS,
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
-  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
+  NOTIFIER_CHANGE_STATUS
 } from '../constants/actionTypes';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
@@ -127,6 +128,8 @@ const setFindPhotos = createLogic({
           .then(() => {
             // Finish the process when all photos are received
             if (results.length == currentFind.photos.length) {
+              // Hide Spinner
+              dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
               done();
             }
           });
@@ -201,6 +204,8 @@ const setFindSitePhotos = createLogic({
           .then(() => {
             // Finish the process when all photos are received
             if (results.length == currentFind.photos.length) {
+              // Hide Spinner
+              dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
               done();
             }
           });

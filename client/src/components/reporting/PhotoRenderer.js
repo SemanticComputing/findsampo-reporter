@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
 import { PhotosOf } from '../../helpers/enum/enums';
+import { changeSnipperStatus } from '../../actions/notifier';
 import { setFindSitePhotos, setFindPhotos } from '../../actions/findNotification';
 import ImageViewer from '../ImageViewer';
 
@@ -75,6 +76,8 @@ class PhotoRenderer extends Component {
 
   onPhotoPickerPressed = (event) => {
     const files = event.target.files;
+    // Show the spinner before starting the process
+    this.props.changeSnipperStatus(true);
     this.onFilesSelected(files);
     if (this.props.for === PhotosOf.FIND_SITE) {
       this.props.setFindSitePhotos(files, this.props.currentFindIndex, this.state.findSitePhotos.length);
@@ -202,7 +205,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setFindSitePhotos: (photos, findIndex, imgIndex) => dispatch(setFindSitePhotos(photos, findIndex, imgIndex)),
-  setFindPhotos: (photos, findIndex, imgIndex) => dispatch(setFindPhotos(photos, findIndex, imgIndex))
+  setFindPhotos: (photos, findIndex, imgIndex) => dispatch(setFindPhotos(photos, findIndex, imgIndex)),
+  changeSnipperStatus: (status) => dispatch(changeSnipperStatus(status))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoRenderer);
