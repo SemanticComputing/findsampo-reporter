@@ -41,6 +41,10 @@ export const getWMTSLayerKeyByValue = (value) => {
   return invert(names)[value];
 };
 
+export const createThumbUrl = (url) => {
+  return url.replace('.png', '_thumb.png');
+};
+
 export const getWMTSLayerValueByKey = (value) => {
   const names = {
     arkeologiset_loydot: 'Arkeologiset löydöt',

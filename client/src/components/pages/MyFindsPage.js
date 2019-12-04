@@ -11,14 +11,14 @@ import {
   Typography,
   Divider,
   Chip,
-  Tooltip,
-  Icon,
-  Paper
+  Paper,
+  GridList,
+  GridListTile
 } from '@material-ui/core';
 import { isEqual, isEmpty, differenceWith } from 'lodash';
 import { getMyFinds, getCertainFinds, continueFillingOut } from '../../actions/myFinds';
 import { ReportStatuses, Colors, RouterPaths } from '../../helpers/enum/enums';
-import { getIdfromUri, getIdsfromArrayUri } from '../../helpers/functions/functions';
+import { getIdfromUri, getIdsfromArrayUri, createThumbUrl } from '../../helpers/functions/functions';
 import { enqueueSnackbar } from '../../actions/notifier';
 
 class MyFindsPage extends Component {
@@ -57,6 +57,8 @@ class MyFindsPage extends Component {
         {
           this.props.reports.length > 0 ?
             this.props.reports.map((report, index) => {
+              const date = new Date(report.date);
+              const images = [...report.findImages, ...report.findSiteImages];
               return (
                 <Card className="my-finds-page__find" key={index} >
                   <CardActionArea className="my-finds-page__find__details" onClick={this.onReportPressed(index)}>
@@ -65,24 +67,27 @@ class MyFindsPage extends Component {
                         {intl.get('myFindsPage.container.report')} {intl.get('myFindsPage.container.time', { d: new Date(report.date) })}
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
+                        {intl.get('myFindsPage.container.timeClock')}: {`${date.getHours()}:${date.getMinutes()}`}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
                         {intl.get('myFindsPage.container.municipality')}: {report.municipality}
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
                         {intl.get('myFindsPage.container.finds', { number: report.finds.length })}
                       </Typography>
                     </CardContent>
-                    <div className="my-finds-page__find__actions__status-container">
-                      <Tooltip title="No Image" placement="top">
-                        <Icon className="my-finds-page__find__actions__status-container__icon">{statusIconDeterminer(report.status.toLowerCase())}</Icon>
-                      </Tooltip>
-                      <div className="my-finds-page__find__actions__status-container__text">
-                        <Chip
-                          label={intl.get(`myFindsPage.statuses.${report.status.toLowerCase()}`).toUpperCase()}
-                          className="my-finds-page__find__actions__status-container__text__chip"
-                          style={statusColorDeterminer(report.status.toLowerCase())}
-                        />
-                      </div>
-                    </div>
+                    <GridList 
+                      className="my-finds-page__find__details__img-container"
+                      cols={2} 
+                      spacing={2}>
+                      {images.slice(0, 2).map((tile, index) => (
+                        <GridListTile 
+                          className="my-finds-page__find__details__img-container__img"
+                          key={index} cols={1}>
+                          <img src={createThumbUrl(tile)} />
+                        </GridListTile>
+                      ))}
+                    </GridList>
                   </CardActionArea>
                   <Divider />
                   <CardActions className="my-finds-page__find__actions">
@@ -105,6 +110,15 @@ class MyFindsPage extends Component {
                         {intl.get('myFindsPage.continue')}
                       </Button>
                     }
+                    <div className="my-finds-page__find__actions__status-container">
+                      <div className="my-finds-page__find__actions__status-container__text">
+                        <Chip
+                          label={intl.get(`myFindsPage.statuses.${report.status.toLowerCase()}`).toUpperCase()}
+                          className="my-finds-page__find__actions__status-container__text__chip"
+                          style={statusColorDeterminer(report.status.toLowerCase())}
+                        />
+                      </div>
+                    </div>
                   </CardActions>
                 </Card>
               );
@@ -188,11 +202,11 @@ const statusColorDeterminer = (status) => {
   return style;
 };
 
-/**
+/** NOTE: This is disabled due to plan changes
  * Returns the icon of the given status
  * @param {status} current status of report 
  */
-const statusIconDeterminer = (status) => {
+/*const statusIconDeterminer = (status) => {
   let icon = 'crop_original';
   switch (status) {
     case ReportStatuses.DRAFT:
@@ -217,7 +231,7 @@ const statusIconDeterminer = (status) => {
       return icon;
   }
   return icon;
-};
+}; */
 
 const REPORT_SEPRATOR = 'report';
 const FIND_SEPRATOR = 'find';

@@ -112,6 +112,7 @@ export default {
     "noFindsError": "No finds found!",
     "container": {
       "report": "Report",
+      "timeClock": "Time",
       "municipality": "Municipality",
       "time": "on {d, date, short}",
       "finds": "Contains {number} finds"
