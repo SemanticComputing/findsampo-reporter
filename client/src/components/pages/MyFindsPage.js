@@ -57,8 +57,8 @@ class MyFindsPage extends Component {
         {
           this.props.reports.length > 0 ?
             this.props.reports.map((report, index) => {
-              const date = new Date(report.date);
               const images = [...report.findImages, ...report.findSiteImages];
+              const date = new Date(report.date);
               return (
                 <Card className="my-finds-page__find" key={index} >
                   <CardActionArea className="my-finds-page__find__details" onClick={this.onReportPressed(index)}>
@@ -67,7 +67,7 @@ class MyFindsPage extends Component {
                         {intl.get('myFindsPage.container.report')} {intl.get('myFindsPage.container.time', { d: new Date(report.date) })}
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
-                        {intl.get('myFindsPage.container.timeClock')}: {`${date.getHours()}:${date.getMinutes()}`}
+                        {intl.get('myFindsPage.container.timeClock')}: {`${date.getHours()}:${(date.getMinutes() < 10 ? '0' : '') + date.getMinutes()}`}
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
                         {intl.get('myFindsPage.container.municipality')}: {report.municipality}
@@ -76,12 +76,12 @@ class MyFindsPage extends Component {
                         {intl.get('myFindsPage.container.finds', { number: report.finds.length })}
                       </Typography>
                     </CardContent>
-                    <GridList 
+                    <GridList
                       className="my-finds-page__find__details__img-container"
-                      cols={2} 
+                      cols={2}
                       spacing={2}>
                       {images.slice(0, 2).map((tile, index) => (
-                        <GridListTile 
+                        <GridListTile
                           className="my-finds-page__find__details__img-container__img"
                           key={index} cols={1}>
                           <img src={createThumbUrl(tile)} />
