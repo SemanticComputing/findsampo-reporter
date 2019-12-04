@@ -256,6 +256,8 @@ export default {
       "question": "Please select the find depth.",
       "help": "Some explenation about find depth.",
       "label": "Find Depth",
+      "useSlider": "Use the slider",
+      "depth": "Depth",
       "buttonOne": "Continue",
       "depthUnit": "cm"
     },

@@ -10,7 +10,23 @@
     flex: 1;
     margin: 1rem;
   }
-  &__slider {
-    margin: 2rem;
+  & &__slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    &__avatar {
+      width: 100px;
+      height: 100px;
+      margin: 10px 0 40px 0;
+      font-size: 3rem;
+      background: $color-bottom-bar-icon-grey;
+    }
+    &__slider {
+      width: 85%;
+    }
+    &__input {
+      margin: 0;
+    }
   }
 }

@@ -5,7 +5,8 @@ import {
   Slider,
   FormControlLabel,
   TextField,
-  InputAdornment
+  InputAdornment,
+  Avatar
 } from '@material-ui/core/';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -20,11 +21,16 @@ import { setDate, setAdditionalMaterial, setFindDepth } from '../../actions/find
 
 class AnswerOptions extends Component {
   state = {
-    isExactDay: true
+    isExactDay: true,
+    sliderValue: 30,
+    isDepthSliderEnabled: true
   }
 
   onFindDepthChanged = (event, value) => {
-    this.props.setFindDepth(value, this.props.currentFindIndex);
+    const newValue = parseInt(value ? value : event.target.value) > 0 ?
+      parseInt(value ? value : event.target.value) : 0;
+    this.setState({ sliderValue: newValue });
+    this.props.setFindDepth(newValue, this.props.currentFindIndex);
   }
 
   onExactDayChanged = () => {
@@ -37,6 +43,10 @@ class AnswerOptions extends Component {
 
   onAdditionalMaterialTyped = (event) => {
     this.props.setAdditionalMaterial(event.target.value, this.props.currentFindIndex);
+  }
+
+  onDepthFormControlLabelPressed = () => {
+    this.setState({ isDepthSliderEnabled: !this.state.isDepthSliderEnabled });
   }
 
   renderDatePickers() {
@@ -62,6 +72,37 @@ class AnswerOptions extends Component {
           value={this.props.findDate}
           onChange={this.onFindDateChange}
           className="answer-options__date-picker" />
+      );
+    }
+  }
+
+  renderDepthPickers() {
+    const marks = [{ value: 0, label: '0cm', }, { value: 50, label: '50cm', }, { value: 100, label: '100cm', }];
+    if (this.state.isDepthSliderEnabled) {
+      return (<Slider
+        defaultValue={30}
+        max={100}
+        aria-labelledby="discrete-slider-always"
+        marks={marks}
+        valueLabelDisplay="on"
+        onChange={(event, value) => this.setState({ sliderValue: value })}
+        onChangeCommitted={this.onFindDepthChanged}
+        className="answer-options__slider-container__slider"
+      />);
+    } else {
+      return (
+        <TextField
+          id="outlined-number"
+          label={intl.get('report.questionFindDepth.label')}
+          onChange={this.onFindDepthChanged}
+          type="number"
+          margin="normal"
+          variant="outlined"
+          className="answer-options__slider-container__input"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">{intl.get('report.questionFindDepth.depthUnit')}</InputAdornment>,
+          }}
+        />
       );
     }
   }
@@ -139,17 +180,21 @@ class AnswerOptions extends Component {
           );
           break;
         case OptionTypes.SLIDER: {
-          const marks = [{ value: 0, label: '0cm', }, { value: 300, label: '300cm', }];
           container = (
-            <Slider
-              defaultValue={30}
-              max={300}
-              aria-labelledby="discrete-slider-always"
-              marks={marks}
-              valueLabelDisplay="on"
-              onChangeCommitted={this.onFindDepthChanged}
-              className="answer-options__slider"
-            />
+            <div className="answer-options__slider-container">
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={this.state.isDepthSliderEnabled}
+                    onChange={this.onDepthFormControlLabelPressed}
+                    color="primary"
+                  />
+                }
+                label={intl.get('report.questionFindDepth.useSlider')}
+              />
+              <Avatar className="answer-options__slider-container__avatar">{this.state.sliderValue}</Avatar>
+              {this.renderDepthPickers()}
+            </div>
           );
         }
       }
