@@ -23,15 +23,18 @@ import {
   OutlinedInput
 } from '@material-ui/core';
 import { isEqual, isEmpty, differenceWith } from 'lodash';
-import { getMyFinds, getCertainFinds, continueFillingOut } from '../../actions/myFinds';
+import { getMyFinds, getCertainFinds, continueFillingOut, orderMyReports } from '../../actions/myFinds';
 import { ReportStatuses, Colors, RouterPaths } from '../../helpers/enum/enums';
 import { getIdfromUri, getIdsfromArrayUri, createThumbUrl } from '../../helpers/functions/functions';
 import { enqueueSnackbar } from '../../actions/notifier';
+import { MyFindsPageFilter, MyFindsPageViews } from '../../helpers/enum/enums';
 
 class MyFindsPage extends Component {
 
   state = {
-    selectedIndex: null
+    selectedIndex: null,
+    selectedFilter: '',
+    activeView: MyFindsPageViews.TABLE
   }
 
   componentDidMount() {
@@ -51,47 +54,61 @@ class MyFindsPage extends Component {
     }
   }
 
+  onFilterChangePressed = (event) => {
+    this.setState({ selectedFilter: event.target.value });
+    this.props.orderMyReports(event.target.value);
+  }
+
+  renderHeader() {
+    return (
+      <div className="my-finds-page__header-container">
+        <Paper className="my-finds-page__header-container__paper">
+          <Typography className="my-finds-page__header-container__header" variant="overline">
+            {intl.get('myFindsPage.header.title')}
+          </Typography>
+          <Divider />
+          <div className="my-finds-page__header-container__paper__additionals">
+            <FormControl className="my-finds-page__header-container__paper__additionals__select" variant="outlined">
+              <InputLabel /*ref={inputLabel}*/ htmlFor="outlined-input">
+                {intl.get('myFindsPage.header.orderSelect.orderBy')}
+              </InputLabel>
+              <Select
+                value={this.state.selectedFilter}
+                onChange={this.onFilterChangePressed}
+                input={<OutlinedInput labelWidth={70} name="age" id="outlined-input" />}
+              >
+                <MenuItem value={MyFindsPageFilter.DATE}>{intl.get('myFindsPage.header.orderSelect.date')}</MenuItem>
+                <MenuItem value={MyFindsPageFilter.MUNICIPALITY}>{intl.get('myFindsPage.header.orderSelect.municipality')}</MenuItem>
+              </Select>
+            </FormControl>
+            <div className="my-finds-page__header-container__paper__additionals__icons">
+              <Typography className="my-finds-page__header-container__paper__additionals__icons__header"
+                variant="overline" display="block" gutterBottom>
+                {intl.get('myFindsPage.header.show')}
+              </Typography>
+              <div>
+                <IconButton className="my-finds-page__header-container__paper__additionals__icons__btn-icon">
+                  <Icon
+                    className={this.state.activeView === MyFindsPageViews.TABLE ? 'my-finds-page__active' : ''}
+                    fontSize="large">table_chart</Icon>
+                </IconButton>
+                <IconButton className="my-finds-page__header-container__paper__additionals__icons__btn-icon">
+                  <Icon
+                    className={this.state.activeView === MyFindsPageViews.MAP ? 'my-finds-page__active' : ''}
+                    fontSize="large">map</Icon>
+                </IconButton>
+              </div>
+            </div>
+          </div>
+        </Paper>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="my-finds-page">
-        <div className="my-finds-page__header-container">
-          <Paper className="my-finds-page__header-container__paper">
-            <Typography className="my-finds-page__header-container__header" variant="overline">
-              {intl.get('myFindsPage.header.title')}
-            </Typography>
-            <Divider />
-            <div className="my-finds-page__header-container__paper__additionals">
-              <FormControl className="my-finds-page__header-container__paper__additionals__select" variant="outlined">
-                <InputLabel /*ref={inputLabel}*/ htmlFor="outlined-age-simple">
-                  {intl.get('myFindsPage.header.orderSelect.orderBy')}
-                </InputLabel>
-                <Select
-                  //value={values.age}
-                  //onChange={handleChange}
-                  input={<OutlinedInput labelWidth={70} name="age" id="outlined-age-simple" />}
-                >
-                  <MenuItem value={10}>{intl.get('myFindsPage.header.orderSelect.date')}</MenuItem>
-                  <MenuItem value={20}>{intl.get('myFindsPage.header.orderSelect.municipality')}</MenuItem>
-                  <MenuItem value={30}>{intl.get('myFindsPage.header.orderSelect.totalFinds')}</MenuItem>
-                </Select>
-              </FormControl>
-              <div className="my-finds-page__header-container__paper__additionals__icons">
-                <Typography className="my-finds-page__header-container__paper__additionals__icons__header"
-                  variant="overline" display="block" gutterBottom>
-                  {intl.get('myFindsPage.header.show')}
-                </Typography>
-                <div>
-                  <IconButton className="my-finds-page__header-container__paper__additionals__icons__btn-icon" color="primary">
-                    <Icon fontSize="large">table_chart</Icon>
-                  </IconButton>
-                  <IconButton className="my-finds-page__header-container__paper__additionals__icons__btn-icon" color="primary">
-                    <Icon fontSize="large">map</Icon>
-                  </IconButton>
-                </div>
-              </div>
-            </div>
-          </Paper>
-        </div>
+        {this.renderHeader()}
         {
           this.props.reports.length > 0 ?
             this.props.reports.map((report, index) => {
@@ -311,6 +328,7 @@ const mapDispatchToProps = (dispatch) => ({
   getCertainFinds: (index, finds) => dispatch(getCertainFinds(index, finds)),
   continueFillingOut: (report) => dispatch(continueFillingOut(report)),
   enqueueSnackbar: (notification) => dispatch(enqueueSnackbar(notification)),
+  orderMyReports: (filter) => dispatch(orderMyReports(filter))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyFindsPage));

@@ -136,3 +136,13 @@ export const ReportingIDs = Object.freeze({
   PREFIX_FIND_IMAGE: 'sam_fimg_',
   PREFIX_FIND_SITE_IMAGE: 'sam_fsimg_'
 });
+
+export const MyFindsPageFilter = Object.freeze({
+  DATE: 'date',
+  MUNICIPALITY: 'municipality'
+});
+
+export const MyFindsPageViews = Object.freeze({
+  TABLE: 'table',
+  MAP: 'map'
+});

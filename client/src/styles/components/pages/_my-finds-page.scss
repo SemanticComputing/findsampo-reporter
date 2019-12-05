@@ -110,4 +110,7 @@
       text-align: center;
     }
   }
+  &__active {
+    color: $color-primary;
+  }
 }
