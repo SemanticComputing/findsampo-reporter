@@ -13,7 +13,14 @@ import {
   Chip,
   Paper,
   GridList,
-  GridListTile
+  GridListTile,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  IconButton,
+  Icon,
+  OutlinedInput
 } from '@material-ui/core';
 import { isEqual, isEmpty, differenceWith } from 'lodash';
 import { getMyFinds, getCertainFinds, continueFillingOut } from '../../actions/myFinds';
@@ -50,8 +57,39 @@ class MyFindsPage extends Component {
         <div className="my-finds-page__header-container">
           <Paper className="my-finds-page__header-container__paper">
             <Typography className="my-finds-page__header-container__header" variant="overline">
-              {intl.get('myFindsPage.header')}
+              {intl.get('myFindsPage.header.title')}
             </Typography>
+            <Divider />
+            <div className="my-finds-page__header-container__paper__additionals">
+              <FormControl className="my-finds-page__header-container__paper__additionals__select" variant="outlined">
+                <InputLabel /*ref={inputLabel}*/ htmlFor="outlined-age-simple">
+                  {intl.get('myFindsPage.header.orderSelect.orderBy')}
+                </InputLabel>
+                <Select
+                  //value={values.age}
+                  //onChange={handleChange}
+                  input={<OutlinedInput labelWidth={70} name="age" id="outlined-age-simple" />}
+                >
+                  <MenuItem value={10}>{intl.get('myFindsPage.header.orderSelect.date')}</MenuItem>
+                  <MenuItem value={20}>{intl.get('myFindsPage.header.orderSelect.municipality')}</MenuItem>
+                  <MenuItem value={30}>{intl.get('myFindsPage.header.orderSelect.totalFinds')}</MenuItem>
+                </Select>
+              </FormControl>
+              <div className="my-finds-page__header-container__paper__additionals__icons">
+                <Typography className="my-finds-page__header-container__paper__additionals__icons__header"
+                  variant="overline" display="block" gutterBottom>
+                  {intl.get('myFindsPage.header.show')}
+                </Typography>
+                <div>
+                  <IconButton className="my-finds-page__header-container__paper__additionals__icons__btn-icon" color="primary">
+                    <Icon fontSize="large">table_chart</Icon>
+                  </IconButton>
+                  <IconButton className="my-finds-page__header-container__paper__additionals__icons__btn-icon" color="primary">
+                    <Icon fontSize="large">map</Icon>
+                  </IconButton>
+                </div>
+              </div>
+            </div>
           </Paper>
         </div>
         {

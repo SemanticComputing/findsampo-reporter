@@ -103,7 +103,16 @@ export default {
     "fhaCulturalHeritageMaterial": "Finnish Heritage Agency: Protecting the archaeological cultural heritage"
   },
   "myFindsPage": {
-    "header": "My Finds",
+    "header": {
+      "title": "My Finds",
+      "show": "Show",
+      "orderSelect": {
+        "orderBy": "Order By",
+        "date": "Date",
+        "municipality": "Municipality",
+        "totalFinds": "Total Finds"
+      } 
+    },
     "more": "View More",
     "share": "Share",
     "continue": "Continue",
