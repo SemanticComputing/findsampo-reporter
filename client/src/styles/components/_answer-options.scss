@@ -29,4 +29,22 @@
       margin: 0;
     }
   }
+  & &__map-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    &__button {
+      font-size: 0.60rem;
+      margin: 0.2rem;
+    }
+  }
+  &__dialog {
+    &__content {
+      display: flex;
+      flex-direction: column;
+    }
+    &__text-field {
+      margin-bottom: 12px !important;
+    }
+  }
 }

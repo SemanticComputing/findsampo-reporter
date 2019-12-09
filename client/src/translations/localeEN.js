@@ -453,6 +453,15 @@ export default {
   "answerOptions": {
     "date": "Date",
     "approximateDate": "Approximate Date",
-    "additionalMaterials": "Additional Materials"
+    "additionalMaterials": "Additional Materials",
+    "btnEnterManually": "Enter Manually",
+    "dialog": {
+      "title": "Input Coordinates",
+      "content": "Please input coordinates in decimal form.",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "cancel": "Cancel",
+      "insert": "Insert"
+    }
   }
 };

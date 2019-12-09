@@ -68,8 +68,8 @@ class Map extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.markerData !== this.props.markerData || this.props.mode) {
-      this.clusterMap.clearLayers();
-      this.heatMap.setLatLngs([]);
+      this.clusterMap && this.clusterMap.clearLayers();
+      this.heatMap && this.heatMap.setLatLngs([]);
       this.showMarkersOnMap(this.props.markerData);
     }
 
@@ -413,9 +413,9 @@ class Map extends Component {
 
     for (let marker of markerData) {
       if (marker.lat && marker.long && !isNaN(marker.lat) && !isNaN(marker.long)) {
-        const popupText = this.generateMarkerPopup(marker);
+        const popupText = marker.id ? this.generateMarkerPopup(marker) : '';
         const location = new L.LatLng(marker.lat, marker.long);
-        const markerToMap = new L.marker(location).bindPopup(popupText);
+        const markerToMap = popupText ? new L.marker(location).bindPopup(popupText) : new L.marker(location);
         latLngs.push(location);
         this.clusterMap.addLayer(markerToMap);
       }
