@@ -8,8 +8,14 @@ import {
   CardContent,
   Typography,
   Icon,
-  Tooltip
+  Tooltip,
+  Divider,
+  CardActions,
+  Button
 } from '@material-ui/core';
+import { RouterPaths } from '../../helpers/enum/enums';
+import { getIdfromUri } from '../../helpers/functions/functions';
+import { history } from '../../routers/AppRouter';
 
 /**
  * Parameters
@@ -54,7 +60,7 @@ const Table = (props) => {
 const renderDetailPanel = (row) => {
   return (
     <Card className="table__detail-panel">
-      <CardActionArea className="table__detail-panel__container">
+      <CardActionArea className="table__detail-panel__container" disabled>
         {
           row.image_url ? (
             <CardMedia
@@ -80,8 +86,19 @@ const renderDetailPanel = (row) => {
           </Typography>
         </CardContent>
       </CardActionArea>
+      <Divider />
+      <CardActions className="my-finds-page__find__actions">
+        <Button size="small" color="primary" onClick={() => onMoreButtonPressed(row.id)}>
+          {intl.get('nearByPage.table.more')}
+        </Button>
+      </CardActions>
     </Card>
   );
+};
+
+const onMoreButtonPressed = (id) => {
+  const findId = getIdfromUri('sualt-fha-finds', id);
+  history.push(`${RouterPaths.FIND_PAGE}?id=${findId}`, { findId });
 };
 
 export default Table;

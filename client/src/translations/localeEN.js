@@ -80,6 +80,7 @@ export default {
     },
     "table": {
       "previewImage": "Preview Image",
+      "more": "More",
       "title": "Title",
       "material": "Material",
       "type": "Type",
