@@ -9,8 +9,8 @@ class AppHomePage extends Component {
       <div style={{ display: 'flex', flex: '1', flexDirection: 'column' }}>
         <ContentContainer
           stylingClass="content-container--justified"
-          header='findsampo'
-          headerStyle={{ color: '#eeeeee', margin: '0', fontSize: '3rem', textTransform: 'uppercase', fontWeight: 'bold' }}
+          header={intl.get('appHomePage.contentContainer.name')}
+          headerStyle={{ color: '#eeeeee', margin: '0', fontSize: '3rem', fontWeight: 'bold' }}
           description={intl.get('appHomePage.contentContainer.headerTitle')}
           descriptionStyle={{ color: '#fff', fontStyle: 'italic', fontVariant: 'small-caps', background: '#0009', opacity: 0.8, padding: '3px' }}
           bgImage='./images/others/home_bg.jpg'

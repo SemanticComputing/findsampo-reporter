@@ -142,7 +142,8 @@ export default {
       "guides": "Guides and Instructions",
       "applicationTagline": "Findsampo has received over x applications",
       "headerTitle": "Archeological finds studying and reporting platform",
-      "learnMore": "Learn More"
+      "learnMore": "Learn More",
+      "name": "FindSampo"
     },
   },
   "notFoundPage": {
