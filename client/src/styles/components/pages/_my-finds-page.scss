@@ -113,4 +113,9 @@
   &__active {
     color: $color-primary;
   }
+  &__finds-map-container {
+    display: flex;
+    flex: 1;
+    margin: 8px 16px;
+  }
 }

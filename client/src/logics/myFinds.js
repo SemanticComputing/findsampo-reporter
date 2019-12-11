@@ -6,7 +6,9 @@ import {
   MY_FINDS_GET_REPORTS_FAIL,
   MY_FINDS_GET_CERTAIN_FINDS,
   MY_FINDS_GET_CERTAIN_FINDS_SUCESS,
-  MY_FINDS_GET_CERTAIN_FINDS_FAIL
+  MY_FINDS_GET_CERTAIN_FINDS_FAIL,
+  MY_FINDS_GET_MY_REPORTS_FINDS,
+  MY_FINDS_GET_MY_REPORTS_FINDS_SUCCESS
 } from '../constants/actionTypes';
 
 const MY_FINDS_END_POINT = '/api/v1/myfinds';
@@ -52,7 +54,23 @@ const getCertainFinds = createLogic({
   }
 });
 
+
+const getMyReportsFinds = createLogic({
+  type: MY_FINDS_GET_MY_REPORTS_FINDS,
+  latest: true,
+
+  processOptions: {
+    dispatchReturn: true,
+    successType: MY_FINDS_GET_MY_REPORTS_FINDS_SUCCESS,
+  },
+
+  async process({ action }) {
+    return await axios.post(MY_FINDS_END_POINT, { finds: action.finds }, { headers });
+  }
+});
+
 export default [
   getMyFinds,
-  getCertainFinds
+  getCertainFinds,
+  getMyReportsFinds
 ];

@@ -92,3 +92,21 @@ export const convertToChartData = (data, activeProperty) => {
     series: Object.values(result)
   };
 };
+
+/**
+ * Creates marker data from finds to show on a map
+ */
+export const createMarkerDataFromFind = (finds) => {
+  const markerData = [];
+  finds.map((f) => {
+    markerData.push({
+      id: f.id,
+      reportId: f.reportId,
+      lat: f.findSite.coords.lat,
+      long: f.findSite.coords.lng,
+      image_url: f.photos[0] // Only one photo is shown
+    });
+  });
+
+  return markerData;
+};

@@ -4,11 +4,14 @@ import { orderBy } from 'lodash';
 import {
   MY_FINDS_GET_REPORTS_SUCCESS,
   MY_FINDS_GET_CERTAIN_FINDS_SUCESS,
-  MY_FINDS_ORDER_REPORTS
+  MY_FINDS_ORDER_REPORTS,
+  MY_FINDS_GET_MY_REPORTS_FINDS_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
-  reports: []
+  reports: [],
+  findIds: [],
+  finds: []
 };
 
 export default (state = initialState, action) => {
@@ -16,7 +19,8 @@ export default (state = initialState, action) => {
     case MY_FINDS_GET_REPORTS_SUCCESS:
       return {
         ...state,
-        reports: action.payload.data
+        reports: action.payload.data,
+        findIds: getFindsFromReports(action.payload.data)
       };
     case MY_FINDS_GET_CERTAIN_FINDS_SUCESS:
       return update(state, {
@@ -33,7 +37,22 @@ export default (state = initialState, action) => {
         ...state,
         reports: orderBy(state.reports, action.filter)
       };
+    case MY_FINDS_GET_MY_REPORTS_FINDS_SUCCESS:
+      return {
+        ...state,
+        finds: action.payload.data
+      };
     default:
       return state;
   }
+};
+
+
+const getFindsFromReports = (reports) => {
+  let findIds = [];
+  reports.map((r) => {
+    findIds = [...findIds, ...r.finds];
+  });
+
+  return findIds;
 };
