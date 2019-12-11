@@ -8,7 +8,7 @@ import {
   Button,
   Icon,
   IconButton,
-  Typography,
+  //Typography,
   Avatar,
   Popper,
   Grow,
@@ -264,16 +264,19 @@ class Header extends Component {
   }
 
   render() {
-    const titleclass = isDesktopScreen(window) ? 'appbar__typography' : 'appbar__typography--mobile';
+    //const titleclass = isDesktopScreen(window) ? 'appbar__typography' : 'appbar__typography--mobile';
     return (
       <div>
         <AppBar position="static" className="appbar">
           <Toolbar className="appbar__toolbar">
+            <img src="images/test_icon.png" />
+            {/*
             <Typography variant="h6" color="inherit" className={titleclass}>
               <Link className="appbar__title" to="/">
                 {intl.get('header.title')}
               </Link>
             </Typography>
+            */}
             {this.renderDesktopMenuItems()}
             {this.renderIOSMenu()}
             <LangMenu />
