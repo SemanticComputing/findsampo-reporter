@@ -269,7 +269,10 @@ class Header extends Component {
       <div>
         <AppBar position="static" className="appbar">
           <Toolbar className="appbar__toolbar">
-            <img src="images/test_icon.png" />
+            {/** TODO:Move styling to css */}
+            <div style={!isDesktopScreen(window) ? { flex: 1} : {}}>
+              {isDesktopScreen(window) ? <img src="images/test_icon.png" height="34px" /> : <img src="images/test_icon_mobile.png" height="34px" />}
+            </div>
             {/*
             <Typography variant="h6" color="inherit" className={titleclass}>
               <Link className="appbar__title" to="/">
