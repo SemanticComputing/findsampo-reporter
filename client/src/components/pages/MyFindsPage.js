@@ -106,6 +106,7 @@ class MyFindsPage extends Component {
                 </IconButton>
                 <IconButton
                   onClick={() => this.onViewChangePressed(MyFindsPageViews.MAP)}
+                  disabled={this.props.findIds.length <= 0}
                   className="my-finds-page__header-container__paper__additionals__icons__btn-icon"
                 >
                   <Icon
