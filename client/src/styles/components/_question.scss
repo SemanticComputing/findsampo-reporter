@@ -82,6 +82,20 @@
       }
       &__output {
         cursor: pointer;
+        &__span {
+          display: flex;
+          &__container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            padding: 4px;
+            &__icon {
+              font-size: 1.85rem;
+              color: $color-delete-red;
+            }
+          }
+        }
       }
     }
     &__progress {

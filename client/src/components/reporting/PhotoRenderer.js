@@ -94,10 +94,13 @@ class PhotoRenderer extends Component {
 
     if (currentModePhotos.length > 0) {
       return (
-        <span>
+        <span className="photo-renderer__output__span">
           {
             currentModePhotos.map((photo, index) => (
-              <ImageViewer image={photo} key={index} />
+              <div key={index} className="photo-renderer__output__span__container" >
+                <ImageViewer image={photo} />
+                <Icon className="photo-renderer__output__span__container__icon">delete_forever</Icon>
+              </div>
             ))
           }
         </span>
