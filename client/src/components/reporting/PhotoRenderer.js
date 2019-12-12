@@ -11,6 +11,7 @@ import {
   DialogActions,
   Dialog,
   Icon,
+  IconButton,
   Button,
   Typography
 } from '@material-ui/core/';
@@ -99,7 +100,9 @@ class PhotoRenderer extends Component {
             currentModePhotos.map((photo, index) => (
               <div key={index} className="photo-renderer__output__span__container" >
                 <ImageViewer image={photo} />
-                <Icon className="photo-renderer__output__span__container__icon">delete_forever</Icon>
+                <IconButton>               
+                  <Icon className="photo-renderer__output__span__container__icon">delete_forever</Icon>
+                </IconButton>
               </div>
             ))
           }
@@ -198,9 +201,9 @@ class PhotoRenderer extends Component {
           {intl.get('photoRenderer.infoText')}
         </Typography>
         {this.renderAddPhotoDialog()}
-        <output className="photo-renderer__output">
+        <div className="photo-renderer__output">
           <div>{this.renderPhotos()}</div>
-        </output>
+        </div>
         {this.renderAlertDialog()}
       </div>
     );
