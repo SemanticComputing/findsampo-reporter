@@ -128,6 +128,65 @@ class PhotoRenderer extends Component {
     );
   }
 
+
+  renderAddPhotoDialog() {
+    return (
+      <Dialog
+        onClose={this.onOpenPhotoDialogPressed}
+        aria-labelledby="photo-dialog"
+        open={this.state.isPhotoDialogOpen}
+      >
+        <DialogTitle id="photo-dialog">{intl.get('photoRenderer.dialog.title')}</DialogTitle>
+        <div>
+          <List>
+            <ListItem button onClick={() => this.captureInputRef.current.click()}>
+              <ListItemAvatar>
+                <Avatar>
+                  <Icon>camera_alt</Icon>
+                </Avatar>
+              </ListItemAvatar>
+              <input
+                type="file"
+                id="photo-from-camera"
+                accept="image/*"
+                className="answer-options__input"
+                onChange={this.onPhotoPickerPressed}
+                capture
+                ref={this.captureInputRef}
+              />
+              <label className="answer-options__label">{intl.get('photoRenderer.dialog.takePhoto')}</label>
+            </ListItem>
+            <ListItem button onClick={() => this.galleryInputRef.current.click()}>
+              <ListItemAvatar>
+                <Avatar>
+                  <Icon>insert_photo</Icon>
+                </Avatar>
+              </ListItemAvatar>
+              <input
+                type="file"
+                id="photo-from-gallery"
+                className="answer-options__input"
+                accept="image/*"
+                onChange={this.onPhotoPickerPressed}
+                multiple
+                ref={this.galleryInputRef}
+              />
+              <label className="answer-options__label">{intl.get('photoRenderer.dialog.selectFromGallery')}</label>
+            </ListItem>
+            <ListItem button onClick={this.onOpenPhotoDialogPressed}>
+              <ListItemAvatar>
+                <Avatar>
+                  <Icon>cancel</Icon>
+                </Avatar>
+              </ListItemAvatar>
+              <label className="answer-options__label">{intl.get('photoRenderer.dialog.cancel')}</label>
+            </ListItem>
+          </List>
+        </div>
+      </Dialog>
+    );
+  }
+
   render() {
     return (
       <div className="photo-renderer">
@@ -135,60 +194,8 @@ class PhotoRenderer extends Component {
         <Typography variant="caption" display="block" gutterBottom>
           {intl.get('photoRenderer.infoText')}
         </Typography>
-        <Dialog
-          onClose={this.onOpenPhotoDialogPressed}
-          aria-labelledby="photo-dialog"
-          open={this.state.isPhotoDialogOpen}
-        >
-          <DialogTitle id="photo-dialog">{intl.get('photoRenderer.dialog.title')}</DialogTitle>
-          <div>
-            <List>
-              <ListItem button onClick={() => this.captureInputRef.current.click()}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <Icon>camera_alt</Icon>
-                  </Avatar>
-                </ListItemAvatar>
-                <input
-                  type="file"
-                  id="photo-from-camera"
-                  accept="image/*"
-                  className="answer-options__input"
-                  onChange={this.onPhotoPickerPressed}
-                  capture
-                  ref={this.captureInputRef}
-                />
-                <label className="answer-options__label">{intl.get('photoRenderer.dialog.takePhoto')}</label>
-              </ListItem>
-              <ListItem button onClick={() => this.galleryInputRef.current.click()}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <Icon>insert_photo</Icon>
-                  </Avatar>
-                </ListItemAvatar>
-                <input
-                  type="file"
-                  id="photo-from-gallery"
-                  className="answer-options__input"
-                  accept="image/*"
-                  onChange={this.onPhotoPickerPressed}
-                  multiple
-                  ref={this.galleryInputRef}
-                />
-                <label className="answer-options__label">{intl.get('photoRenderer.dialog.selectFromGallery')}</label>
-              </ListItem>
-              <ListItem button onClick={this.onOpenPhotoDialogPressed}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <Icon>cancel</Icon>
-                  </Avatar>
-                </ListItemAvatar>
-                <label className="answer-options__label">{intl.get('photoRenderer.dialog.cancel')}</label>
-              </ListItem>
-            </List>
-          </div>
-        </Dialog>
-        <output>
+        {this.renderAddPhotoDialog()}
+        <output className="photo-renderer__output">
           <div>{this.renderPhotos()}</div>
         </output>
         {this.renderAlertDialog()}

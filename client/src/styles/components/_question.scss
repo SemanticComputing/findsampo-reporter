@@ -80,6 +80,9 @@
         height: 4rem;
         margin: 0.5rem;
       }
+      &__output {
+        cursor: pointer;
+      }
     }
     &__progress {
       align-self: center;
