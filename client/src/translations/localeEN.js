@@ -141,7 +141,7 @@ export default {
       "recentFinds": "Recent Finds",
       "guides": "Guides and Instructions",
       "applicationTagline": "Findsampo has received over x applications",
-      "headerTitle": "Archeological finds studying and reporting platform",
+      "headerTitle": "The Finnish archaeological finds data and reporting platform",
       "learnMore": "Learn More",
       "name": "FindSampo"
     },
