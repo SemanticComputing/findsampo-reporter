@@ -26,12 +26,12 @@ const Table = (props) => {
   return (
     <div className="table">
       <MaterialTable
-        columns={[ // TODO: Add translations
+        columns={[
           {
             title: intl.get('nearByPage.table.previewImage'),
             field: 'image',
             render: rowData => rowData.image_url ?
-              <img src={rowData.image_url} className="table__column__icon" /> :
+              <img src={rowData.image_url.split(';')[0]/*Show only the first image*/} className="table__column__icon" / > :
               <Icon className="table__column__icon">crop_original</Icon>
           },
           { title: intl.get('nearByPage.table.title'), field: 'title' },
