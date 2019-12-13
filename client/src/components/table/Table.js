@@ -65,7 +65,7 @@ const renderDetailPanel = (row) => {
           row.image_url ? (
             <CardMedia
               className="table__detail-panel__container__image"
-              image={row.image_url}
+              image={row.image_url.split(';')[0]}
               title={row.title}
             />
           ) : (
