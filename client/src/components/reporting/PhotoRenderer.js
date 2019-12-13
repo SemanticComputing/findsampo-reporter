@@ -110,10 +110,13 @@ class PhotoRenderer extends Component {
         <span className="photo-renderer__output__span">
           {
             currentModePhotos.map((photo, index) => (
-              <div key={index} className="photo-renderer__output__span__container" >
-                <ImageViewer image={photo} />
-                <IconButton onClick={() => this.onDeletePhotoPressed(photo, index, this.props.for)}>
-                  <Icon className="photo-renderer__output__span__container__icon">delete_forever</Icon>
+              <div key={index} className="photo-renderer__output__span__container">
+                <ImageViewer image={photo} width={90}/>
+                <IconButton 
+                  className="photo-renderer__output__span__container__btn" 
+                  onClick={() => this.onDeletePhotoPressed(photo, index, this.props.for)}
+                >
+                  <Icon className="photo-renderer__output__span__container__btn__icon">delete_forever</Icon>
                 </IconButton>
               </div>
             ))

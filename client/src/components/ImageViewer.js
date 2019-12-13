@@ -9,8 +9,8 @@ const ImageViewer = (props) => {
     <div style={{ display: props.display || 'inline', margin: '2px', cursor: 'pointer' }}>
       <img
         src={props.image}
-        width={props.width || '64px'}
-        height={props.height || '64px'}
+        width={props.width ? `${props.width}px` : '64px'}
+        height={props.height ? `${props.height}px` : '64px'}
         onClick={() => setLighboxStatus(true)}
       />
       {isOpen && <Lightbox
