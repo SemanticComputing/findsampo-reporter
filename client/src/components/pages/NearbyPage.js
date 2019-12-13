@@ -26,7 +26,7 @@ import { createDonutOptions } from '../../helpers/data/chart';
 
 class NearbyPage extends Component {
   state = {
-    isFacetOpen: false,
+    isFacetOpen: isDesktopScreen(window),
     showMap: true,
     selectedChartProperty: 'main_material', // Default chart is material
     mode: 0 // Default mode is clustered map
