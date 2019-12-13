@@ -79,12 +79,16 @@ class PhotoRenderer extends Component {
 
   onPhotoPickerPressed = (event) => {
     const files = event.target.files;
+    const currentFind = this.props.finds[this.props.currentFindIndex];
+    const findSitePhotosCount = currentFind.findSite.photos ? currentFind.findSite.photos.length : 0;
+    const findPhotosCount = currentFind.photos ? currentFind.photos.length : 0;
+
     // Show the spinner before starting the process
     this.props.changeSnipperStatus(true);
     if (this.props.for === PhotosOf.FIND_SITE) {
-      this.props.setFindSitePhotos(files, this.props.currentFindIndex, this.state.findSitePhotos.length);
+      this.props.setFindSitePhotos(files, this.props.currentFindIndex, findSitePhotosCount);
     } else {
-      this.props.setFindPhotos(files, this.props.currentFindIndex, this.state.findPhotos.length);
+      this.props.setFindPhotos(files, this.props.currentFindIndex, findPhotosCount);
     }
     this.onOpenPhotoDialogPressed();
   }
