@@ -8,7 +8,6 @@ import {
   Button,
   Icon,
   IconButton,
-  //Typography,
   Avatar,
   Popper,
   Grow,
@@ -270,9 +269,9 @@ class Header extends Component {
         <AppBar position="static" className="appbar">
           <Toolbar className="appbar__toolbar">
             {/** TODO:Move styling to css */}
-            <div style={!isDesktopScreen(window) ? { flex: 1} : {}}>
+            <Link to={RouterPaths.HOME_PAGE} style={!isDesktopScreen(window) ? { flex: 1} : {}}>
               {isDesktopScreen(window) ? <img src="images/test_icon.png" height="34px" /> : <img src="images/test_icon_mobile.png" height="34px" />}
-            </div>
+            </Link>
             {/*
             <Typography variant="h6" color="inherit" className={titleclass}>
               <Link className="appbar__title" to="/">
