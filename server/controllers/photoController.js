@@ -93,7 +93,7 @@ const deletePhotos = (req, res) => {
     let filePath = path.join(dirPath, id);
     const promise = new Promise((resolve, reject) => {
       fsExtra.unlink(filePath, function (err) {
-        if (err) throw reject(true);
+        if (err) reject(true);
         // if no error, file has been deleted successfully
         resolve(true);
       });
