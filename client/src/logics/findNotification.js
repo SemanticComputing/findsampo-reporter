@@ -15,14 +15,19 @@ import {
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
-  NOTIFIER_CHANGE_STATUS
+  NOTIFIER_CHANGE_STATUS,
+  FIND_NOTIFICATION_DELETE_PHOTO,
+  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS
 } from '../constants/actionTypes';
+import intl from 'react-intl-universal';
+import { enqueueSnackbar } from '../actions/notifier';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
 const FIND_NOTIFICATION_FIND_IMAGE_MERGE_END_POINT = '/api/v1/photo/find-merge';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find-site';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_MERGE_END_POINT = '/api/v1/photo/find-site-merge';
+const FIND_NOTIFICATION_PHOTO_DELETION_END_POINT = '/api/v1/photo/delete';
 
 const SMART_HELPER_END_POINT = '/api/v1/smart-helper';
 const SMART_HELPER_NEARBY_END_POINT = '/api/v1/smart-helper/nearby';
@@ -152,7 +157,7 @@ const setFindSitePhotos = createLogic({
       // Image information
       const axiosPromiseArray = [];
       const imgIndex = parseInt(i) + parseInt(action.imgIndex);
-      const fileName = `${getState().findNotification.reportId}_find-site_img-${imgIndex}`;
+      const fileName = `${getState().findNotification.reportId}_find-site_find-${currentFindIndex}_img-${imgIndex}`;
       const photo = currentFind.photos[i];
       const partNames = [];
       // Chunk information
@@ -211,6 +216,32 @@ const setFindSitePhotos = createLogic({
           });
       });
     }
+  }
+});
+
+const deletePhotos = createLogic({
+  type: FIND_NOTIFICATION_DELETE_PHOTO,
+  latest: true,
+
+  process({ action }, dispatch, done) {
+    axios.put(FIND_NOTIFICATION_PHOTO_DELETION_END_POINT, { photoIds: action.photoIds })
+      .then(() => {
+        dispatch({
+          type: FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS,
+          currentFindIndex: action.currentFindIndex,
+          photoIndex: action.photoIndex,
+          photoType: action.photoType
+        });
+      })
+      .catch(() => {
+        dispatch(enqueueSnackbar({
+          message: intl.get('report.notifications.photoDeletionError'),
+          options: {
+            variant: 'error',
+          },
+        }));
+      })
+      .then(() => done());
   }
 });
 
@@ -279,5 +310,6 @@ export default [
   setFindPhotos,
   setFindSitePhotos,
   getLocationBasedSmartHelp,
-  getFindPropertyBasedSmartHelp
+  getFindPropertyBasedSmartHelp,
+  deletePhotos
 ];

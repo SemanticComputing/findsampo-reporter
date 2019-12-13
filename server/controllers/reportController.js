@@ -7,7 +7,6 @@ const url = require('url');
 const constants = require('../helpers/constants');
 const report = require('../sparql/queries/report');
 
-const HTTP_OK = 200;
 const defaultreportHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded',
   'Accept': 'application/sparql-results+json; charset=utf-8'
@@ -15,7 +14,7 @@ const defaultreportHeaders = {
 
 router.post('/', async (req, res, next) => {
   try {
-    const reportId = req.body.data.reportId ? req.body.data.reportId : (constants.PREFIX_REPORT + nanoid(12));
+    const reportId = req.body.data.reportId ? req.body.data.reportId : (constants.prefixes.PREFIX_REPORT + nanoid(12));
     const update = report.postReport(reportId, req.body.user, req.body.data);
 
     const response = await axios({
@@ -26,7 +25,7 @@ router.post('/', async (req, res, next) => {
     });
 
     // Send report id to client when saving is succeeded
-    if (response.status == HTTP_OK) {
+    if (response.status == constants.statuses.HTTP_OK) {
       res.send({ reportId });
     }
   } catch (error) {
@@ -93,7 +92,7 @@ router.put('/', async (req, res, next) => {
       data: querystring.stringify({ update })
     });
     // Ensure that deletion is succeed
-    if (response.status == HTTP_OK) {
+    if (response.status == constants.statuses.HTTP_OK) {
       res.send('Deletion is done!');
     }
   } catch (error) {

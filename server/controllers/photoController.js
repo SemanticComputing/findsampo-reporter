@@ -4,7 +4,7 @@ const Busboy = require('busboy');
 const sharp = require('sharp');
 const path = require('path');
 const fsExtra = require('fs-extra');
-
+const constants = require('../helpers/constants');
 
 const FILE_MAX_LIMIT = 1024 * 1024 * 30;
 const FILE_MAX_NUMBERS = 10;
@@ -59,6 +59,57 @@ router.post(['/find-merge', '/find-site-merge'], async (req, res, next) => {
   }
 });
 
+
+/**
+ * API for deleting photos
+ */
+router.put('/delete', async (req, res, next) => {
+  try {
+    deletePhotos(req, res);
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+    next(error);
+  }
+});
+
+const deletePhotos = (req, res) => {
+  const dirPath = path.join(__dirname, '..', '..', 'users', 'applications', 'images');
+  const results = [];
+
+  for (const id of req.body.photoIds) {
+    let filePath = path.join(dirPath, id);
+    const promise = new Promise((resolve, reject) => {
+      fsExtra.unlink(filePath, function (err) {
+        if (err) throw reject(true);
+        // if no error, file has been deleted successfully
+        resolve(true);
+      });
+    });
+    results.push(promise);
+  }
+
+  Promise.all(results)
+    .then(() => {
+      res.status(constants.statuses.HTTP_NO_CONTENT).send();
+    })
+    .catch(() => {
+      res.status(constants.statuses.HTTP_SERVER_ERROR).send();
+    });
+};
+
 /**
  * Merge the saved chunks
  * 
@@ -86,7 +137,7 @@ const mergeChunks = (req, res) => {
     }
   });
 
-  
+
   fsExtra.remove(concatFilePath, (err) => {
     if (err) {
       console.error('An error occured during the deletion of chunk files', err);
@@ -145,7 +196,7 @@ const saveChunks = (req, res) => {
   // Triggered once all uploaded files are processed by Busboy.
   busboy.on('finish', async () => {
     Promise.all(fileWrites).then(() => {
-      res.status(204).send();
+      res.status(constants.statuses.HTTP_NO_CONTENT).send();
     });
   });
 

@@ -14,7 +14,8 @@ import {
   FIND_NOTIFICATION_RESET,
   FIND_NOTIFICATION_SKIP_HELP_TUTORIAL_STEPS,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
-  FIND_NOTIFICATION_SET_REPORT_ID
+  FIND_NOTIFICATION_SET_REPORT_ID,
+  FIND_NOTIFICATION_DELETE_PHOTO
 } from '../constants/actionTypes';
 
 export const setDate = (date) => ({
@@ -111,4 +112,12 @@ export const resetFindNotification = () => ({
 export const setReportId = (id) => ({
   type: FIND_NOTIFICATION_SET_REPORT_ID,
   id
+});
+
+export const deletePhotos = (photoIds, currentFindIndex, photoIndex, photoType) => ({
+  type: FIND_NOTIFICATION_DELETE_PHOTO,
+  photoIds,
+  currentFindIndex,
+  photoIndex,
+  photoType
 });

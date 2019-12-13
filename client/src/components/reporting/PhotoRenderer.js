@@ -18,8 +18,9 @@ import {
 import intl from 'react-intl-universal';
 import { PhotosOf } from '../../helpers/enum/enums';
 import { changeSnipperStatus } from '../../actions/notifier';
-import { setFindSitePhotos, setFindPhotos } from '../../actions/findNotification';
+import { setFindSitePhotos, setFindPhotos, deletePhotos } from '../../actions/findNotification';
 import ImageViewer from '../ImageViewer';
+import { getIdfromUri, getThumbId } from '../../helpers/functions/functions';
 
 class PhotoRenderer extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class PhotoRenderer extends Component {
     });
   }
 
+  /* Files are not stored in memory anymore
   onFilesSelected = (files) => {
     // Loop through the FileList
     for (let i = 0; i < files.length; i++) {
@@ -73,13 +75,12 @@ class PhotoRenderer extends Component {
       // Read in the image file as a data URL.
       reader.readAsDataURL(file);
     }
-  }
+  } */
 
   onPhotoPickerPressed = (event) => {
     const files = event.target.files;
     // Show the spinner before starting the process
     this.props.changeSnipperStatus(true);
-    this.onFilesSelected(files);
     if (this.props.for === PhotosOf.FIND_SITE) {
       this.props.setFindSitePhotos(files, this.props.currentFindIndex, this.state.findSitePhotos.length);
     } else {
@@ -88,19 +89,26 @@ class PhotoRenderer extends Component {
     this.onOpenPhotoDialogPressed();
   }
 
-  renderPhotos() {
-    const currentModePhotos = this.props.for === PhotosOf.FIND_SITE
-      ? this.state.findSitePhotos
-      : this.state.findPhotos;
+  onDeletePhotoPressed = (photo, photoIndex, photoType) => {
+    const id = getIdfromUri('images', photo);
+    const thumbID = getThumbId(id);
+    this.props.deletePhotos([id, thumbID], this.props.currentFindIndex, photoIndex, photoType);
+  }
 
-    if (currentModePhotos.length > 0) {
+  renderPhotos() {
+    const currentFind = this.props.finds[this.props.currentFindIndex];
+    let currentModePhotos = this.props.for === PhotosOf.FIND
+      ? currentFind.photos
+      : currentFind.findSite.photos;
+
+    if (currentModePhotos && currentModePhotos.length > 0) {
       return (
         <span className="photo-renderer__output__span">
           {
             currentModePhotos.map((photo, index) => (
               <div key={index} className="photo-renderer__output__span__container" >
                 <ImageViewer image={photo} />
-                <IconButton>               
+                <IconButton onClick={() => this.onDeletePhotoPressed(photo, index, this.props.for)}>
                   <Icon className="photo-renderer__output__span__container__icon">delete_forever</Icon>
                 </IconButton>
               </div>
@@ -210,16 +218,16 @@ class PhotoRenderer extends Component {
   }
 }
 
-const MAX_FILE_SIZE = 1024 * 1024 * 30;
-
 const mapStateToProps = (state) => ({
-  currentFindIndex: state.findNotification.currentFindIndex
+  currentFindIndex: state.findNotification.currentFindIndex,
+  finds: state.findNotification.finds
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setFindSitePhotos: (photos, findIndex, imgIndex) => dispatch(setFindSitePhotos(photos, findIndex, imgIndex)),
   setFindPhotos: (photos, findIndex, imgIndex) => dispatch(setFindPhotos(photos, findIndex, imgIndex)),
-  changeSnipperStatus: (status) => dispatch(changeSnipperStatus(status))
+  changeSnipperStatus: (status) => dispatch(changeSnipperStatus(status)),
+  deletePhotos: (photoIds, currentFindIndex, photoIndex, photoType) => dispatch(deletePhotos(photoIds, currentFindIndex, photoIndex, photoType))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoRenderer);

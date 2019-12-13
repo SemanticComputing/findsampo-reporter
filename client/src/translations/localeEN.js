@@ -221,6 +221,9 @@ export default {
     "back": "Back",
     "optionalSection": "Optional",
     "reportSent": "Your report has been sent successfully!",
+    "notifications": {
+      "photoDeletionError": "Deleting this photo failed. Please try again"
+    },
     "questionZero": {
       "question": "Would you like to get familiar with our starter kits before starting to add your find?",
       "help": "This questions is for providing some help. Please choose one of the choices",

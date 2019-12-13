@@ -19,6 +19,11 @@ export const getIdfromUri = (seperator, text) => {
   return text.split(`${seperator}/`).pop();
 };
 
+export const getThumbId = (text) => {
+  const [id] = text.split('.png');
+  return `${id}_thumb.png`;
+};
+
 export const getIdsfromArrayUri = (seperator, array) => {
   return array.map((id) => id.split(`${seperator}/`).pop());
 };

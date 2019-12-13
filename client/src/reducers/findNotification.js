@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { ReportStatuses, SmartHelpers } from '../helpers/enum/enums';
+import { ReportStatuses, SmartHelpers, PhotosOf } from '../helpers/enum/enums';
 import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,
@@ -20,7 +20,8 @@ import {
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
-  FIND_NOTIFICATION_SET_REPORT_ID
+  FIND_NOTIFICATION_SET_REPORT_ID,
+  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -236,6 +237,28 @@ export default (state = initialState, action) => {
         ...state,
         reportId: action.id
       };
+    case FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS: {
+      const { currentFindIndex, photoIndex, photoType } = action;
+      if (photoType === PhotosOf.FIND) {
+        return update(state, {
+          finds: {
+            [currentFindIndex]: {
+              photos: { $splice: [[photoIndex, 1]] }
+            }
+          }
+        });
+      } else {
+        return update(state, {
+          finds: {
+            [currentFindIndex]: {
+              findSite: {
+                photos: { $splice: [[photoIndex, 1]] }
+              }
+            }
+          }
+        });
+      }
+    }
     default:
       return state;
   }
