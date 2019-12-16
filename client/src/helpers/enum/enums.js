@@ -111,10 +111,10 @@ export const ReportStatuses = Object.freeze({
 });
 
 export const ReportSteps = Object.freeze({
-  LOCATION: 3,
-  MATERIAL: 9,
-  TYPE: 10,
-  PERIOD: 11
+  LOCATION: 1,
+  MATERIAL: 7,
+  TYPE: 8,
+  PERIOD: 9
 });
 
 export const SmartHelpers = Object.freeze({
