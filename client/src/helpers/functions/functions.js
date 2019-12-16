@@ -30,17 +30,28 @@ export const getIdsfromArrayUri = (seperator, array) => {
 
 export const getWMTSLayerKeyByValue = (value) => {
   const names = {
-    arkeologiset_loydot: 'Arkeologiset löydöt',
-    arkeologiset_kohteet_alue: 'Muinaisjäännösalueet',
-    arkeologiset_kohteet_piste: 'Muinaisjäännöspisteet',
-    maailmanperinto_alue: 'Maailmanperintökohteet alueet',
-    maailmanperinto_piste: 'Maailmanperintökohteet pisteet',
-    rakennusperinto_alue: 'Rakennusperintörekisterin suojellut alueet',
-    rakennusperinto_piste: 'Rakennusperintörekisterin suojellut rakennukset',
-    arkeologisten_kohteiden_alakohteet_piste: 'Muinaisjäännösten alakohteet',
-    rky_alue: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt alueet',
-    rky_piste: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt pisteet',
-    rky_viiva: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt viivat'
+    // arkeologiset_loydot: 'Arkeologiset löydöt',
+    // arkeologiset_kohteet_alue: 'Muinaisjäännösalueet',
+    // arkeologiset_kohteet_piste: 'Muinaisjäännöspisteet',
+    // maailmanperinto_alue: 'Maailmanperintökohteet alueet',
+    // maailmanperinto_piste: 'Maailmanperintökohteet pisteet',
+    // rakennusperinto_alue: 'Rakennusperintörekisterin suojellut alueet',
+    // rakennusperinto_piste: 'Rakennusperintörekisterin suojellut rakennukset',
+    // arkeologisten_kohteiden_alakohteet_piste: 'Muinaisjäännösten alakohteet',
+    // rky_alue: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt alueet',
+    // rky_piste: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt pisteet',
+    // rky_viiva: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt viivat'
+    arkeologiset_loydot: 'Archaeological finds',
+    arkeologiset_kohteet_alue: 'Archaeological sites, areas',
+    arkeologiset_kohteet_piste: 'Archaeological sites, points',
+    maailmanperinto_alue: 'World heritage sites, areas',
+    maailmanperinto_piste: 'World heritage sites, points',
+    rakennusperinto_alue: 'Architectural heritage, areas',
+    rakennusperinto_piste: 'Architectural heritage, buildings',
+    arkeologisten_kohteiden_alakohteet_piste: 'Archaeological sites, subparts, points',
+    rky_alue: 'Notable cultural environments, areas',
+    rky_piste: 'Notable cultural environments, points',
+    rky_viiva: 'Notable cultural environments, lines'
   };
 
   return invert(names)[value];
@@ -52,17 +63,28 @@ export const createThumbUrl = (url) => {
 
 export const getWMTSLayerValueByKey = (value) => {
   const names = {
-    arkeologiset_loydot: 'Arkeologiset löydöt',
-    arkeologiset_kohteet_alue: 'Muinaisjäännösalueet',
-    arkeologiset_kohteet_piste: 'Muinaisjäännöspisteet',
-    maailmanperinto_alue: 'Maailmanperintökohteet alueet',
-    maailmanperinto_piste: 'Maailmanperintökohteet pisteet',
-    rakennusperinto_alue: 'Rakennusperintörekisterin suojellut alueet',
-    rakennusperinto_piste: 'Rakennusperintörekisterin suojellut rakennukset',
-    arkeologisten_kohteiden_alakohteet_piste: 'Muinaisjäännösten alakohteet',
-    rky_alue: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt alueet',
-    rky_piste: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt pisteet',
-    rky_viiva: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt viivat'
+    // arkeologiset_loydot: 'Arkeologiset löydöt',
+    // arkeologiset_kohteet_alue: 'Muinaisjäännösalueet',
+    // arkeologiset_kohteet_piste: 'Muinaisjäännöspisteet',
+    // maailmanperinto_alue: 'Maailmanperintökohteet alueet',
+    // maailmanperinto_piste: 'Maailmanperintökohteet pisteet',
+    // rakennusperinto_alue: 'Rakennusperintörekisterin suojellut alueet',
+    // rakennusperinto_piste: 'Rakennusperintörekisterin suojellut rakennukset',
+    // arkeologisten_kohteiden_alakohteet_piste: 'Muinaisjäännösten alakohteet',
+    // rky_alue: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt alueet',
+    // rky_piste: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt pisteet',
+    // rky_viiva: 'Valtakunnallisesti merkittävät rakennetut kulttuuriympäristöt viivat'
+    arkeologiset_loydot: 'Archaeological finds',
+    arkeologiset_kohteet_alue: 'Archaeological sites, areas',
+    arkeologiset_kohteet_piste: 'Archaeological sites, points',
+    maailmanperinto_alue: 'World heritage sites, areas',
+    maailmanperinto_piste: 'World heritage sites, points',
+    rakennusperinto_alue: 'Architectural heritage, areas',
+    rakennusperinto_piste: 'Architectural heritage, buildings',
+    arkeologisten_kohteiden_alakohteet_piste: 'Archaeological sites, subparts, points',
+    rky_alue: 'Notable cultural environments, areas',
+    rky_piste: 'Notable cultural environments, points',
+    rky_viiva: 'Notable cultural environments, lines'
   };
 
   return names[value];
