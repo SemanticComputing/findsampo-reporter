@@ -279,17 +279,23 @@ export default {
     "questionFindMaterial": {
       "question": "Enter the material of the find.",
       "help": "If you cannot find the material you can select others.",
-      "buttonOne": "Continue"
+      "buttonOne": "Continue",
+      "label": "Material",
+      "placeholder": "e.g. stone, gold, bronze"
     },
     "questionFindType": {
       "question": "Enter the type of the find.",
       "help": "If you cannot find the type you can select others.",
-      "buttonOne": "Continue"
+      "buttonOne": "Continue",
+      "label": "Type",
+      "placeholder": "e.g. coin, ceramic, jewellery"
     },
     "questionFindTime": {
       "question": "Enter the period of the find.",
       "help": "If you cannot find the type you can select others.",
-      "buttonOne": "Continue"
+      "buttonOne": "Continue",
+      "label": "Period",
+      "placeholder": "e.g. Middle Ages, Stone Age"
     },
     "questionAdditionalMaterials": {
       "question": "Would you like to add additional materials related to the find site?",
@@ -468,5 +474,9 @@ export default {
       "cancel": "Cancel",
       "insert": "Insert"
     }
+  },
+  "autocompleter": {
+    "noOptions": "No options",
+    "loading": "Loading..."
   }
 };

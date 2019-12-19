@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import { getAutocompleteData } from '../actions/findNotification';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { CircularProgress, TextField } from '@material-ui/core';
+import intl from 'react-intl-universal';
 import { setFindType, setFindMaterial, setFindTiming } from '../actions/findNotification';
 import { TreeViewTypes } from '../helpers/enum/enums';
 
 const Autocompleter = (props) => {
+  const MIN_WORD_LENGTH = 2;
   const [open, setOpen] = useState(false);
   const [suggestion, setSuggestion] = useState('');
-  const { getAutocompleteData, autocompleteResults, propertyType,
+  const { getAutocompleteData, autocompleteResults, propertyType, label, placeholder,
     setFindType, setFindMaterial, setFindTiming, currentFindIndex, isFetching } = props;
-  const loading = open && suggestion.length >= 2 && isFetching;
+  const loading = open && suggestion.length >= MIN_WORD_LENGTH && isFetching;
 
   useEffect(() => {
-    if (suggestion.length >= 2) {
+    if (suggestion.length >= MIN_WORD_LENGTH) {
       getAutocompleteData(suggestion, propertyType);
     } else {
       setOpen(false);
@@ -44,13 +46,13 @@ const Autocompleter = (props) => {
       options={autocompleteResults}
       loading={loading}
       onChange={(event, values) => saveAutoCompleteChanges(values)}
-      noOptionsText='No options'
-      loadingText='Loading...'
+      noOptionsText={intl.get('autocompleter.noOptions')}
+      loadingText={intl.get('autocompleter.loading')}
       renderInput={params => (
         <TextField
           {...params}
-          label="something"
-          placeholder="e.g. "
+          label={label}
+          placeholder={placeholder}
           fullWidth
           variant="outlined"
           onChange={(event) => setSuggestion(event.target.value)}

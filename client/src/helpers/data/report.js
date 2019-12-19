@@ -1,8 +1,5 @@
 
 import { OptionTypes, ButtonTypes, TreeViewTypes, ButtonActions, QuestionDependencies } from '../enum/enums';
-import eras from '../../helpers/data/eras';
-import findTypes from '../../helpers/data/findTypes';
-import findMaterials from '../../helpers/data/findMaterials';
 import Overview from '../../components/reporting/Overview';
 /*
 import StarterKit from '../../components/instructions/StarterKit';
@@ -194,9 +191,10 @@ export default {
       backStep: 6,
       skipStep: 8,
       options: {
-        type: OptionTypes.TREE_VIEW,
-        treeData: findMaterials,
-        for: TreeViewTypes.MATERIAL
+        type: OptionTypes.AUTOCOMPLETE,
+        for: TreeViewTypes.MATERIAL,
+        label: 'report.questionFindMaterial.label',
+        placeholder: 'report.questionFindMaterial.placeholder'
       },
       buttons: [
         {
@@ -213,9 +211,10 @@ export default {
       backStep: 7,
       skipStep: 9,
       options: {
-        type: OptionTypes.TREE_VIEW,
-        treeData: findTypes,
-        for: TreeViewTypes.TYPE
+        type: OptionTypes.AUTOCOMPLETE,
+        for: TreeViewTypes.TYPE,
+        label: 'report.questionFindType.label',
+        placeholder: 'report.questionFindType.placeholder'
       },
       buttons: [
         {
@@ -232,9 +231,10 @@ export default {
       backStep: 8,
       skipStep: 10,
       options: {
-        type: OptionTypes.TREE_VIEW,
-        treeData: eras,
-        for: TreeViewTypes.ERAS
+        type: OptionTypes.AUTOCOMPLETE,
+        for: TreeViewTypes.ERAS,
+        label: 'report.questionFindTime.label',
+        placeholder: 'report.questionFindTime.placeholder'
       },
       buttons: [
         {

@@ -277,11 +277,13 @@ class AnswerOptions extends Component {
             <ExpandPanel content={options.panelElements} />
           );
           break;
-        case OptionTypes.TREE_VIEW:
+        case OptionTypes.AUTOCOMPLETE: {
+          const { label, placeholder } = this.props.currentQuestion.options;
           container = (
-            <Autocompleter propertyType={options.for}/>
+            <Autocompleter propertyType={options.for} label={intl.get(label)} placeholder={intl.get(placeholder)} />
           );
           break;
+        }
         case OptionTypes.SLIDER: {
           container = (
             <div className="answer-options__slider-container">
