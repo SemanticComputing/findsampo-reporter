@@ -21,6 +21,7 @@ const Autocompleter = (props) => {
 
   return (
     <Autocomplete
+      multiple
       style={{ width: 300 }}
       open={open}
       onOpen={() => setOpen(true)}
