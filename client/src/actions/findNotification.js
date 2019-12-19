@@ -9,6 +9,7 @@ import {
   FIND_NOTIFICATION_SET_FIND_MATERIAL,
   FIND_NOTIFICATION_SET_FIND_TIMING,
   FIND_NOTIFICATION_SET_FIND_DEPTH,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA,
   FIND_NOTIFICATION_SET_MUNICIPALITY,
   FIND_NOTIFICATION_SET_STATUS_TO_AWAIT_REVIEW,
   FIND_NOTIFICATION_RESET,
@@ -112,6 +113,11 @@ export const resetFindNotification = () => ({
 export const setReportId = (id) => ({
   type: FIND_NOTIFICATION_SET_REPORT_ID,
   id
+});
+
+export const getAutocompleteData = (suggestion) => ({
+  type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA,
+  suggestion
 });
 
 export const deletePhotos = (photoIds, currentFindIndex, photoIndex, photoType) => ({

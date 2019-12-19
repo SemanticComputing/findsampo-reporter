@@ -17,7 +17,11 @@ import {
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
   NOTIFIER_CHANGE_STATUS,
   FIND_NOTIFICATION_DELETE_PHOTO,
-  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS
+  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED
 } from '../constants/actionTypes';
 import intl from 'react-intl-universal';
 import { enqueueSnackbar } from '../actions/notifier';
@@ -245,6 +249,49 @@ const deletePhotos = createLogic({
   }
 });
 
+const getAutoCompleteData = createLogic({
+  type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA,
+  latest: true,
+
+  process({ action }, dispatch, done) {
+    // Show spinner
+    dispatch({
+      type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING
+    });
+
+    axios.get(
+      'http://api.finto.fi/rest/v1/maotao/search?'
+      + `query=${action.suggestion}*`
+      + '&lang=fi'
+      + '&fields=prefLabel' // TODO: Different parents for material type and period
+      + '&type=http://www.yso.fi/onto/mao-meta/Concept&parent=http://www.yso.fi/onto/yso/p1435'
+      + '&maxhits=5'
+    )
+      .then((queryResult) => {
+        const results = mapAutoCompleteResults(queryResult.data.results);
+        dispatch({
+          type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS,
+          results
+        });
+      })
+      .then(() => {
+        // Remove the spinner
+        dispatch({
+          type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED
+        });
+        done();
+      });
+  }
+});
+
+/**
+ * Helper method that maps autocomplete results
+ * 
+ * @param {Autocomplete results} results 
+ */
+const mapAutoCompleteResults = (results) => {
+  return results.map(result => ({ uri: result.uri, lang: result.lang, prefLabel: result.prefLabel }));
+};
 
 /********************* Helper Methods for providing help with the smart assistant *********************/
 const getLocationBasedSmartHelp = createLogic({
@@ -311,5 +358,6 @@ export default [
   setFindSitePhotos,
   getLocationBasedSmartHelp,
   getFindPropertyBasedSmartHelp,
-  deletePhotos
+  deletePhotos,
+  getAutoCompleteData
 ];

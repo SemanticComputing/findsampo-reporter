@@ -90,7 +90,7 @@ const postMyReport = async (dispatch, getState, action, done) => {
         uid: getState().auth.uid,
         email: getState().auth.email
       }, // Remove smartHelper data from the report before sending
-      data: omit(getState().findNotification, 'smartHelper')
+      data: omit(getState().findNotification, ['smartHelper', 'autocomplete'])
     })
     .then((result) => {
       dispatch({ type: FIND_NOTIFICATION_SEND_SUCCESS, payload: result });

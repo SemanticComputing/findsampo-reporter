@@ -20,8 +20,8 @@ import intl from 'react-intl-universal';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
 import ExpandPanel from '../ExpandPanel';
-import TreeView from '../../components/TreeView';
 import { OptionTypes } from '../../helpers/enum/enums';
+import Autocompleter from '../Autocompleter';
 import { setDate, setAdditionalMaterial, setFindDepth, setCoordinates, setMunicipality } from '../../actions/findNotification';
 
 
@@ -279,7 +279,7 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.TREE_VIEW:
           container = (
-            <TreeView content={options.treeData} for={options.for} />
+            <Autocompleter />
           );
           break;
         case OptionTypes.SLIDER: {

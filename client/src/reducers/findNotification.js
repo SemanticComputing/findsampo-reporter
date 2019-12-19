@@ -21,7 +21,10 @@ import {
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
   FIND_NOTIFICATION_SET_REPORT_ID,
-  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS
+  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -32,6 +35,10 @@ const initialState = {
   date: new Date(),
   municipality: null,
   finds: [],
+  autocomplete: {
+    isFetching: false,
+    results: []
+  },
   smartHelper: {
     nearbyFinds: {
       data: []
@@ -259,6 +266,33 @@ export default (state = initialState, action) => {
         });
       }
     }
+    case FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING:
+      return update(state, {
+        autocomplete: {
+          isFetching: {
+            $set: true
+          }
+        }
+      });
+    case FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED:
+      return update(state, {
+        autocomplete: {
+          isFetching: {
+            $set: false
+          }
+        }
+      });
+    case FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS:
+      return update(state, {
+        autocomplete: {
+          results: {
+            $set: [...action.results],
+          },
+          isFetching: {
+            $set: false
+          }
+        }
+      });
     default:
       return state;
   }
