@@ -25,6 +25,7 @@ import {
 } from '../constants/actionTypes';
 import intl from 'react-intl-universal';
 import { enqueueSnackbar } from '../actions/notifier';
+import { TreeViewTypes } from '../helpers/enum/enums';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
@@ -263,8 +264,9 @@ const getAutoCompleteData = createLogic({
       'http://api.finto.fi/rest/v1/maotao/search?'
       + `query=${action.suggestion}*`
       + '&lang=fi'
-      + '&fields=prefLabel' // TODO: Different parents for material type and period
-      + '&type=http://www.yso.fi/onto/mao-meta/Concept&parent=http://www.yso.fi/onto/yso/p1435'
+      + '&fields=prefLabel'
+      + '&type=http://www.yso.fi/onto/mao-meta/Concept'
+      + `&parent=${getPropertyParentUri(action.propertyType)}`
       + '&maxhits=5'
     )
       .then((queryResult) => {
@@ -283,6 +285,20 @@ const getAutoCompleteData = createLogic({
       });
   }
 });
+
+const MATERIAL_PARENT = 'http://www.yso.fi/onto/mao/p1731';
+const TYPE_PANRET = 'http://www.yso.fi/onto/liito/p11062';
+const PERIOD_PARENT = 'http://www.yso.fi/onto/mao/p2251';
+
+const getPropertyParentUri = (propertyType) => {
+  if (propertyType === TreeViewTypes.TYPE) {
+    return TYPE_PANRET;
+  } else if (propertyType === TreeViewTypes.ERAS) {
+    return PERIOD_PARENT;
+  } else {
+    return MATERIAL_PARENT;
+  }
+};
 
 /**
  * Helper method that maps autocomplete results

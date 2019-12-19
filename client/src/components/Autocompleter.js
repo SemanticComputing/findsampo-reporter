@@ -8,21 +8,17 @@ import { CircularProgress, TextField } from '@material-ui/core';
 const Autocompleter = (props) => {
   const [open, setOpen] = useState(false);
   const [suggestion, setSuggestion] = useState('');
-  const { getAutocompleteData, autocompleteResults } = props;
+  const { getAutocompleteData, autocompleteResults, propertyType } = props;
   const loading = open && suggestion.length >= 2 && props.isFetching;
-
-  // Aikakaudet: http://www.yso.fi/onto/mao/p2251
-  // Materiaali: http://www.yso.fi/onto/mao/p1731
-  // Tyypit: http://www.yso.fi/onto/liito/p11062
 
   useEffect(() => {
     if (suggestion.length >= 2) {
-      getAutocompleteData(suggestion);
+      getAutocompleteData(suggestion, propertyType);
     } else {
       setOpen(false);
     }
-  }, [suggestion, getAutocompleteData]);
-  
+  }, [suggestion, propertyType, getAutocompleteData]);
+
   return (
     <Autocomplete
       style={{ width: 300 }}
@@ -33,7 +29,7 @@ const Autocompleter = (props) => {
       getOptionLabel={option => option.prefLabel}
       options={autocompleteResults}
       loading={loading}
-      onChange={(e,o) => console.log('selected',o)}
+      onChange={(e, o) => console.log('selected', o)}
       noOptionsText='No options'
       loadingText='Loading...'
       renderInput={params => (
@@ -65,7 +61,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAutocompleteData: (suggestion) => dispatch(getAutocompleteData(suggestion))
+  getAutocompleteData: (suggestion, propertyType) => dispatch(getAutocompleteData(suggestion, propertyType))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Autocompleter);

@@ -115,9 +115,10 @@ export const setReportId = (id) => ({
   id
 });
 
-export const getAutocompleteData = (suggestion) => ({
+export const getAutocompleteData = (suggestion, propertyType) => ({
   type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA,
-  suggestion
+  suggestion,
+  propertyType
 });
 
 export const deletePhotos = (photoIds, currentFindIndex, photoIndex, photoType) => ({

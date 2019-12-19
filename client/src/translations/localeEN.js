@@ -277,17 +277,17 @@ export default {
       "depthUnit": "cm"
     },
     "questionFindMaterial": {
-      "question": "Select the material of the find.",
+      "question": "Enter the material of the find.",
       "help": "If you cannot find the material you can select others.",
       "buttonOne": "Continue"
     },
     "questionFindType": {
-      "question": "Select the type of the find.",
+      "question": "Enter the type of the find.",
       "help": "If you cannot find the type you can select others.",
       "buttonOne": "Continue"
     },
     "questionFindTime": {
-      "question": "Time your find please.",
+      "question": "Enter the period of the find.",
       "help": "If you cannot find the type you can select others.",
       "buttonOne": "Continue"
     },

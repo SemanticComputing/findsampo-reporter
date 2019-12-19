@@ -279,7 +279,7 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.TREE_VIEW:
           container = (
-            <Autocompleter />
+            <Autocompleter propertyType={options.for}/>
           );
           break;
         case OptionTypes.SLIDER: {
