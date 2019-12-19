@@ -148,7 +148,9 @@ export default (state = initialState, action) => {
       return update(state, {
         finds: {
           [action.index]: {
-            $merge: { type: action.findType }
+            $merge: {
+              type: [...action.findType]
+            }
           }
         }
       });
@@ -156,7 +158,9 @@ export default (state = initialState, action) => {
       return update(state, {
         finds: {
           [action.index]: {
-            $merge: { material: action.findMaterial }
+            $merge: {
+              material: [...action.findMaterial]
+            }
           }
         }
       });
@@ -164,7 +168,9 @@ export default (state = initialState, action) => {
       return update(state, {
         finds: {
           [action.index]: {
-            $merge: { timing: action.findTiming }
+            $merge: {
+              timing: [...action.findTiming]
+            }
           }
         }
       });
