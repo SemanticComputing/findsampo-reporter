@@ -36,6 +36,9 @@
     &__button {
       font-size: 0.60rem;
       margin: 0.2rem;
+      @media screen and (min-width: $size-max-mobile) {
+        margin: 1rem 20%;
+      }
     }
   }
   &__dialog {
@@ -45,6 +48,13 @@
     }
     &__text-field {
       margin-bottom: 12px !important;
+    }
+  }
+  &__autocomplete {
+    flex: 1;
+    margin: 1rem;
+    @media screen and (min-width: $size-max-mobile) {
+      margin: 1rem 20%;
     }
   }
 }

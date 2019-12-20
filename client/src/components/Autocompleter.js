@@ -36,8 +36,8 @@ const Autocompleter = (props) => {
 
   return (
     <Autocomplete
+      className="answer-options__autocomplete"
       multiple
-      style={{ width: 300 }}
       open={open}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
