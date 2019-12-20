@@ -261,7 +261,7 @@ const getAutoCompleteData = createLogic({
     });
 
     axios.get(
-      'http://api.finto.fi/rest/v1/maotao/search?'
+      'https://api.finto.fi/rest/v1/maotao/search?'
       + `query=${action.suggestion}*`
       + '&lang=fi'
       + '&fields=prefLabel'
