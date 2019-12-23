@@ -10,6 +10,7 @@ import { TreeViewTypes } from '../helpers/enum/enums';
 const Autocompleter = (props) => {
   const MIN_WORD_LENGTH = 2;
   const [open, setOpen] = useState(false);
+  const [values, setValues] = useState([]);
   const [suggestion, setSuggestion] = useState('');
   const { getAutocompleteData, autocompleteResults, propertyType, label, placeholder,
     setFindType, setFindMaterial, setFindTiming, currentFindIndex, isFetching } = props;
@@ -22,6 +23,11 @@ const Autocompleter = (props) => {
       setOpen(false);
     }
   }, [suggestion, propertyType, getAutocompleteData]);
+
+  useEffect(() => {
+    // Empty selected values
+    setValues([]);
+  }, [propertyType]);
 
   const saveAutoCompleteChanges = (values) => {
     const uriValues = values.map((v => v.uri));
@@ -38,6 +44,7 @@ const Autocompleter = (props) => {
     <Autocomplete
       className="answer-options__autocomplete"
       multiple
+      value={values}
       open={open}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
@@ -45,7 +52,10 @@ const Autocompleter = (props) => {
       getOptionLabel={option => option.prefLabel}
       options={autocompleteResults}
       loading={loading}
-      onChange={(event, values) => saveAutoCompleteChanges(values)}
+      onChange={(event, values) => {
+        setValues(values);
+        saveAutoCompleteChanges(values);
+      }}
       noOptionsText={intl.get('autocompleter.noOptions')}
       loadingText={intl.get('autocompleter.loading')}
       renderInput={params => (
@@ -74,7 +84,8 @@ const Autocompleter = (props) => {
 const mapStateToProps = (state) => ({
   isFetching: state.findNotification.autocomplete.isFetching,
   autocompleteResults: state.findNotification.autocomplete.results,
-  currentFindIndex: state.findNotification.currentFindIndex
+  currentFindIndex: state.findNotification.currentFindIndex,
+  findNotification: state.findNotification
 });
 
 const mapDispatchToProps = (dispatch) => ({
