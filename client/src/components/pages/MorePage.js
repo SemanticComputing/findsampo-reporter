@@ -8,7 +8,7 @@ import {
   Typography,
   Paper
 } from '@material-ui/core';
-import { RouterPaths } from '../../helpers/enum/enums';
+import { RouterPaths } from '../../utils/enum/enums';
 
 const FHA_HOW_TO_REPORT_PAGE = 'https://www.museovirasto.fi/en/cultural-environment/archaeological-cultural-heritage/reporting-a-discovery';
 const FHA_PROTECTING_CULTURAL_HERITAGE_PAGE = 'https://www.museovirasto.fi/en/cultural-environment/archaeological-cultural-heritage/protecting-the-archaeological-cultural-heritage';

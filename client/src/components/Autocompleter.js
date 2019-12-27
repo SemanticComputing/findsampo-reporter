@@ -16,8 +16,8 @@ import {
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
 import { setFindType, setFindMaterial, setFindTiming } from '../actions/findNotification';
-import { TreeViewTypes } from '../helpers/enum/enums';
-import { isDesktopScreen } from '../helpers/functions/functions';
+import { TreeViewTypes } from '../utils/enum/enums';
+import { isDesktopScreen } from '../utils/functions/functions';
 
 const Autocompleter = (props) => {
   const MIN_WORD_LENGTH = 2;

@@ -37,8 +37,8 @@ import {
 import intl from 'react-intl-universal';
 import { setCoordinates, setMunicipality } from '../../actions/findNotification';
 import { fetchMapData, startMapSpinner } from '../../actions/map';
-import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../helpers/enum/enums';
-import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey, getIdfromUri } from '../../helpers/functions/functions';
+import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../utils/enum/enums';
+import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey, getIdfromUri } from '../../utils/functions/functions';
 import { enqueueSnackbar } from '../../actions/notifier';
 
 /**

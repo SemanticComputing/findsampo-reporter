@@ -27,9 +27,9 @@ import {
   setFacetFilterPanel,
   removeFacetFilterPanel
 } from '../actions/facetFilter';
-import { FacetFilters } from '../helpers/enum/enums';
+import { FacetFilters } from '../utils/enum/enums';
 import findsSelector from '../selectors/facet/facetResults';
-import { isDesktopScreen } from '../helpers/functions/functions';
+import { isDesktopScreen } from '../utils/functions/functions';
 
 class FacetDrawer extends Component {
   state = {

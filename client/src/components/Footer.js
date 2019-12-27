@@ -1,8 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { AppBar, Slide, Toolbar } from '@material-ui/core';
-import { isMobileScreen } from '../helpers/functions/functions';
-import { RouterPaths } from '../helpers/enum/enums';
+import { isMobileScreen } from '../utils/functions/functions';
+import { RouterPaths } from '../utils/enum/enums';
 
 const Footer = (props) => {
   return (

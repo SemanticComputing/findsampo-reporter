@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Overview from '../reporting/Overview';
 import { getMyFinds, getCertainFinds } from '../../actions/myFinds';
 import { isEqual, isEmpty, differenceWith } from 'lodash';
-import { getIdfromUri } from '../../helpers/functions/functions';
+import { getIdfromUri } from '../../utils/functions/functions';
 
 class MyFindsReportOverviewPage extends Component {
   state = {

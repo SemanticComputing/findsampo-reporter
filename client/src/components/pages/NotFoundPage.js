@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Typography, Button } from '@material-ui/core';
-import { RouterPaths } from '../../helpers/enum/enums';
+import { RouterPaths } from '../../utils/enum/enums';
 import intl from 'react-intl-universal';
 
 // The usage of React.forwardRef will no longer be required for react-router-dom v6.

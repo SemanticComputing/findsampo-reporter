@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { ReportStatuses, SmartHelpers, PhotosOf } from '../helpers/enum/enums';
+import { ReportStatuses, SmartHelpers, PhotosOf } from '../utils/enum/enums';
 import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,

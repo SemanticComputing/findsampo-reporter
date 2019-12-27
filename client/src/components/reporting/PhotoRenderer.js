@@ -16,11 +16,11 @@ import {
   Typography
 } from '@material-ui/core/';
 import intl from 'react-intl-universal';
-import { PhotosOf } from '../../helpers/enum/enums';
+import { PhotosOf } from '../../utils/enum/enums';
 import { changeSnipperStatus } from '../../actions/notifier';
 import { setFindSitePhotos, setFindPhotos, deletePhotos } from '../../actions/findNotification';
 import ImageViewer from '../ImageViewer';
-import { getIdfromUri, getThumbId } from '../../helpers/functions/functions';
+import { getIdfromUri, getThumbId } from '../../utils/functions/functions';
 
 class PhotoRenderer extends Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import intl from 'react-intl-universal';
 import { Stepper, Step, StepLabel, MobileStepper, Typography } from '@material-ui/core/';
-import { isDesktopScreen } from '../../helpers/functions/functions';
+import { isDesktopScreen } from '../../utils/functions/functions';
 
 const StepMaker = (props) => {
   const steps = getSteps();

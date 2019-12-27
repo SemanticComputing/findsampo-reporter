@@ -13,8 +13,8 @@ import {
   CardActions,
   Button
 } from '@material-ui/core';
-import { RouterPaths } from '../../helpers/enum/enums';
-import { getIdfromUri } from '../../helpers/functions/functions';
+import { RouterPaths } from '../../utils/enum/enums';
+import { getIdfromUri } from '../../utils/functions/functions';
 import { history } from '../../routers/AppRouter';
 
 /**

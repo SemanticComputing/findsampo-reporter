@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import intl from 'react-intl-universal';
 import { getValidatedFind } from '../../actions/find';
-import { RouterPaths } from '../../helpers/enum/enums';
-import { isDesktopScreen } from '../../helpers/functions/functions';
+import { RouterPaths } from '../../utils/enum/enums';
+import { isDesktopScreen } from '../../utils/functions/functions';
 import {
   Paper,
   Typography,

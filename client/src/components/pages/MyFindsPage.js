@@ -24,10 +24,10 @@ import {
 } from '@material-ui/core';
 import { isEqual, isEmpty, differenceWith } from 'lodash';
 import { getMyFinds, getCertainFinds, continueFillingOut, orderMyReports, getMyReportsFinds } from '../../actions/myFinds';
-import { ReportStatuses, Colors, RouterPaths } from '../../helpers/enum/enums';
-import { getIdfromUri, getIdsfromArrayUri, createThumbUrl, createMarkerDataFromFind } from '../../helpers/functions/functions';
+import { ReportStatuses, Colors, RouterPaths } from '../../utils/enum/enums';
+import { getIdfromUri, getIdsfromArrayUri, createThumbUrl, createMarkerDataFromFind } from '../../utils/functions/functions';
 import { enqueueSnackbar } from '../../actions/notifier';
-import { MyFindsPageFilter, MyFindsPageViews } from '../../helpers/enum/enums';
+import { MyFindsPageFilter, MyFindsPageViews } from '../../utils/enum/enums';
 import Map from '../map/Map';
 import Spinner from '../Spinner';
 

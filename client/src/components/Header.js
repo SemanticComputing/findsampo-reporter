@@ -18,8 +18,8 @@ import {
 } from '@material-ui/core/';
 import LangMenu from './LangMenu';
 import { logout } from '../actions/auth';
-import { isDesktopScreen, isIOSDevice } from '../helpers/functions/functions';
-import { RouterPaths } from '../helpers/enum/enums';
+import { isDesktopScreen, isIOSDevice } from '../utils/functions/functions';
+import { RouterPaths } from '../utils/enum/enums';
 
 class Header extends Component {
   state = {

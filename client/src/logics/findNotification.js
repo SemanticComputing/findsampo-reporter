@@ -25,7 +25,7 @@ import {
 } from '../constants/actionTypes';
 import intl from 'react-intl-universal';
 import { enqueueSnackbar } from '../actions/notifier';
-import { TreeViewTypes } from '../helpers/enum/enums';
+import { TreeViewTypes } from '../utils/enum/enums';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';

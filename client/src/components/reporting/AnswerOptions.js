@@ -20,7 +20,7 @@ import intl from 'react-intl-universal';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
 import ExpandPanel from '../ExpandPanel';
-import { OptionTypes } from '../../helpers/enum/enums';
+import { OptionTypes } from '../../utils/enum/enums';
 import Autocompleter from '../Autocompleter';
 import {
   setDate,

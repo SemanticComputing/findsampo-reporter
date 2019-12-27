@@ -14,7 +14,7 @@ import {
 } from '../constants/actionTypes';
 import { enqueueSnackbar } from '../actions/notifier';
 import { history } from '../routers/AppRouter';
-import { RouterPaths } from '../helpers/enum/enums';
+import { RouterPaths } from '../utils/enum/enums';
 
 
 const REPORT_END_POINT = '/api/v1/report';
