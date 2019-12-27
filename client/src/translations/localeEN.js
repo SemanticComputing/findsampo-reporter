@@ -477,6 +477,7 @@ export default {
   },
   "autocompleter": {
     "noOptions": "No options",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "save": "Save"
   }
 };

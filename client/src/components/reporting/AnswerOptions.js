@@ -22,7 +22,13 @@ import PhotoRenderer from './PhotoRenderer';
 import ExpandPanel from '../ExpandPanel';
 import { OptionTypes } from '../../helpers/enum/enums';
 import Autocompleter from '../Autocompleter';
-import { setDate, setAdditionalMaterial, setFindDepth, setCoordinates, setMunicipality } from '../../actions/findNotification';
+import {
+  setDate,
+  setAdditionalMaterial,
+  setFindDepth,
+  setCoordinates,
+  setMunicipality
+} from '../../actions/findNotification';
 
 
 class AnswerOptions extends Component {
