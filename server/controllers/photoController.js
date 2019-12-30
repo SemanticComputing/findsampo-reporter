@@ -118,7 +118,7 @@ const deletePhotos = (req, res) => {
  */
 const mergeChunks = (req, res) => {
   const { totalFileSize, currentFindIndex, fileName, tempFolderName, partNames } = req.body;
-  const imageUrl = `${req.protocol}://${req.get('host')}/data/images/${fileName}.png`;
+  const imageUrl = `//${req.get('host')}/data/images/${fileName}.png`;
   const dirPath = path.join(__dirname, '..', '..', 'users', 'applications', 'images');
   const concatFilePath = path.join(dirPath, tempFolderName);
   const buffers = [];
@@ -136,7 +136,6 @@ const mergeChunks = (req, res) => {
       createAndResizePhoto(Buffer.concat(buffers), dirPath, fileName, totalFileSize);
     }
   });
-
 
   fsExtra.remove(concatFilePath, (err) => {
     if (err) {
