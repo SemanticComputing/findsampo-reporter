@@ -11,7 +11,7 @@ const ImageViewer = (props) => {
   return (
     <div style={{ display: props.display || 'inline', margin: '2px', cursor: 'pointer' }}>
       <img
-        src={getThumbId(props.image)}
+        src={decodeURIComponent(getThumbId(props.image))}
         width={props.width ? `${props.width}px` : '64px'}
         height={props.height ? `${props.height}px` : '64px'}
         onClick={() => setLighboxStatus(true)}
