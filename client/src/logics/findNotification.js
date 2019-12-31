@@ -287,12 +287,12 @@ const getAutoCompleteData = createLogic({
 });
 
 const MATERIAL_PARENT = 'http://www.yso.fi/onto/mao/p1731';
-const TYPE_PANRET = 'http://www.yso.fi/onto/liito/p11062';
+const TYPE_PARENT = 'https://finto.fi/yso/fi/page/p207';
 const PERIOD_PARENT = 'http://www.yso.fi/onto/mao/p2251';
 
 const getPropertyParentUri = (propertyType) => {
   if (propertyType === TreeViewTypes.TYPE) {
-    return TYPE_PANRET;
+    return TYPE_PARENT;
   } else if (propertyType === TreeViewTypes.ERAS) {
     return PERIOD_PARENT;
   } else {
