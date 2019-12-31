@@ -40,7 +40,6 @@ const ContentContainer = (props) => {
     cardData,
     component: Component
   } = props;
-  console.log(headerStyle);
 
   const bgStyle = bgImage ?
     `radial-gradient(ellipse at center, rgba(194,194,194,0.1) 15%, rgb(191, 191, 191) 100%), url(${bgImage}) center/cover no-repeat border-box` :
