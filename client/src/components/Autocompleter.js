@@ -58,6 +58,7 @@ const Autocompleter = (props) => {
       <Autocomplete
         className="answer-options__autocomplete"
         multiple
+        disableOpenOnFocus
         value={values}
         open={open}
         onOpen={() => setOpen(true)}
