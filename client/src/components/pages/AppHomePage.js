@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import intl from 'react-intl-universal';
 import ContentContainer from '../ContentContainer';
 import Slider from '../reporting/Slider';
+import { isDesktopScreen } from '../../utils/functions/functions';
 
 class AppHomePage extends Component {
   render() {
+    const fontSize = isDesktopScreen(window) ? '3rem' : '2.5rem';
+    const letterSpacing = isDesktopScreen(window) ? '1rem' : '0.5rem';
     return (
       <div style={{ display: 'flex', flex: '1', flexDirection: 'column' }}>
         <ContentContainer
           stylingClass="content-container--justified"
           header={intl.get('appHomePage.contentContainer.name')}
-          headerStyle={{ color: '#eeeeee', margin: '0', fontSize: '3rem', fontWeight: 'bold' }}
+          headerClass="content-container__header--animated"
+          headerStyle={{ color: '#eeeeee', margin: '0', textTransform: 'uppercase', fontSize, letterSpacing }}
           description={intl.get('appHomePage.contentContainer.headerTitle')}
+          descriptionClass="content-container__description--animated"
           descriptionStyle={{ color: '#fff', fontStyle: 'italic', fontVariant: 'small-caps', background: '#0009', opacity: 0.8, padding: '3px' }}
           bgImage='./images/others/home_bg.jpg'
         />

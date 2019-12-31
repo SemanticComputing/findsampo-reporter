@@ -4,6 +4,12 @@
   align-items: center;
   flex: 1;
   text-align: center;
+  &__header--animated {
+    animation: moveInBottom .5s ease-out;
+  }
+  &__description--animated {
+    animation: moveInTop .5s ease-out;
+  }
   &__card-container {
     display: flex;
     flex-wrap: wrap;
@@ -29,5 +35,34 @@
   height: 22rem;
   @media screen and (max-width: $size-max-mobile) {
     height: 11rem;
+  }
+}
+
+// Animations
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+  80% {
+    transform: translateY(0.5rem);
+  }
+  100%{
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  80% {
+    transform: translateY(-0.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
   }
 }

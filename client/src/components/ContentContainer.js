@@ -30,14 +30,17 @@ const ContentContainer = (props) => {
   const {
     stylingClass,
     header,
+    headerClass,
     headerStyle,
     description,
+    descriptionClass,
     descriptionStyle,
     bgColor,
     bgImage,
     cardData,
     component: Component
   } = props;
+  console.log(headerStyle);
 
   const bgStyle = bgImage ?
     `radial-gradient(ellipse at center, rgba(194,194,194,0.1) 15%, rgb(191, 191, 191) 100%), url(${bgImage}) center/cover no-repeat border-box` :
@@ -48,9 +51,9 @@ const ContentContainer = (props) => {
       className={`content-container ${stylingClass}`}
       style={{ background: bgStyle }}
     >
-      <p style={headerStyle}>{header}</p>
+      <p className={headerClass} style={headerStyle}>{header}</p>
       {
-        description && <p style={descriptionStyle}>{description}</p>
+        description && <p className={descriptionClass} style={descriptionStyle}>{description}</p>
       }
       {Component && <Component />}
       <div className="content-container__card-container">
