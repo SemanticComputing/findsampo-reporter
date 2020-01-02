@@ -25,14 +25,6 @@
       cursor: pointer;
       animation: color-changer 1s infinite;
     }
-    @keyframes color-changer {
-      0% {
-        color: white;
-      }
-      100% {
-        color: $color-primary;
-      }
-    }
   }
   & &__popper {
     z-index: 1;
