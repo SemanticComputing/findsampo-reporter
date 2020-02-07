@@ -4,6 +4,8 @@ Main reposity of the FindSampo project.
 
 Project homepage: https://blogs.helsinki.fi/sualt-project
 
+master branch visible at https://dev.löytösampo.fi
+
 test branch visible at https://test.löytösampo.fi
 
 ## Initialization
