@@ -7,15 +7,11 @@ const LegalityCheckerPage = () => {
   const [legalityResult, setLegalityResult] = useState(null);
   const [isDataLoaded, setDataStatus] = useState(false);
 
-  const changeDataLoadingStatus = () => {
+  const legalityResultHandler = (result) => {
+    setLegalityResult(result);
     setDataStatus(true);
   };
-  
-  const legalityResultHandler = (result) => {
-    changeDataLoadingStatus(true);
-    setLegalityResult(result);
-  };
-  
+
   return (
     <div className="legality-cheker-page">
       {isDataLoaded &&

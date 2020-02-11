@@ -255,7 +255,7 @@ class Map extends Component {
       cacheLocation: false,
       icon: 'material-icons location-icon',
       iconLoading: 'material-icons w3-spin w3-jumbo loading-icon',
-      flyTo: true
+      flyTo: this.props.legalityChecker ? false : true  // Animation is disabled for legalitycheckerpage
     };
     this.locateControl = L.control.locate(locateOptions).addTo(this.map);
 
@@ -319,8 +319,8 @@ class Map extends Component {
     if (this.state.hasCurrentLocation && this.state.currentLocation &&
       this.props.layers && this.props.checkPointInPolygons) {
       const result = leafletPip.pointInLayer(
-        L.latLng(this.state.currentLocation.coords.latitude,
-          this.state.currentLocation.coords.longitude),
+        L.latLng(this.state.currentLocation.latlng.lat,
+          this.state.currentLocation.latlng.lng),
         geoJSONLayer,
         true);
       // L.latLng(60.183232,24.818036) for forbidden test purposes
@@ -543,6 +543,10 @@ class Map extends Component {
       this.setState({ currentLocation: pos });
       this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
       this.props.setMunicipality({ lat, lng });
+      if (this.props.legalityChecker && this.state.hasCurrentLocation &&
+        this.state.currentLocation && this.props.layers && this.props.checkPointInPolygons) {
+        this.loadFetchedLayers();
+      }
     });
 
     this.map.on('locationerror', (err) => {
