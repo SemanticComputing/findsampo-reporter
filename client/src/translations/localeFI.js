@@ -114,7 +114,7 @@ export default
       "container": {
         "report": "Löytöilmoitus",
         "municipality": "Kunta",
-        "time": "(pv.kk.v.)",
+        "time": "{d, date, short}",
         "timeClock": "Kellonaika",
         "finds": "Löytöjen määrä: (numero)"
       },

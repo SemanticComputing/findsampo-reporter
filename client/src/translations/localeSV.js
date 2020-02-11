@@ -114,8 +114,8 @@ export default
       "container": {
         "report": "Rapportera in fynd",
         "municipality": "Kommun",
-        "time": "datum",
-        "timeClock": "",
+        "time": "datum {d, date, short}",
+        "timeClock": "tid",
         "finds": "Innehåller (nummer) fynd"
       },
       "statuses": {
