@@ -14,7 +14,8 @@ import {
   Paper,
   ClickAwayListener,
   MenuList,
-  MenuItem
+  MenuItem,
+  Typography
 } from '@material-ui/core/';
 import LangMenu from './LangMenu';
 import { logout } from '../actions/auth';
@@ -268,17 +269,19 @@ class Header extends Component {
       <div>
         <AppBar position="static" className="appbar">
           <Toolbar className="appbar__toolbar">
-            {/** TODO:Move styling to css */}
-            <Link to={RouterPaths.HOME_PAGE} style={!isDesktopScreen(window) ? { flex: 1} : {}}>
-              {isDesktopScreen(window) ? <img src="images/test_icon.png" height="34px" /> : <img src="images/test_icon_mobile.png" height="34px" />}
+            <Link to={RouterPaths.HOME_PAGE} className="appbar__toolbar__link">
+              {
+                isDesktopScreen(window) ?
+                  <div className="appbar__toolbar__logo-container">
+                    <img className="appbar__toolbar__logo-container__logo" src="images/logo.png" />
+                    <Typography variant="h5" className="appbar__toolbar__logo-container__text">
+                      {intl.get('header.title')}
+                    </Typography>
+                  </div>
+                  :
+                  <img src="images/logo.png" className="appbar__toolbar__logo-container__logo" />
+              }
             </Link>
-            {/*
-            <Typography variant="h6" color="inherit" className={titleclass}>
-              <Link className="appbar__title" to="/">
-                {intl.get('header.title')}
-              </Link>
-            </Typography>
-            */}
             {this.renderDesktopMenuItems()}
             {this.renderIOSMenu()}
             <LangMenu />
