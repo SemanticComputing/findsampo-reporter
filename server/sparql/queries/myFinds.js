@@ -11,20 +11,30 @@ module.exports = (uid) => {
     
     SELECT ?reportId ?date ?municipality ?status ?currentStep ?currentFindIndex
         (GROUP_CONCAT(DISTINCT ?find_; SEPARATOR=";") AS ?finds)
+        (GROUP_CONCAT(DISTINCT ?findImage_; SEPARATOR=";") AS ?findImages)
+        (GROUP_CONCAT(DISTINCT ?findSiteImage_; SEPARATOR=";") AS ?findSiteImages)
     WHERE {
         graph ?reportId {
           { 
               SELECT *
               WHERE {
+                # Report Data
                 ?reportId a fs-schema:Report ; 
                   fs-schema:report-owner fs-report-owner:${uid} ;
                   fs-schema:report-status ?status ;
                   fs-schema:report-current-step ?currentStep ;
                   fs-schema:report-current-find-index ?currentFindIndex ;
-                  fs-schema:report-submission-date ?date .
-          
-                OPTIONAL {?reportId fs-schema:report-municipality ?municipality}
-                OPTIONAL {?reportId fs-schema:report-find ?find_}
+                  fs-schema:report-submission-date ?date ;
+                  fs-schema:report-municipality ?municipality ;
+                  fs-schema:report-find ?find_ .
+
+                # Find Data
+                ?find a fs-schema:Find ;
+                  fs-schema:find-site ?findSite ;
+                  fs-schema:find-image/fs-schema:find-image-url ?findImage_ .
+
+                # FindSite Data
+                ?findSite fs-schema:find-site-image/fs-schema:find-site-image-url ?findSiteImage_ .
               }
           }
         } 

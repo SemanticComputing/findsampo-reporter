@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { ReportStatuses, SmartHelpers } from '../helpers/enum/enums';
+import { ReportStatuses, SmartHelpers, PhotosOf } from '../utils/enum/enums';
 import {
   FIND_NOTIFICATION_SET_DATE,
   FIND_NOTIFICATION_SET_COORDS,
@@ -20,7 +20,11 @@ import {
   FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
-  FIND_NOTIFICATION_SET_REPORT_ID
+  FIND_NOTIFICATION_SET_REPORT_ID,
+  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -31,6 +35,10 @@ const initialState = {
   date: new Date(),
   municipality: null,
   finds: [],
+  autocomplete: {
+    isFetching: false,
+    results: []
+  },
   smartHelper: {
     nearbyFinds: {
       data: []
@@ -101,7 +109,6 @@ export default (state = initialState, action) => {
       });
     }
     case FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS: {
-      console.log(action.payload);
       const { currentFindIndex, imageUrl } = action.payload.data;
       // If there is no photos then create a new objet
       if (!state.finds[currentFindIndex].photos) {
@@ -141,7 +148,9 @@ export default (state = initialState, action) => {
       return update(state, {
         finds: {
           [action.index]: {
-            $merge: { type: action.findType }
+            $merge: {
+              type: [...action.findType]
+            }
           }
         }
       });
@@ -149,7 +158,9 @@ export default (state = initialState, action) => {
       return update(state, {
         finds: {
           [action.index]: {
-            $merge: { material: action.findMaterial }
+            $merge: {
+              material: [...action.findMaterial]
+            }
           }
         }
       });
@@ -157,7 +168,9 @@ export default (state = initialState, action) => {
       return update(state, {
         finds: {
           [action.index]: {
-            $merge: { timing: action.findTiming }
+            $merge: {
+              timing: [...action.findTiming]
+            }
           }
         }
       });
@@ -237,6 +250,55 @@ export default (state = initialState, action) => {
         ...state,
         reportId: action.id
       };
+    case FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS: {
+      const { currentFindIndex, photoIndex, photoType } = action;
+      if (photoType === PhotosOf.FIND) {
+        return update(state, {
+          finds: {
+            [currentFindIndex]: {
+              photos: { $splice: [[photoIndex, 1]] }
+            }
+          }
+        });
+      } else {
+        return update(state, {
+          finds: {
+            [currentFindIndex]: {
+              findSite: {
+                photos: { $splice: [[photoIndex, 1]] }
+              }
+            }
+          }
+        });
+      }
+    }
+    case FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING:
+      return update(state, {
+        autocomplete: {
+          isFetching: {
+            $set: true
+          }
+        }
+      });
+    case FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED:
+      return update(state, {
+        autocomplete: {
+          isFetching: {
+            $set: false
+          }
+        }
+      });
+    case FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS:
+      return update(state, {
+        autocomplete: {
+          results: {
+            $set: [...action.results],
+          },
+          isFetching: {
+            $set: false
+          }
+        }
+      });
     default:
       return state;
   }

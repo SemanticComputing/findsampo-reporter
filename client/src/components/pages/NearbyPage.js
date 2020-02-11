@@ -20,13 +20,13 @@ import {
 } from '@material-ui/core';
 import intl from 'react-intl-universal';
 import { getValidatedFinds } from '../../actions/find';
-import { isDesktopScreen, isMobileScreen, convertToChartData } from '../../helpers/functions/functions';
-import { MapMode } from '../../helpers/enum/enums';
-import { createDonutOptions } from '../../helpers/data/chart';
+import { isDesktopScreen, isMobileScreen, convertToChartData } from '../../utils/functions/functions';
+import { MapMode } from '../../utils/enum/enums';
+import { createDonutOptions } from '../../utils/data/chart';
 
 class NearbyPage extends Component {
   state = {
-    isFacetOpen: false,
+    isFacetOpen: isDesktopScreen(window),
     showMap: true,
     selectedChartProperty: 'main_material', // Default chart is material
     mode: 0 // Default mode is clustered map

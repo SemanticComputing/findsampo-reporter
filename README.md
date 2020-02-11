@@ -4,6 +4,8 @@ Main reposity of the FindSampo project.
 
 Project homepage: https://blogs.helsinki.fi/sualt-project
 
+master branch visible at https://dev.löytösampo.fi
+
 test branch visible at https://test.löytösampo.fi
 
 ## Initialization
@@ -24,8 +26,7 @@ In this project directory, you can run:
 
 Runs the app in the development mode.<br>
 
-The page will reload if you make changes.<br>
-You will also see any lint errors in the console.
+Runs builds on file changes<br>
 
 ### `yarn build:dev`
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import { isDesktopScreen } from '../../helpers/functions/functions';
+import { isDesktopScreen } from '../../utils/functions/functions';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const DESKTOP_SCREEN_PERSENTAGE = 30;

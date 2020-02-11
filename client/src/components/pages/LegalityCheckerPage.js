@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import Map from '../map/Map';
 import { Paper, Typography, Grow } from '@material-ui/core';
-import { Fha_Wfs_Layer } from '../../helpers/enum/enums';
+import { Fha_Wfs_Layer } from '../../utils/enum/enums';
 
 const LegalityCheckerPage = () => {
   const [legalityResult, setLegalityResult] = useState(null);
   const [isDataLoaded, setDataStatus] = useState(false);
 
-  const changeDataLoadingStatus = () => {
+  const legalityResultHandler = (result) => {
+    setLegalityResult(result);
     setDataStatus(true);
   };
-  
-  const legalityResultHandler = (result) => {
-    changeDataLoadingStatus(true);
-    setLegalityResult(result);
-  };
-  
+
   return (
     <div className="legality-cheker-page">
       {isDataLoaded &&

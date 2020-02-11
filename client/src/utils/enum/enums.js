@@ -7,7 +7,8 @@ export const OptionTypes = Object.freeze({
   PHOTOGRAPH: 'photograph',
   EXPANSION_PANEL: 'expansion-panel',
   TREE_VIEW: 'tree-view',
-  SLIDER: 'slider'
+  SLIDER: 'slider',
+  AUTOCOMPLETE: 'autocomplete'
 });
 
 export const ButtonTypes = Object.freeze({
@@ -111,10 +112,10 @@ export const ReportStatuses = Object.freeze({
 });
 
 export const ReportSteps = Object.freeze({
-  LOCATION: 3,
-  MATERIAL: 9,
-  TYPE: 10,
-  PERIOD: 11
+  LOCATION: 1,
+  MATERIAL: 7,
+  TYPE: 8,
+  PERIOD: 9
 });
 
 export const SmartHelpers = Object.freeze({
@@ -135,4 +136,14 @@ export const ReportingIDs = Object.freeze({
   PREFIX_FIND_SITE: 'sam_fs_',
   PREFIX_FIND_IMAGE: 'sam_fimg_',
   PREFIX_FIND_SITE_IMAGE: 'sam_fsimg_'
+});
+
+export const MyFindsPageFilter = Object.freeze({
+  DATE: 'date',
+  MUNICIPALITY: 'municipality'
+});
+
+export const MyFindsPageViews = Object.freeze({
+  TABLE: 'table',
+  MAP: 'map'
 });

@@ -9,9 +9,9 @@ import {
 import Map from './map/Map';
 import Table from './table/Table';
 import Chart from './Chart';
-import { createPieChartOptions, createDonutOptions } from '../helpers/data/chart';
-import { ReportSteps, SmartHelpers, SmartHelperMode } from '../helpers/enum/enums';
-import { convertToTableData } from './../helpers/functions/functions';
+import { createPieChartOptions, createDonutOptions } from '../utils/data/chart';
+import { ReportSteps, SmartHelpers, SmartHelperMode } from '../utils/enum/enums';
+import { convertToTableData } from '../utils/functions/functions';
 import { setPropertySmartData } from '../actions/findNotification';
 
 class SmartHelper extends Component {

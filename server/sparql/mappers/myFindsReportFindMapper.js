@@ -2,6 +2,7 @@ module.exports = (finds) => {
   const result = finds.map(f => {
     return {
       id: f.find.value,
+      reportId: f.report.value,
       ...(Object.prototype.hasOwnProperty.call(f, 'depth') && { depth: f.depth.value }),
       ...(Object.prototype.hasOwnProperty.call(f, 'material') && { material: f.material.value }),
       ...(Object.prototype.hasOwnProperty.call(f, 'type') && { type: f.type.value }),

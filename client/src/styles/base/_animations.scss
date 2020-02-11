@@ -1,0 +1,41 @@
+@keyframes moveInBottom {
+    0% {
+      opacity: 0;
+      transform: translateY(-2rem);
+    }
+    80% {
+      transform: translateY(0.5rem);
+    }
+    100%{
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+  
+  @keyframes moveInTop {
+    0% {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    80% {
+      transform: translateY(-0.5rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+
+  @keyframes color-changer {
+    0% {
+      color: white;
+    }
+    100% {
+      color: $color-primary;
+    }
+  }
+
+  @keyframes rotating {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg)}
+  }

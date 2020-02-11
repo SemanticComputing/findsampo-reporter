@@ -14,14 +14,25 @@ import {
   FIND_NOTIFICATION_SET_COORDS,
   FIND_NOTIFICATION_SET_NEARBY_SMART_HELP,
   FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP,
-  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS
+  FIND_NOTIFICATION_SET_PROPERTY_SMART_HELP_SUCCESS,
+  NOTIFIER_CHANGE_STATUS,
+  FIND_NOTIFICATION_DELETE_PHOTO,
+  FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING,
+  FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED
 } from '../constants/actionTypes';
+import intl from 'react-intl-universal';
+import { enqueueSnackbar } from '../actions/notifier';
+import { TreeViewTypes } from '../utils/enum/enums';
 
 const FIND_NOTIFICATION_END_POINT = '/api/v1/findNotification';
 const FIND_NOTIFICATION_FIND_IMAGE_END_POINT = '/api/v1/photo/find';
 const FIND_NOTIFICATION_FIND_IMAGE_MERGE_END_POINT = '/api/v1/photo/find-merge';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_END_POINT = '/api/v1/photo/find-site';
 const FIND_NOTIFICATION_FIND_SITE_IMAGE_MERGE_END_POINT = '/api/v1/photo/find-site-merge';
+const FIND_NOTIFICATION_PHOTO_DELETION_END_POINT = '/api/v1/photo/delete';
 
 const SMART_HELPER_END_POINT = '/api/v1/smart-helper';
 const SMART_HELPER_NEARBY_END_POINT = '/api/v1/smart-helper/nearby';
@@ -69,6 +80,7 @@ const setFindPhotos = createLogic({
   process({ action, getState }, dispatch, done) {
     const currentFindIndex = getState().findNotification.currentFindIndex;
     const currentFind = action[currentFindIndex];
+    const results = [];
 
     for (let i in currentFind.photos) {
       // Image information
@@ -105,7 +117,6 @@ const setFindPhotos = createLogic({
       }
 
       axios.all(axiosPromiseArray).then(() => {
-        console.log(axiosPromiseArray);
         return axios({
           method: 'post',
           url: FIND_NOTIFICATION_FIND_IMAGE_MERGE_END_POINT,
@@ -122,10 +133,13 @@ const setFindPhotos = createLogic({
               type: FIND_NOTIFICATION_SET_FIND_PHOTOS_SUCCESS,
               payload: result
             });
+            results.push(result.data.imageUrl);
           })
           .then(() => {
             // Finish the process when all photos are received
-            if (i == currentFind.photos.length) {
+            if (results.length == currentFind.photos.length) {
+              // Hide Spinner
+              dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
               done();
             }
           });
@@ -142,12 +156,13 @@ const setFindSitePhotos = createLogic({
   process({ action, getState }, dispatch, done) {
     const currentFindIndex = getState().findNotification.currentFindIndex;
     const currentFind = action[currentFindIndex];
+    const results = [];
 
     for (let i in currentFind.photos) {
       // Image information
       const axiosPromiseArray = [];
       const imgIndex = parseInt(i) + parseInt(action.imgIndex);
-      const fileName = `${getState().findNotification.reportId}_find-site_img-${imgIndex}`;
+      const fileName = `${getState().findNotification.reportId}_find-site_find-${currentFindIndex}_img-${imgIndex}`;
       const photo = currentFind.photos[i];
       const partNames = [];
       // Chunk information
@@ -194,10 +209,13 @@ const setFindSitePhotos = createLogic({
               type: FIND_NOTIFICATION_SET_FIND_SITE_PHOTOS_SUCCESS,
               payload: result
             });
+            results.push(result.data.imageUrl);
           })
           .then(() => {
             // Finish the process when all photos are received
-            if (i == currentFind.photos.length) {
+            if (results.length == currentFind.photos.length) {
+              // Hide Spinner
+              dispatch({ type: NOTIFIER_CHANGE_STATUS, status: false });
               done();
             }
           });
@@ -206,6 +224,90 @@ const setFindSitePhotos = createLogic({
   }
 });
 
+const deletePhotos = createLogic({
+  type: FIND_NOTIFICATION_DELETE_PHOTO,
+  latest: true,
+
+  process({ action }, dispatch, done) {
+    axios.put(FIND_NOTIFICATION_PHOTO_DELETION_END_POINT, { photoIds: action.photoIds })
+      .then(() => {
+        dispatch({
+          type: FIND_NOTIFICATION_DELETE_PHOTO_SUCCESS,
+          currentFindIndex: action.currentFindIndex,
+          photoIndex: action.photoIndex,
+          photoType: action.photoType
+        });
+      })
+      .catch(() => {
+        dispatch(enqueueSnackbar({
+          message: intl.get('report.notifications.photoDeletionError'),
+          options: {
+            variant: 'error',
+          },
+        }));
+      })
+      .then(() => done());
+  }
+});
+
+const getAutoCompleteData = createLogic({
+  type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA,
+  latest: true,
+
+  process({ action }, dispatch, done) {
+    // Show spinner
+    dispatch({
+      type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING
+    });
+
+    axios.get(
+      'https://api.finto.fi/rest/v1/maotao/search?'
+      + `query=${action.suggestion}*`
+      + '&lang=fi'
+      + '&fields=prefLabel'
+      + '&type=http://www.yso.fi/onto/mao-meta/Concept'
+      + `&parent=${getPropertyParentUri(action.propertyType)}`
+      + '&maxhits=5'
+    )
+      .then((queryResult) => {
+        const results = mapAutoCompleteResults(queryResult.data.results);
+        dispatch({
+          type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_SUCCESS,
+          results
+        });
+      })
+      .then(() => {
+        // Remove the spinner
+        dispatch({
+          type: FIND_NOTIFICATION_GET_AUTOCOMPLETE_DATA_FETCHING_FINISHED
+        });
+        done();
+      });
+  }
+});
+
+const MATERIAL_PARENT = 'http://www.yso.fi/onto/mao/p1731';
+const TYPE_PARENT = 'https://finto.fi/yso/fi/page/p207';
+const PERIOD_PARENT = 'http://www.yso.fi/onto/mao/p2251';
+
+const getPropertyParentUri = (propertyType) => {
+  if (propertyType === TreeViewTypes.TYPE) {
+    return TYPE_PARENT;
+  } else if (propertyType === TreeViewTypes.ERAS) {
+    return PERIOD_PARENT;
+  } else {
+    return MATERIAL_PARENT;
+  }
+};
+
+/**
+ * Helper method that maps autocomplete results
+ * 
+ * @param {Autocomplete results} results 
+ */
+const mapAutoCompleteResults = (results) => {
+  return results.map(result => ({ uri: result.uri, lang: result.lang, prefLabel: result.prefLabel }));
+};
 
 /********************* Helper Methods for providing help with the smart assistant *********************/
 const getLocationBasedSmartHelp = createLogic({
@@ -271,5 +373,7 @@ export default [
   setFindPhotos,
   setFindSitePhotos,
   getLocationBasedSmartHelp,
-  getFindPropertyBasedSmartHelp
+  getFindPropertyBasedSmartHelp,
+  deletePhotos,
+  getAutoCompleteData
 ];

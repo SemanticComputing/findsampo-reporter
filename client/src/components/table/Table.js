@@ -8,8 +8,14 @@ import {
   CardContent,
   Typography,
   Icon,
-  Tooltip
+  Tooltip,
+  Divider,
+  CardActions,
+  Button
 } from '@material-ui/core';
+import { RouterPaths } from '../../utils/enum/enums';
+import { getIdfromUri } from '../../utils/functions/functions';
+import { history } from '../../routers/AppRouter';
 
 /**
  * Parameters
@@ -20,12 +26,12 @@ const Table = (props) => {
   return (
     <div className="table">
       <MaterialTable
-        columns={[ // TODO: Add translations
+        columns={[
           {
             title: intl.get('nearByPage.table.previewImage'),
             field: 'image',
             render: rowData => rowData.image_url ?
-              <img src={rowData.image_url} className="table__column__icon" /> :
+              <img src={rowData.image_url.split(';')[0]/*Show only the first image*/} className="table__column__icon" / > :
               <Icon className="table__column__icon">crop_original</Icon>
           },
           { title: intl.get('nearByPage.table.title'), field: 'title' },
@@ -54,12 +60,12 @@ const Table = (props) => {
 const renderDetailPanel = (row) => {
   return (
     <Card className="table__detail-panel">
-      <CardActionArea className="table__detail-panel__container">
+      <CardActionArea className="table__detail-panel__container" disabled>
         {
           row.image_url ? (
             <CardMedia
               className="table__detail-panel__container__image"
-              image={row.image_url}
+              image={row.image_url.split(';')[0]}
               title={row.title}
             />
           ) : (
@@ -80,8 +86,19 @@ const renderDetailPanel = (row) => {
           </Typography>
         </CardContent>
       </CardActionArea>
+      <Divider />
+      <CardActions className="my-finds-page__find__actions">
+        <Button size="small" color="primary" onClick={() => onMoreButtonPressed(row.id)}>
+          {intl.get('nearByPage.table.more')}
+        </Button>
+      </CardActions>
     </Card>
   );
+};
+
+const onMoreButtonPressed = (id) => {
+  const findId = getIdfromUri('sualt-fha-finds', id);
+  history.push(`${RouterPaths.FIND_PAGE}?id=${findId}`, { findId });
 };
 
 export default Table;

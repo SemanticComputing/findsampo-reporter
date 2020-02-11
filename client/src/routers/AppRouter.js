@@ -11,8 +11,8 @@ import Notifier from '../components/Notifier';
 import Spinner from '../components/Spinner';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
-import { RouterPaths } from '../helpers/enum/enums';
-import { isIOSDevice } from '../helpers/functions/functions';
+import { RouterPaths } from '../utils/enum/enums';
+import { isIOSDevice } from '../utils/functions/functions';
 
 /**
  * Support for managing session history

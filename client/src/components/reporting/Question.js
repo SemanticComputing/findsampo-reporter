@@ -9,7 +9,7 @@ import ButtonBar from './ButtonBar';
 import StepMaker from '../reporting/StepMaker';
 import Spinner from '../Spinner';
 import { getMyFinds } from '../../actions/myFinds';
-import { isDesktopScreen } from '../../helpers/functions/functions';
+import { isDesktopScreen } from '../../utils/functions/functions';
 
 class Question extends Component {
 
@@ -60,7 +60,7 @@ class Question extends Component {
         }
         {
           this.props.isLoading &&
-          <Spinner styles={{ backgroundColor: 'transparent', color: 'grey' }} />
+          <Spinner />
         }
       </div>
     );

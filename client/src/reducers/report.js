@@ -1,4 +1,4 @@
-import initalState from '../helpers/data/report';
+import initalState from '../utils/data/report';
 import {
   REPORT_CHANGE_QUESTION,
   FIND_NOTIFICATION_RESET,

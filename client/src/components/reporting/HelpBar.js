@@ -20,7 +20,7 @@ import intl from 'react-intl-universal';
 import SmartHelper from '../SmartHelper';
 import { changeQuestion, postReport, deleteReport } from '../../actions/report';
 import { enqueueSnackbar } from '../../actions/notifier';
-import { ReportSteps, SmartHelpers } from '../../helpers/enum/enums';
+import { ReportSteps, SmartHelpers } from '../../utils/enum/enums';
 
 class HelpBar extends Component {
   state = {

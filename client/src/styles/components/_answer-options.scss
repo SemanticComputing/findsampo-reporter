@@ -10,7 +10,71 @@
     flex: 1;
     margin: 1rem;
   }
-  &__slider {
-    margin: 2rem;
+  & &__slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    &__avatar {
+      width: 100px;
+      height: 100px;
+      margin: 10px 0 40px 0;
+      font-size: 3rem;
+      background: $color-bottom-bar-icon-grey;
+    }
+    &__slider {
+      width: 85%;
+    }
+    &__input {
+      margin: 0;
+    }
+  }
+  & &__map-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    &__button {
+      font-size: 0.60rem;
+      margin: 0.2rem;
+      @media screen and (min-width: $size-max-mobile) {
+        margin: 1rem 20%;
+      }
+    }
+  }
+  &__dialog {
+    &__content {
+      display: flex;
+      flex-direction: column;
+    }
+    &__text-field {
+      margin-bottom: 12px !important;
+    }
+  }
+  &__autocomplete {
+    flex: 1;
+    margin: 1rem;
+    @media screen and (min-width: $size-max-mobile) {
+      margin: 1rem 20%;
+    }
+  }
+  &__autocomplete-dialog {
+    &__appbar {
+      position: relative !important;
+      &__toolbar {
+        justify-content: space-between;
+      }
+    }
+  }
+  &__mobile-autocomplete {
+    flex: 1;
+  }
+  &__chip-container {
+    flex: 1;
+    margin: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 24px;
+    &__placeholder {
+      color: $color-ligher-dark-grey;
+    }
   }
 }

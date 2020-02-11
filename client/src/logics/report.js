@@ -14,7 +14,7 @@ import {
 } from '../constants/actionTypes';
 import { enqueueSnackbar } from '../actions/notifier';
 import { history } from '../routers/AppRouter';
-import { RouterPaths } from '../helpers/enum/enums';
+import { RouterPaths } from '../utils/enum/enums';
 
 
 const REPORT_END_POINT = '/api/v1/report';
@@ -90,7 +90,7 @@ const postMyReport = async (dispatch, getState, action, done) => {
         uid: getState().auth.uid,
         email: getState().auth.email
       }, // Remove smartHelper data from the report before sending
-      data: omit(getState().findNotification, 'smartHelper')
+      data: omit(getState().findNotification, ['smartHelper', 'autocomplete'])
     })
     .then((result) => {
       dispatch({ type: FIND_NOTIFICATION_SEND_SUCCESS, payload: result });

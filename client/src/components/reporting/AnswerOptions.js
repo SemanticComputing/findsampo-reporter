@@ -5,7 +5,14 @@ import {
   Slider,
   FormControlLabel,
   TextField,
-  InputAdornment
+  InputAdornment,
+  Avatar,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from '@material-ui/core/';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -13,18 +20,33 @@ import intl from 'react-intl-universal';
 import Map from '../map/Map';
 import PhotoRenderer from './PhotoRenderer';
 import ExpandPanel from '../ExpandPanel';
-import TreeView from '../../components/TreeView';
-import { OptionTypes } from '../../helpers/enum/enums';
-import { setDate, setAdditionalMaterial, setFindDepth } from '../../actions/findNotification';
+import { OptionTypes } from '../../utils/enum/enums';
+import Autocompleter from '../Autocompleter';
+import {
+  setDate,
+  setAdditionalMaterial,
+  setFindDepth,
+  setCoordinates,
+  setMunicipality
+} from '../../actions/findNotification';
 
 
 class AnswerOptions extends Component {
   state = {
-    isExactDay: true
+    isExactDay: true,
+    sliderValue: 30,
+    isDepthSliderEnabled: true,
+    isCoordinatesDialogOpen: false,
+    showCustomLocation: false,
+    latitude: '',
+    longitude: ''
   }
 
   onFindDepthChanged = (event, value) => {
-    this.props.setFindDepth(value, this.props.currentFindIndex);
+    const newValue = parseInt(value ? value : event.target.value) > 0 ?
+      parseInt(value ? value : event.target.value) : 0;
+    this.setState({ sliderValue: newValue });
+    this.props.setFindDepth(newValue, this.props.currentFindIndex);
   }
 
   onExactDayChanged = () => {
@@ -37,6 +59,84 @@ class AnswerOptions extends Component {
 
   onAdditionalMaterialTyped = (event) => {
     this.props.setAdditionalMaterial(event.target.value, this.props.currentFindIndex);
+  }
+
+  onDepthFormControlLabelPressed = () => {
+    this.setState({ isDepthSliderEnabled: !this.state.isDepthSliderEnabled });
+  }
+
+  onOpenCoordsDialogPressed = () => {
+    this.setState({ isCoordinatesDialogOpen: true });
+  }
+
+  onCloseCoordsDialogPressed = () => {
+    this.setState({ isCoordinatesDialogOpen: false });
+  }
+
+  onInsertCoordsDialogPressed = () => {
+    // Change the values in the store
+    this.props.setCoordinates(
+      { lat: parseInt(this.state.latitude), lng: parseInt(this.state.longitude) },
+      this.props.currentFindIndex
+    );
+    this.props.setMunicipality({ lat: parseInt(this.state.latitude), lng: parseInt(this.state.longitude) });
+    // And change component state
+    this.setState({
+      showCustomLocation: true,
+      isCoordinatesDialogOpen: false
+    });
+  }
+
+  onCoordsChanged = (event) => {
+    this.setState({ [event.target.id]: event.target.value });
+  }
+
+  renderCoordinatesInputDialog() {
+    return (
+      <Dialog
+        open={this.state.isCoordinatesDialogOpen}
+        keepMounted
+        onClose={this.onCloseCoordsDialogPressed}
+        aria-labelledby="coords-dialog-slide-title"
+        aria-describedby="coords-dialog-slide-description"
+        className="answer-options__dialog"
+      >
+        <DialogTitle id="coords-dialog-slide-title">{intl.get('answerOptions.dialog.title')}</DialogTitle>
+        <DialogContent className="answer-options__dialog__content">
+          <DialogContentText id="coords-dialog-slide-description">
+            {intl.get('answerOptions.dialog.content')}
+          </DialogContentText>
+          <TextField
+            id="latitude"
+            label={intl.get('answerOptions.dialog.latitude')}
+            required
+            type="number"
+            value={this.state.latitude}
+            onChange={this.onCoordsChanged}
+            className="answer-options__dialog__text-field"
+            variant="outlined"
+          />
+          <TextField
+            id="longitude"
+            label={intl.get('answerOptions.dialog.longitude')}
+            required
+            type="number"
+            value={this.state.longitude}
+            onChange={this.onCoordsChanged}
+            className="answer-options__dialog__text-field"
+            variant="outlined"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.onCloseCoordsDialogPressed} color="primary">
+            {intl.get('answerOptions.dialog.cancel')}
+          </Button>
+          <Button onClick={this.onInsertCoordsDialogPressed} color="primary" disabled={!(this.state.latitude && this.state.longitude)}>
+            {intl.get('answerOptions.dialog.insert')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   }
 
   renderDatePickers() {
@@ -66,6 +166,37 @@ class AnswerOptions extends Component {
     }
   }
 
+  renderDepthPickers() {
+    const marks = [{ value: 0, label: '0cm', }, { value: 50, label: '50cm', }, { value: 100, label: '100cm', }];
+    if (this.state.isDepthSliderEnabled) {
+      return (<Slider
+        defaultValue={30}
+        max={100}
+        aria-labelledby="discrete-slider-always"
+        marks={marks}
+        valueLabelDisplay="on"
+        onChange={(event, value) => this.setState({ sliderValue: value })}
+        onChangeCommitted={this.onFindDepthChanged}
+        className="answer-options__slider-container__slider"
+      />);
+    } else {
+      return (
+        <TextField
+          id="outlined-number"
+          label={intl.get('report.questionFindDepth.label')}
+          onChange={this.onFindDepthChanged}
+          type="number"
+          margin="normal"
+          variant="outlined"
+          className="answer-options__slider-container__input"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">{intl.get('report.questionFindDepth.depthUnit')}</InputAdornment>,
+          }}
+        />
+      );
+    }
+  }
+
   renderAnswerOptions() {
     const options = this.props.currentQuestion.options;
     let container;
@@ -88,7 +219,26 @@ class AnswerOptions extends Component {
           break;
         case OptionTypes.MAP:
           container = (
-            <Map showCurrentLocation useSatellite zoomLevel={DEFAULT_ZOOM_LEVEL} />
+            <div className="answer-options__map-container">
+              {
+                this.state.showCustomLocation ? (
+                  <Map
+                    markerData={[{ lat: this.state.latitude, long: this.state.longitude }]}
+                    useSatellite
+                    setViewForMarkerData
+                    zoomLevel={DETAILED_ZOOM_LEVEL} />
+                ) : (
+                  <Map showCurrentLocation useSatellite zoomLevel={DEFAULT_ZOOM_LEVEL} />
+                )
+              }
+              <Button className="answer-options__map-container__button"
+                variant="outlined"
+                color="primary"
+                onClick={this.onOpenCoordsDialogPressed}
+              >
+                {intl.get('answerOptions.btnEnterManually')}
+              </Button>
+            </div>
           );
           break;
         case OptionTypes.DATE_PICKER:
@@ -133,23 +283,29 @@ class AnswerOptions extends Component {
             <ExpandPanel content={options.panelElements} />
           );
           break;
-        case OptionTypes.TREE_VIEW:
+        case OptionTypes.AUTOCOMPLETE: {
+          const { label, placeholder } = this.props.currentQuestion.options;
           container = (
-            <TreeView content={options.treeData} for={options.for} />
+            <Autocompleter propertyType={options.for} label={intl.get(label)} placeholder={intl.get(placeholder)} />
           );
           break;
+        }
         case OptionTypes.SLIDER: {
-          const marks = [{ value: 0, label: '0cm', }, { value: 300, label: '300cm', }];
           container = (
-            <Slider
-              defaultValue={30}
-              max={300}
-              aria-labelledby="discrete-slider-always"
-              marks={marks}
-              valueLabelDisplay="on"
-              onChangeCommitted={this.onFindDepthChanged}
-              className="answer-options__slider"
-            />
+            <div className="answer-options__slider-container">
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={this.state.isDepthSliderEnabled}
+                    onChange={this.onDepthFormControlLabelPressed}
+                    color="primary"
+                  />
+                }
+                label={intl.get('report.questionFindDepth.useSlider')}
+              />
+              <Avatar className="answer-options__slider-container__avatar">{this.state.sliderValue}</Avatar>
+              {this.renderDepthPickers()}
+            </div>
           );
         }
       }
@@ -171,12 +327,14 @@ class AnswerOptions extends Component {
     return (
       <div className={currentStyle}>
         {this.renderAnswerOptions()}
+        {this.renderCoordinatesInputDialog()}
       </div>
     );
   }
 }
 
 const DEFAULT_ZOOM_LEVEL = 4;
+const DETAILED_ZOOM_LEVEL = 7;
 
 const mapStateToProps = (state) => ({
   currentQuestion: state.report.questions[state.report.currentStep],
@@ -187,7 +345,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setDate: (date) => dispatch(setDate(date)),
   setAdditionalMaterial: (additionalMaterial, index) => dispatch(setAdditionalMaterial(additionalMaterial, index)),
-  setFindDepth: (depth, index) => dispatch(setFindDepth(depth, index))
+  setFindDepth: (depth, index) => dispatch(setFindDepth(depth, index)),
+  setCoordinates: (coords, index) => dispatch(setCoordinates(coords, index)),
+  setMunicipality: (coords) => dispatch(setMunicipality(coords)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnswerOptions);

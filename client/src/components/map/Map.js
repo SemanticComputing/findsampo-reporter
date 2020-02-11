@@ -37,21 +37,22 @@ import {
 import intl from 'react-intl-universal';
 import { setCoordinates, setMunicipality } from '../../actions/findNotification';
 import { fetchMapData, startMapSpinner } from '../../actions/map';
-import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../helpers/enum/enums';
-import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey } from '../../helpers/functions/functions';
+import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../utils/enum/enums';
+import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey, getIdfromUri } from '../../utils/functions/functions';
 import { enqueueSnackbar } from '../../actions/notifier';
 
 /**
  * Parameters
- * showCurrentLocation: If true user's current location is shown on the map
+ * showCurrentLocation: If true, user's current location is shown on the map
  * markerData: Marker points which will be shown on the map
- * setViewForMarkerData: If true it sets view for a range of coordinates
+ * setViewForMarkerData: If true, it sets view for a range of coordinates
  * location: The location where map component adds a marker
  * zoomLevel: Defines the default zoom level of the map
  * layers: Default active layers to show on the map
  * checkPointInPolygons: Show notification that user is at ancient monument area
  * legalityResultHandler: Function which is used to send legality result to parent component
  * id: Defines the id of map element. Used in case of viewing multiple maps on the same page
+ * showingMyFinds: if true, define custom settings for showing own finds
  */
 class Map extends Component {
   state = {
@@ -68,8 +69,8 @@ class Map extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.markerData !== this.props.markerData || this.props.mode) {
-      this.clusterMap.clearLayers();
-      this.heatMap.setLatLngs([]);
+      this.clusterMap && this.clusterMap.clearLayers();
+      this.heatMap && this.heatMap.setLatLngs([]);
       this.showMarkersOnMap(this.props.markerData);
     }
 
@@ -81,7 +82,9 @@ class Map extends Component {
   }
 
   componentWillUnmount() {
-    this.locateControl.stop();
+    if (this.locateControl) {
+      this.locateControl.stop();
+    }
     navigator.geolocation.clearWatch(this.geoLocationId);
   }
 
@@ -252,7 +255,7 @@ class Map extends Component {
       cacheLocation: false,
       icon: 'material-icons location-icon',
       iconLoading: 'material-icons w3-spin w3-jumbo loading-icon',
-      flyTo: true
+      flyTo: this.props.legalityChecker ? false : true  // Animation is disabled for legalitycheckerpage
     };
     this.locateControl = L.control.locate(locateOptions).addTo(this.map);
 
@@ -316,8 +319,8 @@ class Map extends Component {
     if (this.state.hasCurrentLocation && this.state.currentLocation &&
       this.props.layers && this.props.checkPointInPolygons) {
       const result = leafletPip.pointInLayer(
-        L.latLng(this.state.currentLocation.coords.latitude,
-          this.state.currentLocation.coords.longitude),
+        L.latLng(this.state.currentLocation.latlng.lat,
+          this.state.currentLocation.latlng.lng),
         geoJSONLayer,
         true);
       // L.latLng(60.183232,24.818036) for forbidden test purposes
@@ -413,9 +416,10 @@ class Map extends Component {
 
     for (let marker of markerData) {
       if (marker.lat && marker.long && !isNaN(marker.lat) && !isNaN(marker.long)) {
-        const popupText = this.generateMarkerPopup(marker);
+        const popupText = marker.id ? this.generateMarkerPopup(marker) : '';
+        const popupOptions = marker.reportId ? { reportId: getIdfromUri('report', marker.reportId), findId: getIdfromUri('find', marker.id) } : {};
         const location = new L.LatLng(marker.lat, marker.long);
-        const markerToMap = new L.marker(location).bindPopup(popupText);
+        const markerToMap = popupText ? new L.marker(location).bindPopup(popupText, popupOptions) : new L.marker(location);
         latLngs.push(location);
         this.clusterMap.addLayer(markerToMap);
       }
@@ -529,8 +533,8 @@ class Map extends Component {
     });
 
     // Fired when marker popup more button is clicked
-    this.map.on('popupopen', () => {
-      document.getElementById('leaflet-popup-content__more-button').addEventListener('click', this.popupMorePressListener);
+    this.map.on('popupopen', (event) => {
+      document.getElementById('leaflet-popup-content__more-button').addEventListener('click', () => this.popupMorePressListener(event.popup.options));
     });
 
     this.map.on('locationfound', (pos) => {
@@ -539,6 +543,10 @@ class Map extends Component {
       this.setState({ currentLocation: pos });
       this.props.setCoordinates({ lat, lng }, this.props.currentFindIndex);
       this.props.setMunicipality({ lat, lng });
+      if (this.props.legalityChecker && this.state.hasCurrentLocation &&
+        this.state.currentLocation && this.props.layers && this.props.checkPointInPolygons) {
+        this.loadFetchedLayers();
+      }
     });
 
     this.map.on('locationerror', (err) => {
@@ -556,9 +564,13 @@ class Map extends Component {
   /**
    * Listener for navigating popup more link presses
    */
-  popupMorePressListener = () => {
-    const id = document.getElementById('leaflet-popup-content__id').textContent;
-    history.push(`${RouterPaths.FIND_PAGE}?id=${id}`, { id });
+  popupMorePressListener = (options) => {
+    if (this.props.showingMyFinds) {
+      history.push(`${RouterPaths.MY_FINDS_REPORT_OVERVIEW_PAGE}?r=${options.reportId}&f=${options.findId}`);
+    } else {
+      const id = document.getElementById('leaflet-popup-content__id').textContent;
+      history.push(`${RouterPaths.FIND_PAGE}?id=${id}`, { id });
+    }
   };
 
   /**
@@ -622,7 +634,8 @@ class Map extends Component {
    */
   generateMarkerPopup = (marker) => {
     let popupText = '';
-    const id = marker.id.split('sualt-fha-finds/')[1];
+    const idPrefix = marker.id.includes('sualt-fha-finds/') ? 'sualt-fha-finds/' : '';
+    const id = idPrefix ? marker.id.split(idPrefix)[1] : '';
     const image = getImageForPopup(marker.image_url);
     const title = marker.title ? `<h2 class="leaflet-popup-content__text-container__title">${marker.title}</h2>` : '';
     const description = marker.description ? `<p class="leaflet-popup-content__text-container__description">${marker.description}</p>` : '';

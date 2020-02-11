@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Icon, BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import intl from 'react-intl-universal';
-import { isMobileScreen, isIOSDevice } from '../helpers/functions/functions';
-import { RouterPaths } from '../helpers/enum/enums';
+import { isMobileScreen, isIOSDevice } from '../utils/functions/functions';
+import { RouterPaths } from '../utils/enum/enums';
 
 class BottomNav extends Component {
   state = {

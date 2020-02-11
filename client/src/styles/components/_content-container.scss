@@ -4,6 +4,12 @@
   align-items: center;
   flex: 1;
   text-align: center;
+  &__header--animated {
+    animation: moveInBottom .5s ease-out;
+  }
+  &__description--animated {
+    animation: moveInTop .5s ease-out;
+  }
   &__card-container {
     display: flex;
     flex-wrap: wrap;

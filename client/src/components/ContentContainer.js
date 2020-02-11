@@ -30,8 +30,10 @@ const ContentContainer = (props) => {
   const {
     stylingClass,
     header,
+    headerClass,
     headerStyle,
     description,
+    descriptionClass,
     descriptionStyle,
     bgColor,
     bgImage,
@@ -48,9 +50,9 @@ const ContentContainer = (props) => {
       className={`content-container ${stylingClass}`}
       style={{ background: bgStyle }}
     >
-      <p style={headerStyle}>{header}</p>
+      <p className={headerClass} style={headerStyle}>{header}</p>
       {
-        description && <p style={descriptionStyle}>{description}</p>
+        description && <p className={descriptionClass} style={descriptionStyle}>{description}</p>
       }
       {Component && <Component />}
       <div className="content-container__card-container">

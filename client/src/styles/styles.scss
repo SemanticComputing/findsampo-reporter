@@ -1,35 +1,51 @@
-// Components
-@import './base/settings';
-@import './base/base';
-@import './components/footer';
-@import './components/header';
-@import './components/lang-menu';
-@import './components/pages/login-page';
-@import './components/pages/signup-page';
-@import './components/pages/legality-checker-page';
-@import './components/pages/my-finds-page';
-@import './components/pages/my-finds-report-overview-page';
-@import './components/pages/more-page';
-@import './components/pages/not-found-page';
-@import './components/question';
-@import './components/help-bar';
-@import './components/map';
-@import './components/report';
-@import './components/answer-options';
-@import './components/step-maker';
-@import './components/tree-view';
-@import './components/bottom-nav';
-@import './components/overview';
-@import './components/nearby';
-@import './components/table';
-@import './components/facet-drawer';
-@import './components/spinner';
-@import './components/content-container';
-@import './components/slider';
-@import './components/smart-helper';
-@import './components/chart';
-@import './components/pages/find-page';
-// Others
-@import './others/spinner';
 // Third party
-@import "~react-image-gallery/styles/scss/image-gallery.scss";
+@import 
+	'~react-image-gallery/styles/scss/image-gallery.scss';
+
+// Abstracts
+@import
+	'abstracts/variables';
+
+// Vendors
+@import 
+	'vendors/spinner';
+
+// Base
+@import 
+	'base/typography',
+	'base/animations',
+	'base/base';
+
+// Components
+@import 
+	'components/footer',
+	'components/header',
+	'components/lang-menu',
+	'components/question',
+	'components/help-bar',
+	'components/map',
+	'components/report',
+	'components/answer-options',
+	'components/step-maker',
+	'components/tree-view',
+	'components/bottom-nav',
+	'components/overview',
+	'components/nearby',
+	'components/table',
+	'components/facet-drawer',
+	'components/spinner',
+	'components/content-container',
+	'components/slider',
+	'components/smart-helper',
+	'components/chart';
+
+// Pages
+@import 
+	'pages/find-page',
+	'pages/login-page',
+	'pages/signup-page',
+	'pages/legality-checker-page',
+	'pages/my-finds-page',
+	'pages/my-finds-report-overview-page',
+	'pages/more-page',
+	'pages/not-found-page';

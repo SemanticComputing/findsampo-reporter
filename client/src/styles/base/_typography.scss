@@ -1,0 +1,26 @@
+/**
+  Load Custom font families
+*/
+@font-face {
+    font-family: 'New Hero Bd';
+    src: url('/fonts/HeroNew-Regular.otf');
+  }
+  
+  @font-face {
+    font-family: 'New Hero Bd';
+    src: url('/fonts/HeroNew-Bold.otf');
+    font-weight: bold;
+  }
+  
+  @font-face {
+    font-family: 'New Hero Bd';
+    src: url('/fonts/HeroNew-Light.otf');
+    font-weight: lighter;
+  }
+  
+  /**
+    Use New Hero Bd for all classes except material-icons
+  */
+  *:not(.material-icons) {
+    font-family: "New Hero Bd", "Helvetica", "Roboto", "Arial", sans-serif !important;
+  }

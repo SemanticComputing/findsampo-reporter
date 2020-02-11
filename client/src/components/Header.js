@@ -8,7 +8,6 @@ import {
   Button,
   Icon,
   IconButton,
-  Typography,
   Avatar,
   Popper,
   Grow,
@@ -19,8 +18,8 @@ import {
 } from '@material-ui/core/';
 import LangMenu from './LangMenu';
 import { logout } from '../actions/auth';
-import { isDesktopScreen, isIOSDevice } from '../helpers/functions/functions';
-import { RouterPaths } from '../helpers/enum/enums';
+import { isDesktopScreen, isIOSDevice } from '../utils/functions/functions';
+import { RouterPaths } from '../utils/enum/enums';
 
 class Header extends Component {
   state = {
@@ -264,16 +263,22 @@ class Header extends Component {
   }
 
   render() {
-    const titleclass = isDesktopScreen(window) ? 'appbar__typography' : 'appbar__typography--mobile';
+    //const titleclass = isDesktopScreen(window) ? 'appbar__typography' : 'appbar__typography--mobile';
     return (
       <div>
         <AppBar position="static" className="appbar">
           <Toolbar className="appbar__toolbar">
+            {/** TODO:Move styling to css */}
+            <Link to={RouterPaths.HOME_PAGE} style={!isDesktopScreen(window) ? { flex: 1} : {}}>
+              {isDesktopScreen(window) ? <img src="images/test_icon.png" height="34px" /> : <img src="images/test_icon_mobile.png" height="34px" />}
+            </Link>
+            {/*
             <Typography variant="h6" color="inherit" className={titleclass}>
               <Link className="appbar__title" to="/">
                 {intl.get('header.title')}
               </Link>
             </Typography>
+            */}
             {this.renderDesktopMenuItems()}
             {this.renderIOSMenu()}
             <LangMenu />

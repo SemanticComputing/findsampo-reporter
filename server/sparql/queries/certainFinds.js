@@ -11,7 +11,7 @@ module.exports = (id) => {
     PREFIX fs-find-site: <http://ldf.fi/findsampo/find-site/>
     PREFIX fs-find-site-image: <http://ldf.fi/findsampo/find-site-image/>
     
-    SELECT ?find ?depth ?material ?type ?period  ?additionalMaterials ?findSite ?lat ?long
+    SELECT ?report ?find ?depth ?material ?type ?period  ?additionalMaterials ?findSite ?lat ?long
       (GROUP_CONCAT(DISTINCT ?findImageUrl_; SEPARATOR=";") AS ?findImageUrl)
       (GROUP_CONCAT(DISTINCT ?findSiteImageUrl_; SEPARATOR=";") AS ?findSiteImageUrl)
     
@@ -21,10 +21,10 @@ module.exports = (id) => {
         ?find a fs-schema:Find .
         # Find Information
         OPTIONAL { ?find fs-schema:find-depth ?depth . }
-  		  OPTIONAL { ?find fs-schema:find-material ?material . }
-  		  OPTIONAL { ?find fs-schema:find-type ?type . }
-  		  OPTIONAL { ?find fs-schema:find-period ?period . }
-  		  OPTIONAL { ?find fs-schema:find-additional-materials ?additionalMaterials . }
+        OPTIONAL { ?find fs-schema:find-material ?material . }
+        OPTIONAL { ?find fs-schema:find-type ?type . }
+        OPTIONAL { ?find fs-schema:find-period ?period . }
+        OPTIONAL { ?find fs-schema:find-additional-materials ?additionalMaterials . }
         #Find image information
         OPTIONAL {
           ?find fs-schema:find-image ?findImage .
@@ -42,7 +42,10 @@ module.exports = (id) => {
         ?findSite fs-schema:find-site-image ?findSiteImage .
           ?findSiteImage fs-schema:find-site-image-url ?findSiteImageUrl_ .
         }
+      # Report information
+      ?report a fs-schema:Report;
+        fs-schema:report-find ?find .
       } 
-    GROUP BY ?find ?depth ?material ?type ?period  ?additionalMaterials ?findSite ?lat ?long
+    GROUP BY ?report ?find ?depth ?material ?type ?period  ?additionalMaterials ?findSite ?lat ?long
     `;
 };

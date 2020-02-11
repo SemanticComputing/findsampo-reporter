@@ -8,7 +8,7 @@ import configureStore from './store/configureStore';
 import firebase from './firebase/firebase';
 import { loginLoggedUser } from './actions/auth';
 import { setLocale } from './actions/locale';
-import { isDesktopScreen, isMobileScreen } from './helpers/functions/functions';
+import { isDesktopScreen, isMobileScreen } from './utils/functions/functions';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 

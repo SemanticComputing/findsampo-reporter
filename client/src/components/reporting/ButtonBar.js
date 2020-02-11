@@ -6,7 +6,7 @@ import intl from 'react-intl-universal';
 import { withRouter } from 'react-router-dom';
 import { changeQuestion, postReport } from '../../actions/report';
 import { changeFindIndex, setStatusToAwaitReview, setReportId } from '../../actions/findNotification';
-import { QuestionDependencies, ButtonActions, ReportingIDs } from '../../helpers/enum/enums';
+import { QuestionDependencies, ButtonActions, ReportingIDs } from '../../utils/enum/enums';
 
 const ButtonBar = (props) => (
   <div className="button-bar">

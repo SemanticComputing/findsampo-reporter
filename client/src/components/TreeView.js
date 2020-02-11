@@ -4,7 +4,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import SortableTree, { changeNodeAtPath } from 'react-sortable-tree';
 import FileExplorerTheme from 'react-sortable-tree-theme-minimal';
 import intl from 'react-intl-universal';
-import { TreeViewTypes } from '../helpers/enum/enums';
+import { TreeViewTypes } from '../utils/enum/enums';
 import { setFindType, setFindMaterial, setFindTiming } from '../actions/findNotification';
 
 class TreeView extends Component {
