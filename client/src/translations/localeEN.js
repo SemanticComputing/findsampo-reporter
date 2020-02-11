@@ -1,483 +1,384 @@
-export default {
-  "header": {
-    "title": "FindSampo",
-    "login": "Log In",
-    "logout": "Log Out",
-    "notification": {
-      "logoutSuccess": "You've been successfully logged out!"
-    }
-  },
-  "loginPage": {
-    "title": "Log In",
-    "email": "Email",
-    "password": "Password",
-    "login": "Log In",
-    "signup": "Sign Up",
-    "forgotPassword": "Forgot your password?",
-    "loginWith": "Log in with",
-    "googleLogin": "G",
-    "notAMemberYet": "Not a member yet?",
-    "error": {
-      "emptyField": "Password and email fields cannot be empty!"
-    }
-  },
-  "signupPage": {
-    "title": "Sign Up",
-    "username": "Username",
-    "email": "Email",
-    "password": "Password",
-    "signup": "Sign Up",
-    "alreadyAMember": "Already a member?",
-    "login": "Log In",
-    "registrationDone": "Registration successfully completed!"
-  },
-  "nearByPage": {
-    "map": {
-      "mapLayers": {
-        "backGroundMap": "Background Map (National Survey of Finland)",
-        "topographicalMap": "Topographical Map (National Survey of Finland)",
-        "googleMaps": "Google Maps"
+export default
+  {
+    "header": {
+      "title": "FindSampo",
+      "login": "Log In",
+      "logout": "Log Out",
+      "notification": {
+        "logoutSuccess": "You have successfully logged out!"
+      }
+    },
+    "": "",
+    "loginPage": {
+      "title": "Log In",
+      "email": "Email",
+      "password": "Password",
+      "login": "Log In",
+      "signup": "Sign up",
+      "forgotPassword": "Forgotten your password?",
+      "loginWith": "Log in with",
+      "googleLogin": "Log in with Google",
+      "notAMemberYet": "Not registered yet?",
+      "error": {
+        "emptyField": "Email and password are needed!"
+      }
+    },
+    "signupPage": {
+      "title": "Sign Up",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "signup": "Sign Up",
+      "alreadyAMember": "Already registered",
+      "login": "Log In",
+      "registrationDone": "Registration successfully completed!"
+    },
+    "nearByPage": {
+      "map": {
+        "mapLayers": {
+          "backGroundMap": "Background Map",
+          "topographicalMap": "Topographic Map",
+          "googleMaps": "Google Maps"
+        },
+        "overLays": {
+          "arkeologiset_loydot": "Archaeological finds",
+          "arkeologiset_kohteet_alue": "Archaeological Heritage, areas around protected sites and other significant remains",
+          "arkeologiset_kohteet_piste": "Archaeological Heritage, protected sites and other significant remains",
+          "maailmanperinto_alue": "World Heritage areas",
+          "maailmanperinto_piste": "World Heritage sites",
+          "rakennusperinto_alue": "Built Heritage, areas around protected buildings",
+          "rakennusperinto_piste": "Built Heritage, protected buildings",
+          "arkeologisten_kohteiden_alakohteet_piste": "Archaeological heritage, subsites of protected sites and other significant remains",
+          "rky_alue": "Nationally significant built cultural environments (RKY), areas",
+          "rky_piste": "Nationally significant built cultural environments (RKY), pointlike sites",
+          "rky_viiva": "Nationally significant built cultural environments (RKY), roads and other linelike sites"
+        },
+        "alert": {
+          "zoomAlertTitle": "Zoom Level Alert",
+          "zoomAlertContent": "Please change the zoom level to 13 to view selected layer.",
+          "zoomAlertConfirmation": "OK",
+          "gettingLocationFailed": "Unable to retrieve your location. Please make sure that GPS is turned on."
+        },
+        "mapContent": {
+          "name": "Name",
+          "town": "Town",
+          "link": "Link",
+          "more": "More"
+        }
       },
-      "overLays": {
-        "arkeologiset_loydot": "Archaeological finds",
-        "arkeologiset_kohteet_alue": "Archaeological sites, areas",
-        "arkeologiset_kohteet_piste": "Archaeological sites, points",
-        "maailmanperinto_alue": "World heritage sites, areas",
-        "maailmanperinto_piste": "World heritage sites, points",
-        "rakennusperinto_alue": "Architectural heritage, areas",
-        "rakennusperinto_piste": "Architectural heritage, buildings",
-        "arkeologisten_kohteiden_alakohteet_piste": "Archaeological sites, subparts, points",
-        "rky_alue": "Notable cultural environments, areas",
-        "rky_piste": "Notable cultural environments, points",
-        "rky_viiva": "Notable cultural environments, lines"
+      "tabs": {
+        "map": "Map",
+        "heatmap": "HeatMap",
+        "statistics": "Statistics",
+        "table": "Table"
       },
-      "alert": {
-        "zoomAlertTitle": "Zoom Level Alert",
-        "zoomAlertContent": "Please change the zoom level to 13 to view selected layer as shown below.",
-        "zoomAlertConfirmation": "OK",
-        "gettingLocationFailed": "Unable to retrieve your location. Please make sure that GPS is turned on."
+      "statistics": {
+        "chart": {
+          "selectProperty": "Select Property",
+          "material": "Material",
+          "type": "Object type",
+          "period": "Period"
+        }
       },
-      "mapContent": {
-        "name": "Name",
-        "town": "Town",
-        "link": "Link",
+      "table": {
+        "title": "Object classification",
+        "material": "Material",
+        "type": "Object type",
+        "period": "Period",
+        "municipality": "Municipality",
+        "province": "County",
+        "specification": "Circumstances of the find",
+        "previewImage": "Preview Image",
+        "notProvidedValue": "Not provided",
+        "noAdditionalInformation": "No additional information found!",
         "more": "More"
       }
     },
-    "tabs": {
-      "map": "Map",
-      "heatmap": "HeatMap",
-      "table": "Table",
-      "statistics": "Statistics"
-    },
-    "statistics": {
-      "chart": {
-        "selectProperty": "Select Property",
-        "material": "Material",
-        "type": "Type",
-        "period": "Period"
-      }
-    },
-    "table": {
-      "previewImage": "Preview Image",
-      "more": "More",
-      "title": "Title",
-      "material": "Material",
-      "type": "Type",
-      "period": "Period",
-      "municipality": "Municipality",
-      "province": "Province",
-      "specification": "Specification",
-      "notProvidedValue": "Not provided",
-      "noAdditionalInformation": "No additional information found!"
-    }
-  },
-  "morePage": {
-    "headers": {
-      "usefulTools": "Useful tools & Resources",
-      "tutorials": "Tutorials",
-      "recommendedApps": "Recommended Applications"
-    },
-    "checkLegality": "Check legality of the find site for digging",
-    "photoFrame": "Photo frame for taking find photos",
-    "fhaHowToReport": "Finnish Heritage Agency: How to report a find?",
-    "fhaCulturalHeritageMaterial": "Finnish Heritage Agency: Protecting the archaeological cultural heritage"
-  },
-  "myFindsPage": {
-    "header": {
-      "title": "My Finds",
-      "show": "Show",
-      "orderSelect": {
-        "orderBy": "Order By",
-        "date": "Date",
-        "municipality": "Municipality",
-        "totalFinds": "Total Finds"
-      } 
-    },
-    "more": "View More",
-    "share": "Share",
-    "continue": "Continue",
-    "status": "Status",
-    "noFindsInfo": "The selected report does not have any finds.",
-    "noFindsError": "No finds found!",
-    "container": {
-      "report": "Report",
-      "timeClock": "Time",
-      "municipality": "Municipality",
-      "time": "on {d, date, short}",
-      "finds": "Contains {number} finds"
-    },
-    "statuses": {
-      "draft": "Draft",
-      "await_review": "Await Review",
-      "in_review": "In Review",
-      "validated": "Validated",
-      "rejected": "Rejected",
-      "peding_user": "Pending User"
-    }
-  },
-  "appHomePage": {
-    "contentContainer": {
-      "recentFinds": "Recent Finds",
-      "guides": "Guides and Instructions",
-      "applicationTagline": "Findsampo has received over x applications",
-      "headerTitle": "The Finnish archaeological finds data and reporting platform",
-      "learnMore": "Learn More",
-      "name": "FindSampo"
-    },
-  },
-  "notFoundPage": {
-    "pageNotFound": "Ooops! Page Not Found!",
-    "goToHomePage": "Go To HomePage"
-  },
-  "legalityCheckerPage": {
-    "alert": {
-      "allowed": {
-        "header": "You are safe!",
-        "description": "We could not find any ancient monument at your location."
+    "myFindsPage": {
+      "header": {
+        "title": "My Finds",
+        "show": "Show",
+        "orderSelect": {
+          "orderBy": "Order By",
+          "date": "Date",
+          "municipality": "Municipality",
+          "totalFinds": "Total Finds"
+        }
       },
-      "forbidden": {
-        "header": "You are not allowed to excavate in this area!",
-        "description": "Please do not excavate. Ancient relics are protected by the Antiquities Act (295/63). According to this Act, all ancient relics are protected as reminders of Finland’s earlier inhabitants and history. Without permission issued under the Act, it is forbidden to excavate, cover, alter, damage or remove ancient relics or disturb them in any other way."
-      }
-    }
-  },
-  "findPage": {
-    "id": "Id",
-    "material": "Material",
-    "type": "Type",
-    "municipality": "Municipality",
-    "specification": "specification",
-    "period": "Period",
-    "site": "Historical Site",
-    "link": "Link",
-    "description": "Description"
-  },
-  "overview": {
-    "title": "Summary",
-    "notProvidedValue": "Not Provided",
-    "findSite": {
-      "title": "Find Site Details",
-      "photos": "Find Site Photos",
-      "location": "Location",
-      "additionalMaterials": "Additional Materials",
-    },
-    "find": {
-      "title": "Details of finds",
-      "subTitle": "Find",
-      "photos": "Photos",
-      "depth": "Depth",
-      "type": "Type",
-      "timing": "Period",
-      "material": "Material"
-    }
-  },
-  "facetDrawer": {
-    "facetedSearch": "Faceted Search",
-    "searchResults": "search results",
-    "searchCriteria": "Search criteria",
-    "emptyBtn": "Empty",
-    "facetCriteria": {
-      "type": "Type",
-      "material": "Material",
-      "period": "Period",
-      "municipality": "Municipality",
-      "province": "Province"
-    }
-  },
-  "langMenu": {
-    "abbreviation": {
-      "english": "EN",
-      "finnish": "FI",
-      "swedish": "SV"
-    }
-  },
-  "report": {
-    "stepOne": "Help",
-    "stepTwo": "Details",
-    "stepThree": "Additionals",
-    "stepFour": "Done!",
-    "skip": "Skip",
-    "back": "Back",
-    "optionalSection": "Optional",
-    "reportSent": "Your report has been sent successfully!",
-    "notifications": {
-      "photoDeletionError": "Deleting this photo failed. Please try again"
-    },
-    "questionZero": {
-      "question": "Would you like to get familiar with our starter kits before starting to add your find?",
-      "help": "This questions is for providing some help. Please choose one of the choices",
-      "buttonOne": "Yes, please!",
-      "buttonTwo": "No, thanks!"
-    },
-    "questionProvideHelp": {
-      "question": "Great, below you can find the most relevant instructions.",
-      "help": "Please select one of the guides!",
-      "buttonOne": "Continue",
-      "options": {
-        "optionOne": "General Instructions",
-        "optionTwo": "Starter Kit",
-        "optionThree": "Reporting Instructions",
+      "more": "View More",
+      "share": "Share",
+      "continue": "Continue",
+      "status": "Status",
+      "noFindsInfo": "The selected report does not have any finds.",
+      "noFindsError": "No finds!",
+      "container": {
+        "report": "Report",
+        "municipality": "Municipality",
+        "time": "on {dd.mm.yy}",
+        "timeClock": "Time",
+        "finds": "Number of finds: (number)"
+      },
+      "statuses": {
+        "draft": "Draft",
+        "await_review": "Awaiting Review",
+        "in_review": "In Review",
+        "validated": "Validated",
+        "rejected": "Rejected",
+        "peding_user": "Pending additional information"
       }
     },
-    "questionFindTimeDetermining": {
-      "question": "Are you adding a find that has recently found?",
-      "help": "This question is asked to get your current location and date.",
-      "buttonOne": "Yes, I am on the find site",
-      "buttonTwo": "No, I found a while ago"
+    "notFoundPage": {
+      "pageNotFound": "Ooops! Page Not Found!",
+      "goToHomePage": "Go To HomePage"
     },
-    "questionFindLocation": {
-      "question": "Pick the find location please.",
-      "help": "Mark exactly where the find has been found.",
-      "buttonOne": "Done, continue"
+    "legalityCheckerPage": {
+      "alert": {
+        "allowed": {
+          "header": "?There are no restrictions in this location?",
+          "description": "We could not find any archaeological heritage site at your location."
+        },
+        "forbidden": {
+          "header": "You are not allowed to dig in this area!",
+          "description": "You cannot dig the soil in places protected by the Antiquities Act (295/1963), sites suspected to be ancient monuments, or areas protected under the Nature Conservation Act without a separate permit. Digging nearby a protected ancient monument, at a distance of less than 200 metres from the site, is strongly discouraged."
+        }
+      }
     },
-    "questionFindPhotos": {
-      "question": "Please add some photos from the find.",
-      "help": "Min three photos is needed.",
-      "buttonOne": "Continue"
+    "overview": {
+      "title": "Summary",
+      "notProvidedValue": "Not Provided",
+      "findSite": {
+        "title": "Find Site Details",
+        "photos": "Find Site Photos",
+        "location": "Location",
+        "additionalMaterials": "Additional information"
+      },
+      "find": {
+        "title": "Find details",
+        "subTitle": "Find object",
+        "photos": "Photos",
+        "depth": "Depth",
+        "type": "Object name",
+        "timing": "Period",
+        "material": "Material"
+      }
     },
-    "questionFindSitePhotos": {
-      "question": "Please add some photos from the find site.",
-      "help": "Min three photos is needed.",
-      "buttonOne": "Continue"
+    "report": {
+      "stepOne": "Help",
+      "stepTwo": "Details",
+      "stepThree": "Additionals",
+      "stepFour": "Done!",
+      "skip": "Skip",
+      "optionalSection": "Optional",
+      "reportSent": "Your report has been sent successfully!",
+      "back": "Back",
+      "notifications": {
+        "photoDeletionError": "Deleting the photo failed. Please try again"
+      },
+      "questionZero": {
+        "question": "Would you like to get familiar with our starter kits before starting to report your find?",
+        "help": "These questions are for providing some help. Please select one of the choices.",
+        "buttonOne": "Yes, please!",
+        "buttonTwo": "No, thanks!"
+      },
+      "questionProvideHelp": {
+        "question": "Great, below you can find the most relevant instructions.",
+        "help": "Please select one of the guides!",
+        "buttonOne": "Continue",
+        "options": {
+          "optionOne": "General Instructions",
+          "optionTwo": "Starter Kit",
+          "optionThree": "Reporting Instructions"
+        }
+      },
+      "questionFindTimeDetermining": {
+        "question": "Are you reporting a find that has recently been found?",
+        "help": "This question is asked to get your current location and date.",
+        "buttonOne": "Yes, I am on the find site.",
+        "buttonTwo": "No, I found it a while ago."
+      },
+      "questionFindLocation": {
+        "question": "Pick the find location please.",
+        "help": "Mark exactly where the find has been found.",
+        "buttonOne": "Done, continue"
+      },
+      "questionFindPhotos": {
+        "question": "Please add photos of the find.",
+        "help": "At least one photo is needed.",
+        "buttonOne": "Continue"
+      },
+      "questionFindSitePhotos": {
+        "question": "Please add some photos from the find site.",
+        "help": "At least one photo is needed.",
+        "buttonOne": "Continue"
+      },
+      "questionFindDate": {
+        "question": "Please pick OR give an approximate of the find date.",
+        "help": "Select the exact date that find has been found.",
+        "buttonOne": "Continue",
+        "selectionText": "I know the exact date."
+      },
+      "questionFindDepth": {
+        "question": "Please input the find depth.",
+        "help": "Add some explanation of the find depth.",
+        "label": "Find Depth",
+        "depth": "Depth",
+        "buttonOne": "Continue",
+        "useSlider": "Use the slider",
+        "depthUnit": "cm"
+      },
+      "questionFindMaterial": {
+        "question": "Select the material of the find.",
+        "help": "If you cannot find the material you can select 'others' option.",
+        "buttonOne": "Continue",
+        "label": "Material",
+        "placeholder": "e.g. stone, gold, bronze"
+      },
+      "questionFindType": {
+        "question": "Select the name of the object.",
+        "help": "If you cannot find the type you can select 'others' option.",
+        "buttonOne": "Continue",
+        "label": "Type",
+        "placeholder": "e.g. coin, ceramic, jewellery"
+      },
+      "questionFindTime": {
+        "question": "Please estimate the dating of your find.",
+        "help": "If you cannot find the type you can select 'others' option.",
+        "buttonOne": "Continue",
+        "label": "Period",
+        "placeholder": "e.g. Middle Ages, Stone Age"
+      },
+      "questionAdditionalMaterials": {
+        "question": "Would you like to add additional information related to the find site?",
+        "help": "Description of additional information",
+        "buttonOne": "Continue"
+      },
+      "questionAddAnotherFind": {
+        "question": "Would you like to report another find?",
+        "help": "One report can contain several finds. Find instructions from 'More'.",
+        "buttonOne": "Yes, please",
+        "buttonTwo": "No, thanks"
+      },
+      "questionOverview": {
+        "buttonOne": "Looks good, please send!"
+      },
+      "questionReportSent": {
+        "question": "Your find report has been sent successfully.",
+        "help": "Your find report has been sent. You will get an notification of it soon."
+      },
+      "questionAddMoreInformation": {
+        "question": "Would you like to add some additional information to your find report?",
+        "help": "If you accept this, you are going to provide some additional information.",
+        "buttonOne": "Yes, please",
+        "buttonTwo": "No, thanks"
+      }
     },
-    "questionFindDate": {
-      "question": "Pick OR approximate a find date please.",
-      "help": "Select the exact date that find has been found.",
-      "buttonOne": "Continue",
-      "selectionText": "I know the exact day."
+    "findMaterials": {
+      "stone": "Stone",
+      "slag": "Slag",
+      "glass": "Glass",
+      "metal": "Metal",
+      "leather": "Leather",
+      "wood": "Wood",
+      "iron": "Iron",
+      "bronze": "Bronze",
+      "porcelain": "Ceramic"
     },
-    "questionFindDepth": {
-      "question": "Please select the find depth.",
-      "help": "Some explenation about find depth.",
-      "label": "Find Depth",
-      "useSlider": "Use the slider",
-      "depth": "Depth",
-      "buttonOne": "Continue",
-      "depthUnit": "cm"
+    "bottomNavBar": {
+      "home": "Home",
+      "mine": "MyFinds",
+      "nearby": "Nearby",
+      "report": "Report",
+      "more": "More"
     },
-    "questionFindMaterial": {
-      "question": "Enter the material of the find.",
-      "help": "If you cannot find the material you can select others.",
-      "buttonOne": "Continue",
-      "label": "Material",
-      "placeholder": "e.g. stone, gold, bronze"
+    "helpBar": {
+      "saveAs": "Save as draft",
+      "delete": "Delete",
+      "notifications": {
+        "noDataAvailable": "Smart help data is not available yet!",
+        "reportDeleted": "The report has been deleted succesfully!",
+        "reportSent": "The report has been saved as draft succesfully!"
+      },
+      "dialog": {
+        "header": "Help",
+        "closeBtn": "Close"
+      }
     },
-    "questionFindType": {
-      "question": "Enter the type of the find.",
-      "help": "If you cannot find the type you can select others.",
-      "buttonOne": "Continue",
-      "label": "Type",
-      "placeholder": "e.g. coin, ceramic, jewellery"
+    "photoRenderer": {
+      "infoText": "Tap the icon to take or choose a photo",
+      "errorHeader": "Photo too large!",
+      "errorText": "The photo exceeds the maximum upload size for this site. Photos cannot exceed 30 MB. Please try again!",
+      "confirmationBtn": "OK",
+      "dialog": {
+        "title": "Add Photo",
+        "takePhoto": "Take Photo",
+        "selectFromGallery": "Select from gallery",
+        "cancel": "Cancel"
+      }
     },
-    "questionFindTime": {
-      "question": "Enter the period of the find.",
-      "help": "If you cannot find the type you can select others.",
-      "buttonOne": "Continue",
-      "label": "Period",
-      "placeholder": "e.g. Middle Ages, Stone Age"
+    "morePage": {
+      "headers": {
+        "usefulTools": "Useful tools & Resources",
+        "tutorials": "Tutorials",
+        "recommendedApps": "Recommended Applications"
+      },
+      "checkLegality": "Find out the location of protected archaeological heritage sites (where no unauthorized investigation is allowed) in the nearby area.",
+      "fhaHowToReport": "Reporting a discovery",
+      "fhaCulturalHeritageMaterial": "Protecting the archaeological cultural heritage",
+      "photoFrame": "Photo frame for taking find photos"
     },
-    "questionAdditionalMaterials": {
-      "question": "Would you like to add additional materials related to the find site?",
-      "help": "Description about what it can be",
-      "buttonOne": "Continue"
+    "facetDrawer": {
+      "facetedSearch": "Faceted Search",
+      "searchResults": "Search results",
+      "searchCriteria": "Search criteria",
+      "emptyBtn": "Empty",
+      "facetCriteria": {
+        "type": "Object name",
+        "material": "Material",
+        "period": "Period",
+        "municipality": "Municipality",
+        "province": "Province"
+      }
     },
-    "questionAddAnotherFind": {
-      "question": "Would you like to add another find?",
-      "help": "One report can contains many finds. Some intruduction about it.",
-      "buttonOne": "Yes, please",
-      "buttonTwo": "No, thanks"
+    "langMenu": {
+      "abbreviation": {
+        "english": "EN",
+        "finnish": "FI",
+        "swedish": "SV"
+      }
     },
-    "questionOverview": {
-      "buttonOne": "Looks good, Send Please!"
+    "smartHelper": {
+      "table": "Table",
+      "map": "Map",
+      "nearbySpecific": "Nearby finds",
+      "overall": "All finds"
     },
-    "questionReportSent": {
-      "question": "Your find has been added successfully.",
-      "help": "You find has been sent. You will get an notification soon.",
+    "appHomePage": {
+      "contentContainer": {
+        "recentFinds": "Recent Finds",
+        "guides": "Guides and Instructions",
+        "applicationTagline": "The number of recieved find reports in FindSampo: x",
+        "headerTitle": "The Finnish archaeological finds data and reporting platform",
+        "learnMore": "Learn More",
+        "name": "FindSampo"
+      }
     },
-    "questionAddMoreInformation": {
-      "question": "Would you like to give some additional information about the find?",
-      "help": "If you accept this, you are going to provide some additional information",
-      "buttonOne": "Yes, please",
-      "buttonTwo": "No, thanks"
+    "answerOptions": {
+      "date": "Date",
+      "approximateDate": "Approximate Date",
+      "additionalMaterials": "Additional information",
+      "btnEnterManually": "Enter Manually",
+      "dialog": {
+        "title": "Input Coordinates",
+        "content": "Please input coordinates in decimal form.",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "cancel": "Cancel",
+        "insert": "Insert"
+      }
+    },
+    "autocompleter": {
+      "noOptions": "No options",
+      "loading": "Loading",
+      "save": "Save"
     }
-  },
-  "eras": { // TODO TRANSLATE THESE TO ENGLISH
-    "mesolithic": {
-      "name": "Mesoliittinen kivikausi",
-      "periodOne": "Varhaisvaihe",
-      "periodTwo": "Keskivaihe",
-      "periodThree": "Myöhäisvaihe"
-    },
-    "neolithicStoneAge": {
-      "name": "Neoliittinen kivikausi",
-      "periodOne": "Varhaisvaihe",
-      "periodTwo": "Keskivaihe",
-      "periodThree": "Myöhäisvaihe"
-    },
-    "neolithicPotteryStoneAge": {
-      "name": "Neoliittisen kivikauden keramiikkatyypit",
-      "periodOne": "Vanhempi varhaiskampakeramiikka",
-      "periodTwo": "Säräisniemi 1 -keramiikka",
-      "periodThree": "Varhainen asbestikeramiikka",
-      "periodFour": "Nuorempi varhaiskampakeramiikka",
-      "periodFive": "Jäkärlän keramiikka",
-      "periodSix": "Tyypillinen kampakeramiikka",
-      "periodSeven": "Myöhäiskampakeramiikka",
-      "periodEight": "Kierikin keramiikka",
-      "periodNine": "Pöljän keramiikka",
-      "periodTen": "Jysmän keramiikka",
-      "periodEleven": "Pyheensillan keramiikka",
-      "periodTwelve": "Nuorakeramiikka",
-      "periodThirteen": "Kiukaisten keramiikka"
-    },
-    "protoMetal": {
-      "name": "Pronssi- ja varhaismetallikausi",
-      "periodOne": "Varhaismetallikausi",
-      "periodTwo": "Pronssikausi",
-      "periodThree": "Vanhempi pronssikausi",
-      "periodFour": "Nuorempi pronssikausi",
-      "periodFive": "Esiroomalainen rautakausi",
-      "periodSix": "Vanhempi roomalainen rautakausi",
-      "periodSeven": "Nuorempi roomalainen rautakausi"
-    },
-    "potteryProtoMetal": {
-      "name": "Pronssi- ja varhaismetallikauden keramiikkatyylit",
-      "periodOne": "Tekstiilikeramiikka",
-      "periodTwo": "(Rannikon) pronssikauden keramiikat",
-      "periodThree": "Morbyn keramiikka",
-      "periodFour": "Säräisniemi 2 -keramiikka",
-      "periodFive": "Anttilan keramiikka",
-      "periodSix": "Luukonsaaren keramiikka",
-      "periodSeven": "Kjelmøyn keramiikka",
-      "periodEight": "Sirnihtan keramiikka"
-    },
-    "ironAge": {
-      "name": "Rautakausi",
-      "periodOne": "Varhaisrautakausi",
-      "periodTwo": "Keskirautakausi",
-      "periodThree": "Myöhäisrautakausi",
-    },
-    "ironAgePeriodization": {
-      "name": "Rautakauden periodisaatio",
-      "periodOne": "Esiroomalainen aika",
-      "periodTwo": "Vanhempi roomalaisaika",
-      "periodThree": "Nuorempi roomalaisaika",
-      "periodFour": "Kansainvaellusaika",
-      "periodFive": "Merovingiaika",
-      "periodSix": "Viikinkiaika",
-      "periodSeven": "Länsi-Suomen viikinkiaika",
-      "periodEight": "Karjalan viikinkiaika",
-      "periodNine": "Ristiretkiaika",
-      "periodTen": "Länsi-Suomen ristiretkiaika",
-      "periodEleven": "Savo-Karjalan ristiretkiaika",
-    },
-    "middleAges": {
-      "name": "Keskiaika",
-      "periodOne": "Länsi-Suomen keskiaika",
-      "periodTwo": "Itä-Suomen/Karjalan keskiaika",
-    },
-    "beforeCommonEra": "eaa",
-    "afterCommonEra": "jaa"
-  },
-  "findTypes": {
-    "weapon": "Weapon",
-    "coin": "Coin",
-    "dish": "Dish",
-    "bottle": "Bottle",
-    "mounting": "Mouting",
-    "fragment": "Fragment",
-    "ceramic": "Ceramic",
-    "jewellery": "Jewellery",
-    "bones": "Bones",
-    "tool": "Tool"
-  },
-  "findMaterials": {
-    "stone": "Stone",
-    "slag": "Slag",
-    "glass": "Glass",
-    "metal": "Metal",
-    "leather": "Leather",
-    "wood": "Wood",
-    "iron": "Iron",
-    "bronze": "Bronze",
-    "porcelain": "Porcelain"
-  },
-  "bottomNavBar": {
-    "home": "Home",
-    "mine": "MyFinds",
-    "nearby": "Search",
-    "report": "Report",
-    "more": "More"
-  },
-  "helpBar": {
-    "saveAs": "Save as draft",
-    "delete": "Delete",
-    "notifications": {
-      "noDataAvailable": "Smart help data is not available yet!",
-      "reportSent": "The report has been saved as draft succesfully!",
-      "reportDeleted": "The report has been deleted succesfully!",
-    },
-    "dialog": {
-      "header": "Help",
-      "closeBtn": "Close"
-    }
-  },
-  "photoRenderer": {
-    "dialog": {
-      "title": "Add Photo",
-      "takePhoto": "Take Photo",
-      "selectFromGallery": "Select from gallery",
-      "cancel": "Cancel"
-    },
-    "infoText": "Tap the icon to take or choose a photo",
-    "errorHeader": "Photo too large",
-    "errorText": "The photo exceeds the maximum upload size for this site. Photos cannot exceed 5 MB. Please try again!",
-    "confirmationBtn": "OK"
-  },
-  "smartHelper": {
-    "table": "Table",
-    "map": "Map",
-    "nearbySpecific": "Nearby Specific",
-    "overall": "Overall"
-  },
-  "answerOptions": {
-    "date": "Date",
-    "approximateDate": "Approximate Date",
-    "additionalMaterials": "Additional Materials",
-    "btnEnterManually": "Enter Manually",
-    "dialog": {
-      "title": "Input Coordinates",
-      "content": "Please input coordinates in decimal form.",
-      "latitude": "Latitude",
-      "longitude": "Longitude",
-      "cancel": "Cancel",
-      "insert": "Insert"
-    }
-  },
-  "autocompleter": {
-    "noOptions": "No options",
-    "loading": "Loading...",
-    "save": "Save"
-  }
-};
+  };
