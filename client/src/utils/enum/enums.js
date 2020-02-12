@@ -68,7 +68,7 @@ export const MapMode = Object.freeze({
   CLUSTURED_MAP: 'clustured-map'
 });
 
-export const Fha_Wfs_Layer = Object.freeze({
+export const FhaMapLayers = Object.freeze({
   ARCHEOLOGICAL_PLACES_AREAS: 'arkeologiset_kohteet_alue',
   ARCHEOLOGICAL_PLACES_POINT: 'Arkeologiset_kohteet_piste',
   WORLD_HERITAGE_SITE_AREAS: 'maailmanperinto_alue',
