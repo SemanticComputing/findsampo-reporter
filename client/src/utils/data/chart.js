@@ -17,7 +17,9 @@ const colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#00D9E9'
 export const createPieChartOptions = (labels, series) => {
   return {
     chart: {
-      type: 'pie'
+      type: 'pie',
+      height: isDesktopScreen(window) ? '90%' : '',
+      width: '100%',
     },
     legend: {
       position: 'bottom'
