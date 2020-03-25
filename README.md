@@ -4,9 +4,9 @@ A mobile web application for reporting new archeological finds.
 
 Project homepage: https://blogs.helsinki.fi/sualt-project
 
-master branch visible at https://dev.löytösampo.fi
+master branch visible at https://dev.report.löytösampo.fi
 
-test branch visible at https://test.löytösampo.fi
+test branch visible at https://test.report.löytösampo.fi
 
 ## Initialization
 
