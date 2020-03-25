@@ -78,7 +78,7 @@ const getFindsByCriteria = (finds, filterKey, filters) => {
  */
 const filterBySearchKeyword = (find, filters) => {
   if (isArray(find.title)) {
-    // FIXME: Remove dublicates
+    // TODO: Remove dublicates
     console.log('The following finds have two or more titles');
     console.log(find.title);
   } else if (!isArray(find.title) && find.title.toLowerCase().includes(head(filters).label.toLowerCase())) {

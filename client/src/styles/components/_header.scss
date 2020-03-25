@@ -6,6 +6,27 @@
   }
   & &__toolbar {
     padding-right: 0;
+    &__link {
+      text-decoration: none;
+      @media screen and (max-width: $size-max-mobile){
+        flex: 1;
+      }
+    }
+    &__logo-container {
+      display: flex;
+      align-items: center;
+      margin-right: 2rem;
+      &__logo {
+        height: 2.5rem;
+        margin-right: 0.5rem;
+      } 
+      &__text {
+        margin: 0;
+        text-decoration: none;
+        color: $color-white;
+        font-size: 1.4rem;
+      }
+    }
     &__log-out-button, &__log-out-button:hover {
       background: $color-ligher-grey;
       padding: 4px 7px;

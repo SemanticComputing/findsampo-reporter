@@ -114,7 +114,7 @@ export default
       "container": {
         "report": "Report",
         "municipality": "Municipality",
-        "time": "on {dd.mm.yy}",
+        "time": "on {d, date, short}",
         "timeClock": "Time",
         "finds": "Number of finds: (number)"
       },

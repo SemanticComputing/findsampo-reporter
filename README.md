@@ -1,6 +1,6 @@
-# FindSampo
+# FindSampo Reporter
 
-Main reposity of the FindSampo project.
+A mobile web application for reporting new archeological finds.
 
 Project homepage: https://blogs.helsinki.fi/sualt-project
 

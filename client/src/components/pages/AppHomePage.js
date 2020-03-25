@@ -45,7 +45,7 @@ class AppHomePage extends Component {
   }
 }
 
-// FIXME : Replace with real ones
+// TODO : Replace with real ones
 const sliderData = [
   {
     des: 'Neulahakaisia, Imatra',
@@ -74,7 +74,7 @@ const sliderData = [
 ];
 
 
-// FIXME: Replace these with the real ones
+// TODO: Replace these with the real ones
 const data = [
   {
     title: 'What should I do if I find an antiquity?',

@@ -37,8 +37,8 @@ import {
 import intl from 'react-intl-universal';
 import { setCoordinates, setMunicipality } from '../../actions/findNotification';
 import { fetchMapData, startMapSpinner } from '../../actions/map';
-import { MapMode, Fha_Wfs_Layer, Colors, RouterPaths } from '../../utils/enum/enums';
-import { getWMTSLayerKeyByValue, getWMTSLayerValueByKey, getIdfromUri } from '../../utils/functions/functions';
+import { MapMode, FhaMapLayers, Colors, RouterPaths } from '../../utils/enum/enums';
+import { getIdfromUri } from '../../utils/functions/functions';
 import { enqueueSnackbar } from '../../actions/notifier';
 
 /**
@@ -128,7 +128,7 @@ class Map extends Component {
   loadFetchedLayers = () => {
     if (this.props.wmtsData) {
       for (let l of this.props.wmtsData) {
-        const mapLayer = this.overlayLayers[getWMTSLayerValueByKey(l.layer)];
+        const mapLayer = this.overlayLayers[intl.get(`nearByPage.map.overLays.${[l.layer]}`)];
         // Clear current layers
         mapLayer.clearLayers();
         // Load the fetched data
@@ -200,17 +200,17 @@ class Map extends Component {
     });
 
     // Create a layergroup for adding markers
-    this.findsLayer = L.layerGroup();
-    const archaeologicalPlacesAreaLayer = L.layerGroup();
-    const archaeologicalPlacesPointLayer = L.layerGroup();
-    const worldHeritageSiteAreaLayer = L.layerGroup();
-    const worldHeritageSitePointLayer = L.layerGroup();
-    const archaeologicalHeritageAreaLayer = L.layerGroup();
-    const archaeologicalHeritagePointLayer = L.layerGroup();
-    const archaeologicalSublacesPointLayer = L.layerGroup();
-    const rkyAreaLayer = L.layerGroup();
-    const rkyPointLayer = L.layerGroup();
-    const rkyLineLayer = L.layerGroup();
+    this.findsLayer = L.layerGroup([], { id: FhaMapLayers.ARCHEOLOGICAL_FINDS });
+    const archaeologicalPlacesAreaLayer = L.layerGroup([], { id: FhaMapLayers.ARCHEOLOGICAL_PLACES_AREAS });
+    const archaeologicalPlacesPointLayer = L.layerGroup([], { id: FhaMapLayers.ARCHEOLOGICAL_PLACES_POINT });
+    const worldHeritageSiteAreaLayer = L.layerGroup([], { id: FhaMapLayers.WORLD_HERITAGE_SITE_AREAS });
+    const worldHeritageSitePointLayer = L.layerGroup([], { id: FhaMapLayers.WORLD_HERITAGE_SITE_POINT });
+    const archaeologicalHeritageAreaLayer = L.layerGroup([], { id: FhaMapLayers.ARCHITECTURAL_HERITAGE_AREAS });
+    const archaeologicalHeritagePointLayer = L.layerGroup([], { id: FhaMapLayers.ARCHITECTURAL_HERITAGE_POINT });
+    const archaeologicalSublacesPointLayer = L.layerGroup([], { id: FhaMapLayers.ARCHEOLOGICAL_SUBPLACES_POINT });
+    const rkyAreaLayer = L.layerGroup([], { id: FhaMapLayers.RKY_AREAS });
+    const rkyPointLayer = L.layerGroup([], { id: FhaMapLayers.RKY_POINTS });
+    const rkyLineLayer = L.layerGroup([], { id: FhaMapLayers.RKY_LINES });
 
     // Base maps 
     const baseMaps = {
@@ -307,7 +307,7 @@ class Map extends Component {
     // If layers property is provided then show it on the map
     if (this.props.layers) {
       this.props.layers.forEach(e => {
-        this.map.addLayer(this.overlayLayers[getWMTSLayerValueByKey(e)]);
+        this.map.addLayer(this.overlayLayers[intl.get(`nearByPage.map.overLays.${[e]}`)]);
       });
     }
   }
@@ -477,17 +477,17 @@ class Map extends Component {
   initialiseMapListeners = () => {
     // The data layhers below can be fetched without zoom level restrictions
     const smallDataLayers = [
-      Fha_Wfs_Layer.RKY_LINES,
-      Fha_Wfs_Layer.RKY_POINTS,
-      Fha_Wfs_Layer.ARCHITECTURAL_HERITAGE_AREAS,
-      Fha_Wfs_Layer.WORLD_HERITAGE_SITE_AREAS,
-      Fha_Wfs_Layer.WORLD_HERITAGE_SITE_POINT
+      FhaMapLayers.RKY_LINES,
+      FhaMapLayers.RKY_POINTS,
+      FhaMapLayers.ARCHITECTURAL_HERITAGE_AREAS,
+      FhaMapLayers.WORLD_HERITAGE_SITE_AREAS,
+      FhaMapLayers.WORLD_HERITAGE_SITE_POINT
     ];
 
     // Fired when an overlay is selected through the layer control
     this.map.on('overlayadd', (eo) => {
-      const layerName = getWMTSLayerKeyByValue(eo.name);
-      if (layerName !== Fha_Wfs_Layer.ARCHEOLOGICAL_FINDS) {
+      const layerName = eo.layer.options['id'];
+      if (layerName !== FhaMapLayers.ARCHEOLOGICAL_FINDS) {
         this.state.activeOverLays.push(layerName);
         if (this.map.getZoom() < MIN_ZOOM_LEVEL && !smallDataLayers.includes(layerName)
           && (!this.props.checkPointInPolygons)) {
@@ -501,8 +501,8 @@ class Map extends Component {
 
     //Fired when an overlay is deselected through the layer control
     this.map.on('overlayremove', (eo) => {
-      const layerName = getWMTSLayerKeyByValue(eo.name);
-      if (layerName !== Fha_Wfs_Layer.ARCHEOLOGICAL_FINDS) {
+      const layerName = eo.layer.options['id'];
+      if (layerName !== FhaMapLayers.ARCHEOLOGICAL_FINDS) {
         const activeOverLays = this.state.activeOverLays.filter((name) => name !== layerName);
         this.setState({ activeOverLays });
       }
@@ -578,25 +578,25 @@ class Map extends Component {
    */
   getOverlayColor = (overlay) => {
     switch (overlay) {
-      case Fha_Wfs_Layer.ARCHEOLOGICAL_PLACES_AREAS:
+      case FhaMapLayers.ARCHEOLOGICAL_PLACES_AREAS:
         return Colors.PINK;
-      case Fha_Wfs_Layer.ARCHEOLOGICAL_PLACES_POINT:
+      case FhaMapLayers.ARCHEOLOGICAL_PLACES_POINT:
         return Colors.LIME;
-      case Fha_Wfs_Layer.WORLD_HERITAGE_SITE_AREAS:
+      case FhaMapLayers.WORLD_HERITAGE_SITE_AREAS:
         return Colors.DEEP_PURPLE;
-      case Fha_Wfs_Layer.WORLD_HERITAGE_SITE_POINT:
+      case FhaMapLayers.WORLD_HERITAGE_SITE_POINT:
         return Colors.BLUE;
-      case Fha_Wfs_Layer.ARCHITECTURAL_HERITAGE_AREAS:
+      case FhaMapLayers.ARCHITECTURAL_HERITAGE_AREAS:
         return Colors.CYAN;
-      case Fha_Wfs_Layer.ARCHITECTURAL_HERITAGE_POINT:
+      case FhaMapLayers.ARCHITECTURAL_HERITAGE_POINT:
         return Colors.TEAL;
-      case Fha_Wfs_Layer.ARCHEOLOGICAL_SUBPLACES_POINT:
+      case FhaMapLayers.ARCHEOLOGICAL_SUBPLACES_POINT:
         return Colors.GREEN;
-      case Fha_Wfs_Layer.RKY_AREAS:
+      case FhaMapLayers.RKY_AREAS:
         return Colors.BROWN;
-      case Fha_Wfs_Layer.RKY_POINTS:
+      case FhaMapLayers.RKY_POINTS:
         return Colors.YELLOW;
-      case Fha_Wfs_Layer.RKY_LINES:
+      case FhaMapLayers.RKY_LINES:
         return Colors.ORANGE;
     }
   }

@@ -12,6 +12,7 @@
     border-radius: 8px;
     &__actions {
       justify-content: space-between;
+      flex-wrap: wrap
       &__more-container {
         display: flex;
         flex: 1;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Map from '../map/Map';
 import { Paper, Typography, Grow } from '@material-ui/core';
-import { Fha_Wfs_Layer } from '../../utils/enum/enums';
+import { FhaMapLayers } from '../../utils/enum/enums';
 
 const LegalityCheckerPage = () => {
   const [legalityResult, setLegalityResult] = useState(null);
@@ -31,7 +31,7 @@ const LegalityCheckerPage = () => {
         </Grow>
       }
       <Map
-        layers={[Fha_Wfs_Layer.ARCHEOLOGICAL_PLACES_AREAS]}
+        layers={[FhaMapLayers.ARCHEOLOGICAL_PLACES_AREAS]}
         zoomLevel={16}
         showCurrentLocation
         checkPointInPolygons

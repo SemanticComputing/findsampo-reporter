@@ -20,7 +20,6 @@ class FindPage extends Component {
     if (id) {
       this.props.getValidatedFind(id);
     } else {
-      // TODO: Show a notification when id is missing
       this.props.history.push(RouterPaths.HOME_PAGE);
     }
   }

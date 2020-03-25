@@ -15,7 +15,6 @@ export const PublicRoute = ({
 }) => (
   <Route {...rest} component={(props) => (
     isAuthenticated ? (
-      // TODO: Add here a notification about that the user is already logged in
       <Redirect to="/" />
     ) : (
       <Component {...props} />
