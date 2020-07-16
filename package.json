@@ -33,7 +33,7 @@
     "leaflet.locatecontrol": "^0.68.0",
     "leaflet.markercluster": "^1.4.1",
     "leaflet.zoominfo": "git+https://github.com/SemanticComputing/Leaflet.zoominfo.git",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "material-table": "^1.54.2",
     "nanoid": "^2.1.7",
     "normalize.css": "^8.0.1",
