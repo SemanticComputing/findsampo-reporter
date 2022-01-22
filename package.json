@@ -35,7 +35,7 @@
     "leaflet.zoominfo": "git+https://github.com/SemanticComputing/Leaflet.zoominfo.git",
     "lodash": "^4.17.11",
     "material-table": "^1.54.2",
-    "nanoid": "^2.1.7",
+    "nanoid": "^3.1.31",
     "normalize.css": "^8.0.1",
     "notistack": "^0.9.7",
     "react": "^16.8.3",
