@@ -52,7 +52,7 @@
     "redux": "^4.0.1",
     "redux-logic": "^2.1.1",
     "reselect": "^4.0.0",
-    "sharp": "^0.23.0",
+    "sharp": "^0.30.5",
     "shrink-ray-current": "^4.0.0"
   },
   "devDependencies": {
